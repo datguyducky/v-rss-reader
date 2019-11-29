@@ -39,6 +39,13 @@ export default class ReadScreen extends React.Component {
 		};
 	}
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			feed: []
+		}
+	}
+
 	componentDidMount() {
 		const RSS_URL = [
 			'https://www.theguardian.com/uk/technology/rss',				//THE GUARDIAN - TECH
@@ -74,8 +81,21 @@ export default class ReadScreen extends React.Component {
 		.then((response) => response.text())
 		.then((responseData) => rssParser.parse(responseData))
         .then((rss) => {
-			console.log(rss.title);
-			console.log(rss.items.length);
+			//console.log(rss.items);
+			//console.log(rss.items[0].title);
+			rss.items.map(function(rssItem){
+				//console.log(rssNews.title, rssNews.links[0].url, rssNews.published)
+				let obj = {
+					title: rssItem.title,
+					published: rssItem.published,
+					url: rssItem.links[0].url
+				};
+
+				this.setState({
+					feed: [...this.state.feed, obj]
+				});
+			}.bind(this))
+			//console.log(rss.items.length);
 		})
 		.catch(err => {
 			console.log(err);
