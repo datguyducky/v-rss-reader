@@ -1,10 +1,11 @@
  // @refresh reset
 
 import React from 'react';
-import { Text, TouchableHighlight } from 'react-native';
+import { SafeAreaView, TouchableHighlight, FlatList, View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 
+import FeedItem from './FeedItem'
 
 export default class ReadScreen extends React.Component {
 	static navigationOptions = ({ navigation }) => {
@@ -16,6 +17,7 @@ export default class ReadScreen extends React.Component {
 					size={24}
 					onPress={() => navigation.navigate('Profile')}
 					style={{marginLeft: 16}}
+					color="#fff"
 					/>
 				</TouchableHighlight>
 			),
@@ -33,6 +35,7 @@ export default class ReadScreen extends React.Component {
 					size={24}
 					onPress={() => navigation.navigate('List')}
 					style={{marginRight: 16}}
+					color='#fff'
 					/>
 				</TouchableHighlight>
 			)
@@ -75,36 +78,88 @@ export default class ReadScreen extends React.Component {
 			'https://www.wired.com/feed/category/science/latest/rss',		//WIRED - SCIENCE
 			'https://www.wired.com/feed/category/security/latest/rss',		//WIRED - SECURITY
 		];
-		//console.log(RSS_URL.length);
 
-		fetch(RSS_URL[0])
-		.then((response) => response.text())
-		.then((responseData) => rssParser.parse(responseData))
-        .then((rss) => {
-			//console.log(rss.items);
-			//console.log(rss.items[0].title);
-			rss.items.map(function(rssItem){
-				//console.log(rssNews.title, rssNews.links[0].url, rssNews.published)
-				let obj = {
-					title: rssItem.title,
-					published: rssItem.published,
-					url: rssItem.links[0].url
-				};
+		async function shuffleArray(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+		}
 
-				this.setState({
-					feed: [...this.state.feed, obj]
+		shuffleArray(RSS_URL).then(() => {
+			for(let i=25; i<RSS_URL.length; i++){
+				fetch(RSS_URL[i])
+				.then((response) => response.text())
+				.then((responseData) => rssParser.parse(responseData))
+				.then((rss) => {
+					var pubName = rss.title;
+					rss.items.map(function(rssItem){
+						let re = /[0-9]{2}:/;
+						let pub = rssItem.published.split(re)[0];
+						re = /[a-zA-Z], /;
+						pub = pub.split(re)[1];
+						let obj = {
+							title: rssItem.title,
+							published: pub,
+							url: rssItem.links[0].url,
+							publisherName: pubName,
+							categories: rssItem.categories[0]
+						};
+						this.setState({
+							feed: [...this.state.feed, obj]
+						});
+					}.bind(this))
+				})
+				.catch(err => {
+					console.log(err);
 				});
-			}.bind(this))
-			//console.log(rss.items.length);
+			}
 		})
-		.catch(err => {
-			console.log(err);
-		});
 	}
 
 	render() {
 		return (
-			<Text>:d</Text>
+			<SafeAreaView style={{backgroundColor: '#fbfbfb'}}>
+				<FlatList
+				data = { this.state.feed }
+				renderItem = { ({ item }) => 
+					<FeedItem 
+						title={item.title} 
+						url={item.url} 
+						published={item.published}
+						pubName={item.publisherName}
+						categories={item.categories}
+					/> 
+				}
+				keyExtractor = { item => item.id }
+				ItemSeparatorComponent = { this.FeedSep }
+				ListFooterComponent = { this.FedBottom }
+				/>
+		  	</SafeAreaView>
 		);
+	}
+
+	//used as a margin between FlatList items
+	FeedSep = () => {
+		return (
+		  	<View
+			style={{
+				marginVertical: 8,
+			  	width: "100%",
+			}}
+		  	/>
+		);
+	}
+
+	//only used as a margin at the end of FlatList
+	FedBottom = () => {
+		return(
+			<View
+			style={{
+				width: '100%',
+				margin: 8
+			}}
+			/>
+		)
 	}
 }
