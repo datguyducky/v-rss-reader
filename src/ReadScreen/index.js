@@ -1,7 +1,7 @@
  // @refresh reset
 
 import React from 'react';
-import { SafeAreaView, TouchableHighlight, FlatList, View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import { SafeAreaView, TouchableHighlight, FlatList, View, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 
@@ -10,6 +10,7 @@ import FeedItem from './FeedItem'
 export default class ReadScreen extends React.Component {
 	static navigationOptions = ({ navigation }) => {
 		return {
+			//icon on the left of the header. With clickable icon to Profile Screen.
 			headerLeft: () => (
 				<TouchableHighlight>
 					<Icon 
@@ -28,6 +29,7 @@ export default class ReadScreen extends React.Component {
 				fontWeight: 'bold',
 				textTransform: 'uppercase'
 			},
+			//icon on the right of the header. With clickable icon to List of RSS Screen
 			headerRight: () => (
 				<TouchableHighlight>
 					<Icon 
@@ -55,7 +57,7 @@ export default class ReadScreen extends React.Component {
 			'https://www.theguardian.com/science/rss',						//THE GUARDIAN - SCIENCE
 			'https://www.theguardian.com/world/rss',						//THE GUARDIAN - WORLD
 			'https://www.theguardian.com/games/rss',						//THE GUARDIAN - GAMES
-			'https://www.theguardian.com/global-development',				//THE GUARDIAN - GLOBAL DEVELOPMENT
+			'https://www.theguardian.com/global-development/rss',			//THE GUARDIAN - GLOBAL DEVELOPMENT
 			'https://www.theguardian.com/books/rss',						//THE GUARDIAN - BOOKS
 			'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',		//NYT - WORLD
 			'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',	//NYT - TECH
@@ -120,10 +122,14 @@ export default class ReadScreen extends React.Component {
 	render() {
 		return (
 			<SafeAreaView style={{backgroundColor: '#fbfbfb'}}>
+				{/* changing status bar of Android to the same color as header */}
+				<StatusBar backgroundColor="#0080B0" barStyle="light-content" />
+
 				<FlatList
 				data = { this.state.feed }
 				renderItem = { ({ item }) => 
-					<FeedItem 
+					<FeedItem
+						id={item.id}
 						title={item.title} 
 						url={item.url} 
 						published={item.published}
@@ -151,13 +157,14 @@ export default class ReadScreen extends React.Component {
 		);
 	}
 
-	//only used as a margin at the end of FlatList
+	//only used at the end of FlatList. Empty, blue bar.
 	FedBottom = () => {
 		return(
 			<View
 			style={{
 				width: '100%',
-				margin: 8
+				height: 16,
+				backgroundColor: '#0080B0'
 			}}
 			/>
 		)

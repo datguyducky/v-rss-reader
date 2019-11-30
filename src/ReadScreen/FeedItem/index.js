@@ -7,6 +7,7 @@ export default class FeedItem extends React.Component {
 		title = this.props.title;
 		published = this.props.published;
 		
+		//Changing publisher names to full, proper ones.
 		if(pubName.includes('The Guardian')) {
 			pubName = 'The Guardian';
 		}
@@ -32,16 +33,23 @@ export default class FeedItem extends React.Component {
 			pubName = 'WIRED';
 		}
 
-		let category = [];
+		let category = '';
 		let categoriesHolder = this.props.categories;
-		if(categoriesHolder !== 'undefined') {
-			Object.keys(categoriesHolder).forEach(function(key) {
-				category.push(categoriesHolder[key]);
-			})
+		
+		//displaying fetched category name - if exists.
+		if(categoriesHolder !== undefined){
+			category = ' / ' + categoriesHolder.name;
+		}
+		//for whatever reason The Wall Street Journal have PAID category for every post. It looks better without it.
+		if(category == ' / PAID'){
+			category = '';
 		}
 
 		return (
-			<TouchableNativeFeedback onPress={() => Linking.openURL(this.props.url).catch(err => console.error('An error occurred', err))}>
+			<TouchableNativeFeedback
+			//onPress open browser with article
+			onPress={() => Linking.openURL(this.props.url).catch(err => console.error('An error occurred', err))}
+			>
 				<View 
 				style={{ 
 					backgroundColor: '#fff',
@@ -53,8 +61,11 @@ export default class FeedItem extends React.Component {
 					width: '100%',
 				}}
 				>
-					<Text style={{fontSize: 12, fontWeight: 'bold', color: '#0080B0'}}>{pubName + ' / ' + category}</Text>
+					{/* Publisher name and category of article/news */}
+					<Text style={{fontSize: 12, fontWeight: 'bold', color: '#0080B0'}}>{pubName + category}</Text>
+					{/* Title of article/news */}
 					<Text style={{fontSize: 24}}>{title}</Text>
+					{/* Date of published article/news [eg. 29 Nov 2019] */}
 					<Text style={{opacity: 0.7, fontSize: 11, textAlign: 'right', marginTop: 12}}>Published at: {published}</Text>
 				</View>
 			</TouchableNativeFeedback>
