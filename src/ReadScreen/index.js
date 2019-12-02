@@ -17,7 +17,7 @@ export default class ReadScreen extends React.Component {
 					name="user" 
 					size={24}
 					onPress={() => navigation.navigate('Profile')}
-					style={{marginLeft: 16}}
+					style={{padding: 15}}
 					color="#fff"
 					/>
 				</TouchableHighlight>
@@ -36,7 +36,7 @@ export default class ReadScreen extends React.Component {
 					name="rss"
 					size={24}
 					onPress={() => navigation.navigate('List')}
-					style={{marginRight: 16}}
+					style={{padding: 15}}
 					color='#fff'
 					/>
 				</TouchableHighlight>
@@ -127,6 +127,7 @@ export default class ReadScreen extends React.Component {
 
 				<FlatList
 				data = { this.state.feed }
+				keyExtractor={(item, index) => index.toString()}
 				renderItem = { ({ item }) => 
 					<FeedItem
 						id={item.id}
@@ -137,7 +138,6 @@ export default class ReadScreen extends React.Component {
 						categories={item.categories}
 					/> 
 				}
-				keyExtractor = { item => item.id }
 				ItemSeparatorComponent = { this.FeedSep }
 				ListFooterComponent = { this.FedBottom }
 				/>
