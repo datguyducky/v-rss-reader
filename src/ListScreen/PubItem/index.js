@@ -22,17 +22,17 @@ export default class PubItem extends Component {
 				<Text style={{fontSize: 26, textAlign: 'center', fontWeight: 'bold', marginBottom: 6}}>{title}</Text>
 					<View>
 					{
-						feeds.map((e) => {
-							const catStyle = e.category.replace(/ /g, '_');
-							//console.log(catStyle);
-							return (
-								<PubCat
-									key = {e.id}
-									ID = {e.id}
-									category = {e.category}
-								/>
-							)
-						})
+							feeds.map((e) => {
+								const catStyle = e.category.replace(/ /g, '_');
+								return (
+									<PubCat
+										key = {e.id}
+										ID = {e.id}
+										category = {e.category}
+										parent = {title}
+									/>
+								)
+							})
 					}
 					</View>
 					

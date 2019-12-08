@@ -30,26 +30,37 @@ export default class ListScreen extends Component {
 		super(props);
 		this.state = {
 			RSS_PUBS: [],
-			addRSSVisible: true,
-			error: false
+			addRSSVisible: false,
+			error: false,
+			RSS_PUBi: [],
 		}
 	}
 	
-	componentDidMount() {
+	async componentDidMount() {
 		this.props.navigation.setParams({
 			openModal: this.openModal.bind(this)
 		});
+
 		
 		RSS_JSON.RSS.map(function(e){
 			let obj = {
 				name: e.name,
 				feeds: e.feeds
 			};
-			
+
 			this.setState(previousState => ({
 				RSS_PUBS: [...previousState.RSS_PUBS, obj]
 			}));
 		}.bind(this));
+
+
+		//loading manually added by user rss feeds
+		let custom = await AsyncStorage.getItem('custom_feeds');
+		custom = JSON.parse(custom);
+		
+		this.setState(previousState => ({
+			RSS_PUBS: [...previousState.RSS_PUBS, custom]
+		}));
 	}
 
 	openModal() {
@@ -111,7 +122,7 @@ export default class ListScreen extends Component {
 							CUSTOM_SAVE.id = LOCAL_ID + 1;
 							
 							c_feeds.feeds.push(CUSTOM_SAVE);
-							await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+							//await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
 						}
 					}; CUSTOM_LENGTH(CUSTOM_SAVE, LOCAL_ID_MAX);
 				}
@@ -124,6 +135,7 @@ export default class ListScreen extends Component {
 	}
 
 	render() {
+		console.log(this.state.RSS_PUBS)
 		return(
 			<View>
 				<FlatList
