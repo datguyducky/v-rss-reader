@@ -57,7 +57,7 @@ export default class ListScreen extends Component {
 	}
 
 	closeModal() {
-		this.setState({addRSSVisible:false});
+		this.setState({addRSSVisible:false, error: false});
 	}
 
 	saveCustomRSS() {
@@ -69,7 +69,9 @@ export default class ListScreen extends Component {
 		}
 		const RSS_NAME = this.state.customRSSName;
 		//console.log(RSS_NAME, RSS_LINK);
-		
+		const LOCAL_ID = this.state.RSS_PUBS;
+		let LOCAL_ID_MAX = LOCAL_ID[LOCAL_ID.length - 1].feeds;
+		LOCAL_ID_MAX = LOCAL_ID_MAX[LOCAL_ID_MAX.length - 1].id;
 		//checking if user typed name and link of RSS
 		if(RSS_LINK && RSS_NAME) {
 			fetch(RSS_LINK)
@@ -82,13 +84,36 @@ export default class ListScreen extends Component {
 				}
 				//saving name, link to AsyncStorage
 				else {
-					const CUSTOM_LENGTH = async () => {
+					const CUSTOM_SAVE = {
+						url: RSS_LINK,
+						category: RSS_NAME,
+						id: 0
+					};
+					const CUSTOM_LENGTH = async (CUSTOM_SAVE, LOCAL_ID_MAX) => {
 						//console.log(rss);
+						//const del = await AsyncStorage.removeItem('custom_feeds');
 						const CUSTOM_FEEDS_KEYS = await AsyncStorage.getAllKeys();
 						if(!CUSTOM_FEEDS_KEYS.includes('custom_feeds')) {
-							console.log('tutaj no');
+							const LAUNCH_SAVE = {
+								name: "Others",
+								feeds: [],
+							}
+							CUSTOM_SAVE.id = LOCAL_ID_MAX + 1;
+							
+							LAUNCH_SAVE.feeds.push(CUSTOM_SAVE);
+							await AsyncStorage.setItem('custom_feeds', JSON.stringify(LAUNCH_SAVE));
 						}
-					}; CUSTOM_LENGTH();
+						else {
+							let c_feeds = await AsyncStorage.getItem('custom_feeds');
+							c_feeds = JSON.parse(c_feeds);
+							
+							let LOCAL_ID = c_feeds.feeds[c_feeds.feeds.length - 1].id;
+							CUSTOM_SAVE.id = LOCAL_ID + 1;
+							
+							c_feeds.feeds.push(CUSTOM_SAVE);
+							await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+						}
+					}; CUSTOM_LENGTH(CUSTOM_SAVE, LOCAL_ID_MAX);
 				}
 			})
 			.catch(err => {
@@ -166,6 +191,7 @@ export default class ListScreen extends Component {
 										placeholder="RSS Link"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
+										autoCapitalize="none"
 									/>
 								</View>
 								

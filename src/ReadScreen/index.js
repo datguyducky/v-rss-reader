@@ -68,12 +68,12 @@ export default class ReadScreen extends React.Component {
 			'https://www.economist.com/science-and-technology/rss.xml',		//THE ECONOMIST - TECH
 			'https://nypost.com/tech/feed/',								//NEW YORK POST - TECH
 			'https://feeds.a.dj.com/rss/RSSWorldNews.xml',					//THE WALL STREET JOURNAL - WORLD
-			'https://feeds.a.dj.com/rss/RSSWSJD.xml',						//THE WALL STREET JOURNAL - TECH
+			'https://feeds.a.dj.com/rss/RSSWSJD.xml',						//THE WALL STREET JOURNAL - TECH			
 			'https://venturebeat.com/category/arvr/feed/',					//VENTURE BEAT - AR/VR
 			'https://venturebeat.com/category/ai/feed/',					//VENTURE BEAT - AI
 			'https://venturebeat.com/category/dev/feed/',					//VENTURE BEAT - DEV
 			'https://venturebeat.com/category/pc-gaming/feed/',				//VENTURE BEAT - PC GAMING
-			'https://venturebeat.com/category/security/feed/',				//VENTURE BEAT - SECURITY
+			'https://venturebeat.com/category/security/feed/',				//VENTURE BEAT - SECURITY		
 			'https://www.theverge.com/rss/space/index.xml',					//THE VERGE - SPACE
 			'https://www.wired.com/feed/category/ideas/latest/rss',			//WIRED - IDEAS
 			'https://www.wired.com/feed/category/business/latest/rss',		//WIRED - BUSINESS
