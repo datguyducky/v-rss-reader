@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Modal, Text, StyleSheet, Button, TextInput } from 'react-native';
-import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { View, Modal, Text, StyleSheet, Button, TextInput, FlatList } from 'react-native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import * as rssParser from 'react-native-rss-parser';
 
 import * as RSS_JSON from '../RSS_FEEDS.json';
@@ -31,7 +31,7 @@ export default class ListScreen extends Component {
 		this.state = {
 			RSS_PUBS: [],
 			addRSSVisible: false,
-			error: false,
+			error: '',
 			RSS_PUBi: [],
 		}
 	}
@@ -72,7 +72,7 @@ export default class ListScreen extends Component {
 	}
 
 	closeModal() {
-		this.setState({addRSSVisible:false, error: false});
+		this.setState({addRSSVisible:false, error: ''});
 	}
 
 	saveCustomRSS() {
@@ -95,10 +95,10 @@ export default class ListScreen extends Component {
 			.then((rss) => {
 				//displaying error when fetched websites is not RSS
 				if(!rss.title){
-					this.setState({error: true})
+					this.setState({error: 'Please check that link you\'ve provided is a working RSS link.'})
 				}
 				//saving name, link to AsyncStorage
-				else {
+				else if(RSS_LINK.length <= 20) {
 					const CUSTOM_SAVE = {
 						url: RSS_LINK,
 						category: RSS_NAME,
@@ -131,10 +131,13 @@ export default class ListScreen extends Component {
 						}
 					}; CUSTOM_LENGTH(CUSTOM_SAVE, LOCAL_ID_MAX);
 				}
+				else {
+					this.setState({error: 'Sorry, name of feed cannot be longer than 20 characters. '})
+				}
 			})
 			.catch(err => {
 				//console.log(err);
-				this.setState({error: true})
+				this.setState({error: 'Please check that link you\'ve provided is a working RSS link.'})
 			});
 		};
 	}
@@ -217,10 +220,10 @@ export default class ListScreen extends Component {
 									width: '80%',
 									marginTop: 4,
 									fontSize: 12,
-									opacity: this.state.error === true ? 1 : 0
+									opacity: this.state.error.length >= 1 ? 1 : 0
 								}}
 								>
-									Please check that link you've provided is a working RSS link.
+									{this.state.error}
 								</Text>
 								
 								<View style={{flexDirection: 'row', marginLeft: 'auto', marginTop: 8, marginBottom: 10}}>

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput, TouchableNativeFeedback } from 'react-native';
+import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -15,7 +17,7 @@ export default class PubCat extends Component {
 	}
 
 	async componentDidMount() {
-		const ID = 'disabled' + this.props.ID;
+		const ID = this.props.ID;
 		const value = await AsyncStorage.getItem(`dis${ID}`);
 
 		if(value === null){
@@ -26,6 +28,14 @@ export default class PubCat extends Component {
 			disabled: value
 		});
 		//console.log(value);
+	}
+
+	openModal(n) {
+		this.setState({[`${n}`]: true});
+	}
+
+	closeModal(n) {
+		this.setState({[`${n}`]: false});
 	}
 
 	async deleteCustomRSS() {
@@ -47,16 +57,10 @@ export default class PubCat extends Component {
 		else {
 			const del = await AsyncStorage.removeItem('custom_feeds');
 		}
+
+		const delDis = await AsyncStorage.removeItem(`dis${ID}`);
 		
-		this.closeModal('deleteModalVisible');
-	}
-
-	openModal(n) {
-		this.setState({[`${n}`]: true});
-	}
-
-	closeModal(n) {
-		this.setState({[`${n}`]: false});
+		this.closeModal('renameModalVisible');
 	}
 
 	async renameCustomRSS() {
@@ -75,11 +79,11 @@ export default class PubCat extends Component {
 		}
 		await AsyncStorage.setItem('custom_feeds', JSON.stringify(renamedObject));
 		
-		this.closeModal('deleteModalVisible');
+		this.closeModal('renameModalVisible');
 	}
 
 	render() {
-		const ID = 'disabled' + this.props.ID;
+		const ID = this.props.ID;
 		let category = this.props.category;
 		let disabled = this.state.disabled;
 		let parent = this.props.parent;
