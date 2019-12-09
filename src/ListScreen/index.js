@@ -37,6 +37,7 @@ export default class ListScreen extends Component {
 	}
 	
 	async componentDidMount() {
+		//const del = await AsyncStorage.removeItem('custom_feeds');
 		this.props.navigation.setParams({
 			openModal: this.openModal.bind(this)
 		});
@@ -56,11 +57,14 @@ export default class ListScreen extends Component {
 
 		//loading manually added by user rss feeds
 		let custom = await AsyncStorage.getItem('custom_feeds');
-		custom = JSON.parse(custom);
+		if (custom !== null) {
+			custom = JSON.parse(custom);
 		
-		this.setState(previousState => ({
-			RSS_PUBS: [...previousState.RSS_PUBS, custom]
-		}));
+			this.setState(previousState => ({
+				RSS_PUBS: [...previousState.RSS_PUBS, custom]
+			}));
+		}
+
 	}
 
 	openModal() {
@@ -122,7 +126,8 @@ export default class ListScreen extends Component {
 							CUSTOM_SAVE.id = LOCAL_ID + 1;
 							
 							c_feeds.feeds.push(CUSTOM_SAVE);
-							//await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+							await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+							this.closeModal('deleteModalVisible');
 						}
 					}; CUSTOM_LENGTH(CUSTOM_SAVE, LOCAL_ID_MAX);
 				}
@@ -135,7 +140,6 @@ export default class ListScreen extends Component {
 	}
 
 	render() {
-		console.log(this.state.RSS_PUBS)
 		return(
 			<View>
 				<FlatList
@@ -160,7 +164,7 @@ export default class ListScreen extends Component {
 				>
 					<View style={{
 						flex: 1,
-						backgroundColor: 'rgba(0, 0, 0, 0.3)',
+						backgroundColor: 'rgba(0, 0, 0, 0.55)',
 						justifyContent:'center',
 					}}
 					>

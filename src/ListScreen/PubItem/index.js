@@ -7,7 +7,6 @@ export default class PubItem extends Component {
 	render() {
 		let title = this.props.title;
 		let feeds = this.props.feeds;
-
 		return (
 			<View style={{
 				backgroundColor: '#fff', 
