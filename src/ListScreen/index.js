@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { View, Modal, Text, StyleSheet, Button, TextInput, FlatList } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
-import * as rssParser from 'react-native-rss-parser';
-
-import * as RSS_JSON from '../RSS_FEEDS.json';
-import PubItem from './PubItem';
-import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/Feather';
+
+import PubItem from './PubItem';
 
 import Styles from './style';
 
@@ -43,19 +41,6 @@ export default class ListScreen extends Component {
 		this.props.navigation.setParams({
 			openModal: this.openModal.bind(this)
 		});
-
-		
-		RSS_JSON.RSS.map(function(e){
-			let obj = {
-				name: e.name,
-				feeds: e.feeds
-			};
-
-			this.setState(previousState => ({
-				RSS_PUBS: [...previousState.RSS_PUBS, obj]
-			}));
-		}.bind(this));
-
 
 		//loading manually added by user rss feeds
 		let custom = await AsyncStorage.getItem('custom_feeds');

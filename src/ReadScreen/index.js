@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import * as rssParser from 'react-native-rss-parser';
 import AsyncStorage from '@react-native-community/async-storage';
-import * as RSS_JSON from '../RSS_FEEDS.json';
 
 import FeedItem from './FeedItem'
 
@@ -51,49 +50,11 @@ export default class ReadScreen extends React.Component {
 		super(props);
 		this.state = {
 			feed: [],
-			RSS: [],
-			RSS_LINKS: []
+			RSS: []
 		}
 	}
 
 	async componentDidMount() {
-		for(let i=0; i<4; i++){
-			const R_FEED = RSS_JSON.RSS[i].feeds;
-			for(let j=0; j<R_FEED.length; j++) {
-				const R_FEED_URL = R_FEED[j].url;
-				
-				const ID = 'dis' + R_FEED[j].id;
-				const DISABLE_STATE = await AsyncStorage.getItem(ID);
-
-				if(DISABLE_STATE === 'false' ) {;
-					const FEED_RESPONSE = await fetch(R_FEED_URL);
-					const myJson = await FEED_RESPONSE.text();
-					const rss = await rssParser.parse(myJson)
-					
-					for(let k=0; k<6; k++) {
-						var pubName = rss.title;
-						const R_ITEM = rss.items[k];
-						
-						let re = /[0-9]{2}:/;
-						let pub = R_ITEM.published.split(re)[0];
-						re = /[a-zA-Z], /;
-						pub = pub.split(re)[1];
-						
-						let obj = {
-							title: R_ITEM.title,
-							published: pub,
-							url: R_ITEM.links[0].url,
-							publisherName: pubName,
-							categories: R_ITEM.categories[0]
-						};
-						this.setState({
-							feed: [...this.state.feed, obj]
-						});
-					}
-				}
-			}	
-		}
-
 		let custom = await AsyncStorage.getItem('custom_feeds');
 		
 		if (custom !== null) {
