@@ -32,6 +32,9 @@ export default class FeedItem extends React.Component {
 		else if(pubName.includes('Latest')) {
 			pubName = 'WIRED';
 		}
+		else {
+			pubName = this.props.pubName;
+		} 
 
 		let category = '';
 		let categoriesHolder = this.props.categories;

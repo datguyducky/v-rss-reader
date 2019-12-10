@@ -3,7 +3,10 @@
 import React from 'react';
 import { SafeAreaView, TouchableHighlight, FlatList, View, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+
 import * as rssParser from 'react-native-rss-parser';
+import AsyncStorage from '@react-native-community/async-storage';
+import * as RSS_JSON from '../RSS_FEEDS.json';
 
 import FeedItem from './FeedItem'
 
@@ -47,78 +50,79 @@ export default class ReadScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			feed: []
+			feed: [],
+			RSS: [],
+			RSS_LINKS: []
 		}
 	}
 
-	componentDidMount() {
-		const RSS_URL = [
-			'https://www.theguardian.com/uk/technology/rss',				//THE GUARDIAN - TECH
-			'https://www.theguardian.com/science/rss',						//THE GUARDIAN - SCIENCE
-			'https://www.theguardian.com/world/rss',						//THE GUARDIAN - WORLD
-			'https://www.theguardian.com/games/rss',						//THE GUARDIAN - GAMES
-			'https://www.theguardian.com/global-development/rss',			//THE GUARDIAN - GLOBAL DEVELOPMENT
-			'https://www.theguardian.com/books/rss',						//THE GUARDIAN - BOOKS
-			'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',		//NYT - WORLD
-			'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',	//NYT - TECH
-			'https://rss.nytimes.com/services/xml/rss/nyt/Science.xml',		//NYT - SCIENCE
-			'https://rss.nytimes.com/services/xml/rss/nyt/Space.xml',		//NYT - SPACE
-			'https://rss.nytimes.com/services/xml/rss/nyt/Books.xml',		//NYT - BOOKS
-			'https://rss.nytimes.com/services/xml/rss/nyt/Movies.xml',		//NYT - MOVIES
-			'https://www.economist.com/science-and-technology/rss.xml',		//THE ECONOMIST - TECH
-			'https://nypost.com/tech/feed/',								//NEW YORK POST - TECH
-			'https://feeds.a.dj.com/rss/RSSWorldNews.xml',					//THE WALL STREET JOURNAL - WORLD
-			'https://feeds.a.dj.com/rss/RSSWSJD.xml',						//THE WALL STREET JOURNAL - TECH			
-			'https://venturebeat.com/category/arvr/feed/',					//VENTURE BEAT - AR/VR
-			'https://venturebeat.com/category/ai/feed/',					//VENTURE BEAT - AI
-			'https://venturebeat.com/category/dev/feed/',					//VENTURE BEAT - DEV
-			'https://venturebeat.com/category/pc-gaming/feed/',				//VENTURE BEAT - PC GAMING
-			'https://venturebeat.com/category/security/feed/',				//VENTURE BEAT - SECURITY		
-			'https://www.theverge.com/rss/space/index.xml',					//THE VERGE - SPACE
-			'https://www.wired.com/feed/category/ideas/latest/rss',			//WIRED - IDEAS
-			'https://www.wired.com/feed/category/business/latest/rss',		//WIRED - BUSINESS
-			'https://www.wired.com/feed/category/science/latest/rss',		//WIRED - SCIENCE
-			'https://www.wired.com/feed/category/security/latest/rss',		//WIRED - SECURITY
-		];
-
-		async function shuffleArray(array) {
-			for (let i = array.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[array[i], array[j]] = [array[j], array[i]];
-			}
-		}
-
-		shuffleArray(RSS_URL).then(() => {
-			for(let i=25; i<RSS_URL.length; i++){
-				fetch(RSS_URL[i])
-				.then((response) => response.text())
-				.then((responseData) => rssParser.parse(responseData))
-				.then((rss) => {
+	async componentDidMount() {
+		/*for(let i=0; i<4; i++){
+			const R_FEED = RSS_JSON.RSS[i].feeds;
+			for(let j=0; j<R_FEED.length; j++) {
+				const R_FEED_URL = R_FEED[j].url;
+				
+				const FEED_RESPONSE = await fetch(R_FEED_URL);
+				const myJson = await FEED_RESPONSE.text();
+				const rss = await rssParser.parse(myJson)
+				
+				for(let k=0; k<6; k++) {
 					var pubName = rss.title;
-					rss.items.map(function(rssItem){
-						let re = /[0-9]{2}:/;
-						let pub = rssItem.published.split(re)[0];
-						re = /[a-zA-Z], /;
-						pub = pub.split(re)[1];
-						let obj = {
-							title: rssItem.title,
-							published: pub,
-							url: rssItem.links[0].url,
-							publisherName: pubName,
-							categories: rssItem.categories[0]
-						};
-						this.setState({
-							feed: [...this.state.feed, obj]
-						});
-					}.bind(this))
-				})
-				.catch(err => {
-					console.log(err);
-				});
-			}
-		})
-	}
+					const R_ITEM = rss.items[k];
+					
+					let re = /[0-9]{2}:/;
+					let pub = R_ITEM.published.split(re)[0];
+					re = /[a-zA-Z], /;
+					pub = pub.split(re)[1];
+					
+					let obj = {
+						title: R_ITEM.title,
+						published: pub,
+						url: R_ITEM.links[0].url,
+						publisherName: pubName,
+						categories: R_ITEM.categories[0]
+					};
+					this.setState({
+						feed: [...this.state.feed, obj]
+					});
+				}
+			}	
+		}*/
 
+		let custom = await AsyncStorage.getItem('custom_feeds');
+		if (custom !== null) {
+			custom = JSON.parse(custom);
+			
+			for(let i=0; i<custom.feeds.length; i++) {
+				const R_FEED_URL = custom.feeds[i].url;
+				const CUSTOM_NAME = custom.feeds[i].category;
+				const FEED_RESPONSE = await fetch(R_FEED_URL);
+				const myJson = await FEED_RESPONSE.text();
+				const rss = await rssParser.parse(myJson)
+
+				for(let j=0; j<12; j++) {
+					var pubName = rss.title;
+					
+					const C_ITEM = rss.items[j];
+					let re = /[0-9]{2}:/;
+					let pub = C_ITEM.published.split('T')[0];
+
+					let obj = {
+						title: C_ITEM.title,
+						published: pub,
+						url: C_ITEM.links[0].url,
+						publisherName: CUSTOM_NAME,
+						categories: C_ITEM.categories[0]
+					};
+					this.setState({
+						feed: [...this.state.feed, obj]
+					});
+				}
+			}
+		}
+
+
+	}
 	render() {
 		return (
 			<SafeAreaView style={{backgroundColor: '#fbfbfb'}}>
