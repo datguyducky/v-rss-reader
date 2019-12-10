@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import { Modal, Text, View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { Modal, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Feather';
+
+import Styles from './style';
+
 
 export default class PubCat extends Component {
 	constructor(props) {
@@ -90,36 +93,53 @@ export default class PubCat extends Component {
 
 		return (
 			<View>
-				<View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 2,
-				opacity: disabled === 'true' ? 0.3 : 1
-				}}>
+				<View style={[
+					Styles.publisherCard,
+					{ opacity: disabled === 'true' ? 0.3 : 1 }
+				]}>
 					<TouchableOpacity 
-						style={{flex: 1}}
+						style={{ flex: 1 }}
 						activeOpacity={0.3}
 						onPress={async () => {
 							let disabled = this.state.disabled === 'false' ? 'true' : 'false';
 							await AsyncStorage.setItem(`dis${ID}`, disabled);
+							
 							this.setState({
 								disabled: this.state.disabled === 'false' ? 'true' : 'false'
 							})
 						}}
 					>
-						<Text style={[styles.catTitle]}>{category}</Text>
+						<Text style={{
+							flex: 1,
+							fontSize: 21
+						}}>
+							{category}
+						</Text>
 					</TouchableOpacity>
 					{
 						//rename custom feed
 						parent === 'Others' ?
-						<TouchableOpacity onPress={() => this.openModal('renameModalVisible')} activeOpacity={0.3}>
+						<TouchableOpacity 
+							onPress={() => this.openModal('renameModalVisible')} 
+							activeOpacity={0.3}
+						>
 							<Icon name="edit" size={18} style={{marginRight: 8}}/>
 						</TouchableOpacity>
-						:
-						null
+						: null
 					}
 					{
 						//delete custom feed
 						parent === 'Others' ?
-						<TouchableOpacity onPress={() => this.openModal('deleteModalVisible')} activeOpacity={0.3}>
-							<Icon name="trash" size={18} style={{color: disabled === 'true' ? '#000' : '#D8000C', marginRight: 8}}/>
+						<TouchableOpacity 
+							onPress={() => this.openModal('deleteModalVisible')}
+							activeOpacity={0.3}
+						>
+							<Icon name="trash" size={18} 
+								style={{
+									color: disabled === 'true' ? '#000' : '#D8000C', 
+									marginRight: 8
+								}}
+							/>
 						</TouchableOpacity>
 						:
 						null
@@ -135,63 +155,50 @@ export default class PubCat extends Component {
 						}}
 					>
 					{
-						
 						disabled === 'true' ?
-							<Icon name="square" size={18} style={{color: disabled === 'true' ? '#000' : '#0080B0'}}/>
+							<Icon name="square" size={18} 
+								style={{
+									color: disabled === 'true' ? '#000' : '#0080B0'
+								}}
+							/>
 						:
 							<Icon name="check-square" size={18} style={{color: '#0080B0'}}/>
 					}
 					</TouchableOpacity>
 				</View>
+
+
 				<Modal
 					visible={this.state.deleteModalVisible}
 					animationType={'fade'}
 					onRequestClose={() => this.closeModal('deleteModalVisible')}
 					transparent={true}
 				>
-					<View style={{
-						flex: 1,
-						backgroundColor: 'rgba(0, 0, 0, 0.55)',
-						justifyContent:'center',
-					}}
-					>
-						<View style={{
-							width: 280,
-							backgroundColor: '#fff', 
-							alignSelf: 'center',
-							borderRadius: 6,
-							elevation: 4,
-						}}
-						>
-							<Text style={{
-								fontSize: 24,
-								textAlign: 'center',
-								backgroundColor: '#0080B0',
-								color: '#fff',
-								fontWeight: 'bold',
-								paddingVertical: 4,
-								borderTopLeftRadius: 6,
-								borderTopRightRadius: 6
-							}}>
+					<View style={Styles.m__RSS_wrapper}>
+						<View style={Styles.m__RSS_container}>
+							<Text style={Styles.m__RSS_header}>
 								Delete '{category}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<Text style={{textAlign: 'center', marginTop: 6}}>Are you sure that you want to delete this feed? You can readd it later. </Text>
+								<Text style={{textAlign: 'center', marginTop: 6}}>
+									Are you sure that you want to delete this feed? You can readd it later. 
+								</Text>
 								
-								<View style={{flexDirection: 'row', marginLeft: 'auto', marginTop: 8, marginBottom: 10}}>
+								<View style={Styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
-										<Text style={{fontSize: 21, fontWeight: 'bold', color: '#000', padding: 4, opacity: 0.3, marginRight: 8}} onPress={() => this.closeModal('deleteModalVisible')}>
+										<Text
+											onPress={() => this.closeModal('deleteModalVisible')}
+											style={[
+												Styles.m__btn,
+												{color: '#000', opacity: 0.3}
+											]}
+										>
 											Cancel
 										</Text>
 									</TouchableNativeFeedback>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
-										<Text style={{
-											fontSize: 21, 
-											fontWeight: 'bold', 
-											color: '#D8000C', 
-											padding: 4, 
-											marginRight: 8
-										}} 
+										<Text 
+											style={Styles.m__btn} 
 											onPress={() => this.deleteCustomRSS()}
 										>
 											Delete
@@ -203,63 +210,47 @@ export default class PubCat extends Component {
 					</View>
 				</Modal>
 
+
 				<Modal
 					visible={this.state.renameModalVisible}
 					animationType={'fade'}
 					onRequestClose={() => this.closeModal('renameModalVisible')}
 					transparent={true}
 				>
-					<View style={{
-						flex: 1,
-						backgroundColor: 'rgba(0, 0, 0, 0.55)',
-						justifyContent:'center',
-					}}
-					>
-						<View style={{
-							width: 280,
-							backgroundColor: '#fff', 
-							alignSelf: 'center',
-							borderRadius: 6,
-							elevation: 4,
-						}}
-						>
-							<Text style={{
-								fontSize: 24,
-								textAlign: 'center',
-								backgroundColor: '#0080B0',
-								color: '#fff',
-								fontWeight: 'bold',
-								paddingVertical: 4,
-								borderTopLeftRadius: 6,
-								borderTopRightRadius: 6
-							}}>
+					<View style={Styles.m__RSS_wrapper}>
+						<View style={Styles.m__RSS_container}>
+							<Text style={Styles.m__RSS_header}>
 								Rename '{category}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={{marginTop: 10, width: '80%', borderBottomWidth: 2, borderBottomColor: '#0080B0'}}>
+								<View style={Styles.m__input_wrapper}>
 									<TextInput 
 										onChangeText={(text) => this.setState({newCustomRSSName: text})}
 										value={this.state.text}
-										style={{height: 36, width:'100%', padding: 0, paddingLeft: 5, fontSize: 17}}
+										style={Styles.m__input}
 										placeholder="New feed name"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
 									/>
 								</View>
-								<View style={{flexDirection: 'row', marginLeft: 'auto', marginTop: 8, marginBottom: 10}}>
+								<View style={Styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
-										<Text style={{fontSize: 21, fontWeight: 'bold', color: '#000', padding: 4, opacity: 0.3, marginRight: 8}} onPress={() => this.closeModal('renameModalVisible')}>
+										<Text 
+											style={[
+												Styles.m__btn,
+												{color: '#000', opacity: 0.3}
+											]} 
+											onPress={() => this.closeModal('renameModalVisible')}
+										>
 											Cancel
 										</Text>
 									</TouchableNativeFeedback>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
-										<Text style={{
-											fontSize: 21, 
-											fontWeight: 'bold', 
-											color: '#D8000C', 
-											padding: 4, 
-											marginRight: 8
-										}} 
+										<Text 
+											style={[
+												Styles.m__btn,
+												{color: '#0080B0'}
+											]}
 											onPress={() => this.renameCustomRSS()}
 										>
 											Rename
@@ -274,10 +265,3 @@ export default class PubCat extends Component {
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	catTitle: {
-		flex: 1,
-		fontSize: 21,
-	},
-})

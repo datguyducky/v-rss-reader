@@ -8,6 +8,8 @@ import PubItem from './PubItem';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import Styles from './style';
+
 export default class ListScreen extends Component {
 	static navigationOptions = ({navigation}) => {
 		return {
@@ -165,48 +167,27 @@ export default class ListScreen extends Component {
 					onRequestClose={() => this.closeModal()}
 					transparent={true}
 				>
-					<View style={{
-						flex: 1,
-						backgroundColor: 'rgba(0, 0, 0, 0.55)',
-						justifyContent:'center',
-					}}
-					>
-						<View style={{
-							width: 280,
-							backgroundColor: '#fff', 
-							alignSelf: 'center',
-							borderRadius: 6,
-							elevation: 4,
-						}}
-						>
-							<Text style={{
-								fontSize: 24,
-								textAlign: 'center',
-								backgroundColor: '#0080B0',
-								color: '#fff',
-								fontWeight: 'bold',
-								paddingVertical: 4,
-								borderTopLeftRadius: 6,
-								borderTopRightRadius: 6
-							}}>
+					<View style={Styles.m__addRSS_wrapper}>
+						<View style={Styles.m__addRSS_container}>
+							<Text style={Styles.m__addRSS_header}>
 								ADD CUSTOM RSS:
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={{marginTop: 10, width: '80%', borderBottomWidth: 2, borderBottomColor: '#0080B0'}}>
+								<View style={Styles.m__input_wrapper}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSName: text})}
 										value={this.state.text}
-										style={{height: 36, width:'100%', padding: 0, paddingLeft: 5, fontSize: 17}}
+										style={Styles.m__input}
 										placeholder="RSS Name"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
 									/>
 								</View>
-								<View style={{marginTop: 8, width: '80%', borderBottomWidth: 2, borderBottomColor: '#0080B0'}}>
+								<View style={Styles.m__input_wrapper}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSLink: text})}
 										value={this.state.text}
-										style={{height: 36, width:'100%', padding: 0, paddingLeft: 5, fontSize: 17}}
+										style={Styles.m__input}
 										placeholder="RSS Link"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
@@ -214,30 +195,30 @@ export default class ListScreen extends Component {
 									/>
 								</View>
 								
-								<Text style={{
-									textAlign: 'center', 
-									color: '#D8000C', 
-									width: '80%',
-									marginTop: 4,
-									fontSize: 12,
-									opacity: this.state.error.length >= 1 ? 1 : 0
-								}}
-								>
+								<Text 
+								style={[
+									Styles.m__error,
+									{opacity: this.state.error.length >= 1 ? 1 : 0}
+								]}>
 									{this.state.error}
 								</Text>
 								
-								<View style={{flexDirection: 'row', marginLeft: 'auto', marginTop: 8, marginBottom: 10}}>
+								<View style={Styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
-										<Text style={{fontSize: 21, fontWeight: 'bold', color: '#000', padding: 4, opacity: 0.3, marginRight: 8}} onPress={() => this.closeModal()}>Cancel</Text>
+										<Text 
+											style={[
+												Styles.m__btn, 
+												{ color: '#000',  opacity: 0.3 }
+											]} 
+											onPress={() => this.closeModal()}
+										>
+											Cancel
+										</Text>
 									</TouchableNativeFeedback>
+
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
-										<Text style={{
-											fontSize: 21, 
-											fontWeight: 'bold', 
-											color: '#0080B0', 
-											padding: 4, 
-											marginRight: 8
-										}} 
+										<Text 
+											style={Styles.m__btn} 
 											onPress={() => this.saveCustomRSS()}
 										>
 											Create

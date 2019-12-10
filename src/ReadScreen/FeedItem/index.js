@@ -1,5 +1,7 @@
 import React from 'react';
-import { TouchableNativeFeedback, View, Text, StyleSheet, Linking } from 'react-native';
+import { TouchableNativeFeedback, View, Text, Linking } from 'react-native';
+
+import Styles from './style';
 
 export default class FeedItem extends React.Component {
 	render() {
@@ -51,25 +53,23 @@ export default class FeedItem extends React.Component {
 		return (
 			<TouchableNativeFeedback
 			//onPress open browser with article
-			onPress={() => Linking.openURL(this.props.url).catch(err => console.error('An error occurred', err))}
+			onPress={() => 
+				Linking.openURL(this.props.url).catch(err => console.error('An error occurred', err))
+			}
 			>
-				<View 
-				style={{ 
-					backgroundColor: '#fff',
-					paddingVertical: 8,
-					paddingHorizontal: 16,
-					borderBottomWidth: StyleSheet.hairlineWidth,
-					borderBottomColor: 'rgba(156, 156, 156, 0.50)',
-					elevation: 4,
-					width: '100%',
-				}}
-				>
+				<View style={Styles.newsCard}>
 					{/* Publisher name and category of article/news */}
-					<Text style={{fontSize: 12, fontWeight: 'bold', color: '#0080B0'}}>{pubName + category}</Text>
+					<Text style={Styles.newsCardPublisher}>
+						{pubName + category}
+					</Text>
 					{/* Title of article/news */}
-					<Text style={{fontSize: 24}}>{title}</Text>
+					<Text style={{fontSize: 24}}>
+						{title}
+					</Text>
 					{/* Date of published article/news [eg. 29 Nov 2019] */}
-					<Text style={{opacity: 0.7, fontSize: 11, textAlign: 'right', marginTop: 12}}>Published at: {published}</Text>
+					<Text style={Styles.newsCardPublished}>
+						Published at: {published}
+					</Text>
 				</View>
 			</TouchableNativeFeedback>
 		)
