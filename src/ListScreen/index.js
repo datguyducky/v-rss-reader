@@ -98,7 +98,7 @@ export default class ListScreen extends Component {
 					this.setState({error: 'Please check that link you\'ve provided is a working RSS link.'})
 				}
 				//saving name, link to AsyncStorage
-				else if(RSS_LINK.length <= 20) {
+				else if(RSS_NAME.length <= 20) {
 					const CUSTOM_SAVE = {
 						url: RSS_LINK,
 						category: RSS_NAME,

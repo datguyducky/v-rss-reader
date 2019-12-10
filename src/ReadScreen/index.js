@@ -64,8 +64,8 @@ export default class ReadScreen extends React.Component {
 				
 				const ID = 'dis' + R_FEED[j].id;
 				const DISABLE_STATE = await AsyncStorage.getItem(ID);
-				
-				if(DISABLE_STATE === 'false') {;
+
+				if(DISABLE_STATE === 'false' ) {;
 					const FEED_RESPONSE = await fetch(R_FEED_URL);
 					const myJson = await FEED_RESPONSE.text();
 					const rss = await rssParser.parse(myJson)
@@ -104,8 +104,8 @@ export default class ReadScreen extends React.Component {
 				const CUSTOM_NAME = custom.feeds[i].category;
 				const ID = 'dis' + custom.feeds[i].id;
 				const DISABLE_STATE = await AsyncStorage.getItem(ID);
-				
-				if(DISABLE_STATE === 'false') {
+
+				if(DISABLE_STATE === 'false' || DISABLE_STATE === null) {
 					const FEED_RESPONSE = await fetch(R_FEED_URL);
 					const myJson = await FEED_RESPONSE.text();
 					const rss = await rssParser.parse(myJson)
