@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
 	m__addRSS_wrapper: {
 		flex: 1,
-		backgroundColor: 'rgba(0, 0, 0, 0.55)',
 		justifyContent:'center',
 	},
 
@@ -63,5 +62,23 @@ export default StyleSheet.create({
 		padding: 4, 
 		marginRight: 8
 	},
+
+	m__opRSS_wrapper: {
+		height: '100%',
+	},
+
+	m__opRSS_btn_wrapper: {
+		backgroundColor: '#1575a0',
+		fontSize: 32,
+		flexDirection: 'row',
+		justifyContent: 'center'
+	},
+
+	m__opRSS_btn: {
+		color: '#fff',
+		fontSize: 15,
+		padding: 8,
+		textTransform: 'uppercase'
+	}
 	
 })

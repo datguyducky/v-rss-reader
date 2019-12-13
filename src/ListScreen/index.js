@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Modal, Text, StyleSheet, Button, TextInput, FlatList } from 'react-native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { View, Modal, Text, StyleSheet, Button, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { TouchableNativeFeedback,  } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -17,7 +17,7 @@ export default class ListScreen extends Component {
 					<Icon 
 					name="plus"
 					size={24}
-					onPress={() => navigation.state.params.openModal()}
+					onPress={() => navigation.state.params.openModal('opRSS')}
 					style={{padding: 15}}
 					color='#fff'
 					/>
@@ -31,6 +31,8 @@ export default class ListScreen extends Component {
 		this.state = {
 			RSS_PUBS: [],
 			addRSSVisible: false,
+			opRSS: false,
+			addCatVisible: false,
 			error: '',
 			RSS_PUBi: [],
 		}
@@ -54,12 +56,16 @@ export default class ListScreen extends Component {
 
 	}
 
-	openModal() {
-		this.setState({addRSSVisible:true});
+	openModal(n) {
+		this.setState({[`${n}`]: true});
 	}
 
-	closeModal() {
-		this.setState({addRSSVisible:false, error: ''});
+	closeModal(n) {
+		this.setState({[`${n}`]: false});
+	}
+
+	saveCustomCat() {
+
 	}
 
 	saveCustomRSS() {
@@ -114,7 +120,7 @@ export default class ListScreen extends Component {
 							
 							c_feeds.feeds.push(CUSTOM_SAVE);
 							await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
-							this.closeModal('deleteModalVisible');
+							this.closeModal('addRSSVisible');
 						}
 					}; CUSTOM_LENGTH(CUSTOM_SAVE, LOCAL_ID_MAX);
 				}
@@ -147,15 +153,114 @@ export default class ListScreen extends Component {
 				/>
 
 				<Modal
-					visible={this.state.addRSSVisible}
+					visible={this.state.opRSS}
+					animationType={'slides'}
+					onRequestClose={() => this.closeModal('opRSS')}
+					transparent={true}
+				>
+					<View style={Styles.m__opRSS_wrapper}>
+						{/* hack so this modal can be closed by clicking on header */}
+						<TouchableOpacity 
+							style={{height: 56}} 
+							onPress={() => this.closeModal('opRSS')}
+						/>
+						
+						<View style={Styles.m__opRSS_btn_wrapper}>
+							<TouchableNativeFeedback>
+								<Text 
+									style={Styles.m__opRSS_btn} 
+									onPress={() => this.openModal('addCatVisible')}
+								>
+									Create new category
+								</Text>
+							</TouchableNativeFeedback>
+							<TouchableNativeFeedback>
+								<Text 
+									style={Styles.m__opRSS_btn}
+									onPress={() => this.openModal('addRSSVisible')}
+								>
+									Add new RSS feed
+								</Text>
+							</TouchableNativeFeedback>
+						</View>
+
+						{/* hack so this modal can be closed by clicking everywhere else than buttons */}
+						<TouchableOpacity 
+							style={{height: '100%', backgroundColor: 'rgba(0,0,0,0.55)'}} 
+							activeOpacity={0.95}
+							onPress={() => this.closeModal('opRSS')}
+						/>
+					</View>
+				</Modal>
+
+				<Modal
+					visible={this.state.addCatVisible}
 					animationType={'fade'}
-					onRequestClose={() => this.closeModal()}
+					onRequestClose={() => this.closeModal('addCatVisible')}
 					transparent={true}
 				>
 					<View style={Styles.m__addRSS_wrapper}>
 						<View style={Styles.m__addRSS_container}>
 							<Text style={Styles.m__addRSS_header}>
-								ADD CUSTOM RSS:
+								NEW CATEGORY:
+							</Text>
+							<View style={{alignItems: 'center'}}>
+								<View style={Styles.m__input_wrapper}>
+									<TextInput 
+										onChangeText={(text) => this.setState({customCatName: text})}
+										value={this.state.text}
+										style={Styles.m__input}
+										placeholder="Category Name"
+										selectionColor='#0080B0'
+										underlineColorAndroid="transparent"
+									/>
+								</View>
+								
+								<Text 
+								style={[
+									Styles.m__error,
+									{opacity: this.state.error.length >= 1 ? 1 : 0}
+								]}>
+									{this.state.error}
+								</Text>
+								
+								<View style={Styles.m__btn_wrapper}>
+									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
+										<Text 
+											style={[
+												Styles.m__btn, 
+												{ color: '#000',  opacity: 0.3 }
+											]} 
+											onPress={() => this.closeModal('addCatVisible')}
+										>
+											Cancel
+										</Text>
+									</TouchableNativeFeedback>
+
+									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
+										<Text 
+											style={Styles.m__btn} 
+											onPress={() => this.saveCustomCat()}
+										>
+											Create
+										</Text>
+									</TouchableNativeFeedback>
+								</View>
+							</View>
+						</View>
+					</View>
+				</Modal>
+
+				<Modal
+					visible={this.state.addRSSVisible}
+					animationType={'fade'}
+					onRequestClose={() => this.closeModal('addRSSVisible')}
+					transparent={true}
+				>
+					<View style={Styles.m__addRSS_wrapper}>
+						<View style={Styles.m__addRSS_container}>
+							<Text style={Styles.m__addRSS_header}>
+								ADD RSS FEED:
 							</Text>
 							<View style={{alignItems: 'center'}}>
 								<View style={Styles.m__input_wrapper}>
@@ -195,7 +300,7 @@ export default class ListScreen extends Component {
 												Styles.m__btn, 
 												{ color: '#000',  opacity: 0.3 }
 											]} 
-											onPress={() => this.closeModal()}
+											onPress={() => this.closeModal('addRSSVisible')}
 										>
 											Cancel
 										</Text>
