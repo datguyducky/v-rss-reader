@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import Styles from './style';
 
-
 export default class PubCat extends Component {
 	constructor(props) {
 		super(props);
@@ -77,6 +76,7 @@ export default class PubCat extends Component {
 
 		await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
 		
+		this.props.renderChanges();
 		this.closeModal('renameModalVisible');
 	}
 
@@ -85,7 +85,6 @@ export default class PubCat extends Component {
 		let CAT = this.props.category;
 		let disabled = this.state.disabled;
 		let name = this.props.name;
-
 		return (
 			<View>
 				<View style={[

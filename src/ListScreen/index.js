@@ -37,14 +37,15 @@ export default class ListScreen extends Component {
 					
 				}]
 			}],
-			addRSSVisible: true,
-			opRSS: true,
+			addRSSVisible: false,
+			opRSS: false,
 			addCatVisible: false,
 			error: '',
-			catList: []
+			catList: [],
 		}
+		this.renderChanges = this.renderChanges.bind(this);
 	}
-	
+
 	async componentDidMount() {
 		//const del = await AsyncStorage.removeItem('custom_feeds');
 		this.props.navigation.setParams({
@@ -75,6 +76,18 @@ export default class ListScreen extends Component {
 
 	closeModal(n) {
 		this.setState({[`${n}`]: false});
+	}
+
+	async renderChanges() {
+		let custom = await AsyncStorage.getItem('custom_feeds');
+
+		if (custom !== null) {
+			custom = JSON.parse(custom);
+			//console.log(custom);
+			this.setState({
+				RSS_PUBS: custom
+			});
+		}
 	}
 
 	async saveCustomCat() {
@@ -203,7 +216,6 @@ export default class ListScreen extends Component {
 
 	render() {
 		let catList = this.state.catList;
-
 		return(
 			<View>
 				<FlatList
@@ -213,6 +225,7 @@ export default class ListScreen extends Component {
 						<PubItem
 							category={item.category}
 							c_list={item}
+							renderChanges={this.renderChanges}
 						/> 
 					}
 					keyExtractor={(item, index) => index.toString()}
