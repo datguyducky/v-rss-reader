@@ -60,34 +60,46 @@ export default class ReadScreen extends React.Component {
 		if (custom !== null) {
 			custom = JSON.parse(custom);
 
-			for(let i=0; i<custom.feeds.length; i++) {
-				const R_FEED_URL = custom.feeds[i].url;
-				const CUSTOM_NAME = custom.feeds[i].category;
-				const ID = 'dis' + custom.feeds[i].id;
-				const DISABLE_STATE = await AsyncStorage.getItem(ID);
+			for(let i=0; i<custom.length; i++) {
+				if(custom[i].feeds.length > 0) {
+					let F_CAT = custom[i].category;
+					let catFeeds = custom[i].feeds;
+					
+					for(let j=0; j<catFeeds.length; j++) {
+						const F_ID = `dis${catFeeds[j].id}-${F_CAT}`;
+						const F_NAME = catFeeds[j].name;
+						const F_URL = catFeeds[j].url;
+						const DISABLE_STATE = await AsyncStorage.getItem(F_ID);
 
-				if(DISABLE_STATE === 'false' || DISABLE_STATE === null) {
-					const FEED_RESPONSE = await fetch(R_FEED_URL);
-					const myJson = await FEED_RESPONSE.text();
-					const rss = await rssParser.parse(myJson)
+						if(DISABLE_STATE === 'false' || DISABLE_STATE === null) {
+							const RSS_FETCH = await fetch(F_URL);
+							const FETCH_JSON = await RSS_FETCH.text();
+							const RSS = await rssParser.parse(FETCH_JSON);
 
-					for(let j=0; j<12; j++) {
-						var pubName = rss.title;
-						
-						const C_ITEM = rss.items[j];
-						let re = /[0-9]{2}:/;
-						let pub = C_ITEM.published.split('T')[0];
+							//max 12 news from one feed
+							for(let k=0; k<=10; k++) {
+								const C_ITEM = RSS.items[k];
+								let re = /[0-9]{2}:/;
+								let pub = C_ITEM.published.split('T')[0];
+								re = /[0-9]{2}\ [a-zA-Z]{3}\ [0-9]{4}/;
+								pub = pub.match(re) !== null ? pub.match(re)[0] : pub;
+		
+								let obj = {
+									title: C_ITEM.title,
+									published: pub,
+									url: C_ITEM.links[0].url,
+									publisherName: F_NAME,
+									categories: C_ITEM.categories[0]
+								};
 
-						let obj = {
-							title: C_ITEM.title,
-							published: pub,
-							url: C_ITEM.links[0].url,
-							publisherName: CUSTOM_NAME,
-							categories: C_ITEM.categories[0]
-						};
-						this.setState({
-							feed: [...this.state.feed, obj]
-						});
+								//max 150 total of FeedItem components
+								if(this.state.feed.length <= 150) {
+									this.setState({
+										feed: [...this.state.feed, obj]
+									});
+								}
+							}
+						}
 					}
 				}
 			}

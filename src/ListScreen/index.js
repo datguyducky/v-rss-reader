@@ -15,6 +15,20 @@ export default class ListScreen extends Component {
 	static navigationOptions = ({navigation}) => {
 		return {
 			headerTitle: 'RSS Feeds',
+			headerLeft: () => (
+				<TouchableNativeFeedback>
+					<Icon 
+					name="arrow-left"
+					size={24}
+					onPress={() => {
+						navigation.navigate('Home');
+						//to-do: re-render ReadScreen
+ 					}}
+					style={{padding: 15}}
+					color='#fff'
+					/>
+				</TouchableNativeFeedback>
+			),
 			headerRight: () => (
 				<TouchableNativeFeedback>
 					<Icon 

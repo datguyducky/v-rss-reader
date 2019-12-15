@@ -25,7 +25,7 @@ const RootStack = createStackNavigator(
 		List: ListScreen
 	},
 	{
-		initialRouteName: 'List',
+		initialRouteName: 'Home',
 		/* The header config from HomeScreen is now here */
 		defaultNavigationOptions: {
 			headerStyle: {
