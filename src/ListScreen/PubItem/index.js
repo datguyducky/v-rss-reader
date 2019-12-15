@@ -8,17 +8,25 @@ import Styles from './style';
 export default class PubItem extends Component {
 	render() {
 		let category = this.props.category;
-
+		let categoryList = this.props.c_list.feeds;
+		
 		return (
 			<View style={Styles.publisherWrapper}>
-				{/*<Text style={Styles.publisherWrapperHeader}>
+				<Text style={Styles.publisherWrapperHeader}>
 					{category}
-				</Text>*/}
+				</Text>
 					<View>
-						<PubCat
-							ID = {this.props.id}
-							name = {this.props.name}
-						/>
+						{
+							categoryList.map(o => {
+								return (
+									<PubCat
+										ID = {o.id}
+										name = {o.name}
+									/>
+								)
+							})
+						}
+						
 					</View>
 			</View>
 		)

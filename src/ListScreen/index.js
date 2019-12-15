@@ -32,7 +32,11 @@ export default class ListScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			RSS_PUBS: [],
+			RSS_PUBS: [{
+				feeds: [{
+					
+				}]
+			}],
 			addRSSVisible: true,
 			opRSS: true,
 			addCatVisible: false,
@@ -52,7 +56,7 @@ export default class ListScreen extends Component {
 
 		if (custom !== null) {
 			custom = JSON.parse(custom);
-		
+			//console.log(custom);
 			this.setState({
 				RSS_PUBS: custom
 			});
@@ -122,9 +126,6 @@ export default class ListScreen extends Component {
 		}
 		const RSS_NAME = this.state.customRSSName;
 		const RSS_CAT = this.state.addRSSCat;
-		//console.log(RSS_NAME, RSS_LINK);
-		const LOCAL_ID = this.state.RSS_PUBS;
-		let LOCAL_ID_MAX = LOCAL_ID.length > 0 ? LOCAL_ID[LOCAL_ID.length - 1] : 0 ;
 		
 
 		//checking if user typed name and link of RSS
@@ -140,20 +141,20 @@ export default class ListScreen extends Component {
 				//saving name, link to AsyncStorage
 				else if(RSS_NAME.length <= 20) {
 					const CUSTOM_SAVE = {
-						url: RSS_LINK,
-						name: RSS_NAME,
-						categories: RSS_CAT,
-						id: 0
+						category: RSS_CAT,
+						feeds: [{
+							url: RSS_LINK,
+							name: RSS_NAME,
+							id: 0
+						}]
 					};
 
-					const CUSTOM_LENGTH = async (CUSTOM_SAVE, LOCAL_ID_MAX) => {
+					const CUSTOM_LENGTH = async (CUSTOM_SAVE, RSS_LINK, RSS_NAME) => {
 						//console.log(rss);
 						//const del = await AsyncStorage.removeItem('custom_feeds');
 						const CUSTOM_FEEDS_KEYS = await AsyncStorage.getAllKeys();
 						if(!CUSTOM_FEEDS_KEYS.includes('custom_feeds')) {
 							const LAUNCH_SAVE = [];
-							CUSTOM_SAVE.id = LOCAL_ID_MAX + 1;
-							
 							LAUNCH_SAVE.push(CUSTOM_SAVE);
 							await AsyncStorage.setItem('custom_feeds', JSON.stringify(LAUNCH_SAVE));
 							
@@ -163,15 +164,27 @@ export default class ListScreen extends Component {
 							let c_feeds = await AsyncStorage.getItem('custom_feeds');
 							c_feeds = JSON.parse(c_feeds);
 							
-							let LOCAL_ID = c_feeds[c_feeds.length - 1].id;
-							CUSTOM_SAVE.id = LOCAL_ID + 1;
-							
-							c_feeds.push(CUSTOM_SAVE);
-							await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
-							
-							this.closeModal('addRSSVisible');
+							const CAT_i = c_feeds.findIndex(item => item.category === CUSTOM_SAVE.category);
+							if(CAT_i >= 0) {
+								const toSend = {
+									url: RSS_LINK,
+									name: RSS_NAME,
+									id: c_feeds[CAT_i].feeds.length
+								}
+
+								c_feeds[CAT_i].feeds.push(toSend);
+								console.log(c_feeds[0]);
+								await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+								this.closeModal('addRSSVisible');
+
+							} else {
+								c_feeds.push(CUSTOM_SAVE);
+								await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+								
+								this.closeModal('addRSSVisible');
+							}
 						}
-					}; CUSTOM_LENGTH(CUSTOM_SAVE, LOCAL_ID_MAX);
+					}; CUSTOM_LENGTH(CUSTOM_SAVE, RSS_LINK, RSS_NAME );
 				}
 				else {
 					this.setState({error: 'Sorry, name of feed cannot be longer than 20 characters. '})
@@ -198,11 +211,8 @@ export default class ListScreen extends Component {
 					data = { this.state.RSS_PUBS }
 					renderItem = { ({ item, i }) => 
 						<PubItem
-							key={item.id}
-							id={item.id}
-							name={item.name}
 							category={item.category}
-							feeds={this.state.RSS_PUBS}
+							c_list={item}
 						/> 
 					}
 					keyExtractor={(item, index) => index.toString()}
