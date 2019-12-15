@@ -63,7 +63,7 @@ export default class PubCat extends Component {
 
 		const delDis = await AsyncStorage.removeItem(`dis${ID}`);
 		
-		this.closeModal('renameModalVisible');
+		this.closeModal('deleteModalVisible');
 	}
 
 	async renameCustomRSS() {

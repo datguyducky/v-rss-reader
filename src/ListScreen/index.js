@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { View, Modal, Text, StyleSheet, Button, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, Modal, Text, Picker, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import { TouchableNativeFeedback,  } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
+
 import Icon from 'react-native-vector-icons/Feather';
 
-import PubItem from './PubItem';
+import * as rssParser from 'react-native-rss-parser';
+import AsyncStorage from '@react-native-community/async-storage';
 
+import PubItem from './PubItem';
 import Styles from './style';
+
 
 export default class ListScreen extends Component {
 	static navigationOptions = ({navigation}) => {
@@ -30,16 +33,17 @@ export default class ListScreen extends Component {
 		super(props);
 		this.state = {
 			RSS_PUBS: [],
-			addRSSVisible: false,
-			opRSS: false,
+			addRSSVisible: true,
+			opRSS: true,
 			addCatVisible: false,
 			error: '',
 			RSS_PUBi: [],
+			catList: []
 		}
 	}
 	
 	async componentDidMount() {
-		//const del = await AsyncStorage.removeItem('custom_feeds');
+		//const del = await AsyncStorage.removeItem('catList');
 		this.props.navigation.setParams({
 			openModal: this.openModal.bind(this)
 		});
@@ -54,6 +58,11 @@ export default class ListScreen extends Component {
 			}));
 		}
 
+		let catList = await AsyncStorage.getItem('catList');
+		catList = JSON.parse(catList);
+
+		this.setState({catList: catList})
+
 	}
 
 	openModal(n) {
@@ -64,8 +73,44 @@ export default class ListScreen extends Component {
 		this.setState({[`${n}`]: false});
 	}
 
-	saveCustomCat() {
+	async saveCustomCat() {
+		const CAT_NAME = this.state.customCatName;
+		
+		if(CAT_NAME === undefined || CAT_NAME.length < 4 ) {
+			this.setState({error: 'Sorry, category name must be at least 4 characters long.'})
+		}
+		
+		else {
+			let catList = await AsyncStorage.getItem('catList');
+			catList = JSON.parse(catList);
 
+			//saving first category
+			if (catList === null) {
+				const CAT_SAVE = [{
+					name: CAT_NAME,
+					id: 1,
+				}];
+				
+				await AsyncStorage.setItem('catList', JSON.stringify(CAT_SAVE));
+			}
+			
+			//saving category
+			else {
+				const ID = catList.length;
+				const r = new RegExp('^' + CAT_NAME, 'g');
+				//getting array of objects that starts with..
+				let dupCheck = catList.filter(({name}) => name.match(r));
+				
+				const CAT_SAVE = {
+					name: dupCheck.length > 0 ? CAT_NAME + dupCheck.length : CAT_NAME,
+					id: ID + 1
+				};
+				
+				catList.push(CAT_SAVE);
+				await AsyncStorage.setItem('catList', JSON.stringify(catList));
+				console.log(catList);
+			}
+		}
 	}
 
 	saveCustomRSS() {
@@ -76,12 +121,14 @@ export default class ListScreen extends Component {
 			RSS_LINK = 'http://' + RSS_LINK;
 		}
 		const RSS_NAME = this.state.customRSSName;
+		const RSS_CAT = this.state.addRSSCat;
 		//console.log(RSS_NAME, RSS_LINK);
 		const LOCAL_ID = this.state.RSS_PUBS;
-		let LOCAL_ID_MAX = LOCAL_ID[LOCAL_ID.length - 1].feeds;
-		LOCAL_ID_MAX = LOCAL_ID_MAX[LOCAL_ID_MAX.length - 1].id;
+		let LOCAL_ID_MAX = LOCAL_ID.length > 0 ? LOCAL_ID[LOCAL_ID.length - 1].feeds : 0 ;
+		LOCAL_ID_MAX = LOCAL_ID_MAX !== 0 ? LOCAL_ID_MAX[LOCAL_ID_MAX.length - 1].id : 0;
+
 		//checking if user typed name and link of RSS
-		if(RSS_LINK && RSS_NAME) {
+		if(RSS_LINK && RSS_NAME && RSS_CAT) {
 			fetch(RSS_LINK)
 			.then((response) => response.text())
 			.then((responseData) => rssParser.parse(responseData))
@@ -110,6 +157,8 @@ export default class ListScreen extends Component {
 							
 							LAUNCH_SAVE.feeds.push(CUSTOM_SAVE);
 							await AsyncStorage.setItem('custom_feeds', JSON.stringify(LAUNCH_SAVE));
+							
+							this.closeModal('addRSSVisible');
 						}
 						else {
 							let c_feeds = await AsyncStorage.getItem('custom_feeds');
@@ -120,6 +169,7 @@ export default class ListScreen extends Component {
 							
 							c_feeds.feeds.push(CUSTOM_SAVE);
 							await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+							
 							this.closeModal('addRSSVisible');
 						}
 					}; CUSTOM_LENGTH(CUSTOM_SAVE, LOCAL_ID_MAX);
@@ -129,13 +179,19 @@ export default class ListScreen extends Component {
 				}
 			})
 			.catch(err => {
-				//console.log(err);
+				console.log(err);
 				this.setState({error: 'Please check that link you\'ve provided is a working RSS link.'})
 			});
-		};
+		}
+
+		else {
+			this.setState({error: 'Please provide name and link of RSS feed and make sure that you\'ve selected one of available categories!'})
+		}
 	}
 
 	render() {
+		let catList = this.state.catList;
+
 		return(
 			<View>
 				<FlatList
@@ -283,6 +339,30 @@ export default class ListScreen extends Component {
 										underlineColorAndroid="transparent"
 										autoCapitalize="none"
 									/>
+								</View>
+
+								<View style={{width: '80%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: 14}}>
+									<Text style={{fontSize: 17}}>
+										Category: 
+									</Text>
+
+									<Picker 
+										selectedValue={this.state.addRSSCat}
+										style={{height: 38, width: 140}}
+										onValueChange={(itemValue, itemIndex) =>
+											this.setState({addRSSCat: itemValue})
+										}
+									>
+									{
+										catList !== null ?
+											catList.map((o) => {
+												return (
+													<Picker.Item label={o.name} value={o.name} />
+												)
+											})
+										: null
+									}
+				</Picker>
 								</View>
 								
 								<Text 
