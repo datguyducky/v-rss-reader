@@ -30,7 +30,6 @@ export default class PubCat extends Component {
 		this.setState({
 			disabled: value
 		});
-		//console.log(value);
 	}
 
 	openModal(n) {
@@ -59,6 +58,7 @@ export default class PubCat extends Component {
 		//removing 'disabled' state from AsyncStorage
 		const delDis = await AsyncStorage.removeItem(`dis${ID}-${CAT}`); 
 
+		this.props.renderChanges();
 		this.closeModal('deleteModalVisible');
 	}
 
@@ -75,7 +75,7 @@ export default class PubCat extends Component {
 		c_feeds[CAT_i].feeds[TO_EDIT_i].name = rename;
 
 		await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
-		
+
 		this.props.renderChanges();
 		this.closeModal('renameModalVisible');
 	}

@@ -57,7 +57,6 @@ export default class ListScreen extends Component {
 
 		if (custom !== null) {
 			custom = JSON.parse(custom);
-			//console.log(custom);
 			this.setState({
 				RSS_PUBS: custom
 			});
@@ -65,9 +64,7 @@ export default class ListScreen extends Component {
 
 		let catList = await AsyncStorage.getItem('catList');
 		catList = JSON.parse(catList);
-
 		this.setState({catList: catList})
-
 	}
 
 	openModal(n) {
@@ -88,6 +85,10 @@ export default class ListScreen extends Component {
 				RSS_PUBS: custom
 			});
 		}
+
+		let catList = await AsyncStorage.getItem('catList');
+		catList = JSON.parse(catList);
+		this.setState({catList: catList})
 	}
 
 	async saveCustomCat() {
@@ -105,10 +106,14 @@ export default class ListScreen extends Component {
 			if (catList === null) {
 				const CAT_SAVE = [{
 					name: CAT_NAME,
-					id: 1,
+					id: 0,
 				}];
 				
 				await AsyncStorage.setItem('catList', JSON.stringify(CAT_SAVE));
+
+				this.closeModal('addCatVisible');
+				this.closeModal('opRSS');
+				this.renderChanges();
 			}
 			
 			//saving category
@@ -125,7 +130,10 @@ export default class ListScreen extends Component {
 				
 				catList.push(CAT_SAVE);
 				await AsyncStorage.setItem('catList', JSON.stringify(catList));
-				console.log(catList);
+				
+				this.closeModal('addCatVisible');
+				this.closeModal('opRSS');
+				this.renderChanges();
 			}
 		}
 	}
@@ -163,8 +171,7 @@ export default class ListScreen extends Component {
 					};
 
 					const CUSTOM_LENGTH = async (CUSTOM_SAVE, RSS_LINK, RSS_NAME) => {
-						//console.log(rss);
-						//const del = await AsyncStorage.removeItem('custom_feeds');
+						//await AsyncStorage.removeItem('custom_feeds');
 						const CUSTOM_FEEDS_KEYS = await AsyncStorage.getAllKeys();
 						if(!CUSTOM_FEEDS_KEYS.includes('custom_feeds')) {
 							const LAUNCH_SAVE = [];
@@ -172,6 +179,8 @@ export default class ListScreen extends Component {
 							await AsyncStorage.setItem('custom_feeds', JSON.stringify(LAUNCH_SAVE));
 							
 							this.closeModal('addRSSVisible');
+							this.closeModal('opRSS');
+							this.renderChanges();
 						}
 						else {
 							let c_feeds = await AsyncStorage.getItem('custom_feeds');
@@ -186,15 +195,19 @@ export default class ListScreen extends Component {
 								}
 
 								c_feeds[CAT_i].feeds.push(toSend);
-								console.log(c_feeds[0]);
 								await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+							
 								this.closeModal('addRSSVisible');
+								this.closeModal('opRSS');
+								this.renderChanges();
 
 							} else {
 								c_feeds.push(CUSTOM_SAVE);
 								await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
 								
 								this.closeModal('addRSSVisible');
+								this.closeModal('opRSS');
+								this.renderChanges();
 							}
 						}
 					}; CUSTOM_LENGTH(CUSTOM_SAVE, RSS_LINK, RSS_NAME );
@@ -216,10 +229,11 @@ export default class ListScreen extends Component {
 
 	render() {
 		let catList = this.state.catList;
+
 		return(
 			<View>
 				<FlatList
-					style={{backgroundColor: '#fbfbfb'}}
+					style={{backgroundColor: '#fbfbfb', minHeight: '100%'}}
 					data = { this.state.RSS_PUBS }
 					renderItem = { ({ item, i }) => 
 						<PubItem
@@ -229,7 +243,6 @@ export default class ListScreen extends Component {
 						/> 
 					}
 					keyExtractor={(item, index) => index.toString()}
-					ItemSeparatorComponent = { this.FeedSep }
 				/>
 
 				<Modal
@@ -386,7 +399,7 @@ export default class ListScreen extends Component {
 											})
 										: null
 									}
-				</Picker>
+									</Picker>
 								</View>
 								
 								<Text 
@@ -424,17 +437,6 @@ export default class ListScreen extends Component {
 					</View>
 				</Modal>
 			</View>
-		);
-	}
-
-	FeedSep = () => {
-		return (
-		  	<View
-			style={{
-				marginVertical: 8,
-			  	width: "100%",
-			}}
-		  	/>
 		);
 	}
 }
