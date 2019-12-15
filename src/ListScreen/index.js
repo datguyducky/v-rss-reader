@@ -46,7 +46,7 @@ export default class ListScreen extends Component {
 	}
 	
 	async componentDidMount() {
-		//const del = await AsyncStorage.removeItem('catList');
+		//const del = await AsyncStorage.removeItem('custom_feeds');
 		this.props.navigation.setParams({
 			openModal: this.openModal.bind(this)
 		});

@@ -17,5 +17,14 @@ export default StyleSheet.create({
 		textAlign: 'center', 
 		fontWeight: 'bold', 
 		marginBottom: 6
+	},
+
+	emptyCat: {
+		textAlign: 'center', 
+		opacity: 0.55, 
+		fontSize: 14, 
+		width: '72%', 
+		marginLeft: 'auto',
+		marginRight: 'auto'
 	}
 })

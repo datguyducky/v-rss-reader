@@ -21,10 +21,11 @@ export default class PubCat extends Component {
 
 	async componentDidMount() {
 		const ID = this.props.ID;
-		const value = await AsyncStorage.getItem(`dis${ID}`);
+		const CAT = this.props.category;
+		const value = await AsyncStorage.getItem(`dis${ID}-${CAT}`);
 
 		if(value === null){
-			await AsyncStorage.setItem(`dis${ID}`, 'false');
+			await AsyncStorage.setItem(`dis${ID}-${CAT}`, 'false');
 		}
 
 		this.setState({
@@ -43,34 +44,36 @@ export default class PubCat extends Component {
 
 	async deleteCustomRSS() {
 		const ID = this.props.ID;
+		const CAT = this.props.category;
 
 		let c_feeds = await AsyncStorage.getItem('custom_feeds');
 		c_feeds = JSON.parse(c_feeds);
 
-		//if there's more than 1 custom feed then we need to create copy of feeds array without feed selected by user, and then AsyncStorage set new version of it.
-		if(c_feeds.length > 1) {
-			let newFeeds = c_feeds.filter(e => e.id !== ID);
-			await AsyncStorage.setItem('custom_feeds', JSON.stringify(newFeeds));
-		}
-		//if there's only 1 custom feed then we need to delete whole AsyncStorage of it. Otherwise there's bug that we can't add new custom feed to AsyncStorage.
-		else {
-			const del = await AsyncStorage.removeItem('custom_feeds');
-		}
-		console.log(ID);
-		const delDis = await AsyncStorage.removeItem(`dis${ID}`);
+		//trying to find index of array that have feeds for this category, then we create coppy of that array without feed that we clicked to delete
+		const CAT_i = c_feeds.findIndex(item => item.category === CAT);
+		let newFeeds = c_feeds[CAT_i].feeds.filter(e => e.id !== ID);
+
+		c_feeds[CAT_i].feeds = newFeeds;
 		
+		//saving version of c_feeds without that deleted feed to AsyncStorage
+		await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+		//removing 'disabled' state from AsyncStorage
+		const delDis = await AsyncStorage.removeItem(`dis${ID}-${CAT}`); 
+
 		this.closeModal('deleteModalVisible');
 	}
 
 	async renameCustomRSS() {
 		const ID = this.props.ID;
+		const CAT = this.props.category;
 		const rename = this.state.newCustomRSSName;
 
 		let c_feeds = await AsyncStorage.getItem('custom_feeds');
 		c_feeds = JSON.parse(c_feeds);
 
-		const TO_EDIT_I = c_feeds.findIndex(e => e.id === ID);
-		c_feeds[TO_EDIT_I].name = rename;
+		const CAT_i = c_feeds.findIndex(item => item.category === CAT);
+		const TO_EDIT_i = c_feeds[CAT_i].feeds.findIndex(e => e.id === ID);
+		c_feeds[CAT_i].feeds[TO_EDIT_i].name = rename;
 
 		await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
 		
@@ -79,7 +82,7 @@ export default class PubCat extends Component {
 
 	render() {
 		const ID = this.props.ID;
-		let category = this.props.category;
+		let CAT = this.props.category;
 		let disabled = this.state.disabled;
 		let name = this.props.name;
 
@@ -94,7 +97,7 @@ export default class PubCat extends Component {
 						activeOpacity={0.3}
 						onPress={async () => {
 							let disabled = this.state.disabled === 'false' ? 'true' : 'false';
-							await AsyncStorage.setItem(`dis${ID}`, disabled);
+							await AsyncStorage.setItem(`dis${ID}-${CAT}`, disabled);
 							
 							this.setState({
 								disabled: this.state.disabled === 'false' ? 'true' : 'false'
@@ -131,7 +134,7 @@ export default class PubCat extends Component {
 						activeOpacity={0.3} 
 						onPress={async () => {
 							let disabled = this.state.disabled === 'false' ? 'true' : 'false';
-							await AsyncStorage.setItem(`dis${ID}`, disabled);
+							await AsyncStorage.setItem(`dis${ID}-${CAT}`, disabled);
 							this.setState({
 								disabled: this.state.disabled === 'false' ? 'true' : 'false'
 							})
@@ -160,7 +163,7 @@ export default class PubCat extends Component {
 					<View style={Styles.m__RSS_wrapper}>
 						<View style={Styles.m__RSS_container}>
 							<Text style={Styles.m__RSS_header}>
-								Delete '{category}' feed?
+								Delete '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
 								<Text style={{textAlign: 'center', marginTop: 6}}>
@@ -203,7 +206,7 @@ export default class PubCat extends Component {
 					<View style={Styles.m__RSS_wrapper}>
 						<View style={Styles.m__RSS_container}>
 							<Text style={Styles.m__RSS_header}>
-								Rename '{category}' feed?
+								Rename '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
 								<View style={Styles.m__input_wrapper}>

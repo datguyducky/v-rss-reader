@@ -9,7 +9,7 @@ export default class PubItem extends Component {
 	render() {
 		let category = this.props.category;
 		let categoryList = this.props.c_list.feeds;
-		
+
 		return (
 			<View style={Styles.publisherWrapper}>
 				<Text style={Styles.publisherWrapperHeader}>
@@ -17,14 +17,20 @@ export default class PubItem extends Component {
 				</Text>
 					<View>
 						{
+							categoryList.length > 0 ?
 							categoryList.map(o => {
 								return (
 									<PubCat
 										ID = {o.id}
 										name = {o.name}
+										category = {category}
 									/>
 								)
 							})
+							:
+							<Text style={Styles.emptyCat}>
+								Click '+' button to add new RSS feed to this category. 
+							</Text>
 						}
 						
 					</View>
