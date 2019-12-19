@@ -1,42 +1,72 @@
 import React from 'react';
 import { TouchableNativeFeedback, View, Text, Linking } from 'react-native';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import Styles from './style';
 
 export default class FeedItem extends React.Component {
+	async ClicksCount() {
+		let total = await AsyncStorage.getItem('clicks_count');
+
+		if(total !== null) {
+			total = parseInt(total);
+			total += 1;
+			await AsyncStorage.setItem('clicks_count', total.toString());
+		} else {
+			total = 1;
+			await AsyncStorage.setItem('clicks_count', total.toString());
+		}
+
+		console.log(total);
+	}
+
+	async StreakCount() {
+		let streak = await AsyncStorage.getItem('streak_count');
+		streak = JSON.parse(streak);
+
+		if(streak !== null) {
+			let DAY = new Date(streak.lastDate);
+			let TDAY = new Date();
+			TDAY.setMinutes(TDAY.getMinutes() - TDAY.getTimezoneOffset());
+
+			const DIF = TDAY.getTime() - DAY.getTime();
+			const DIF_DAYS = Math.floor(DIF / (1000 * 3600 * 24));
+
+			streak.lastDate = TDAY;
+
+			if(DIF_DAYS === 1) {
+				streak.streak += 1;
+				//WTF is this lol. When current number of 'streak' is bigger than the one that it's saved in AsyncStorage 'record' then set it 'streak' number, else: do nothing with it.
+				streak.record = streak.streak > streak.record ? streak.streak : streak.record ;
+				await AsyncStorage.setItem('streak_count', JSON.stringify(streak));
+			}
+			else if (DIF_DAYS > 1) {
+				streak.streak = 0;
+				await AsyncStorage.setItem('streak_count', JSON.stringify(streak));
+			}
+
+		} else {
+			let DAY = new Date();
+			DAY.setMinutes(DAY.getMinutes() - DAY.getTimezoneOffset());
+
+			streak = {
+				lastDate: DAY,
+				streak: 0,
+				record: 0
+			}
+
+			await AsyncStorage.setItem('streak_count', JSON.stringify(streak));
+		}
+		console.log(streak.record);
+		//await AsyncStorage.removeItem('streak_count');
+	}
+
+
 	render() {
 		pubName = this.props.pubName;
 		title = this.props.title;
 		published = this.props.published;
-		
-		//Changing publisher names to full, proper ones.
-		if(pubName.includes('The Guardian')) {
-			pubName = 'The Guardian';
-		}
-		else if(pubName.includes('VentureBeat')) {
-			pubName = 'VentureBeat';
-		}
-		else if(pubName.includes('NYT')) {
-			pubName = 'New York Times';
-		}
-		else if(pubName === 'Science and technology') {
-			pubName = 'The Economist';
-		}
-		else if(pubName.includes('New York Post')) {
-			pubName = 'New York Post';
-		}
-		else if(pubName.includes('WSJ.com')) {
-			pubName = 'The Wall Street Journal';
-		}
-		else if(pubName.includes('The Verge')) {
-			pubName = 'The Verge';
-		}
-		else if(pubName.includes('Latest')) {
-			pubName = 'WIRED';
-		}
-		else {
-			pubName = this.props.pubName;
-		} 
 
 		let category = '';
 		let categoriesHolder = this.props.categories;
@@ -53,9 +83,11 @@ export default class FeedItem extends React.Component {
 		return (
 			<TouchableNativeFeedback
 			//onPress open browser with article
-			onPress={() => 
+			onPress={() => {
+				this.StreakCount();
+				this.ClicksCount();
 				Linking.openURL(this.props.url).catch(err => console.error('An error occurred', err))
-			}
+			}}
 			>
 				<View style={Styles.newsCard}>
 					{/* Publisher name and category of article/news */}

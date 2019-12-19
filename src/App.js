@@ -11,8 +11,23 @@ import { createAppContainer } from 'react-navigation';
 import ReadScreen from './ReadScreen';
 import ProfileScreen from './ProfileScreen';
 import ListScreen from './ListScreen';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class App extends React.Component {
+	async componentDidMount() {
+		let launch_date = await AsyncStorage.getItem('launch_date');
+
+		if(launch_date === null) {
+			var LD = new Date();
+			LD.setMinutes(LD.getMinutes() - LD.getTimezoneOffset());
+			LD = LD.toJSON().slice(0, 16).replace('T', ' ');
+
+			await AsyncStorage.setItem('launch_date', LD)
+		}
+
+		let s_darkMode = await AsyncStorage.getItem('s_darkMode');
+	}
+
 	render() {
 	 	return <AppContainer />;
 	}
@@ -25,7 +40,7 @@ const RootStack = createStackNavigator(
 		List: ListScreen
 	},
 	{
-		initialRouteName: 'Home',
+		initialRouteName: 'Profile',
 		/* The header config from HomeScreen is now here */
 		defaultNavigationOptions: {
 			headerStyle: {
@@ -34,7 +49,7 @@ const RootStack = createStackNavigator(
 			headerTintColor: '#fff'
 		},
 	},
-  );
+);
   
 const AppContainer = createAppContainer(RootStack);
   

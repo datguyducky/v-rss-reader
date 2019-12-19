@@ -22,7 +22,7 @@ export default class ListScreen extends Component {
 					size={24}
 					onPress={() => {
 						navigation.navigate('Home');
-						//to-do: re-render ReadScreen
+						//TODO: re-render ReadScreen
  					}}
 					style={{padding: 15}}
 					color='#fff'

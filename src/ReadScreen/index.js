@@ -88,7 +88,7 @@ export default class ReadScreen extends React.Component {
 									title: C_ITEM.title,
 									published: pub,
 									url: C_ITEM.links[0].url,
-									publisherName: F_NAME,
+									publisherName: F_NAME + ' - ' + F_CAT,
 									categories: C_ITEM.categories[0]
 								};
 
