@@ -3,9 +3,9 @@ import { TouchableNativeFeedback, View, Text, Linking } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import Styles from './style';
+import Styles from './read-card-style';
 
-export default class FeedItem extends React.Component {
+export default class ReadCard extends React.Component {
 	async ClicksCount() {
 		let total = await AsyncStorage.getItem('clicks_count');
 

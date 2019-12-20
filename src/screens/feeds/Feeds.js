@@ -8,10 +8,10 @@ import * as rssParser from 'react-native-rss-parser';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import PubItem from './PubItem';
-import Styles from './style';
+import Styles from './feeds-style';
 
 
-export default class ListScreen extends Component {
+export default class Feeds extends Component {
 	static navigationOptions = ({navigation}) => {
 		return {
 			headerTitle: 'RSS Feeds',
@@ -21,7 +21,7 @@ export default class ListScreen extends Component {
 					name="arrow-left"
 					size={24}
 					onPress={() => {
-						navigation.navigate('Home');
+						navigation.navigate('Read');
 						//TODO: re-render ReadScreen
  					}}
 					style={{padding: 15}}

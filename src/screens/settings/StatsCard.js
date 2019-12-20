@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Button } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/Feather';
 
-import Styles from './style';
+import Styles from './stats-card-style';
 import Theme from '../../GlobalStyles/Theme';
 import AsyncStorage from '@react-native-community/async-storage';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 
-export default class ProfileScreen extends Component {
+export default class StatsCard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -37,10 +38,20 @@ export default class ProfileScreen extends Component {
 
 		if(s_feedNews !== null) { this.setState({s_feedNews: s_feedNews}) };
 		if(s_totNews !== null) { this.setState({s_totNews: s_totNews}) }
+		console.log('s_totNews')
 
 
 		let s_darkMode = await AsyncStorage.getItem('s_darkMode');
 		if(s_darkMode !== null) { this.setState({s_darkMode: s_darkMode}) };
+	}
+
+	async saveSet() {
+		console.log('saved');
+		const s_feedNews = this.state.s_feedNews;
+		const s_totNews = this.state.s_totNews;
+
+		await AsyncStorage.setItem('s_feedNews', s_feedNews.toString());
+		await AsyncStorage.setItem('s_totNews', s_totNews.toString());
 	}
 
 	render() {
@@ -51,6 +62,11 @@ export default class ProfileScreen extends Component {
 
 		const color_main = dark_mode === 'false' ? Theme.Light : Theme.Dark;
 		const color_text = dark_mode === 'false' ? Theme.Light_Text : Theme.Dark_Text;
+
+		let s_feedNews = parseInt(this.state.s_feedNews);
+		let s_totNews = parseInt(this.state.s_totNews);
+
+		console.log(s_feedNews)
 		
 
 		return(
@@ -67,15 +83,15 @@ export default class ProfileScreen extends Component {
 							style={{width: '64%', marginLeft: 'auto', marginRight: 'auto'}}
 							minimumValue={1}
 							maximumValue={12}
-							value={this.state.s_feedNews}
+							value={s_feedNews}
 							step={1}
-							onSlidingComplete={value => this.setState({s_feedNews: value})}
+							onValueChange={value => this.setState({s_feedNews: value})}
 							minimumTrackTintColor={dark_mode === 'false' ? '#1575a0' : '#efefef'}
 							maximumTrackTintColor={dark_mode === 'false' ? '#1575a0' : 'gray'}
 							thumbTintColor='#1575a0'
 						/>
 						<Text style={[Styles.set_value, color_text]}>
-							Set to: {this.state.s_feedNews}
+							Set to: {s_feedNews}
 						</Text>
 
 
@@ -86,7 +102,7 @@ export default class ProfileScreen extends Component {
 							style={{width: '80%', marginLeft: 'auto', marginRight: 'auto'}}
 							minimumValue={5}
 							maximumValue={150}
-							value={this.state.s_totNews}
+							value={s_totNews}
 							step={1}
 							onSlidingComplete={value => this.setState({s_totNews: value})}
 							minimumTrackTintColor={dark_mode === 'false' ? '#1575a0' : '#efefef'}
@@ -94,7 +110,7 @@ export default class ProfileScreen extends Component {
 							thumbTintColor='#1575a0'
 						/>
 						<Text style={[Styles.set_value, color_text]}>
-							Set to: {this.state.s_totNews}
+							Set to: {s_totNews}
 						</Text>
 					</View>
 
@@ -120,6 +136,17 @@ export default class ProfileScreen extends Component {
 								<Icon name="square" size={18} style={{color: '#000'}}/>
 						}
 						</TouchableOpacity>
+					</View>
+
+					<View>
+						<TouchableNativeFeedback onPress={() => this.saveSet()}>
+						<Text 
+							style={{fontSize: 21, textAlign: 'right', marginTop:12, marginRight: 16}}
+							
+						>
+							Save
+						</Text>
+						</TouchableNativeFeedback>
 					</View>
 				</View>
 				<View style={Styles.statsWrapper}>

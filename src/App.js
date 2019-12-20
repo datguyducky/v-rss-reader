@@ -2,16 +2,17 @@
  * @format
  * @flow
 */
-
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-//screens
-import ReadScreen from './ReadScreen';
-import ProfileScreen from './ProfileScreen';
-import ListScreen from './ListScreen';
 import AsyncStorage from '@react-native-community/async-storage';
+
+//screens
+import Feeds from './screens/feeds/Feeds';
+import Read from './screens/read/Read';
+import Settings from './screens/settings/Settings'
+
 
 export default class App extends React.Component {
 	async componentDidMount() {
@@ -24,8 +25,6 @@ export default class App extends React.Component {
 
 			await AsyncStorage.setItem('launch_date', LD)
 		}
-
-		let s_darkMode = await AsyncStorage.getItem('s_darkMode');
 	}
 
 	render() {
@@ -35,13 +34,12 @@ export default class App extends React.Component {
 
 const RootStack = createStackNavigator(
 	{
-		Home: ReadScreen,
-		Profile: ProfileScreen,
-		List: ListScreen
+		Read: Read, //home screen
+		Feeds: Feeds,
+		Settings: Settings
 	},
 	{
-		initialRouteName: 'Profile',
-		/* The header config from HomeScreen is now here */
+		initialRouteName: 'Read',
 		defaultNavigationOptions: {
 			headerStyle: {
 				backgroundColor: '#0080B0',

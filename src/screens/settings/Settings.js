@@ -3,10 +3,10 @@ import { View, StatusBar } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import Stats from './Stats';
-import Styles from './style';
+import StatsCard from './StatsCard';
+import Styles from './settings-style';
 
-export default class ProfileScreen extends Component {
+export default class Settings extends Component {
 	constructor(props) {
 		super(props);
 		this.renderChanges = this.renderChanges.bind(this);
@@ -48,7 +48,7 @@ export default class ProfileScreen extends Component {
 			<View style={Styles.settings_wrapper}>
 				<StatusBar backgroundColor={statusBarColor} barStyle="light-content" />
 				
-				<Stats renderChanges={this.renderChanges}/>
+				<StatsCard renderChanges={this.renderChanges}/>
 			</View>
 		);
 	}

@@ -7,9 +7,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import FeedItem from './FeedItem'
+import ReadCard from './ReadCard'
 
-export default class ReadScreen extends React.Component {
+export default class Read extends React.Component {
 	static navigationOptions = ({ navigation }) => {
 		return {
 			//icon on the left of the header. With clickable icon to Profile Screen.
@@ -18,7 +18,7 @@ export default class ReadScreen extends React.Component {
 					<Icon 
 					name="user" 
 					size={24}
-					onPress={() => navigation.navigate('Profile')}
+					onPress={() => navigation.navigate('Settings')}
 					style={{padding: 15}}
 					color="#fff"
 					/>
@@ -37,7 +37,7 @@ export default class ReadScreen extends React.Component {
 					<Icon 
 					name="rss"
 					size={24}
-					onPress={() => navigation.navigate('List')}
+					onPress={() => navigation.navigate('Feeds')}
 					style={{padding: 15}}
 					color='#fff'
 					/>
@@ -56,6 +56,10 @@ export default class ReadScreen extends React.Component {
 
 	async componentDidMount() {
 		let custom = await AsyncStorage.getItem('custom_feeds');
+		let s_feedNews = 10;
+		s_feedNews = await AsyncStorage.getItem('s_feedNews'); //max number of news from one feed
+		let s_totNews = 150;
+		s_totNews = await AsyncStorage.getItem('s_totNews'); //max total number of news
 		
 		if (custom !== null) {
 			custom = JSON.parse(custom);
@@ -76,8 +80,8 @@ export default class ReadScreen extends React.Component {
 							const FETCH_JSON = await RSS_FETCH.text();
 							const RSS = await rssParser.parse(FETCH_JSON);
 
-							//max 12 news from one feed
-							for(let k=0; k<=10; k++) {
+							//max X news from one feed
+							for(let k=0; k<=s_feedNews; k++) {
 								const C_ITEM = RSS.items[k];
 								let re = /[0-9]{2}:/;
 								let pub = C_ITEM.published.split('T')[0];
@@ -93,7 +97,7 @@ export default class ReadScreen extends React.Component {
 								};
 
 								//max 150 total of FeedItem components
-								if(this.state.feed.length <= 150) {
+								if(this.state.feed.length <= s_totNews) {
 									this.setState({
 										feed: [...this.state.feed, obj]
 									});
@@ -117,7 +121,7 @@ export default class ReadScreen extends React.Component {
 				data = { this.state.feed }
 				keyExtractor={(item, index) => index.toString()}
 				renderItem = { ({ item }) => 
-					<FeedItem
+					<ReadCard
 						id={item.id}
 						title={item.title} 
 						url={item.url} 
