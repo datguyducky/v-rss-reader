@@ -38,7 +38,6 @@ export default class StatsCard extends Component {
 
 		if(s_feedNews !== null) { this.setState({s_feedNews: s_feedNews}) };
 		if(s_totNews !== null) { this.setState({s_totNews: s_totNews}) }
-		console.log('s_totNews')
 
 
 		let s_darkMode = await AsyncStorage.getItem('s_darkMode');
@@ -65,9 +64,6 @@ export default class StatsCard extends Component {
 
 		let s_feedNews = parseInt(this.state.s_feedNews);
 		let s_totNews = parseInt(this.state.s_totNews);
-
-		console.log(s_feedNews)
-		
 
 		return(
 			<View style={[color_main, {flex: 1}]}>
@@ -139,10 +135,10 @@ export default class StatsCard extends Component {
 					</View>
 
 					<View>
-						<TouchableNativeFeedback onPress={() => this.saveSet()}>
+						<TouchableNativeFeedback>
 						<Text 
 							style={{fontSize: 21, textAlign: 'right', marginTop:12, marginRight: 16}}
-							
+							onPress={() => this.saveSet()}
 						>
 							Save
 						</Text>

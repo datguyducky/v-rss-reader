@@ -29,6 +29,9 @@ export default class Feeds extends Component {
 					/>
 				</TouchableNativeFeedback>
 			),
+			headerTitleStyle: {
+				fontWeight: 'bold'
+			},
 			headerRight: () => (
 				<TouchableNativeFeedback>
 					<Icon 
@@ -408,7 +411,7 @@ export default class Feeds extends Component {
 										catList !== null ?
 											catList.map((o) => {
 												return (
-													<Picker.Item label={o.name} value={o.name} />
+													<Picker.Item label={o.name} value={o.name} key={o.id}/>
 												)
 											})
 										: null

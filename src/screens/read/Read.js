@@ -56,9 +56,9 @@ export default class Read extends React.Component {
 
 	async componentDidMount() {
 		let custom = await AsyncStorage.getItem('custom_feeds');
-		let s_feedNews = 10;
+		let s_feedNews = 4;
 		s_feedNews = await AsyncStorage.getItem('s_feedNews'); //max number of news from one feed
-		let s_totNews = 150;
+		let s_totNews = 60;
 		s_totNews = await AsyncStorage.getItem('s_totNews'); //max total number of news
 		
 		if (custom !== null) {
@@ -81,7 +81,7 @@ export default class Read extends React.Component {
 							const RSS = await rssParser.parse(FETCH_JSON);
 
 							//max X news from one feed
-							for(let k=0; k<=s_feedNews; k++) {
+							for(let k=0; k<=s_feedNews - 1; k++) {
 								const C_ITEM = RSS.items[k];
 								let re = /[0-9]{2}:/;
 								let pub = C_ITEM.published.split('T')[0];
@@ -97,7 +97,7 @@ export default class Read extends React.Component {
 								};
 
 								//max 150 total of FeedItem components
-								if(this.state.feed.length <= s_totNews) {
+								if(this.state.feed.length <= s_totNews - 1) {
 									this.setState({
 										feed: [...this.state.feed, obj]
 									});

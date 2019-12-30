@@ -17,8 +17,6 @@ export default class ReadCard extends React.Component {
 			total = 1;
 			await AsyncStorage.setItem('clicks_count', total.toString());
 		}
-
-		console.log(total);
 	}
 
 	async StreakCount() {

@@ -62,6 +62,7 @@ export default class PubItem extends Component {
 							categoryList.map(o => {
 								return (
 									<PubCat
+										key = {o.id}
 										ID = {o.id}
 										name = {o.name}
 										category = {category}
