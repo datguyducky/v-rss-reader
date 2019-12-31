@@ -28,8 +28,8 @@ export default class Read extends React.Component {
 			headerTitleStyle: { 
 				flex: 1, 
 				textAlign: 'center',
-				fontWeight: 'bold',
-				textTransform: 'uppercase'
+				textTransform: 'uppercase',
+				fontFamily: 'Muli-ExtraBold'
 			},
 			//icon on the right of the header. With clickable icon to List of RSS Screen
 			headerRight: () => (

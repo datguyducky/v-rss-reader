@@ -39,7 +39,7 @@ const RootStack = createStackNavigator(
 		Settings: Settings
 	},
 	{
-		initialRouteName: 'Read',
+		initialRouteName: 'Feeds',
 		defaultNavigationOptions: {
 			headerStyle: {
 				backgroundColor: '#0080B0',

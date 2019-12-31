@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Modal, Text, Picker, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { View, Modal, Text, Picker, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { TouchableNativeFeedback,  } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -7,8 +7,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import PubItem from './PubItem';
-import Styles from './feeds-style';
+import FeedsCat from './FeedsCat';
 
 
 export default class Feeds extends Component {
@@ -30,7 +29,7 @@ export default class Feeds extends Component {
 				</TouchableNativeFeedback>
 			),
 			headerTitleStyle: {
-				fontWeight: 'bold'
+				fontFamily: 'Muli-ExtraBold'
 			},
 			headerRight: () => (
 				<TouchableNativeFeedback>
@@ -253,7 +252,7 @@ export default class Feeds extends Component {
 					style={{backgroundColor: '#fbfbfb', minHeight: '100%'}}
 					data = { this.state.RSS_PUBS }
 					renderItem = { ({ item, i }) => 
-						<PubItem
+						<FeedsCat
 							category={item.category}
 							c_list={item}
 							renderChanges={this.renderChanges}
@@ -268,28 +267,28 @@ export default class Feeds extends Component {
 					onRequestClose={() => this.closeModal('opRSS')}
 					transparent={true}
 				>
-					<View style={Styles.m__opRSS_wrapper}>
+					<View style={styles.m__opRSS_wrapper}>
 						{/* hack so this modal can be closed by clicking on header */}
 						<TouchableOpacity 
 							style={{height: 56}} 
 							onPress={() => this.closeModal('opRSS')}
 						/>
 						
-						<View style={Styles.m__opRSS_btn_wrapper}>
+						<View style={styles.m__opRSS_btn_wrapper}>
 							<TouchableNativeFeedback>
 								<Text 
-									style={Styles.m__opRSS_btn} 
+									style={styles.m__opRSS_btn} 
 									onPress={() => this.openModal('addCatVisible')}
 								>
-									Create new category
+									New category
 								</Text>
 							</TouchableNativeFeedback>
 							<TouchableNativeFeedback>
 								<Text 
-									style={Styles.m__opRSS_btn}
+									style={styles.m__opRSS_btn}
 									onPress={() => this.openModal('addRSSVisible')}
 								>
-									Add new RSS feed
+									New RSS feed
 								</Text>
 							</TouchableNativeFeedback>
 						</View>
@@ -309,17 +308,17 @@ export default class Feeds extends Component {
 					onRequestClose={() => this.closeModal('addCatVisible')}
 					transparent={true}
 				>
-					<View style={Styles.m__addRSS_wrapper}>
-						<View style={Styles.m__addRSS_container}>
-							<Text style={Styles.m__addRSS_header}>
+					<View style={styles.m__addRSS_wrapper}>
+						<View style={styles.m__addRSS_container}>
+							<Text style={styles.m__addRSS_header}>
 								NEW CATEGORY:
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={Styles.m__input_wrapper}>
+								<View style={styles.m__input_wrapper}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customCatName: text})}
 										value={this.state.text}
-										style={Styles.m__input}
+										style={styles.m__input}
 										placeholder="Category Name"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
@@ -328,17 +327,17 @@ export default class Feeds extends Component {
 								
 								<Text 
 								style={[
-									Styles.m__error,
+									styles.m__error,
 									{opacity: this.state.error.length >= 1 ? 1 : 0}
 								]}>
 									{this.state.error}
 								</Text>
 								
-								<View style={Styles.m__btn_wrapper}>
+								<View style={styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
 											style={[
-												Styles.m__btn, 
+												styles.m__btn, 
 												{ color: '#000',  opacity: 0.3 }
 											]} 
 											onPress={() => this.closeModal('addCatVisible')}
@@ -349,7 +348,7 @@ export default class Feeds extends Component {
 
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
-											style={Styles.m__btn} 
+											style={styles.m__btn} 
 											onPress={() => this.saveCustomCat()}
 										>
 											Create
@@ -367,27 +366,27 @@ export default class Feeds extends Component {
 					onRequestClose={() => this.closeModal('addRSSVisible')}
 					transparent={true}
 				>
-					<View style={Styles.m__addRSS_wrapper}>
-						<View style={Styles.m__addRSS_container}>
-							<Text style={Styles.m__addRSS_header}>
+					<View style={styles.m__addRSS_wrapper}>
+						<View style={styles.m__addRSS_container}>
+							<Text style={styles.m__addRSS_header}>
 								ADD RSS FEED:
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={Styles.m__input_wrapper}>
+								<View style={styles.m__input_wrapper}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSName: text})}
 										value={this.state.text}
-										style={Styles.m__input}
+										style={styles.m__input}
 										placeholder="RSS Name"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
 									/>
 								</View>
-								<View style={Styles.m__input_wrapper}>
+								<View style={styles.m__input_wrapper}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSLink: text})}
 										value={this.state.text}
-										style={Styles.m__input}
+										style={styles.m__input}
 										placeholder="RSS Link"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
@@ -421,17 +420,17 @@ export default class Feeds extends Component {
 								
 								<Text 
 								style={[
-									Styles.m__error,
+									styles.m__error,
 									{opacity: this.state.error.length >= 1 ? 1 : 0}
 								]}>
 									{this.state.error}
 								</Text>
 								
-								<View style={Styles.m__btn_wrapper}>
+								<View style={styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
 											style={[
-												Styles.m__btn, 
+												styles.m__btn, 
 												{ color: '#000',  opacity: 0.3 }
 											]} 
 											onPress={() => this.closeModal('addRSSVisible')}
@@ -442,7 +441,7 @@ export default class Feeds extends Component {
 
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
-											style={Styles.m__btn} 
+											style={styles.m__btn} 
 											onPress={() => this.saveCustomRSS()}
 										>
 											Create
@@ -457,3 +456,89 @@ export default class Feeds extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	//TO DO: change name of class from m_addRSS_* to m_add_*
+	m__addRSS_wrapper: {
+		flex: 1,
+		justifyContent:'center',
+	},
+
+	m__addRSS_container: {
+		width: 280,
+		backgroundColor: '#fff', 
+		alignSelf: 'center',
+		borderRadius: 6,
+		elevation: 4,
+	},
+
+	m__addRSS_header: {
+		fontSize: 21,
+		textAlign: 'center',
+		backgroundColor: '#0080B0',
+		color: '#fff',
+		paddingVertical: 4,
+		borderTopLeftRadius: 6,
+		borderTopRightRadius: 6,
+		fontFamily: 'Muli-ExtraBold'
+	},
+
+	m__input_wrapper: {
+		marginTop: 10, 
+		width: '80%', 
+		borderBottomWidth: 2, 
+		borderBottomColor: '#0080B0'
+	},
+
+	m__input: {
+		height: 36, 
+		width:'100%', 
+		padding: 0, 
+		paddingLeft: 5, 
+		fontSize: 17,
+		fontFamily: 'OpenSans-Regular'
+	},
+
+	m__error: {
+		textAlign: 'center', 
+		color: '#D8000C', 
+		width: '80%',
+		marginTop: 4,
+		fontSize: 12,
+	},
+
+	m__btn_wrapper: {
+		flexDirection: 'row', 
+		marginLeft: 'auto', 
+		marginTop: 8,
+		marginBottom: 10
+	},
+
+	m__btn: {
+		fontSize: 18, 
+		color: '#0080B0', 
+		padding: 4, 
+		marginRight: 8,
+		fontFamily: 'Muli-ExtraBold'
+	},
+
+	//TO DO: change name from m_opRSS to m_subMenu
+	m__opRSS_wrapper: {
+		height: '100%',
+	},
+
+	m__opRSS_btn_wrapper: {
+		backgroundColor: '#1575a0',
+		fontSize: 32,
+		flexDirection: 'row',
+		justifyContent: 'center'
+	},
+
+	m__opRSS_btn: {
+		color: '#fff',
+		fontSize: 15,
+		padding: 12,
+		textTransform: 'uppercase',
+		fontFamily: 'Muli-Light',
+	}
+})

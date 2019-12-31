@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import { Modal, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { Modal, Text, View, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Feather';
 
-import Styles from './style';
-
-export default class PubCat extends Component {
+export default class FeedsCard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -90,7 +88,7 @@ export default class PubCat extends Component {
 		return (
 			<View>
 				<View style={[
-					Styles.publisherCard,
+					styles.publisherCard,
 					{ opacity: disabled === 'true' ? 0.3 : 1 }
 				]}>
 					<TouchableOpacity 
@@ -108,7 +106,8 @@ export default class PubCat extends Component {
 					>
 						<Text style={{
 							flex: 1,
-							fontSize: 21
+							fontSize: 21,
+							fontFamily: 'OpenSans-Regular'
 						}}>
 							{name}
 						</Text>
@@ -162,9 +161,9 @@ export default class PubCat extends Component {
 					onRequestClose={() => this.closeModal('deleteModalVisible')}
 					transparent={true}
 				>
-					<View style={Styles.m__RSS_wrapper}>
-						<View style={Styles.m__RSS_container}>
-							<Text style={Styles.m__RSS_header}>
+					<View style={styles.m__RSS_wrapper}>
+						<View style={styles.m__RSS_container}>
+							<Text style={styles.m__RSS_header}>
 								Delete '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
@@ -172,12 +171,12 @@ export default class PubCat extends Component {
 									Are you sure that you want to delete this feed? You can readd it later. 
 								</Text>
 								
-								<View style={Styles.m__btn_wrapper}>
+								<View style={styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text
 											onPress={() => this.closeModal('deleteModalVisible')}
 											style={[
-												Styles.m__btn,
+												styles.m__btn,
 												{color: '#000', opacity: 0.3}
 											]}
 										>
@@ -186,7 +185,7 @@ export default class PubCat extends Component {
 									</TouchableNativeFeedback>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
-											style={Styles.m__btn} 
+											style={styles.m__btn} 
 											onPress={() => this.deleteCustomRSS()}
 										>
 											Delete
@@ -205,27 +204,27 @@ export default class PubCat extends Component {
 					onRequestClose={() => this.closeModal('renameModalVisible')}
 					transparent={true}
 				>
-					<View style={Styles.m__RSS_wrapper}>
-						<View style={Styles.m__RSS_container}>
-							<Text style={Styles.m__RSS_header}>
+					<View style={styles.m__RSS_wrapper}>
+						<View style={styles.m__RSS_container}>
+							<Text style={styles.m__RSS_header}>
 								Rename '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={Styles.m__input_wrapper}>
+								<View style={styles.m__input_wrapper}>
 									<TextInput 
 										onChangeText={(text) => this.setState({newCustomRSSName: text})}
 										value={this.state.text}
-										style={Styles.m__input}
+										style={styles.m__input}
 										placeholder="New feed name"
 										selectionColor='#0080B0'
 										underlineColorAndroid="transparent"
 									/>
 								</View>
-								<View style={Styles.m__btn_wrapper}>
+								<View style={styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
 											style={[
-												Styles.m__btn,
+												styles.m__btn,
 												{color: '#000', opacity: 0.3}
 											]} 
 											onPress={() => this.closeModal('renameModalVisible')}
@@ -236,7 +235,7 @@ export default class PubCat extends Component {
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
 											style={[
-												Styles.m__btn,
+												styles.m__btn,
 												{color: '#0080B0'}
 											]}
 											onPress={() => this.renameCustomRSS()}
@@ -253,3 +252,67 @@ export default class PubCat extends Component {
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+	publisherCard: {
+		flexDirection: 'row', 
+		alignItems: 'center', 
+		marginVertical: 2,
+	},
+
+	m__RSS_wrapper: {
+		flex: 1,
+		backgroundColor: 'rgba(0, 0, 0, 0.55)',
+		justifyContent:'center',
+	},
+
+	m__RSS_container: {
+		width: 280,
+		backgroundColor: '#fff', 
+		alignSelf: 'center',
+		borderRadius: 6,
+		elevation: 4,
+	},
+
+	m__RSS_header: {
+		fontSize: 21,
+		textAlign: 'center',
+		backgroundColor: '#0080B0',
+		color: '#fff',
+		fontFamily: 'Muli-ExtraBold',
+		paddingVertical: 4,
+		borderTopLeftRadius: 6,
+		borderTopRightRadius: 6	
+	},
+
+	m__btn_wrapper: {
+		flexDirection: 'row', 
+		marginLeft: 'auto', 
+		marginTop: 8,
+		marginBottom: 10
+	},
+
+	m__btn: {
+		fontSize: 18, 
+		fontFamily: 'Muli-ExtraBold',
+		color: '#D8000C', 
+		padding: 4, 
+		marginRight: 8	
+	},
+
+	m__input_wrapper: {
+		marginTop: 10, 
+		width: '80%', 
+		borderBottomWidth: 2, 
+		borderBottomColor: '#0080B0'
+	},
+
+	m__input: {
+		height: 36, 
+		width:'100%', 
+		padding: 0, 
+		paddingLeft: 5, 
+		fontSize: 17,
+		fontFamily: 'OpenSans-Regular'
+	}
+})

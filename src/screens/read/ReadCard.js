@@ -1,9 +1,8 @@
 import React from 'react';
-import { TouchableNativeFeedback, View, Text, Linking } from 'react-native';
+import { TouchableNativeFeedback, View, Text, Linking, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import Styles from './read-card-style';
 
 export default class ReadCard extends React.Component {
 	async ClicksCount() {
@@ -87,17 +86,17 @@ export default class ReadCard extends React.Component {
 				Linking.openURL(this.props.url).catch(err => console.error('An error occurred', err))
 			}}
 			>
-				<View style={Styles.newsCard}>
+				<View style={styles.newsCard}>
 					{/* Publisher name and category of article/news */}
-					<Text style={Styles.newsCardPublisher}>
+					<Text style={styles.newsCardPub}>
 						{pubName + category}
 					</Text>
 					{/* Title of article/news */}
-					<Text style={{fontSize: 24}}>
+					<Text style={styles.newsCardTitle}>
 						{title}
 					</Text>
 					{/* Date of published article/news [eg. 29 Nov 2019] */}
-					<Text style={Styles.newsCardPublished}>
+					<Text style={styles.newsCardDate}>
 						Published at: {published}
 					</Text>
 				</View>
@@ -105,3 +104,33 @@ export default class ReadCard extends React.Component {
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+	newsCard: {
+		backgroundColor: '#fff',
+		paddingVertical: 8,
+		paddingHorizontal: 16,
+		borderBottomWidth: StyleSheet.hairlineWidth,
+		borderBottomColor: 'rgba(156, 156, 156, 0.50)',
+		elevation: 4,
+		width: '100%',
+	},
+
+	newsCardPub: {
+		fontSize: 12, 
+		color: '#0080B0',
+		fontFamily: 'OpenSans-Bold',
+	},
+
+	newsCardTitle: {
+		fontSize: 24,
+		fontFamily: 'OpenSans-Regular',
+	},
+
+	newsCardDate: { 
+		fontSize: 12, 
+		textAlign: 'right', 
+		marginTop: 12,
+		fontFamily: 'OpenSans-Light'
+	}
+})
