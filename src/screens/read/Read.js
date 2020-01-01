@@ -16,8 +16,8 @@ export default class Read extends React.Component {
 			headerLeft: () => (
 				<TouchableHighlight>
 					<Icon 
-					name="user" 
-					size={24}
+					name="settings" 
+					size={22}
 					onPress={() => navigation.navigate('Settings')}
 					style={{padding: 15}}
 					color="#fff"
@@ -36,7 +36,7 @@ export default class Read extends React.Component {
 				<TouchableHighlight>
 					<Icon 
 					name="rss"
-					size={24}
+					size={22}
 					onPress={() => navigation.navigate('Feeds')}
 					style={{padding: 15}}
 					color='#fff'
