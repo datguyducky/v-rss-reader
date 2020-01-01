@@ -176,7 +176,8 @@ const styles = StyleSheet.create({
 		height: 38,
 		width: 38,
 		borderRadius: 38,
-		margin: 6
+		margin: 6,
+		elevation: 4,
 	},
 
 	mode_header: {
