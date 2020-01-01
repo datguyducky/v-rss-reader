@@ -14,6 +14,16 @@ export default class SettingsTheme extends Component {
 		}
 	}
 
+	async componentDidMount() {
+		let color = await AsyncStorage.getItem('themeColor');
+		if(color !== null) { this.setState({color: color}) };
+
+		let mode = await AsyncStorage.getItem('themeMode');
+		if(mode !== null) { this.setState({mode: mode}) };
+	}
+
+	saveColor(c) { AsyncStorage.setItem('themeColor', c) }
+
 	render() {
 		let color = this.state.color;
 		let mode = this.state.mode;
@@ -30,7 +40,8 @@ export default class SettingsTheme extends Component {
 						onPress={() => {
 							this.setState({
 								color: 'orange'
-							})
+							});
+							this.saveColor('orange');
 						}}
 					>
 						<View style={[
@@ -45,7 +56,8 @@ export default class SettingsTheme extends Component {
 						onPress={() => {
 							this.setState({
 								color: 'purple'
-							})
+							});
+							this.saveColor('purple');
 						}}
 					>
 						<View style={[
@@ -61,7 +73,8 @@ export default class SettingsTheme extends Component {
 						onPress={() => {
 							this.setState({
 								color: 'green'
-							})
+							});
+							this.saveColor('green');
 						}}
 					>
 						<View style={[
@@ -76,7 +89,8 @@ export default class SettingsTheme extends Component {
 						onPress={() => {
 							this.setState({
 								color: 'black'
-							})
+							});
+							this.saveColor('black');
 						}}
 					>
 						<View style={[
@@ -91,7 +105,8 @@ export default class SettingsTheme extends Component {
 						onPress={() => {
 							this.setState({
 								color: 'red'
-							})
+							});
+							this.saveColor('red');
 						}}
 					>
 						<View style={[
@@ -106,7 +121,8 @@ export default class SettingsTheme extends Component {
 						onPress={() => {
 							this.setState({
 								color: 'blue'
-							})
+							});
+							this.saveColor('blue');
 						}}
 					>
 						<View style={[
@@ -122,7 +138,8 @@ export default class SettingsTheme extends Component {
 					onPress={() => {
 						this.setState({
 							mode: mode === 'false' ? 'true' : 'false'
-						})
+						});
+						AsyncStorage.setItem('themeMode', mode === 'false' ? 'true' : 'false');
 					}}
 				>
 					<View style={{
