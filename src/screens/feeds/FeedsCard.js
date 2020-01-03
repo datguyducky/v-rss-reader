@@ -83,6 +83,8 @@ export default class FeedsCard extends Component {
 		let CAT = this.props.category;
 		let disabled = this.state.disabled;
 		let name = this.props.name;
+		let themeColor = this.props.themeColor;
+
 
 		return (
 			<View>
@@ -141,13 +143,9 @@ export default class FeedsCard extends Component {
 					>
 					{
 						disabled === 'true' ?
-							<Icon name="square" size={18} 
-								style={{
-									color: disabled === 'true' ? '#000' : '#0080B0'
-								}}
-							/>
+							<Icon name="square" size={18} style={{color: '#000'}}/>
 						:
-							<Icon name="check-square" size={18} style={{color: '#0080B0'}}/>
+							<Icon name="check-square" size={18} style={{color: themeColor}}/>
 					}
 					</TouchableOpacity>
 				</View>
@@ -161,7 +159,7 @@ export default class FeedsCard extends Component {
 				>
 					<View style={styles.m__RSS_wrapper}>
 						<View style={styles.m__RSS_container}>
-							<Text style={styles.m__RSS_header}>
+							<Text style={[styles.m__RSS_header, {backgroundColor: themeColor}]}>
 								Delete '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
@@ -204,17 +202,17 @@ export default class FeedsCard extends Component {
 				>
 					<View style={styles.m__RSS_wrapper}>
 						<View style={styles.m__RSS_container}>
-							<Text style={styles.m__RSS_header}>
+							<Text style={[styles.m__RSS_header,{backgroundColor: themeColor}]}>
 								Rename '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={styles.m__input_wrapper}>
+								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
 									<TextInput 
 										onChangeText={(text) => this.setState({newCustomRSSName: text})}
 										value={this.state.text}
 										style={styles.m__input}
 										placeholder="New feed name"
-										selectionColor='#0080B0'
+										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
 									/>
 								</View>
@@ -234,7 +232,7 @@ export default class FeedsCard extends Component {
 										<Text 
 											style={[
 												styles.m__btn,
-												{color: '#0080B0'}
+												{color: themeColor}
 											]}
 											onPress={() => this.renameCustomRSS()}
 										>

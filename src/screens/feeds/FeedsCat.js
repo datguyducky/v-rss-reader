@@ -42,6 +42,7 @@ export default class FeedsCat extends Component {
 	render() {
 		let category = this.props.category;
 		let categoryList = this.props.c_list.feeds;
+		let themeColor = this.props.themeColor;
 
 
 		return (
@@ -67,6 +68,7 @@ export default class FeedsCat extends Component {
 										name = {o.name}
 										category = {category}
 										renderChanges={this.props.renderChanges}
+										themeColor={themeColor}
 									/>
 								)
 							})
@@ -82,7 +84,7 @@ export default class FeedsCat extends Component {
 				>
 				<View style={styles.m__RSS_wrapper}>
 					<View style={styles.m__RSS_container}>
-						<Text style={styles.m__RSS_header}>
+						<Text style={[styles.m__RSS_header, {backgroundColor: themeColor}]}>
 							Delete '{category}' category?
 						</Text>
 						<View style={{alignItems: 'center'}}>

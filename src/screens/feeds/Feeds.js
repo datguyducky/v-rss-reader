@@ -12,7 +12,6 @@ import FeedsCat from './FeedsCat';
 
 export default class Feeds extends Component {
 	static navigationOptions = (navigation) => {
-		console.log(navigation.screenProps)
 		return {
 			headerTitle: 'RSS Feeds',
 			headerLeft: () => (
@@ -249,6 +248,8 @@ export default class Feeds extends Component {
 
 	render() {
 		let catList = this.state.catList;
+		let themeColor = this.props.screenProps.themeColor;
+
 
 		return(
 			<View>
@@ -260,6 +261,7 @@ export default class Feeds extends Component {
 							category={item.category}
 							c_list={item}
 							renderChanges={this.renderChanges}
+							themeColor={themeColor}
 						/>
 					}
 					keyExtractor={(item, index) => index.toString()}
@@ -278,7 +280,7 @@ export default class Feeds extends Component {
 							onPress={() => this.closeModal('opRSS')}
 						/>
 						
-						<View style={styles.m__opRSS_btn_wrapper}>
+						<View style={[styles.m__opRSS_btn_wrapper, {backgroundColor: themeColor, opacity: 0.95}]}>
 							<TouchableNativeFeedback>
 								<Text 
 									style={styles.m__opRSS_btn} 
@@ -314,17 +316,17 @@ export default class Feeds extends Component {
 				>
 					<View style={styles.m__addRSS_wrapper}>
 						<View style={styles.m__addRSS_container}>
-							<Text style={styles.m__addRSS_header}>
+							<Text style={[styles.m__addRSS_header, {backgroundColor: themeColor}]}>
 								NEW CATEGORY:
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={styles.m__input_wrapper}>
+								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customCatName: text})}
 										value={this.state.text}
 										style={styles.m__input}
 										placeholder="Category Name"
-										selectionColor='#0080B0'
+										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
 									/>
 								</View>
@@ -352,7 +354,7 @@ export default class Feeds extends Component {
 
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
-											style={styles.m__btn} 
+											style={[styles.m__btn, {color: themeColor}]} 
 											onPress={() => this.saveCustomCat()}
 										>
 											Create
@@ -372,27 +374,27 @@ export default class Feeds extends Component {
 				>
 					<View style={styles.m__addRSS_wrapper}>
 						<View style={styles.m__addRSS_container}>
-							<Text style={styles.m__addRSS_header}>
+							<Text style={[styles.m__addRSS_header, {backgroundColor: themeColor}]}>
 								ADD RSS FEED:
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={styles.m__input_wrapper}>
+								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSName: text})}
 										value={this.state.text}
 										style={styles.m__input}
 										placeholder="RSS Name"
-										selectionColor='#0080B0'
+										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
 									/>
 								</View>
-								<View style={styles.m__input_wrapper}>
+								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSLink: text})}
 										value={this.state.text}
 										style={styles.m__input}
 										placeholder="RSS Link"
-										selectionColor='#0080B0'
+										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
 										autoCapitalize="none"
 									/>
@@ -445,7 +447,7 @@ export default class Feeds extends Component {
 
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
-											style={styles.m__btn} 
+											style={[styles.m__btn, {color: themeColor}]} 
 											onPress={() => this.saveCustomRSS()}
 										>
 											Create

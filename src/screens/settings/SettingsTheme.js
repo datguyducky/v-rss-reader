@@ -9,7 +9,7 @@ export default class SettingsTheme extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			color: 'blue',
+			color: '#0080B0',
 			mode: 'false'
 		}
 	}
@@ -39,14 +39,14 @@ export default class SettingsTheme extends Component {
 						activeOpacity={0.65}
 						onPress={() => {
 							this.setState({
-								color: 'orange'
+								color: '#EF820D'
 							});
-							this.saveColor('orange');
+							this.saveColor('#EF820D');
 						}}
 					>
 						<View style={[
 							styles.theme_choice, 
-							{backgroundColor: '#EF820D', opacity: color === 'orange' ? 1 : 0.5 }
+							{backgroundColor: '#EF820D', opacity: color === '#EF820D' ? 1 : 0.5 }
 						]}
 						/>
 					</TouchableOpacity>
@@ -55,14 +55,14 @@ export default class SettingsTheme extends Component {
 						activeOpacity={0.65}
 						onPress={() => {
 							this.setState({
-								color: 'purple'
+								color: '#6D2AFF'
 							});
-							this.saveColor('purple');
+							this.saveColor('#6D2AFF');
 						}}
 					>
 						<View style={[
 							styles.theme_choice, 
-							{backgroundColor: '#6D2AFF', opacity: color === 'purple' ? 1 : 0.5
+							{backgroundColor: '#6D2AFF', opacity: color === '#6D2AFF' ? 1 : 0.5
 						 }
 						]}
 						/>
@@ -72,14 +72,14 @@ export default class SettingsTheme extends Component {
 						activeOpacity={0.65}
 						onPress={() => {
 							this.setState({
-								color: 'green'
+								color: '#4D9762'
 							});
-							this.saveColor('green');
+							this.saveColor('#4D9762');
 						}}
 					>
 						<View style={[
 							styles.theme_choice, 
-							{backgroundColor: '#4D9762', opacity: color === 'green' ? 1 : 0.5 }
+							{backgroundColor: '#4D9762', opacity: color === '#4D9762' ? 1 : 0.5 }
 						]}
 						/>
 					</TouchableOpacity>
@@ -88,14 +88,14 @@ export default class SettingsTheme extends Component {
 						activeOpacity={0.65}
 						onPress={() => {
 							this.setState({
-								color: 'black'
+								color: '#222'
 							});
-							this.saveColor('black');
+							this.saveColor('#222');
 						}}
 					>
 						<View style={[
 							styles.theme_choice, 
-							{backgroundColor: '#222', opacity: color === 'black' ? 1 : 0.5 }
+							{backgroundColor: '#222', opacity: color === '#222' ? 1 : 0.5 }
 						]}
 						/>
 					</TouchableOpacity>
@@ -104,14 +104,14 @@ export default class SettingsTheme extends Component {
 						activeOpacity={0.65}
 						onPress={() => {
 							this.setState({
-								color: 'red'
+								color: '#FF0800'
 							});
-							this.saveColor('red');
+							this.saveColor('#FF0800');
 						}}
 					>
 						<View style={[
 							styles.theme_choice, 
-							{backgroundColor: '#FF0800', opacity: color === 'red' ? 1 : 0.5 }
+							{backgroundColor: '#FF0800', opacity: color === '#FF0800' ? 1 : 0.5 }
 						]}
 						/>
 					</TouchableOpacity>
@@ -120,14 +120,14 @@ export default class SettingsTheme extends Component {
 						activeOpacity={0.65}
 						onPress={() => {
 							this.setState({
-								color: 'blue'
+								color: '#0080B0'
 							});
-							this.saveColor('blue');
+							this.saveColor('#0080B0');
 						}}
 					>
 						<View style={[
 							styles.theme_choice, 
-							{backgroundColor: '#0080B0', opacity: color === 'blue' ? 1 : 0.5 }
+							{backgroundColor: '#0080B0', opacity: color === '#0080B0' ? 1 : 0.5 }
 						]}
 						/>
 					</TouchableOpacity>

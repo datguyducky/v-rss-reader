@@ -19,12 +19,13 @@ export default class Settings extends Component {
 	}
 
 	render() {
+		let themeColor = this.props.screenProps.themeColor;
 
 		return(
 			<View style={{marginTop: 6}}>
-				<SettingsCard />
-				<SettingsTheme />
-				<SettingsStats />
+				<SettingsCard themeColor={themeColor}/>
+				<SettingsTheme themeColor={themeColor}/>
+				<SettingsStats themeColor={themeColor}/>
 			</View>
 		);
 	}

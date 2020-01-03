@@ -77,6 +77,8 @@ export default class ReadCard extends React.Component {
 			category = '';
 		}
 
+		let themeColor = this.props.themeColor;
+
 		return (
 			<TouchableNativeFeedback
 			//onPress open browser with article
@@ -88,7 +90,7 @@ export default class ReadCard extends React.Component {
 			>
 				<View style={styles.newsCard}>
 					{/* Publisher name and category of article/news */}
-					<Text style={styles.newsCardPub}>
+					<Text style={[styles.newsCardPub, {color: themeColor}]}>
 						{pubName + category}
 					</Text>
 					{/* Title of article/news */}
@@ -125,6 +127,7 @@ const styles = StyleSheet.create({
 	newsCardTitle: {
 		fontSize: 24,
 		fontFamily: 'OpenSans-Regular',
+		opacity: 0.75
 	},
 
 	newsCardDate: { 

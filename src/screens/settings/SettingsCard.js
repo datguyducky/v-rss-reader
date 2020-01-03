@@ -26,6 +26,8 @@ export default class SettingsCard extends Component {
 	render() {
 		let s_feedNews = parseInt(this.state.s_feedNews);
 		let s_totNews = parseInt(this.state.s_totNews);
+		let themeColor = this.props.themeColor;
+
 
 		return (
 			<View style={styles.settings_wrapper}>
@@ -43,9 +45,9 @@ export default class SettingsCard extends Component {
 							step={1}
 							onValueChange={v => this.setState({s_feedNews: v})} //displaying selected value
 							onSlidingComplete={v => AsyncStorage.setItem('s_feedNews', v.toString())} //saving changed value
-							minimumTrackTintColor='#1575a0'
+							minimumTrackTintColor={themeColor}
 							maximumTrackTintColor='gray'
-							thumbTintColor='#1575a0'
+							thumbTintColor={themeColor}
 						/>
 						<Text style={styles.set_value}>
 							Value: {s_feedNews}
@@ -64,9 +66,9 @@ export default class SettingsCard extends Component {
 							step={1}
 							onValueChange={v => this.setState({s_totNews: v})}
 							onSlidingComplete={v => AsyncStorage.setItem('s_totNews', v.toString())}
-							minimumTrackTintColor='#1575a0'
+							minimumTrackTintColor={themeColor}
 							maximumTrackTintColor='gray'
-							thumbTintColor='#1575a0'
+							thumbTintColor={themeColor}
 						/>
 						<Text style={styles.set_value}>
 							Value: {s_totNews}

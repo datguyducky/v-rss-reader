@@ -133,10 +133,11 @@ export default class Read extends React.Component {
 						published={item.published}
 						pubName={item.publisherName}
 						categories={item.categories}
+						themeColor={themeColor}
 					/> 
 				}
 				ItemSeparatorComponent = { this.FeedSep }
-				ListFooterComponent = { this.FedBottom }
+				ListFooterComponent = { this.FedBottom(themeColor) }
 				/>
 		  	</SafeAreaView>
 		);
@@ -155,13 +156,13 @@ export default class Read extends React.Component {
 	}
 
 	//only used at the end of FlatList. Empty, blue bar.
-	FedBottom = () => {
+	FedBottom = (themeColor) => {
 		return(
 			<View
 			style={{
 				width: '100%',
 				height: 16,
-				backgroundColor: '#0080B0'
+				backgroundColor: themeColor
 			}}
 			/>
 		)
