@@ -26,14 +26,17 @@ export default class SettingsCard extends Component {
 	render() {
 		let s_feedNews = parseInt(this.state.s_feedNews);
 		let s_totNews = parseInt(this.state.s_totNews);
+		
 		let themeColor = this.props.themeColor;
+		let themeTColor = this.props.themeTColor;
+		let themeBgColor = this.props.themeBgColor;
 
 
 		return (
 			<View style={styles.settings_wrapper}>
-				<Text style={styles.settings_catHeader}>FEED:</Text>
+				<Text style={[styles.settings_catHeader, {color: themeTColor}]}>FEED:</Text>
 				<View>
-					<Text style={styles.set_item}>
+					<Text style={[styles.set_item, {color: themeTColor}]}>
 						Numbers of news per feed (1-12):
 					</Text>
 					<View style={{alignItems: 'center', marginBottom: 18, justifyContent: 'center'}}>
@@ -45,16 +48,16 @@ export default class SettingsCard extends Component {
 							step={1}
 							onValueChange={v => this.setState({s_feedNews: v})} //displaying selected value
 							onSlidingComplete={v => AsyncStorage.setItem('s_feedNews', v.toString())} //saving changed value
-							minimumTrackTintColor={themeColor}
-							maximumTrackTintColor='gray'
-							thumbTintColor={themeColor}
+							minimumTrackTintColor={themeBgColor !== '#222' ? 'gray' : '#fff'}
+							maximumTrackTintColor={themeBgColor !== '#222' ? 'gray' : '#fff'}
+							thumbTintColor={themeBgColor !== '#222' ? themeColor : themeTColor}
 						/>
-						<Text style={styles.set_value}>
+						<Text style={[styles.set_value, {color: themeTColor}]}>
 							Value: {s_feedNews}
 						</Text>
 					</View>
 						
-					<Text style={styles.set_item}>
+					<Text style={[styles.set_item, {color: themeTColor}]}>
 						Acceptable number of news to display:
 					</Text>
 					<View style={{alignItems: 'center', marginBottom: 18, justifyContent: 'center'}}>
@@ -66,11 +69,11 @@ export default class SettingsCard extends Component {
 							step={1}
 							onValueChange={v => this.setState({s_totNews: v})}
 							onSlidingComplete={v => AsyncStorage.setItem('s_totNews', v.toString())}
-							minimumTrackTintColor={themeColor}
-							maximumTrackTintColor='gray'
-							thumbTintColor={themeColor}
+							minimumTrackTintColor={themeBgColor !== '#222' ? 'gray' : '#fff'}
+							maximumTrackTintColor={themeBgColor !== '#222' ? 'gray' : '#fff'}
+							thumbTintColor={themeBgColor !== '#222' ? themeColor : themeTColor}
 						/>
-						<Text style={styles.set_value}>
+						<Text style={[styles.set_value, {color: themeTColor}]}>
 							Value: {s_totNews}
 						</Text>
 					</View>
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		marginBottom: 4,
 		fontFamily: 'OpenSans-Regular',
-		opacity: 0.7,
+		opacity: 0.9,
 		textAlign: 'center'
 	},
 
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
 		textTransform: 'uppercase', 
 		fontSize: 12,
 		fontFamily: 'OpenSans-Bold',
-		opacity: 0.45
+		opacity: 0.8
 	},
 
 	settingsWrapper: {

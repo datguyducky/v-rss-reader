@@ -30,23 +30,26 @@ export default class SettingsStats extends Component {
 		const clicks_count = this.state.clicks_count;
 		const streak_count = this.state.streak_count;
 
+		let themeColor = this.props.themeColor;
+		let themeTColor = this.props.themeTColor;
+
 		return(
 			<View style={{paddingHorizontal: 16, marginTop: 21}}>
-				<Text style={styles.settings_catHeader}> 
+				<Text style={[styles.settings_catHeader, {color: themeTColor}]}> 
 					STATS:
 				</Text>
 				
 				<View>
-					<Text style={styles.stats_item}>
+					<Text style={[styles.stats_item, {color: themeTColor}]}>
 						Total number of news opened: {clicks_count}
 					</Text>
-					<Text style={styles.stats_item}>
+					<Text style={[styles.stats_item, {color: themeTColor}]}>
 						First use of Just News: {"\n"}{launch_date}
 					</Text>
-					<Text style={styles.stats_item}>
+					<Text style={[styles.stats_item, {color: themeTColor}]}>
 						Current reading streak: {streak_count.streak}
 					</Text>
-					<Text style={styles.stats_item}>
+					<Text style={[styles.stats_item, {color: themeTColor}]}>
 						Longest reading streak: {streak_count.record}
 					</Text>
 				</View>
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
 	stats_item: {
 		fontFamily: 'OpenSans-Regular',
 		fontSize: 16,
-		opacity: 0.7,
+		opacity: 0.9,
 		textAlign: 'center'
 	}
 })

@@ -250,11 +250,22 @@ export default class Feeds extends Component {
 		let catList = this.state.catList;
 		let themeColor = this.props.screenProps.themeColor;
 
+		let themeMode = this.props.screenProps.themeMode;
+		let themeBgColor = '#fbfbfb';
+		let themeBgColor2 = '#fff';
+		let themeTColor = '#000';
+
+
+		if(themeMode === 'true') {
+			themeBgColor = '#333';
+			themeBgColor2 = '#222';
+			themeTColor = '#fff'; 
+		};
+
 
 		return(
-			<View>
+			<View style={{backgroundColor: themeBgColor, minHeight: '100%'}}>
 				<FlatList
-					style={{backgroundColor: '#fbfbfb', minHeight: '100%'}}
 					data = { this.state.RSS_PUBS }
 					renderItem = { ({ item, i }) => 
 						<FeedsCat
@@ -262,6 +273,9 @@ export default class Feeds extends Component {
 							c_list={item}
 							renderChanges={this.renderChanges}
 							themeColor={themeColor}
+							themeBgColor={themeBgColor}
+							themeBgColor2={themeBgColor2}
+							themeTColor={themeTColor}
 						/>
 					}
 					keyExtractor={(item, index) => index.toString()}
@@ -315,17 +329,23 @@ export default class Feeds extends Component {
 					transparent={true}
 				>
 					<View style={styles.m__addRSS_wrapper}>
-						<View style={styles.m__addRSS_container}>
+						<View style={[styles.m__addRSS_container, {backgroundColor: themeBgColor}]}>
 							<Text style={[styles.m__addRSS_header, {backgroundColor: themeColor}]}>
 								NEW CATEGORY:
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
+								<View 
+									style={[
+										styles.m__input_wrapper, 
+										{borderBottomColor: themeColor !== '#222' ? themeColor : themeTColor}
+									]}
+								>
 									<TextInput 
+										style={[styles.m__input, {color: themeTColor}]}
 										onChangeText={(text) => this.setState({customCatName: text})}
 										value={this.state.text}
-										style={styles.m__input}
 										placeholder="Category Name"
+										placeholderTextColor={themeTColor}
 										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
 									/>
@@ -344,7 +364,7 @@ export default class Feeds extends Component {
 										<Text 
 											style={[
 												styles.m__btn, 
-												{ color: '#000',  opacity: 0.3 }
+												{ color: themeTColor,  opacity: 0.5 }
 											]} 
 											onPress={() => this.closeModal('addCatVisible')}
 										>
@@ -354,7 +374,10 @@ export default class Feeds extends Component {
 
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
-											style={[styles.m__btn, {color: themeColor}]} 
+											style={[
+												styles.m__btn, 
+												{color: themeColor !== '#222' ? themeColor : themeTColor}
+											]} 
 											onPress={() => this.saveCustomCat()}
 										>
 											Create
@@ -373,26 +396,38 @@ export default class Feeds extends Component {
 					transparent={true}
 				>
 					<View style={styles.m__addRSS_wrapper}>
-						<View style={styles.m__addRSS_container}>
+						<View style={[styles.m__addRSS_container, {backgroundColor: themeBgColor}]}>
 							<Text style={[styles.m__addRSS_header, {backgroundColor: themeColor}]}>
 								ADD RSS FEED:
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
+								<View 
+									style={[
+										styles.m__input_wrapper, 
+										{borderBottomColor: themeColor !== '#222' ? themeColor : themeTColor}
+									]}
+								>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSName: text})}
 										value={this.state.text}
-										style={styles.m__input}
+										style={[styles.m__input, {color: themeTColor}]}
+										placeholderTextColor={themeTColor}
 										placeholder="RSS Name"
 										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
 									/>
 								</View>
-								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
+								<View 
+									style={[
+										styles.m__input_wrapper, 
+										{borderBottomColor: themeColor !== '#222' ? themeColor : themeTColor}
+									]}
+								>
 									<TextInput 
 										onChangeText={(text) => this.setState({customRSSLink: text})}
 										value={this.state.text}
-										style={styles.m__input}
+										style={[styles.m__input, {color: themeTColor}]}
+										placeholderTextColor={themeTColor}
 										placeholder="RSS Link"
 										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
@@ -401,13 +436,13 @@ export default class Feeds extends Component {
 								</View>
 
 								<View style={{width: '80%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: 14}}>
-									<Text style={{fontSize: 17}}>
+									<Text style={{fontSize: 17, color: themeTColor}}>
 										Category: 
 									</Text>
 
 									<Picker 
 										selectedValue={this.state.addRSSCat}
-										style={{height: 38, width: 140}}
+										style={{height: 38, width: 140, color: themeTColor}}
 										onValueChange={(itemValue, itemIndex) =>
 											this.setState({addRSSCat: itemValue})
 										}
@@ -437,7 +472,7 @@ export default class Feeds extends Component {
 										<Text 
 											style={[
 												styles.m__btn, 
-												{ color: '#000',  opacity: 0.3 }
+												{ color: themeTColor,  opacity: 0.5 }
 											]} 
 											onPress={() => this.closeModal('addRSSVisible')}
 										>
@@ -447,7 +482,10 @@ export default class Feeds extends Component {
 
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
-											style={[styles.m__btn, {color: themeColor}]} 
+											style={[
+												styles.m__btn, 
+												{color: themeColor !== '#222' ? themeColor : themeTColor}
+											]} 
 											onPress={() => this.saveCustomRSS()}
 										>
 											Create

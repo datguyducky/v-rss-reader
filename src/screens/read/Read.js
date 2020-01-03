@@ -116,13 +116,26 @@ export default class Read extends React.Component {
 	}
 	render() {
 		let themeColor = this.props.screenProps.themeColor;
+		
+		let themeMode = this.props.screenProps.themeMode;
+		let themeBgColor = '#fbfbfb';
+		let themeTColor = '#000';
+		let themeBgColor2 = '#fff'
+
+		if(themeMode === 'true') {
+			themeBgColor = '#333';
+			themeBgColor2 = '#222';
+			themeTColor = '#fff'; 
+		};
+		
 
 		return (
-			<SafeAreaView style={{backgroundColor: '#fbfbfb'}}>
+			<SafeAreaView style={{backgroundColor: themeBgColor}}>
 				{/* changing status bar of Android to the same color as header */}
 				<StatusBar backgroundColor={themeColor} barStyle="light-content" />
 
 				<FlatList
+				style={{minHeight: '100%'}}
 				data = { this.state.feed }
 				keyExtractor={(item, index) => index.toString()}
 				renderItem = { ({ item }) => 
@@ -134,10 +147,15 @@ export default class Read extends React.Component {
 						pubName={item.publisherName}
 						categories={item.categories}
 						themeColor={themeColor}
+						themeBgColor={themeBgColor}
+						themeBgColor2={themeBgColor2}
+						themeTColor={themeTColor}
 					/> 
 				}
 				ItemSeparatorComponent = { this.FeedSep }
-				ListFooterComponent = { this.FedBottom(themeColor) }
+				contentContainerStyle={{flexGrow: 1}} //using it so footerComponent is always on bottom
+				ListFooterComponentStyle={{flex:1, justifyContent: 'flex-end'}} //using it so footerComponent is always on bottom
+				ListFooterComponent = { this.state.feed.length > 0 ? this.FedBottom(themeColor) : null }
 				/>
 		  	</SafeAreaView>
 		);
@@ -162,7 +180,7 @@ export default class Read extends React.Component {
 			style={{
 				width: '100%',
 				height: 16,
-				backgroundColor: themeColor
+				backgroundColor: themeColor,
 			}}
 			/>
 		)

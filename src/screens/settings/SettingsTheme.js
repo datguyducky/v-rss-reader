@@ -28,9 +28,11 @@ export default class SettingsTheme extends Component {
 		let color = this.state.color;
 		let mode = this.state.mode;
 
+		let themeTColor = this.props.themeTColor;
+
 		return(
 			<View style={{paddingHorizontal: 16}}>
-				<Text style={styles.settings_catHeader}> 
+				<Text style={[styles.settings_catHeader, {color: themeTColor}]}> 
 					THEME:
 				</Text>
 
@@ -135,7 +137,7 @@ export default class SettingsTheme extends Component {
 
 				<TouchableOpacity 
 					activeOpacity={0.55}
-					onPress={() => {
+					onPress={() =>  {
 						this.setState({
 							mode: mode === 'false' ? 'true' : 'false'
 						});
@@ -149,14 +151,30 @@ export default class SettingsTheme extends Component {
 						flexDirection: 'row', 
 						alignItems: 'center'
 					}}>
-						<Text style={styles.mode_header}>
+						<Text 
+							style={[
+								styles.mode_header, 
+								{
+									color: themeTColor,
+									opacity: mode === 'false' ? 0.6 : 1
+								}
+							]}
+						>
 							DARK MODE: 
 						</Text>
 						{
 							mode === 'true' ?
-								<Icon name="check-square" size={18} style={{opacity: 0.7}}/>
+								<Icon 
+									name="check-square" 
+									size={18} 
+									style={{opacity: 0.9, color: themeTColor}}
+								/>
 							:
-								<Icon name="square" size={18} style={{opacity: 0.7}}/>
+								<Icon 
+									name="square" 
+									size={18} 
+									style={{opacity: 0.6, color: themeTColor}}
+								/>
 						}
 						
 					</View>
@@ -183,7 +201,7 @@ const styles = StyleSheet.create({
 	mode_header: {
 		marginRight: 4,
 		fontSize: 16,
-		opacity: 0.7,
+		opacity: 0.9,
 		fontFamily: 'OpenSans-Regular',
 	}
 })

@@ -78,6 +78,8 @@ export default class ReadCard extends React.Component {
 		}
 
 		let themeColor = this.props.themeColor;
+		let themeBgColor2 = this.props.themeBgColor2;
+		let themeTColor = this.props.themeTColor;
 
 		return (
 			<TouchableNativeFeedback
@@ -88,17 +90,21 @@ export default class ReadCard extends React.Component {
 				Linking.openURL(this.props.url).catch(err => console.error('An error occurred', err))
 			}}
 			>
-				<View style={styles.newsCard}>
+				<View style={[styles.newsCard, {backgroundColor: themeBgColor2}]}>
 					{/* Publisher name and category of article/news */}
-					<Text style={[styles.newsCardPub, {color: themeColor}]}>
+					<Text style={[
+						styles.newsCardPub, 
+						{color: themeColor !== '#222' ? themeColor : themeTColor}
+						]}
+					>
 						{pubName + category}
 					</Text>
 					{/* Title of article/news */}
-					<Text style={styles.newsCardTitle}>
+					<Text style={[styles.newsCardTitle, {color: themeTColor}]}>
 						{title}
 					</Text>
 					{/* Date of published article/news [eg. 29 Nov 2019] */}
-					<Text style={styles.newsCardDate}>
+					<Text style={[styles.newsCardDate, {color: themeTColor}]}>
 						Published at: {published}
 					</Text>
 				</View>
@@ -127,7 +133,7 @@ const styles = StyleSheet.create({
 	newsCardTitle: {
 		fontSize: 24,
 		fontFamily: 'OpenSans-Regular',
-		opacity: 0.75
+		opacity: 0.85
 	},
 
 	newsCardDate: { 

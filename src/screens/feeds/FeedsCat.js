@@ -42,16 +42,20 @@ export default class FeedsCat extends Component {
 	render() {
 		let category = this.props.category;
 		let categoryList = this.props.c_list.feeds;
+		
 		let themeColor = this.props.themeColor;
+		let themeBgColor = this.props.themeBgColor;
+		let themeBgColor2 = this.props.themeBgColor2;
+		let themeTColor = this.props.themeTColor;
 
 
 		return (
 			categoryList && category !== undefined ?
 			<View>
-				<View style={styles.publisherWrapper}>
+				<View style={[styles.publisherWrapper, {backgroundColor: themeBgColor2}]}>
 					<TouchableNativeFeedback delayLongPress={6}>
 						<Text 
-							style={styles.publisherWrapperHeader}
+							style={[styles.publisherWrapperHeader, {color: themeTColor}]}
 							onLongPress={() => this.openModal('deleteCat')}
 							
 						>
@@ -69,6 +73,8 @@ export default class FeedsCat extends Component {
 										category = {category}
 										renderChanges={this.props.renderChanges}
 										themeColor={themeColor}
+										themeBgColor={themeBgColor}
+										themeTColor={themeTColor}
 									/>
 								)
 							})
@@ -83,12 +89,12 @@ export default class FeedsCat extends Component {
 					transparent={true}
 				>
 				<View style={styles.m__RSS_wrapper}>
-					<View style={styles.m__RSS_container}>
+					<View style={[styles.m__RSS_container, {backgroundColor: themeBgColor}]}>
 						<Text style={[styles.m__RSS_header, {backgroundColor: themeColor}]}>
 							Delete '{category}' category?
 						</Text>
 						<View style={{alignItems: 'center'}}>
-							<Text style={{textAlign: 'center', marginTop: 6}}>
+							<Text style={{textAlign: 'center', marginTop: 6, color: themeTColor}}>
 								Are you sure that you want to delete this category? You can readd it later. 
 							</Text>
 							
@@ -98,7 +104,7 @@ export default class FeedsCat extends Component {
 										onPress={() => this.closeModal('deleteCat')}
 										style={[
 											styles.m__btn,
-											{color: '#000', opacity: 0.3}
+											{color: themeTColor, opacity: 0.5}
 										]}
 									>
 										Cancel
@@ -119,7 +125,10 @@ export default class FeedsCat extends Component {
 				</Modal>
 			</View>
 			
-			: <Text style={styles.noCat}>Please create new category and add new RSS Feed to it.</Text>
+			: 
+			<Text style={[styles.noCat, {color: themeTColor}]}>
+				Please create new category and add new RSS Feed to it.
+			</Text>
 		)
 	}
 }
@@ -152,7 +161,7 @@ const styles = StyleSheet.create({
 
 	m__RSS_container: {
 		width: 280,
-		backgroundColor: '#fff', 
+		backgroundColor: '#fbfbfb', 
 		alignSelf: 'center',
 		borderRadius: 6,
 		elevation: 4,

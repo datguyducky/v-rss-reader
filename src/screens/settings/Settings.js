@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View } from 'react-native';
 
 import SettingsCard from './SettingsCard';
 import SettingsTheme from './SettingsTheme';
@@ -21,11 +21,31 @@ export default class Settings extends Component {
 	render() {
 		let themeColor = this.props.screenProps.themeColor;
 
+		let themeMode = this.props.screenProps.themeMode;
+		let themeBgColor = '#fbfbfb';
+		let themeTColor = '#000';
+
+		if(themeMode === 'true') {
+			themeBgColor = '#333';
+			themeTColor = '#fff'; 
+		};
+		
+
 		return(
-			<View style={{marginTop: 6}}>
-				<SettingsCard themeColor={themeColor}/>
-				<SettingsTheme themeColor={themeColor}/>
-				<SettingsStats themeColor={themeColor}/>
+			<View style={{paddingTop: 6, backgroundColor: themeBgColor, minHeight: '100%'}}>
+				<SettingsCard 
+					themeColor={themeColor}
+					themeTColor={themeTColor}
+					themeBgColor={themeBgColor}
+				/>
+				<SettingsTheme 
+					themeColor={themeColor}
+					themeTColor={themeTColor}
+				/>
+				<SettingsStats 
+					themeColor={themeColor}
+					themeTColor={themeTColor}
+				/>
 			</View>
 		);
 	}

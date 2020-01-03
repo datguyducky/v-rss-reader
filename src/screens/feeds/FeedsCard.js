@@ -83,7 +83,10 @@ export default class FeedsCard extends Component {
 		let CAT = this.props.category;
 		let disabled = this.state.disabled;
 		let name = this.props.name;
+
 		let themeColor = this.props.themeColor;
+		let themeTColor = this.props.themeTColor;
+		let themeBgColor = this.props.themeBgColor;
 
 
 		return (
@@ -107,7 +110,8 @@ export default class FeedsCard extends Component {
 						<Text style={{
 							flex: 1,
 							fontSize: 21,
-							fontFamily: 'OpenSans-Regular'
+							fontFamily: 'OpenSans-Regular',
+							color: themeTColor
 						}}>
 							{name}
 						</Text>
@@ -116,7 +120,7 @@ export default class FeedsCard extends Component {
 							onPress={() => this.openModal('renameModalVisible')} 
 							activeOpacity={0.3}
 						>
-							<Icon name="edit" size={18} style={{marginRight: 8}}/>
+							<Icon name="edit" size={18} style={{marginRight: 8, color: themeTColor}}/>
 						</TouchableOpacity>
 
 						<TouchableOpacity 
@@ -125,7 +129,7 @@ export default class FeedsCard extends Component {
 						>
 							<Icon name="trash" size={18} 
 								style={{
-									color: disabled === 'true' ? '#000' : '#D8000C', 
+									color: disabled === 'true' ? themeTColor : '#D8000C', 
 									marginRight: 8
 								}}
 							/>
@@ -143,9 +147,15 @@ export default class FeedsCard extends Component {
 					>
 					{
 						disabled === 'true' ?
-							<Icon name="square" size={18} style={{color: '#000'}}/>
+							<Icon name="square" size={18} style={{color: themeTColor}}/>
 						:
-							<Icon name="check-square" size={18} style={{color: themeColor}}/>
+							<Icon 
+								name="check-square" 
+								size={18} 
+								style={{
+									color: themeColor !== '#222' ? themeColor : themeTColor
+								}}
+							/>
 					}
 					</TouchableOpacity>
 				</View>
@@ -158,12 +168,12 @@ export default class FeedsCard extends Component {
 					transparent={true}
 				>
 					<View style={styles.m__RSS_wrapper}>
-						<View style={styles.m__RSS_container}>
+						<View style={[styles.m__RSS_container, {backgroundColor: themeBgColor}]}>
 							<Text style={[styles.m__RSS_header, {backgroundColor: themeColor}]}>
 								Delete '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<Text style={{textAlign: 'center', marginTop: 6}}>
+								<Text style={{textAlign: 'center', marginTop: 6, color: themeTColor}}>
 									Are you sure that you want to delete this feed? You can readd it later. 
 								</Text>
 								
@@ -173,7 +183,7 @@ export default class FeedsCard extends Component {
 											onPress={() => this.closeModal('deleteModalVisible')}
 											style={[
 												styles.m__btn,
-												{color: '#000', opacity: 0.3}
+												{color: themeTColor, opacity: 0.5}
 											]}
 										>
 											Cancel
@@ -201,17 +211,22 @@ export default class FeedsCard extends Component {
 					transparent={true}
 				>
 					<View style={styles.m__RSS_wrapper}>
-						<View style={styles.m__RSS_container}>
+						<View style={[styles.m__RSS_container, {backgroundColor: themeBgColor}]}>
 							<Text style={[styles.m__RSS_header,{backgroundColor: themeColor}]}>
 								Rename '{name}' feed?
 							</Text>
 							<View style={{alignItems: 'center'}}>
-								<View style={[styles.m__input_wrapper, {borderBottomColor: themeColor}]}>
+								<View style={[
+										styles.m__input_wrapper, 
+										{borderBottomColor: themeColor !== '#222' ? themeColor : themeTColor}
+									]}
+								>
 									<TextInput 
 										onChangeText={(text) => this.setState({newCustomRSSName: text})}
 										value={this.state.text}
-										style={styles.m__input}
+										style={[styles.m__input, {color: themeTColor}]}
 										placeholder="New feed name"
+										placeholderTextColor={themeTColor}
 										selectionColor={themeColor}
 										underlineColorAndroid="transparent"
 									/>
@@ -221,7 +236,7 @@ export default class FeedsCard extends Component {
 										<Text 
 											style={[
 												styles.m__btn,
-												{color: '#000', opacity: 0.3}
+												{color: themeTColor, opacity: 0.5}
 											]} 
 											onPress={() => this.closeModal('renameModalVisible')}
 										>
@@ -232,7 +247,7 @@ export default class FeedsCard extends Component {
 										<Text 
 											style={[
 												styles.m__btn,
-												{color: themeColor}
+												{color: themeColor !== '#222' ? themeColor : themeTColor}
 											]}
 											onPress={() => this.renameCustomRSS()}
 										>
@@ -264,7 +279,7 @@ const styles = StyleSheet.create({
 
 	m__RSS_container: {
 		width: 280,
-		backgroundColor: '#fff', 
+		backgroundColor: '#fbfbfb', 
 		alignSelf: 'center',
 		borderRadius: 6,
 		elevation: 4,

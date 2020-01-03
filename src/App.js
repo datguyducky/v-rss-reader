@@ -18,7 +18,8 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			themeColor: '#0080B0'
+			themeColor: '#0080B0',
+			themeMode: 'false'
 		}
 	}
 
@@ -30,15 +31,18 @@ export default class App extends React.Component {
 			LD.setMinutes(LD.getMinutes() - LD.getTimezoneOffset());
 			LD = LD.toJSON().slice(0, 16).replace('T', ' ');
 
-			await AsyncStorage.setItem('launch_date', LD)
+			await AsyncStorage.setItem('launch_date', LD);
 		}
 
-		let themeColor = await AsyncStorage.getItem('themeColor')
-		this.setState({themeColor: themeColor})
+		let themeColor = await AsyncStorage.getItem('themeColor');
+		this.setState({themeColor: themeColor});
+
+		let themeMode = await AsyncStorage.getItem('themeMode');
+		this.setState({themeMode: themeMode});
 	}
 
 	render() {
-	 	return <AppContainer screenProps={{themeColor: this.state.themeColor}}/>;
+	 	return <AppContainer screenProps={{themeColor: this.state.themeColor, themeMode: this.state.themeMode}}/>;
 	}
 }
 
