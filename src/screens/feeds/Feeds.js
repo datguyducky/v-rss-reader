@@ -256,7 +256,7 @@ export default class Feeds extends Component {
 							category={item.category}
 							c_list={item}
 							renderChanges={this.renderChanges}
-						/> 
+						/>
 					}
 					keyExtractor={(item, index) => index.toString()}
 				/>
@@ -505,6 +505,7 @@ const styles = StyleSheet.create({
 		width: '80%',
 		marginTop: 4,
 		fontSize: 12,
+		fontFamily: 'Muli-Bold'
 	},
 
 	m__btn_wrapper: {

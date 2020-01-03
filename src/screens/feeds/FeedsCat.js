@@ -43,8 +43,9 @@ export default class FeedsCat extends Component {
 		let category = this.props.category;
 		let categoryList = this.props.c_list.feeds;
 
+
 		return (
-			categoryList.length > 0 ?
+			categoryList && category !== undefined ?
 			<View>
 				<View style={styles.publisherWrapper}>
 					<TouchableNativeFeedback delayLongPress={6}>
@@ -115,8 +116,8 @@ export default class FeedsCat extends Component {
 				</View>
 				</Modal>
 			</View>
-			: null
 			
+			: <Text style={styles.noCat}>Please create new category and add new RSS Feed to it.</Text>
 		)
 	}
 }
@@ -139,15 +140,6 @@ const styles = StyleSheet.create({
 		textAlign: 'center',  
 		marginBottom: 6,
 		fontFamily: 'Muli-ExtraBold'
-	},
-
-	emptyCat: {
-		textAlign: 'center', 
-		opacity: 0.55, 
-		fontSize: 14, 
-		width: '72%', 
-		marginLeft: 'auto',
-		marginRight: 'auto'
 	},
 
 	m__RSS_wrapper: {
@@ -188,5 +180,15 @@ const styles = StyleSheet.create({
 		color: '#D8000C', 
 		padding: 4, 
 		marginRight: 8	
+	},
+
+	noCat: {
+		fontSize: 17,
+		fontFamily: 'OpenSans-Regular',
+		width: '78%',
+		textAlign: 'center',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		marginTop: 6
 	}
 })
