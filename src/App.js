@@ -15,6 +15,13 @@ import Settings from './screens/settings/Settings'
 
 
 export default class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			themeColor: '#0080B0'
+		}
+	}
+
 	async componentDidMount() {
 		let launch_date = await AsyncStorage.getItem('launch_date');
 
@@ -25,10 +32,13 @@ export default class App extends React.Component {
 
 			await AsyncStorage.setItem('launch_date', LD)
 		}
+
+		let themeColor = await AsyncStorage.getItem('themeColor')
+		this.setState({themeColor: themeColor})
 	}
 
 	render() {
-	 	return <AppContainer />;
+	 	return <AppContainer screenProps={{themeColor: this.state.themeColor}}/>;
 	}
 }
 

@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import ReadCard from './ReadCard'
 
 export default class Read extends React.Component {
-	static navigationOptions = ({ navigation }) => {
+	static navigationOptions = (navigation) => {
 		return {
 			//icon on the left of the header. With clickable icon to Profile Screen.
 			headerLeft: () => (
@@ -18,7 +18,7 @@ export default class Read extends React.Component {
 					<Icon 
 					name="settings" 
 					size={22}
-					onPress={() => navigation.navigate('Settings')}
+					onPress={() => navigation.navigation.navigate('Settings')}
 					style={{padding: 15}}
 					color="#fff"
 					/>
@@ -31,13 +31,16 @@ export default class Read extends React.Component {
 				textTransform: 'uppercase',
 				fontFamily: 'Muli-ExtraBold'
 			},
+			headerStyle: {
+				backgroundColor: navigation.screenProps.themeColor
+			},
 			//icon on the right of the header. With clickable icon to List of RSS Screen
 			headerRight: () => (
 				<TouchableHighlight>
 					<Icon 
 					name="rss"
 					size={22}
-					onPress={() => navigation.navigate('Feeds')}
+					onPress={() => navigation.navigation.navigate('Feeds')}
 					style={{padding: 15}}
 					color='#fff'
 					/>
@@ -112,10 +115,12 @@ export default class Read extends React.Component {
 
 	}
 	render() {
+		let themeColor = this.props.screenProps.themeColor;
+
 		return (
 			<SafeAreaView style={{backgroundColor: '#fbfbfb'}}>
 				{/* changing status bar of Android to the same color as header */}
-				<StatusBar backgroundColor="#0080B0" barStyle="light-content" />
+				<StatusBar backgroundColor={themeColor} barStyle="light-content" />
 
 				<FlatList
 				data = { this.state.feed }

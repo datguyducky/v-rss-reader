@@ -55,7 +55,7 @@ export default class ReadCard extends React.Component {
 
 			await AsyncStorage.setItem('streak_count', JSON.stringify(streak));
 		}
-		console.log(streak.record);
+		//console.log(streak.record);
 		//await AsyncStorage.removeItem('streak_count');
 	}
 

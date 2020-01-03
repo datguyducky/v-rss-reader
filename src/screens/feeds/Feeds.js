@@ -11,7 +11,8 @@ import FeedsCat from './FeedsCat';
 
 
 export default class Feeds extends Component {
-	static navigationOptions = ({navigation}) => {
+	static navigationOptions = (navigation) => {
+		console.log(navigation.screenProps)
 		return {
 			headerTitle: 'RSS Feeds',
 			headerLeft: () => (
@@ -20,7 +21,7 @@ export default class Feeds extends Component {
 					name="arrow-left"
 					size={24}
 					onPress={() => {
-						navigation.navigate('Read');
+						navigation.navigation.navigate('Read');
 						//TODO: re-render ReadScreen
  					}}
 					style={{padding: 15}}
@@ -31,12 +32,15 @@ export default class Feeds extends Component {
 			headerTitleStyle: {
 				fontFamily: 'Muli-ExtraBold'
 			},
+			headerStyle: {
+				backgroundColor: navigation.screenProps.themeColor
+			},
 			headerRight: () => (
 				<TouchableNativeFeedback>
 					<Icon 
 					name="plus"
 					size={24}
-					onPress={() => navigation.state.params.openModal('opRSS')}
+					onPress={() => navigation.navigation.state.params.openModal('opRSS')}
 					style={{padding: 15}}
 					color='#fff'
 					/>

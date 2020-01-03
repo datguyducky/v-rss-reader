@@ -6,20 +6,22 @@ import SettingsTheme from './SettingsTheme';
 import SettingsStats from './SettingsStats';
 
 export default class Settings extends Component {
-	static navigationOptions = () => {
+	static navigationOptions = (navigation) => {
 		return {
 			headerTitle: 'Settings',
 			headerTitleStyle: {
 				fontFamily: 'Muli-ExtraBold'
+			},
+			headerStyle: {
+				backgroundColor: navigation.screenProps.themeColor
 			}
 		}
 	}
 
 	render() {
+
 		return(
 			<View style={{marginTop: 6}}>
-				<StatusBar backgroundColor='#0080B0' barStyle="light-content" />
-
 				<SettingsCard />
 				<SettingsTheme />
 				<SettingsStats />

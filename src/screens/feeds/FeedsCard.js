@@ -20,7 +20,6 @@ export default class FeedsCard extends Component {
 		const ID = this.props.ID;
 		const CAT = this.props.category;
 		const value = await AsyncStorage.getItem(`dis${ID}-${CAT}`);
-		console.log(CAT+ID, value)
 
 		if(value === null){
 			await AsyncStorage.setItem(`dis${ID}-${CAT}`, 'false');
@@ -97,7 +96,6 @@ export default class FeedsCard extends Component {
 						onPress={async () => {
 							let disabled = this.state.disabled === 'false' ? 'true' : 'false';
 							await AsyncStorage.setItem(`dis${ID}-${CAT}`, disabled);
-							console.log(ID, CAT)
 							
 							this.setState({
 								disabled: this.state.disabled === 'false' ? 'true' : 'false'
