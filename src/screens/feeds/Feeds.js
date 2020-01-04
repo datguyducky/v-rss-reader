@@ -205,20 +205,31 @@ export default class Feeds extends Component {
 							let c_feeds = await AsyncStorage.getItem('custom_feeds');
 							c_feeds = JSON.parse(c_feeds);
 							
+							//returns -1 or index of item if it exists in an array
 							const CAT_i = c_feeds.findIndex(item => item.category === CUSTOM_SAVE.category);
 							if(CAT_i >= 0) {
-								const toSend = {
-									url: RSS_LINK,
-									name: RSS_NAME,
-									id: c_feeds[CAT_i].feeds.length
+								//dupCheck returns -1 or index of item if it exists in an array
+								const dupCheck = c_feeds[CAT_i].feeds.findIndex(i => i.name === RSS_NAME);
+								if(dupCheck < 0) {
+									const toSend = {
+										url: RSS_LINK,
+										name: RSS_NAME,
+										id: c_feeds[CAT_i].feeds.length
+									}
+	
+									c_feeds[CAT_i].feeds.push(toSend);
+									await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+								
+									this.closeModal('addRSSVisible');
+									this.closeModal('opRSS');
+									this.setState({error: ''})//resetting error
+									this.renderChanges();
+								} else {
+									this.setState({error: 
+										'Sorry, but you can\'t have names duplicates in the same category.'
+									})//displaying error
 								}
-
-								c_feeds[CAT_i].feeds.push(toSend);
-								await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
-							
-								this.closeModal('addRSSVisible');
-								this.closeModal('opRSS');
-								this.renderChanges();
+								
 
 							} else {
 								c_feeds.push(CUSTOM_SAVE);

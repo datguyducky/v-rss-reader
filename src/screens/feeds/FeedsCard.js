@@ -13,6 +13,7 @@ export default class FeedsCard extends Component {
 			disabled: 'false',
 			deleteModalVisible: false,
 			renameModalVisible: false,
+			error: ''
 		}
 	}
 
@@ -68,14 +69,26 @@ export default class FeedsCard extends Component {
 		let c_feeds = await AsyncStorage.getItem('custom_feeds');
 		c_feeds = JSON.parse(c_feeds);
 
+		//return -1 or index of item if it exists in an array
 		const CAT_i = c_feeds.findIndex(item => item.category === CAT);
-		const TO_EDIT_i = c_feeds[CAT_i].feeds.findIndex(e => e.id === ID);
-		c_feeds[CAT_i].feeds[TO_EDIT_i].name = rename;
-
-		await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
-
-		this.props.renderChanges();
-		this.closeModal('renameModalVisible');
+		
+		const dupCheck = c_feeds[CAT_i].feeds.findIndex(e => e.name === rename);
+		//dupCheck returns -1 or index of item if it exists in an array
+		if(dupCheck < 0) {
+			const TO_EDIT_i = c_feeds[CAT_i].feeds.findIndex(e => e.id === ID);
+			c_feeds[CAT_i].feeds[TO_EDIT_i].name = rename;
+	
+			await AsyncStorage.setItem('custom_feeds', JSON.stringify(c_feeds));
+	
+			this.props.renderChanges();
+			this.closeModal('renameModalVisible');
+			this.setState({error: ''})//resetting error
+		} else {
+			this.setState({error:
+				'Sorry, but you can\'t have names duplicates in the same category.'
+			})//displaying error
+		}
+		
 	}
 
 	render() {
@@ -231,6 +244,14 @@ export default class FeedsCard extends Component {
 										underlineColorAndroid="transparent"
 									/>
 								</View>
+								<Text 
+								style={[
+									styles.m__error,
+									{opacity: this.state.error.length >= 1 ? 1 : 0}
+								]}>
+									{this.state.error}
+								</Text>
+
 								<View style={styles.m__btn_wrapper}>
 									<TouchableNativeFeedback style={{alignSelf: 'flex-end'}}>
 										<Text 
@@ -309,6 +330,15 @@ const styles = StyleSheet.create({
 		color: '#D8000C', 
 		padding: 4, 
 		marginRight: 8	
+	},
+
+	m__error: {
+		textAlign: 'center', 
+		color: '#D8000C', 
+		width: '80%',
+		marginTop: 4,
+		fontSize: 12,
+		fontFamily: 'Muli-Bold'
 	},
 
 	m__input_wrapper: {
