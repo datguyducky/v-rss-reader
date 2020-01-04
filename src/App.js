@@ -35,10 +35,14 @@ export default class App extends React.Component {
 		}
 
 		let themeColor = await AsyncStorage.getItem('themeColor');
-		this.setState({themeColor: themeColor});
+		if(themeColor !== null) {
+			this.setState({themeColor: themeColor});
+		}
 
 		let themeMode = await AsyncStorage.getItem('themeMode');
-		this.setState({themeMode: themeMode});
+		if(themeMode !== null) {
+			this.setState({themeMode: themeMode});
+		}
 	}
 
 	render() {

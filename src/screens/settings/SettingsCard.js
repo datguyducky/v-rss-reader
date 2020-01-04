@@ -9,8 +9,8 @@ export default class SettingsCard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			s_feedNews: 1,
-			s_totNews: 5,
+			s_feedNews: 4,
+			s_totNews: 20,
 		}
 	};
 

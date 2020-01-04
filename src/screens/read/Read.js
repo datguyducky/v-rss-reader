@@ -1,7 +1,9 @@
  // @refresh reset
 
 import React from 'react';
-import { SafeAreaView, TouchableHighlight, FlatList, View, StatusBar } from 'react-native';
+import { SafeAreaView, FlatList, View, StatusBar } from 'react-native';
+import { TouchableNativeFeedback,  } from 'react-native-gesture-handler';
+
 import Icon from 'react-native-vector-icons/Feather';
 
 import * as rssParser from 'react-native-rss-parser';
@@ -9,20 +11,21 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import ReadCard from './ReadCard'
 
+
 export default class Read extends React.Component {
 	static navigationOptions = (navigation) => {
 		return {
 			//icon on the left of the header. With clickable icon to Profile Screen.
 			headerLeft: () => (
-				<TouchableHighlight>
-					<Icon 
+				<TouchableNativeFeedback>
+				<Icon 
 					name="settings" 
-					size={22}
+					size={24}
 					onPress={() => navigation.navigation.navigate('Settings')}
 					style={{padding: 15}}
 					color="#fff"
-					/>
-				</TouchableHighlight>
+				/>
+				</TouchableNativeFeedback>
 			),
 			headerTitle: 'V - RSS Reader',
 			headerTitleStyle: { 
@@ -36,15 +39,15 @@ export default class Read extends React.Component {
 			},
 			//icon on the right of the header. With clickable icon to List of RSS Screen
 			headerRight: () => (
-				<TouchableHighlight>
-					<Icon 
+				<TouchableNativeFeedback>
+				<Icon 
 					name="rss"
-					size={22}
+					size={24}
 					onPress={() => navigation.navigation.navigate('Feeds')}
 					style={{padding: 15}}
 					color='#fff'
-					/>
-				</TouchableHighlight>
+				/>
+				</TouchableNativeFeedback>
 			)
 		};
 	}
@@ -61,8 +64,11 @@ export default class Read extends React.Component {
 		let custom = await AsyncStorage.getItem('custom_feeds');
 		let s_feedNews = 4;
 		s_feedNews = await AsyncStorage.getItem('s_feedNews'); //max number of news from one feed
+		if(s_feedNews === null) {s_feedNews = 4;}
+		
 		let s_totNews = 60;
 		s_totNews = await AsyncStorage.getItem('s_totNews'); //max total number of news
+		if(s_totNews === null) {s_totNews = 20;}
 		
 		if (custom !== null) {
 			custom = JSON.parse(custom);

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { TouchableNativeFeedback,  } from 'react-native-gesture-handler';
+
+import Icon from 'react-native-vector-icons/Feather';
 
 import SettingsCard from './SettingsCard';
 import SettingsTheme from './SettingsTheme';
 import SettingsStats from './SettingsStats';
+
 
 export default class Settings extends Component {
 	static navigationOptions = (navigation) => {
@@ -12,6 +16,17 @@ export default class Settings extends Component {
 			headerTitleStyle: {
 				fontFamily: 'Muli-ExtraBold'
 			},
+			headerLeft: () => (
+				<TouchableNativeFeedback>
+				<Icon 
+					name="arrow-left" 
+					size={24}
+					onPress={() => navigation.navigation.navigate('Read')}
+					style={{padding: 15}}
+					color="#fff"
+				/>
+				</TouchableNativeFeedback>
+			),
 			headerStyle: {
 				backgroundColor: navigation.screenProps.themeColor
 			}
