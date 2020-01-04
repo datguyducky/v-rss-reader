@@ -24,7 +24,7 @@ export default class Read extends React.Component {
 					/>
 				</TouchableHighlight>
 			),
-			headerTitle: 'Just News',
+			headerTitle: 'V - RSS Reader',
 			headerTitleStyle: { 
 				flex: 1, 
 				textAlign: 'center',

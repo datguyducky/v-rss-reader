@@ -1,1 +1,1 @@
-# Just News
+# V - RSS Reader

@@ -44,7 +44,7 @@ export default class SettingsStats extends Component {
 						Total number of news opened: {clicks_count}
 					</Text>
 					<Text style={[styles.stats_item, {color: themeTColor}]}>
-						First use of Just News: {"\n"}{launch_date}
+						First launch of app: {"\n"}{launch_date}
 					</Text>
 					<Text style={[styles.stats_item, {color: themeTColor}]}>
 						Current reading streak: {streak_count.streak}

@@ -1,4 +1,4 @@
-package com.justnews;
+package com.v;
 
 import android.app.Application;
 import android.content.Context;
