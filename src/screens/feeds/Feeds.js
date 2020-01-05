@@ -87,6 +87,7 @@ export default class Feeds extends Component {
 
 	openModal(n) {
 		this.setState({[`${n}`]: true});
+		this.setState({error: ''})//resetting error
 	}
 
 	closeModal(n) {
@@ -221,7 +222,6 @@ export default class Feeds extends Component {
 								
 									this.closeModal('addRSSVisible');
 									this.closeModal('opRSS');
-									this.setState({error: ''})//resetting error
 									this.renderChanges();
 								} else {
 									this.setState({error: 
@@ -274,7 +274,7 @@ export default class Feeds extends Component {
 
 
 		return(
-			<View style={{backgroundColor: 'themeBgColor', flex: 1}}>
+			<View style={{backgroundColor: themeBgColor, flex: 1}}>
 				<FlatList
 					data = { this.state.RSS_PUBS }
 					renderItem = { ({ item, i }) => 

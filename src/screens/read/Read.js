@@ -6,6 +6,8 @@ import { TouchableNativeFeedback,  } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Feather';
 
+import SplashScreen from 'react-native-splash-screen'
+
 import * as rssParser from 'react-native-rss-parser';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -62,6 +64,9 @@ export default class Read extends React.Component {
 	}
 
 	async componentDidMount() {
+		//hiding splash screen when app is fully loaded
+		SplashScreen.hide();
+
 		//fetching RSS feeds on launch and 
 		//also when going back from other screens to this one 
 		//(so new, enabled feeds can be displayed without need to relaunch whole app)

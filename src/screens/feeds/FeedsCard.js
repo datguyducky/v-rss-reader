@@ -33,6 +33,7 @@ export default class FeedsCard extends Component {
 
 	openModal(n) {
 		this.setState({[`${n}`]: true});
+		this.setState({error: ''})//resetting error
 	}
 
 	closeModal(n) {
@@ -82,7 +83,6 @@ export default class FeedsCard extends Component {
 	
 			this.props.renderChanges();
 			this.closeModal('renameModalVisible');
-			this.setState({error: ''})//resetting error
 		} else {
 			this.setState({error:
 				'Sorry, but you can\'t have names duplicates in the same category.'
