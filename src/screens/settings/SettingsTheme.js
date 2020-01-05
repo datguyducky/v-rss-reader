@@ -29,6 +29,7 @@ export default class SettingsTheme extends Component {
 		let mode = this.state.mode;
 
 		let themeTColor = this.props.themeTColor;
+		let themeColor = this.props.themeColor;
 
 		return(
 			<View style={{paddingHorizontal: 16}}>
@@ -176,9 +177,12 @@ export default class SettingsTheme extends Component {
 									style={{opacity: 0.6, color: themeTColor}}
 								/>
 						}
-						
 					</View>
 				</TouchableOpacity>
+
+				<Text style={[styles.note, {color: themeColor === '#222' ? '#fff' : themeColor }]}>
+					Please remember to restart app to apply new theme.
+				</Text>
 			</View>
 		);
 	}
@@ -203,5 +207,13 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		opacity: 0.9,
 		fontFamily: 'OpenSans-Regular',
+	},
+
+	note: {
+		marginTop: 12,
+		textAlign: 'center',
+		fontSize: 16,
+		fontFamily: 'OpenSans-Regular',
+		opacity: 0.72,
 	}
 })

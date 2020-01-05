@@ -1,7 +1,7 @@
  // @refresh reset
 
 import React from 'react';
-import { SafeAreaView, FlatList, View, StatusBar } from 'react-native';
+import { SafeAreaView, FlatList, View, StatusBar, ActivityIndicator } from 'react-native';
 import { TouchableNativeFeedback,  } from 'react-native-gesture-handler';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -56,11 +56,23 @@ export default class Read extends React.Component {
 		super(props);
 		this.state = {
 			feed: [],
-			RSS: []
+			RSS: [],
 		}
+		this.fetchData = this.fetchData.bind(this);
 	}
 
 	async componentDidMount() {
+		//fetching RSS feeds on launch and 
+		//also when going back from other screens to this one 
+		//(so new, enabled feeds can be displayed without need to relaunch whole app)
+		this._navListener = this.props.navigation.addListener(
+			'didFocus', 
+			() => {
+				this.fetchData();
+		});
+	}
+
+	async fetchData() {
 		let custom = await AsyncStorage.getItem('custom_feeds');
 		let s_feedNews = 4;
 		s_feedNews = await AsyncStorage.getItem('s_feedNews'); //max number of news from one feed
@@ -69,9 +81,11 @@ export default class Read extends React.Component {
 		let s_totNews = 60;
 		s_totNews = await AsyncStorage.getItem('s_totNews'); //max total number of news
 		if(s_totNews === null) {s_totNews = 20;}
-		
+
+
 		if (custom !== null) {
 			custom = JSON.parse(custom);
+			this.setState({feed: []}); //resetting feeds list
 
 			for(let i=0; i<custom.length; i++) {
 				if(custom[i].feeds.length > 0) {
@@ -117,9 +131,9 @@ export default class Read extends React.Component {
 				}
 			}
 		}
-
-
 	}
+
+
 	render() {
 		let themeColor = this.props.screenProps.themeColor;
 		
@@ -133,36 +147,45 @@ export default class Read extends React.Component {
 			themeBgColor2 = '#222';
 			themeTColor = '#fff'; 
 		};
-		
+
 
 		return (
-			<SafeAreaView style={{backgroundColor: themeBgColor}}>
+			<SafeAreaView style={{backgroundColor: themeBgColor, flex: 1}}>
 				{/* changing status bar of Android to the same color as header */}
 				<StatusBar backgroundColor={themeColor} barStyle="light-content" />
 
-				<FlatList
-				style={{minHeight: '100%'}}
-				data = { this.state.feed }
-				keyExtractor={(item, index) => index.toString()}
-				renderItem = { ({ item }) => 
-					<ReadCard
-						id={item.id}
-						title={item.title} 
-						url={item.url} 
-						published={item.published}
-						pubName={item.publisherName}
-						categories={item.categories}
-						themeColor={themeColor}
-						themeBgColor={themeBgColor}
-						themeBgColor2={themeBgColor2}
-						themeTColor={themeTColor}
-					/> 
+				{
+				this.state.feed.length > 0 ?
+					<FlatList
+						style={{minHeight: '100%'}}
+						data = { this.state.feed }
+						keyExtractor={(item, index) => index.toString()}
+						renderItem = { ({ item }) => 
+							<ReadCard
+								id={item.id}
+								title={item.title} 
+								url={item.url} 
+								published={item.published}
+								pubName={item.publisherName}
+								categories={item.categories}
+								themeColor={themeColor}
+								themeBgColor={themeBgColor}
+								themeBgColor2={themeBgColor2}
+								themeTColor={themeTColor}
+							/> 
+						}
+						ItemSeparatorComponent = { this.FeedSep }
+						contentContainerStyle={{flexGrow: 1}} //using it so footerComponent is always on bottom
+						ListFooterComponentStyle={{flex:1, justifyContent: 'flex-end'}} //using it so footerComponent is always on bottom
+						ListFooterComponent = { this.state.feed.length > 0 ? this.FedBottom(themeColor) : null }
+					/>
+				:
+					<ActivityIndicator 
+						size="large"
+						color={themeColor === '#222' ? themeTColor : themeColor} 
+						style={{marginTop: 12}} 
+					/>
 				}
-				ItemSeparatorComponent = { this.FeedSep }
-				contentContainerStyle={{flexGrow: 1}} //using it so footerComponent is always on bottom
-				ListFooterComponentStyle={{flex:1, justifyContent: 'flex-end'}} //using it so footerComponent is always on bottom
-				ListFooterComponent = { this.state.feed.length > 0 ? this.FedBottom(themeColor) : null }
-				/>
 		  	</SafeAreaView>
 		);
 	}
@@ -172,7 +195,7 @@ export default class Read extends React.Component {
 		return (
 		  	<View
 			style={{
-				marginVertical: 8,
+				marginVertical: 6,
 			  	width: "100%",
 			}}
 		  	/>

@@ -21,7 +21,6 @@ export default class Feeds extends Component {
 					size={24}
 					onPress={() => {
 						navigation.navigation.navigate('Read');
-						//TODO: re-render ReadScreen
  					}}
 					style={{padding: 15}}
 					color='#fff'
@@ -275,7 +274,7 @@ export default class Feeds extends Component {
 
 
 		return(
-			<View style={{backgroundColor: themeBgColor, minHeight: '100%'}}>
+			<View style={{backgroundColor: 'themeBgColor', flex: 1}}>
 				<FlatList
 					data = { this.state.RSS_PUBS }
 					renderItem = { ({ item, i }) => 
