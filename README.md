@@ -1,6 +1,10 @@
 # V - RSS Reader
 Are you in need to read world news from around the globe, news from your industry or maybe you're just interested in finding how your favourite sport team is doing? With **V** you don't need to follow multiple websites to be up date with every topic that you try to follow - you can have all of them in one place, in **V**.
 
+<p align="center">
+  <img src="./v_blue.png" alt="How this page looks" width="240">
+</p>
+
 ## 📰 What is RSS?
 RSS allows apps (which are called RSS Readers) like **V**, to receive recently added articles, blog posts or podcast episodes from page and then show titles of them (and sometimes other informations too) inside of one single app - without need to visit every website by yourself.
 This allows you to be up to date with every thing that you're interested in via only one app.
