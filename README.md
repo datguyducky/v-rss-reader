@@ -23,7 +23,7 @@ You need to check by yourself if your news website supports it - search for RSS 
 **A** Yes, **V** is completely free.
 
 **Q:** Where I can download it?\
-**A** If you want to use Google Play, [go here]() //TO DO - ADD LATER and if you don't need automatic updates you can download from Github, [here](https://github.com/datguysheepy/v-rss-reader/releases) - *choose v.apk*.
+**A** If you want to use Google Play, [go here](https://play.google.com/store/apps/details?id=com.v) and if you don't need automatic updates you can download app from Github, [here](https://github.com/datguysheepy/v-rss-reader/releases) - *choose v.apk*.
 
 **Q:** How to add RSS feed to app?\
 **A** Click on RSS icon on header, while being on home screen. And then on **+** icon on header.
