@@ -1,19 +1,27 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import { StyleSheet, View, Text } from 'react-native';
+import { 
+	StyleSheet, 
+	View, 
+	Text,
+	TouchableOpacity
+} from 'react-native';
 
 
-const Home = () => {
+const Home = (props) => {
+	const { navigate } = props.navigation;
 	return (
 		<>
 			<View style={styles.HomeWrapper}>
 				<Text style={{color: "#9194A1"}}>
 					Click + button to add first RSS feed.
 				</Text>
-			</View>
 
-			<View style={styles.AddFeed_btn}>
-				<Icon name="plus" size={36} color="#fff"/>
+				<View style={styles.AddFeed_btn} >
+					<TouchableOpacity onPress={() => navigate('NewFeed')}>
+						<Icon name="plus" size={36} color="#fff"/>
+					</TouchableOpacity>
+				</View>
 			</View>
 		</>
 	);
