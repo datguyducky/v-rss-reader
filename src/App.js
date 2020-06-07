@@ -1,72 +1,23 @@
-/**
- * @format
- * @flow
-*/
 import React from 'react';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import { StatusBar } from 'react-native';
+import Home from './screens/Home'; 
 
-import AsyncStorage from '@react-native-community/async-storage';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-//screens
-import Feeds from './screens/feeds/Feeds';
-import Read from './screens/read/Read';
-import Settings from './screens/settings/Settings'
+const Stack = createStackNavigator();
 
+const App = () => {
+  return (
+	<NavigationContainer>
+		<StatusBar barStyle="dark-content" animated={true} backgroundColor="#fff"/>
 
-export default class App extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			themeColor: '#0080B0',
-			themeMode: 'false'
-		}
-	}
-
-	async componentDidMount() {
-		let launch_date = await AsyncStorage.getItem('launch_date');
-
-		if(launch_date === null) {
-			var LD = new Date();
-			LD.setMinutes(LD.getMinutes() - LD.getTimezoneOffset());
-			LD = LD.toJSON().slice(0, 16).replace('T', ' ');
-
-			await AsyncStorage.setItem('launch_date', LD);
-		}
-
-		let themeColor = await AsyncStorage.getItem('themeColor');
-		if(themeColor !== null) {
-			this.setState({themeColor: themeColor});
-		}
-
-		let themeMode = await AsyncStorage.getItem('themeMode');
-		if(themeMode !== null) {
-			this.setState({themeMode: themeMode});
-		}
-	}
-
-	render() {
-	 	return <AppContainer screenProps={{themeColor: this.state.themeColor, themeMode: this.state.themeMode}}/>;
-	}
-}
-
-const RootStack = createStackNavigator(
-	{
-		Read: Read, //home screen
-		Feeds: Feeds,
-		Settings: Settings
-	},
-	{
-		initialRouteName: 'Read',
-		defaultNavigationOptions: {
-			headerStyle: {
-				backgroundColor: '#0080B0',
-			},
-			headerTintColor: '#fff'
-		},
-	},
-);
+		<Stack.Navigator>
+        	<Stack.Screen name="Home" component={Home} />
+      	</Stack.Navigator>
+	</NavigationContainer>
+  );
   
-const AppContainer = createAppContainer(RootStack);
-  
-  
+}; export default App;
