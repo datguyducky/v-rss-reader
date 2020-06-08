@@ -20,7 +20,6 @@ import Settings from './screens/Settings';
 import NewFeed from './screens/NewFeed';
 // end of screens
 
-import Icon from 'react-native-vector-icons/Feather';
 import PopupMenu from './components/PopupMenu';
 const Stack = createStackNavigator();
 
@@ -52,7 +51,7 @@ const App = () => {
 						fontWeight: '600',
 					}
 				}}
-				initialRouteName='Home'
+				initialRouteName='NewCat'
 			>
 				<Stack.Screen 
 					name='Home' 
@@ -66,7 +65,8 @@ const App = () => {
 									'About',
 									'Settings'
 								]} 
-								onPress={PopupHandler} />
+								onPress={PopupHandler} 
+							/>
 						),
 					}}
 				/>
@@ -79,9 +79,6 @@ const App = () => {
 						headerStyle: {
 							elevation: 0
 						},
-						headerRight: () => (
-							<Icon name='check' size={24}/>
-						),
 						headerRightContainerStyle: {
 							paddingRight: 12
 						}
@@ -112,11 +109,8 @@ const App = () => {
 						headerStyle: {
 							elevation: 0
 						},
-						headerRight: () => (
-							<Icon name='check' size={24}/>
-						),
 						headerRightContainerStyle: {
-							paddingRight: 12
+							paddingRight: 6
 						}
 					}}
 				/>
