@@ -30,7 +30,7 @@ const NewCategory = (props) => {
 							<Icon name='check' size={24}/>
 						</View>
 					</TouchableNativeFeedback>
-			</View>
+				</View>
 			)
 		})
 	})

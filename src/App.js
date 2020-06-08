@@ -51,7 +51,7 @@ const App = () => {
 						fontWeight: '600',
 					}
 				}}
-				initialRouteName='NewCat'
+				initialRouteName='Home'
 			>
 				<Stack.Screen 
 					name='Home' 
@@ -80,7 +80,7 @@ const App = () => {
 							elevation: 0
 						},
 						headerRightContainerStyle: {
-							paddingRight: 12
+							paddingRight: 4
 						}
 					}}
 				/>
@@ -110,7 +110,7 @@ const App = () => {
 							elevation: 0
 						},
 						headerRightContainerStyle: {
-							paddingRight: 6
+							paddingRight: 4
 						}
 					}}
 				/>
