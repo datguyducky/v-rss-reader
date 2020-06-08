@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
 	StyleSheet, 
 	View, 
 	Text, 
 	TextInput,
+	TouchableNativeFeedback,
 	TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
@@ -11,6 +12,35 @@ import Icon from 'react-native-vector-icons/Feather';
 
 const NewCategory = (props) => {
 	const { navigate } = props.navigation;
+	const [catName, set_catName] = useState('');
+
+	
+	React.useLayoutEffect(() => {
+		props.navigation.setOptions({
+			headerRight: () => (
+				// welcome to React Native, where you need to use two <View/> components and 
+				// style one of them with: 'overflow: hidden'
+				// just to make bordeRadius work properly with TouchableNativeFeedback
+				<View style={{padding: 8, borderRadius: 32, overflow: 'hidden'}}>
+					<TouchableNativeFeedback 
+						onPress={saveCategoryHandler}
+						background={TouchableNativeFeedback.Ripple('#555', true)}
+					>
+						<View>
+							<Icon name='check' size={24}/>
+						</View>
+					</TouchableNativeFeedback>
+			</View>
+			)
+		})
+	})
+
+
+	const saveCategoryHandler = () => {
+		console.log(catName);
+	}
+
+
 	return (
 		<View style={styles.NewCatWrapper}>
 			<View style={{
@@ -24,6 +54,8 @@ const NewCategory = (props) => {
 					style={styles.NewCat__input}
 					placeholder='Category name'
 					placeholderTextColor='#9194A1'
+					onChangeText={name => set_catName(name)}
+					value={catName}
 				/>
 			</View>
 
