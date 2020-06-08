@@ -4,7 +4,8 @@ import {
 	StyleSheet, 
 	View, 
 	Text,
-	TouchableOpacity
+	TouchableOpacity,
+	TouchableNativeFeedback
 } from 'react-native';
 
 
@@ -18,9 +19,14 @@ const Home = (props) => {
 				</Text>
 
 				<View style={styles.AddFeed_btn} >
-					<TouchableOpacity onPress={() => navigate('NewFeed')}>
-						<Icon name="plus" size={36} color="#fff"/>
-					</TouchableOpacity>
+					<TouchableNativeFeedback 
+						onPress={() => navigate('NewFeed') }
+						background={TouchableNativeFeedback.Ripple('#555', true)}
+					>
+						<View>
+							<Icon name="plus" size={36} color="#fff"/>
+						</View>
+					</TouchableNativeFeedback>
 				</View>
 			</View>
 		</>
@@ -43,6 +49,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 56,
+		overflow: 'hidden',
 		margin: 16,
 		backgroundColor: '#0080B0',
 		position: 'absolute',

@@ -5,7 +5,7 @@ import {
 	View, 
 	UIManager, 
 	findNodeHandle, 
-	TouchableOpacity 
+	TouchableNativeFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -44,14 +44,19 @@ export default class PopupMenu extends React.Component {
 
 	render () {
 		return (
-			<View>
-				<TouchableOpacity onPress={this.onPress} activeOpacity={0.6} style={{paddingHorizontal: 6}}>
-					<Icon
-						name='more-vertical'
-						size={ICON_SIZE}
-						ref="menu" 
-					/>
-				</TouchableOpacity>
+			<View style={{padding: 8, borderRadius: 32, overflow: 'hidden'}}>
+				<TouchableNativeFeedback 
+					onPress={this.onPress}
+					background={TouchableNativeFeedback.Ripple('#555', true)}
+				>
+					<View>
+						<Icon
+							name='more-vertical'
+							size={ICON_SIZE}
+							ref="menu" 
+						/>
+					</View>
+				</TouchableNativeFeedback>
 			</View>
 		)
 	}
