@@ -4,7 +4,6 @@ import {
 	StyleSheet, 
 	View, 
 	Text,
-	TouchableOpacity,
 	TouchableNativeFeedback
 } from 'react-native';
 
@@ -55,6 +54,6 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 0,
 		right: 0,
-		
+		elevation: 5
 	},
 });
