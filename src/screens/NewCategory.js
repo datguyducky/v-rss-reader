@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
@@ -8,11 +8,17 @@ import {
 	TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import CreatedFeed from '../components/CreatedFeed';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 const NewCategory = (props) => {
 	const { navigate } = props.navigation;
 	const [catName, set_catName] = useState('');
+	const [catError, set_catError] = useState('');
+	const [catList, set_catList] = useState([]);
+	const [catFeed, set_catFeed] = useState([]);
 
 	
 	React.useLayoutEffect(() => {
@@ -36,30 +42,79 @@ const NewCategory = (props) => {
 	})
 
 
+	useEffect(() => {
+		// here, we're getting saved categories from AsyncStorage 
+		// and storing them in state for a later use
+		const getSavedCategories = async () => {
+			let result = await AsyncStorage.getItem('user_categories');
+			result = JSON.parse(result);
+	
+			if(result !== null) {
+				set_catList(result);
+			}
+		}; getSavedCategories();
+	}, [catList])
+
+
+	useEffect(() => {
+		// updating catFeed state with new feed that was added in 'NewFeed' screen
+		if(props.route.params?.catFeed) {
+			set_catFeed(catFeed => [...catFeed, props.route.params.catFeed]);
+		}
+	}, [props.route.params?.catFeed])
+
+
 	const saveCategoryHandler = () => {
-		console.log(catName);
+		if(catName.length <= 0) {
+			set_catError('Category name must be at least 1 character long');
+			return
+		}
+
+		if(catName.length > 32) {
+			set_catError('Category name cannot be longer than 32 characters');
+			set_catName('');
+			return
+		}
+
+		console.log(catFeed);
+		// TODO: finish saving category with feeds to AsyncStorage
+		//navigate('Home')
 	}
 
 
 	return (
 		<View style={styles.NewCatWrapper}>
-			<View style={{
-				borderBottomWidth: 1, 
-				borderBottomColor: '#CFD0D3',
-				marginBottom: 12
-			}}>
-				<TextInput
-					autoCapitalize='none'
-					autoFocus={true}
-					style={styles.NewCat__input}
-					placeholder='Category name'
-					placeholderTextColor='#9194A1'
-					onChangeText={name => set_catName(name)}
-					value={catName}
-				/>
+			<View style={{ marginBottom: 12 }}>
+				<View style={{
+					borderBottomWidth: 1, 
+					borderBottomColor: '#CFD0D3',
+				}}>
+					<TextInput
+						autoCapitalize='none'
+						autoFocus={true}
+						style={styles.NewCat__input}
+						placeholder='Category name'
+						placeholderTextColor='#9194A1'
+						onChangeText={name => set_catName(name)}
+						value={catName}
+					/>
+				</View>
+
+				<Text style={styles.Category__error}>
+					{catError}
+				</Text>
 			</View>
 
-			<TouchableOpacity activeOpacity={0.7} onPress={() => navigate('NewFeed')}>
+			<TouchableOpacity 
+				activeOpacity={0.7} 
+				onPress={() => navigate(
+					'NewFeed',
+					{
+						withCategory: true,
+						feedsWithCat: catFeed
+					}
+				)}
+			>
 				<View style={styles.NewFeed__fake}>
 					<Text style={{fontSize: 16, padding: 2, color: '#9194A1'}}> 
 						Add RSS Feed
@@ -68,6 +123,19 @@ const NewCategory = (props) => {
 					<Icon name='plus-circle' style={{marginLeft: 'auto', marginRight: 2}} size={18}/>
 				</View>
 			</TouchableOpacity>
+
+			{
+				catFeed.length > 0 ?
+					catFeed.map((f) => {
+						return (
+							<CreatedFeed
+								name={f.name}
+								key={f.id}
+							/>
+						)
+					})
+				: null
+			}
 		</View>
 	);
 	
@@ -97,4 +165,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		alignItems: 'center', 
 	},
+
+	Category__error: {
+		color: '#D8000C',
+		textAlign: 'center',
+		marginTop: 4,
+		width: 260
+	}
 });
