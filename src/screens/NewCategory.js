@@ -5,7 +5,8 @@ import {
 	Text, 
 	TextInput,
 	TouchableNativeFeedback,
-	TouchableOpacity
+	TouchableOpacity,
+	ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import CreatedFeed from '../components/CreatedFeed';
@@ -53,7 +54,7 @@ const NewCategory = (props) => {
 				set_catList(result);
 			}
 		}; getSavedCategories();
-	}, [catList])
+	}, [])
 
 
 	useEffect(() => {
@@ -64,7 +65,7 @@ const NewCategory = (props) => {
 	}, [props.route.params?.catFeed])
 
 
-	const saveCategoryHandler = () => {
+	const saveCategoryHandler = async () => {
 		if(catName.length <= 0) {
 			set_catError('Category name must be at least 1 character long');
 			return
@@ -76,15 +77,37 @@ const NewCategory = (props) => {
 			return
 		}
 
-		console.log(catFeed);
-		// TODO: finish saving category with feeds to AsyncStorage
-		//navigate('Home')
+		// default category object that is stored in AsyncStorage
+		let categoryToSend = {
+			name: catName,
+			id: 0,
+			feeds: catFeed
+		}
+
+		// feeds id's are separate for feeds and for categories
+		if(catList.length > 0) {
+			categoryToSend.id = catList.length;
+		}
+
+		// DUP_CHECK is equal to whole category object if one already exists in catList with the same name
+		// otherwise it is undefined and we can proceed with saving category
+		const DUP_CHECK = catList.find(o => o.name === catName);
+		if(DUP_CHECK) {
+			set_catError('Sorry, categories names cannot be repeated. Please choose another one.');
+			return
+		}
+		
+		// saving/adding whole new category to AsyncStorage
+		catList.push(categoryToSend);
+		await AsyncStorage.setItem('user_categories', JSON.stringify(catList));
+		navigate('Home');
 	}
 
 
 	return (
+	<ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
 		<View style={styles.NewCatWrapper}>
-			<View style={{ marginBottom: 12 }}>
+			<View style={{ marginBottom: 10 }}>
 				<View style={{
 					borderBottomWidth: 1, 
 					borderBottomColor: '#CFD0D3',
@@ -100,11 +123,27 @@ const NewCategory = (props) => {
 					/>
 				</View>
 
-				<Text style={styles.Category__error}>
+				<Text style={[
+					styles.Category__error,
+					{ display: catError.length >= 1 ? 'flex' : 'none' }
+				]}>
 					{catError}
 				</Text>
 			</View>
 
+			{
+				catFeed.length > 0 ?
+					catFeed.map((f) => {
+						return (
+							<CreatedFeed
+								name={f.name}
+								key={f.id}
+							/>
+						)
+					})
+				: null
+			}
+				
 			<TouchableOpacity 
 				activeOpacity={0.7} 
 				onPress={() => navigate(
@@ -119,24 +158,12 @@ const NewCategory = (props) => {
 					<Text style={{fontSize: 16, padding: 2, color: '#9194A1'}}> 
 						Add RSS Feed
 					</Text>
-
+	
 					<Icon name='plus-circle' style={{marginLeft: 'auto', marginRight: 2}} size={18}/>
 				</View>
 			</TouchableOpacity>
-
-			{
-				catFeed.length > 0 ?
-					catFeed.map((f) => {
-						return (
-							<CreatedFeed
-								name={f.name}
-								key={f.id}
-							/>
-						)
-					})
-				: null
-			}
 		</View>
+	</ScrollView>
 	);
 	
 }; export default NewCategory;
@@ -161,8 +188,6 @@ const styles = StyleSheet.create({
 
 	NewCatWrapper: {
 		paddingTop: 8,
-		flex: 1, 
-		backgroundColor: '#fff',
 		alignItems: 'center', 
 	},
 
@@ -170,6 +195,7 @@ const styles = StyleSheet.create({
 		color: '#D8000C',
 		textAlign: 'center',
 		marginTop: 4,
-		width: 260
+		width: 260,
+		display: 'none'
 	}
 });

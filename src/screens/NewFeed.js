@@ -132,9 +132,8 @@ const NewFeed = (props) => {
 			feedToSend.id = feedList.length;
 		}
 
-		// returns whole object if one already exists in catFeed with the same name
-		// otherwise DUP_CHECK = undefined
-		// just show error when duplicate exists
+		// DUP_CHECK is equal to whole feed object if one already exists in feedList with the same name
+		// otherwise it is undefined and we can proceed with saving category
 		const DUP_CHECK = feedList.find(o => o.name === feedName);
 		if(DUP_CHECK) {
 			set_feedNameError('Sorry, feeds names cannot be repeated. Please choose another one.');
@@ -157,9 +156,8 @@ const NewFeed = (props) => {
 			feedToSend.id = feedsWithCat.length;
 		}
 
-		// returns whole object if one already exists in catFeed with the same name
-		// otherwise DUP_CHECK = undefined
-		// just show error when duplicate exists
+		// DUP_CHECK is equal to whole feed object if one already exists in feedsWithCat with the same name
+		// otherwise it is undefined and we can proceed with saving category
 		const DUP_CHECK = feedsWithCat.find(o => o.name === feedName);
 		if(DUP_CHECK) {
 			set_feedNameError('Sorry, feeds names cannot be repeated. Please choose another one.');
@@ -193,7 +191,10 @@ const NewFeed = (props) => {
 					/>
 				</View>
 
-				<Text style={styles.Feed__error}>
+				<Text style={[
+					styles.Feed__error,
+					{ display: feedNameError.length >= 1 ? 'flex' : 'none' }
+				]}>
 					{feedNameError}
 				</Text>
 			</View>
@@ -215,7 +216,10 @@ const NewFeed = (props) => {
 					/>
 				</View>
 
-				<Text style={styles.Feed__error}>
+				<Text style={[
+					styles.Feed__error,
+					{ display: feedHrefError.length >= 1 ? 'flex' : 'none' }
+				]}>
 					{feedHrefError}
 				</Text>
 			</View>
