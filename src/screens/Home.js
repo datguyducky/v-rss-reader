@@ -4,11 +4,22 @@ import {
 	StyleSheet, 
 	View, 
 	Text,
-	TouchableNativeFeedback
+	TouchableNativeFeedback,
+	ScrollView,
+	SafeAreaView
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import CategoryCard from '../components/CategoryCard';
 import NoCategoryCard from '../components/NoCategoryCard';
+import { YellowBox } from 'react-native'
+
+
+YellowBox.ignoreWarnings([
+	// TODO: remove when fixed
+	// check https://github.com/GeekyAnts/NativeBase/issues/2947 
+	// for explanation of this issue...
+	'VirtualizedLists should never be nested'
+])
 
 
 const Home = (props) => {
@@ -41,17 +52,19 @@ const Home = (props) => {
 	return (
 		<>
 			<View style={styles.HomeWrapper}>
-				{
-					feedsList.length > 0 ?
-						<NoCategoryCard feedsList={feedsList}/>
-					: null
-				}
+				<ScrollView>
+						{
+							feedsList.length > 0 ?
+								<NoCategoryCard feedsList={feedsList}/>
+							: null
+						}
 
-				{
-					catList.length > 0 ?
-						<CategoryCard catList={catList}/>
-					: null
-				}
+						{
+							catList.length > 0 ?
+								<CategoryCard catList={catList}/>
+							: null
+						}
+				</ScrollView>
 
 				{
 					feedsList.length <= 0 && catList.length <= 0 ?
