@@ -20,6 +20,7 @@ const CategoryCard = () => {
 
 const styles = StyleSheet.create({
 	CardWrapper: {
-		backgroundColor: '#fff'
+		backgroundColor: '#fff',
+		paddingVertical: 6,
 	}
 });

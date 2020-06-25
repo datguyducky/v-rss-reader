@@ -15,14 +15,17 @@ import ReadCard from './ReadCard';
 const NoCategoryCard = (props) => {
 	const [rssObj, set_rssObj] = useState([]);
 	const feedsList = props.feedsList || [];
-	const [hideCat, set_hideCat] = useState(false);
+	const [hideCat, set_hideCat] = useState(true);
 
 	
+	// hiding or unhiding category handler
 	const catViewHandler = () => {
 		set_hideCat(!hideCat);
 	}
 
 
+	// separator component for Flatlist
+	// rendered in between each item, but not at the top or bottom
 	const ReadCardSep = () => {
 		return (
 			<View style={{
@@ -34,18 +37,20 @@ const NoCategoryCard = (props) => {
 		)
 	};
 	
+	// header component for FlatList
+	// rendered at the top
 	const ReadCardHeader = () => {
 		return (
 			<TouchableNativeFeedback onPress={catViewHandler}>
 				<View style={styles.CardHeaderWrapper}>
+
 						{
 							!hideCat ?
 								<Icon name='minus' size={21} />
 							: 
 								<Icon name='plus' size={21} />
 						}
-						
-						
+
 						<Text style={styles.CardHeader}>
 							Feeds without category:
 						</Text>
@@ -57,21 +62,27 @@ const NoCategoryCard = (props) => {
 	
 	useEffect(() => {
 		const fetchRSS = async () => {
+			// hacky way to update FlatList data state only when data changes in AsyncStorage
 			if(rssObj.length < feedsList.length) {
+				console.log(feedsList);
+				// here we fetch every RSS feed in storage
 				for(let i=0; i<feedsList.length; i++){
 					fetch(feedsList[i].href)
 					.then(response => response.text())
 					.then(responseData => rssParser.parse(responseData))
 					.then((rss) => {
-						// max 16 items per one RSS feed
+						// max 16 articles per one RSS feed
+						// saving every article from RSS feed response to rssObj state
 						for(let j=0; j<=16; j++) {
 							const RSS = rss.items[j];
 
+							// converting full date from a RSS to: YEAR-MONTH-DAY
 							let re = /[0-9]{2}:/;
-							let pub = RSS.published.split('T')[0];
+							let date = RSS.published.split('T')[0];
 							re = /[0-9]{2}\ [a-zA-Z]{3}\ [0-9]{4}/;
-							pub = pub.match(re) !== null ? pub.match(re)[0] : pub;
+							date = date.match(re) !== null ? date.match(re)[0] : date;
 
+							// default RSS object to save in a state
 							const rssToSave = {
 								title: RSS.title,
 								date_published: pub,
@@ -80,17 +91,19 @@ const NoCategoryCard = (props) => {
 								categories: RSS.categories[0].name,
 							}
 
+							// saving article to state
 							set_rssObj(rssObj => [...rssObj, rssToSave]);
+							// unhiding this category
+							set_hideCat(false);
 						}
 					})
-					
 					.catch(err => console.log(err))
 				}
 			}
 		}; fetchRSS();
 	}, [])
 	
-	console.log(hideCat)
+
 	return (
 		<View style={styles.CardWrapper}>
 			{
@@ -122,7 +135,9 @@ const NoCategoryCard = (props) => {
 const styles = StyleSheet.create({
 	CardWrapper: {
 		backgroundColor: '#fff',
-		paddingVertical: 8
+		paddingTop: 12,
+		paddingBottom: 6,
+		flex: 1
 	},
 
 	CardHeaderWrapper: {
