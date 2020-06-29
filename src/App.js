@@ -58,6 +58,9 @@ const App = () => {
 					component={Home}
 					options={{
 						title: 'V - RSS Reader',
+						headerStyle: {
+							elevation: 0
+						},
 						headerRight: () => (
 							<PopupMenu 
 								actions={[

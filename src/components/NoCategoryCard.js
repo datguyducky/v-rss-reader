@@ -52,7 +52,7 @@ const NoCategoryCard = (props) => {
 						}
 
 						<Text style={styles.CardHeader}>
-							Feeds without category:
+							Feeds without category
 						</Text>
 				</View>
 			</TouchableNativeFeedback>
@@ -64,7 +64,6 @@ const NoCategoryCard = (props) => {
 		const fetchRSS = async () => {
 			// hacky way to update FlatList data state only when data changes in AsyncStorage
 			if(rssObj.length < feedsList.length) {
-				console.log(feedsList);
 				// here we fetch every RSS feed in storage
 				for(let i=0; i<feedsList.length; i++){
 					fetch(feedsList[i].href)
@@ -85,16 +84,14 @@ const NoCategoryCard = (props) => {
 							// default RSS object to save in a state
 							const rssToSave = {
 								title: RSS.title,
-								date_published: pub,
+								date_published: date,
 								url: RSS.links[0].url,
 								publisher_name: feedsList[i].name,
 								categories: RSS.categories[0].name,
-							}
+							};
 
 							// saving article to state
 							set_rssObj(rssObj => [...rssObj, rssToSave]);
-							// unhiding this category
-							set_hideCat(false);
 						}
 					})
 					.catch(err => console.log(err))
@@ -135,8 +132,7 @@ const NoCategoryCard = (props) => {
 const styles = StyleSheet.create({
 	CardWrapper: {
 		backgroundColor: '#fff',
-		paddingTop: 12,
-		paddingBottom: 6,
+		paddingTop: 8,
 		flex: 1
 	},
 
