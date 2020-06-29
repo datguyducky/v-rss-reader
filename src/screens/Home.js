@@ -27,6 +27,7 @@ const Home = (props) => {
 	const [catList, set_catList] = useState([]);
 	const [feedsList, set_feedsList] = useState([]);
 
+
 	useEffect(() => {
 		const loadFeedsWithCat = async () => {
 			let result = await AsyncStorage.getItem('user_categories');
@@ -49,10 +50,22 @@ const Home = (props) => {
 	}, [])
 
 
+	const scrollHandler = (event) => {
+		const SCROLL_Y = event.nativeEvent.contentOffset.y;
+		props.navigation.setOptions({
+			// hide elevation (shadow) when we're at the top of this screen
+			// and show it, when we're not
+			headerStyle: {
+				elevation: SCROLL_Y === 0 ? 0 : 4
+			}	
+		})
+	}
+
+
 	return (
 		<>
 			<View style={styles.HomeWrapper}>
-				<ScrollView>
+				<ScrollView onScroll={(event) => scrollHandler(event)}>
 						{
 							feedsList.length > 0 ?
 								<NoCategoryCard feedsList={feedsList}/>
