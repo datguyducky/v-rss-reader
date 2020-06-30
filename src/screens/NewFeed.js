@@ -174,53 +174,66 @@ const NewFeed = (props) => {
 	return (
 		<View style={styles.NewFeedWrapper}>
 			<View style={{
-				marginBottom: 12
+				marginBottom: 16,
+				width: '76%',
+				maxWidth: 320
 			}}>
-				<View style={{
-					borderBottomWidth: 1, 
-					borderBottomColor: '#CFD0D3',
-				}}>
+					<Text style={styles.NewFeed__inputLabel}>
+						Feed Name
+					</Text>
 					<TextInput
 						autoCapitalize='none'
 						autoFocus={true}
-						style={styles.NewFeed__input}
-						placeholder='RSS feed name'
+						placeholder='e.g. Basketball News'
 						placeholderTextColor='#9194A1'
 						onChangeText={name => set_feedName(name)}
 						value={feedName}
+						style={[
+							styles.NewFeed__input,
+							{
+								borderColor: feedNameError.length > 0 ? '#D8000C' : '#9194A1'
+							}
+						]}
 					/>
-				</View>
 
 				<Text style={[
 					styles.Feed__error,
-					{ display: feedNameError.length >= 1 ? 'flex' : 'none' }
+					{ 
+						display: feedNameError.length > 0 ? 'flex' : 'none'
+					}
 				]}>
-					{feedNameError}
+					{ feedNameError }
 				</Text>
 			</View>
 
 			<View style={{
-				marginBottom: 12
+				width: '76%',
+				maxWidth: 320
 			}}>
-				<View style={{
-					borderBottomWidth: 1, 
-					borderBottomColor: '#CFD0D3', 
-				}}>
-					<TextInput
-						autoCapitalize='none'
-						style={styles.NewFeed__input}
-						placeholder='RSS feed link'
-						placeholderTextColor='#9194A1'
-						onChangeText={href => set_feedHref(href)}
-						value={feedHref}
-					/>
-				</View>
+				<Text style={styles.NewFeed__inputLabel}>
+					Feed Link
+				</Text>
+				<TextInput
+					autoCapitalize='none'
+					placeholder='e.g. reddit.com/r/Basketball/.rss '
+					placeholderTextColor='#9194A1'
+					onChangeText={href => set_feedHref(href)}
+					value={feedHref}
+					style={[
+						styles.NewFeed__input,
+						{
+							borderColor: feedHrefError.length > 0 ? '#D8000C' : '#9194A1'
+						}
+					]}
+				/>
 
 				<Text style={[
 					styles.Feed__error,
-					{ display: feedHrefError.length >= 1 ? 'flex' : 'none' }
+					{ 
+						display: feedHrefError.length > 0 ? 'flex' : 'none'
+					}
 				]}>
-					{feedHrefError}
+					{ feedHrefError }
 				</Text>
 			</View>
 		</View>
@@ -231,14 +244,24 @@ const NewFeed = (props) => {
 
 const styles = StyleSheet.create({
 	NewFeed__input: {
-		borderWidth: 0,
-		width: 260,
+		borderWidth: 1,
+		borderRadius: 4,
 		fontSize: 16,
-		padding: 0
+		paddingVertical: 4,
+		paddingHorizontal: 8,
+		fontFamily: 'OpenSans-Regular',
+		backgroundColor: '#EFF0F5'
+	},
+
+	NewFeed__inputLabel: {
+		fontSize: 17,
+		marginBottom: 4,
+		fontFamily: 'Muli-SemiBold',
+		color: '#2F3037'
 	},
 
 	NewFeedWrapper: {
-		paddingTop: 8,
+		paddingTop: 6,
 		flex: 1, 
 		backgroundColor: '#fff',
 		alignItems: 'center', 

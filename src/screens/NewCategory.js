@@ -107,42 +107,40 @@ const NewCategory = (props) => {
 	return (
 	<ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
 		<View style={styles.NewCatWrapper}>
-			<View style={{ marginBottom: 10 }}>
-				<View style={{
-					borderBottomWidth: 1, 
-					borderBottomColor: '#CFD0D3',
-				}}>
-					<TextInput
-						autoCapitalize='none'
-						autoFocus={true}
-						style={styles.NewCat__input}
-						placeholder='Category name'
-						placeholderTextColor='#9194A1'
-						onChangeText={name => set_catName(name)}
-						value={catName}
-					/>
-				</View>
+			<View style={{ 
+				marginBottom: 16,
+				width: '76%',
+				maxWidth: 320 
+			}}>
+				<Text style={styles.NewFeed__inputLabel}>
+					Category Name
+				</Text>
+				<TextInput
+					autoCapitalize='none'
+					autoFocus={true}
+					placeholder='e.g. Sport News'
+					placeholderTextColor='#9194A1'
+					onChangeText={name => set_catName(name)}
+					value={catName}
+					style={styles.NewCat__input}
+					style={[
+						styles.NewCat__input,
+						{
+							borderColor: catError.length > 0 ? '#D8000C' : '#9194A1'
+						}
+					]}
+				/>
 
 				<Text style={[
 					styles.Category__error,
-					{ display: catError.length >= 1 ? 'flex' : 'none' }
+					{ 
+						display: catError.length > 0 ? 'flex' : 'none' 
+					}
 				]}>
 					{catError}
 				</Text>
 			</View>
 
-			{
-				catFeed.length > 0 ?
-					catFeed.map((f) => {
-						return (
-							<CreatedFeed
-								name={f.name}
-								key={f.id}
-							/>
-						)
-					})
-				: null
-			}
 				
 			<TouchableOpacity 
 				activeOpacity={0.7} 
@@ -153,13 +151,42 @@ const NewCategory = (props) => {
 						feedsWithCat: catFeed
 					}
 				)}
+				style={{
+					width: '76%',
+					maxWidth: 320
+				}}
 			>
-				<View style={styles.NewFeed__fake}>
-					<Text style={{fontSize: 16, padding: 2, color: '#9194A1'}}> 
-						Add RSS Feed
+				<Text style={styles.NewFeed__inputLabel}>
+					Category Feeds
+				</Text>
+
+				{
+					catFeed.length > 0 ?
+						catFeed.map((f) => {
+							return (
+								<CreatedFeed
+									name={f.name}
+									key={f.id}
+								/>
+							)
+						})
+					: null
+				}
+					
+				<View style={styles.NewFeed__fakeInput}>
+					<Text style={styles.NewFeed_fakePlaceholder}> 
+						Click here to add a new feed
 					</Text>
-	
-					<Icon name='plus-circle' style={{marginLeft: 'auto', marginRight: 2}} size={18}/>
+		
+					<Icon 
+						name='plus-circle' 
+						style={{
+							marginLeft: 'auto', 
+							marginRight: 2, 
+							color: '#2F3037'
+						}} 
+						size={18}
+					/>
 				</View>
 			</TouchableOpacity>
 		</View>
@@ -170,32 +197,53 @@ const NewCategory = (props) => {
 
 
 const styles = StyleSheet.create({
-	NewCat__input: {
-		borderWidth: 0,
-		width: 260,
-		fontSize: 16,
-		padding: 0
+	NewCatWrapper: {
+		paddingTop: 6,
+		alignItems: 'center', 
 	},
 
-	NewFeed__fake: {
-		borderBottomWidth: 1, 
-		borderBottomColor: '#CFD0D3', 
-		width: 260,
+	NewCat__input: {
+		borderWidth: 1,
+		borderRadius: 4,
+		fontSize: 16,
+		paddingVertical: 4,
+		paddingHorizontal: 8,
+		fontFamily: 'OpenSans-Regular',
+		backgroundColor: '#EFF0F5'
+	},
+
+	NewFeed__inputLabel: {
+		fontSize: 17,
+		marginBottom: 4,
+		fontFamily: 'Muli-SemiBold',
+		color: '#2F3037'
+	},
+
+	NewFeed__fakeInput: {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
+		borderWidth: 1,
+		borderRadius: 4,
+		fontSize: 16,
+		paddingVertical: 5,
+		paddingHorizontal: 8,
+		fontFamily: 'OpenSans-Regular',
+		backgroundColor: '#EFF0F5',
+		borderColor: '#9194A1'
 	},
 
-	NewCatWrapper: {
-		paddingTop: 8,
-		alignItems: 'center', 
+	NewFeed_fakePlaceholder: {
+		fontSize: 16, 
+		padding: 2, 
+		color: '#9194A1'
 	},
 
 	Category__error: {
 		color: '#D8000C',
 		textAlign: 'center',
 		marginTop: 4,
-		width: 260,
+		maxWidth: 320,
 		display: 'none'
 	}
 });

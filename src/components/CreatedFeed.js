@@ -15,14 +15,21 @@ const CreatedFeed = (props) => {
 		<TouchableOpacity 
 			activeOpacity={0.7} 
 			onPress={() => console.log('delete here')}
+			style={styles.NewFeed__fakeInput}
 		>
-			<View style={styles.NewFeed__fake}>
-				<Text style={{fontSize: 16, padding: 2, color: '#050505'}}> 
-					{props.name}
-				</Text>
+			<Text style={styles.NewFeed_fakePlaceholder}> 
+				{ props.name }
+			</Text>
 
-				<Icon name='minus-circle' style={{marginLeft: 'auto', marginRight: 2}} size={18}/>
-			</View>
+			<Icon 
+				name='minus-circle' 
+				style={{
+					marginLeft: 'auto',
+					marginRight: 2,
+					color: '#2F3037'
+				}} 
+				size={18}
+			/>
 		</TouchableOpacity>
 	);
 	
@@ -30,20 +37,24 @@ const CreatedFeed = (props) => {
 
 
 const styles = StyleSheet.create({
-	NewCat__input: {
-		borderWidth: 0,
-		width: 260,
-		fontSize: 16,
-		padding: 0
-	},
-
-	NewFeed__fake: {
-		borderBottomWidth: 1, 
-		borderBottomColor: '#CFD0D3', 
-		width: 260,
+	NewFeed__fakeInput: {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		marginBottom: 10
+		borderWidth: 1,
+		borderRadius: 4,
+		fontSize: 16,
+		paddingVertical: 4,
+		paddingHorizontal: 8,
+		fontFamily: 'OpenSans-Regular',
+		backgroundColor: '#EFF0F5',
+		borderColor: '#9194A1',
+		marginBottom: 16
+	},
+
+	NewFeed_fakePlaceholder: {
+		fontSize: 16, 
+		padding: 2, 
+		color: '#2F3037'
 	},
 });
