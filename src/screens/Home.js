@@ -60,7 +60,10 @@ const Home = (props) => {
 			// hide elevation (shadow) when we're at the top of this screen
 			// and show it, when we're not
 			headerStyle: {
-				elevation: SCROLL_Y === 0 ? 0 : 4
+				elevation: SCROLL_Y === 0 ? 0 : 4,
+				// fix to set header backgroundColor to proper one, when edit mode is active
+				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
+				backgroundColor: editActive ? '#0080B0' : '#fff' 
 			}	
 		})
 	}
@@ -107,7 +110,6 @@ const Home = (props) => {
 	}
 
 
-	// TODO: TouchableWithoutFeedback onPress brakes ScrollView a little bit
 	return (
 		<>
 			<StatusBar backgroundColor={editActive ? '#0080B0' : '#fff'} />
@@ -123,10 +125,10 @@ const Home = (props) => {
 						styles.HomeWrapper
 					]}
 				>
-					<ScrollView onScroll={(event) => scrollHandler(event)}>
+					<ScrollView onScroll={(event) => scrollHandler(event)} onStartShouldSetResponder={() => true} >
 									{
 										feedsList.length > 0 ?
-											<NoCategoryCard feedsList={feedsList} longPressHandler={longPressHandler}/>
+											<NoCategoryCard feedsList={feedsList} longPressHandler={longPressHandler} />
 										: null
 									}
 			
@@ -137,6 +139,7 @@ const Home = (props) => {
 												longPressHandler={longPressHandler}
 												editActive={editActive}
 												editList={editList}
+												restartEdit={restartEdit}
 											/>
 										: null
 									}

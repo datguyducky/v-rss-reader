@@ -176,6 +176,7 @@ const CategoryCard = (props) => {
 										url={item.url} 
 										publisher_name={item.publisher_name}
 										categories={item.categories}
+										restartEdit={props.restartEdit}
 									/> 
 								)
 							} else {

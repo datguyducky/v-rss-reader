@@ -3,7 +3,8 @@ import React from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	Text
+	Text,
+	TouchableWithoutFeedback
 } from 'react-native';
 
 
@@ -11,19 +12,21 @@ const ReadCard = (props) => {
 	const { title, date_published, url, publisher_name, categories} = props;
 
 	return (
-		<View style={styles.ReadWrapper}>
-			<Text style={styles.ReadPubCat}>
-				{ publisher_name + ' / ' + categories }
-			</Text>
-
-			<Text style={styles.ReadTitle}>
-				{ title }
-			</Text>
-
-			<Text style={styles.ReadDate}>
-				Published: { date_published }
-			</Text>
-		</View>
+		<TouchableWithoutFeedback onPress={() => props.restartEdit()}>
+			<View style={styles.ReadWrapper} onStartShouldSetResponder={() => true}>
+				<Text style={styles.ReadPubCat}>
+					{ publisher_name + ' / ' + categories }
+				</Text>
+	
+				<Text style={styles.ReadTitle}>
+					{ title }
+				</Text>
+	
+				<Text style={styles.ReadDate}>
+					Published: { date_published }
+				</Text>
+			</View>
+		</TouchableWithoutFeedback>
 	);
 	
 }; export default ReadCard;
