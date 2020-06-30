@@ -19,7 +19,7 @@ const NoCategoryCard = (props) => {
 
 	
 	// hiding or unhiding category handler
-	const catViewHandler = () => {
+	const collapsibleCategory = () => {
 		set_hideCat(!hideCat);
 	}
 
@@ -41,7 +41,7 @@ const NoCategoryCard = (props) => {
 	// rendered at the top
 	const ReadCardHeader = () => {
 		return (
-			<TouchableNativeFeedback onPress={catViewHandler}>
+			<TouchableNativeFeedback onPress={collapsibleCategory}>
 				<View style={styles.CardHeaderWrapper}>
 
 						{

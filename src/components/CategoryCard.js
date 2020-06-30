@@ -96,11 +96,29 @@ const CategoryCard = (props) => {
 	// [Category Name] / [Feed Name]
 	const ReadCardHeader = (name, keyName) => {
 		const INDEX = activeCatList.indexOf(keyName);
+		
 		return (
-			<TouchableNativeFeedback onPress={() => {
-				catViewHandler(keyName)
-			}}>
-				<View style={styles.CardHeaderWrapper}>
+			<TouchableNativeFeedback 
+				onPress={() => {
+					if(!props.editActive) {
+						collapsibleCategory(keyName);
+
+					} else {
+						props.longPressHandler(name);
+					}
+				}}
+				onLongPress={() =>
+					props.longPressHandler(name)
+				}
+			>
+				<View style={[
+					{
+						backgroundColor: props.editList.includes(name)
+						? '#a8cee1'
+						: '#fff',
+					},
+					styles.CardHeaderWrapper
+				]}>
 						{
 							INDEX > -1 ?
 								<Icon name='minus' size={21} />
@@ -121,7 +139,7 @@ const CategoryCard = (props) => {
 	// onPress handler for sections from SectionList
 	// add keyName to an array of active categories
 	// or delete it from there  
-	const catViewHandler = (keyName) => {
+	const collapsibleCategory = (keyName) => {
 		// search if passed keyName is in an activeCatList state
 		// indexOf() returns index of that element, or -1 when not find
 		const INDEX = activeCatList.indexOf(keyName);
@@ -180,7 +198,6 @@ const styles = StyleSheet.create({
 	CardWrapper: {
 		backgroundColor: '#fff',
 		paddingTop: 4,
-		paddingVertical: 0,
 	},
 
 	CardHeaderWrapper: {
