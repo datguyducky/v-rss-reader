@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
 	ReadWrapper: {
 		backgroundColor: '#fff',
 		paddingVertical: 12,
-		paddingHorizontal: 12,
+		paddingLeft: 24,
+		paddingRight: 12,
 		minHeight: 50
 	},
 

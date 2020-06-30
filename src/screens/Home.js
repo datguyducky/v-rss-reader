@@ -6,7 +6,8 @@ import {
 	Text,
 	TouchableNativeFeedback,
 	ScrollView,
-	SafeAreaView
+	StatusBar,
+	TouchableWithoutFeedback
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import CategoryCard from '../components/CategoryCard';
@@ -26,6 +27,9 @@ const Home = (props) => {
 	const { navigate } = props.navigation;
 	const [catList, set_catList] = useState([]);
 	const [feedsList, set_feedsList] = useState([]);
+	const [editActive, set_editActive] = useState(false);
+	const [editList, set_editList] = useState([]);
+	const [refresh, set_refresh] = useState(false);
 
 
 	useEffect(() => {
@@ -62,43 +66,103 @@ const Home = (props) => {
 	}
 
 
+	// enable edit mode by long pressing one of the categories names
+	// enabled mode is showcased by changing background color of StatusBar, react navigation header
+	// and category header.
+	// We're storing names of categories that are currently in edit mode, so we can properly change background
+	// colors of these SectionList headers that were clicked on
+	const longPressHandler = (name) => {
+		if(!editActive) {
+			set_editActive(true);
+			props.navigation.setOptions({
+				headerStyle: {
+					backgroundColor: '#0080B0'
+				}
+			});
+		}
+		
+		const EDIT_INDEX = editList.indexOf(name);
+		if(!editList.includes(name)) {
+			editList.push(name);
+			set_refresh(!refresh);
+
+		} else {
+			editList.splice(EDIT_INDEX, 1);
+			set_refresh(!refresh);
+		}
+	}
+
+
+	// if we click outside of the categories headers, then we call restartEdit to disable edit mode
+	const restartEdit = () => {
+		if(editActive) {
+			set_editActive(false);
+			props.navigation.setOptions({
+				headerStyle: {
+					backgroundColor: '#fff'
+				}
+			});
+			set_editList([]);
+		}
+	}
+
+
+	// TODO: TouchableWithoutFeedback onPress brakes ScrollView a little bit
 	return (
 		<>
-			<View style={styles.HomeWrapper}>
-				<ScrollView onScroll={(event) => scrollHandler(event)}>
-						{
-							feedsList.length > 0 ?
-								<NoCategoryCard feedsList={feedsList}/>
-							: null
-						}
+			<StatusBar backgroundColor={editActive ? '#0080B0' : '#fff'} />
+			
+			<TouchableWithoutFeedback onPress={() => restartEdit()}>
+				<View 
+					style={[
+						{ 
+							backgroundColor: feedsList.length > 0 || catList.length > 0
+							? '#fff'
+							: '#dee2ec'
+						},
+						styles.HomeWrapper
+					]}
+				>
+					<ScrollView onScroll={(event) => scrollHandler(event)}>
+									{
+										feedsList.length > 0 ?
+											<NoCategoryCard feedsList={feedsList} longPressHandler={longPressHandler}/>
+										: null
+									}
+			
+									{
+										catList.length > 0 ?
+											<CategoryCard 
+												catList={catList} 
+												longPressHandler={longPressHandler}
+												editActive={editActive}
+												editList={editList}
+											/>
+										: null
+									}
+					</ScrollView>
 
-						{
-							catList.length > 0 ?
-								<CategoryCard catList={catList}/>
-							: null
-						}
-				</ScrollView>
+					{
+						feedsList.length <= 0 && catList.length <= 0 ?
+							<Text style={{color: "#9194A1"}}>
+								Click + button to add your first RSS feed.
+							</Text>
+						: null
+					}
+			
 
-				{
-					feedsList.length <= 0 && catList.length <= 0 ?
-						<Text style={{color: "#9194A1"}}>
-							Click + button to add your first RSS feed.
-						</Text>
-					: null
-				}
-		
-
-				<View style={styles.AddFeed_btn} >
-					<TouchableNativeFeedback 
-						onPress={() => navigate('NewFeed') }
-						background={TouchableNativeFeedback.Ripple('#555', true)}
-					>
-						<View>
-							<Icon name="plus" size={36} color="#fff"/>
-						</View>
-					</TouchableNativeFeedback>
+					<View style={styles.AddFeed_btn} >
+						<TouchableNativeFeedback 
+							onPress={() => navigate('NewFeed') }
+							background={TouchableNativeFeedback.Ripple('#555', true)}
+						>
+							<View>
+								<Icon name="plus" size={36} color="#fff"/>
+							</View>
+						</TouchableNativeFeedback>
+					</View>
 				</View>
-			</View>
+			</TouchableWithoutFeedback>
 		</>
 	);
 	
@@ -108,7 +172,7 @@ const Home = (props) => {
 const styles = StyleSheet.create({
 	HomeWrapper: { 
 		flex: 1, 
-		//alignItems: 'center', 
+		//alignItems: 'center',
 		//justifyContent: 'center' 
 	},
 
