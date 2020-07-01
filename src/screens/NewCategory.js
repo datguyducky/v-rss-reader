@@ -107,7 +107,7 @@ const NewCategory = (props) => {
 		<View style={styles.NewCatWrapper}>			
 			<Input 
 				inputLabel='Category Name'
-				catError={catError}
+				onError={catError}
 				placeholderText='e.g. Sport News'
 				autoFocus={true}
 				value={catName}

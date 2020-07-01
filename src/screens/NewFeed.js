@@ -11,6 +11,7 @@ import {
 	Text
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { Input } from '../components';
 
 
 const NewFeed = (props) => {
@@ -173,69 +174,23 @@ const NewFeed = (props) => {
 
 	return (
 		<View style={styles.NewFeedWrapper}>
-			<View style={{
-				marginBottom: 16,
-				width: '76%',
-				maxWidth: 320
-			}}>
-					<Text style={styles.NewFeed__inputLabel}>
-						Feed Name
-					</Text>
-					<TextInput
-						autoCapitalize='none'
-						autoFocus={true}
-						placeholder='e.g. Basketball News'
-						placeholderTextColor='#9194A1'
-						onChangeText={name => set_feedName(name)}
-						value={feedName}
-						style={[
-							styles.NewFeed__input,
-							{
-								borderColor: feedNameError.length > 0 ? '#D8000C' : '#9194A1'
-							}
-						]}
-					/>
+			<Input 
+				inputLabel='Feed Names'
+				onError={feedNameError}
+				placeholderText='e.g. Basketball News'
+				autoFocus={true}
+				value={feedName}
+				onChangeText={name => set_feedName(name)}
+			/>
 
-				<Text style={[
-					styles.Feed__error,
-					{ 
-						display: feedNameError.length > 0 ? 'flex' : 'none'
-					}
-				]}>
-					{ feedNameError }
-				</Text>
-			</View>
-
-			<View style={{
-				width: '76%',
-				maxWidth: 320
-			}}>
-				<Text style={styles.NewFeed__inputLabel}>
-					Feed Link
-				</Text>
-				<TextInput
-					autoCapitalize='none'
-					placeholder='e.g. reddit.com/r/Basketball/.rss '
-					placeholderTextColor='#9194A1'
-					onChangeText={href => set_feedHref(href)}
-					value={feedHref}
-					style={[
-						styles.NewFeed__input,
-						{
-							borderColor: feedHrefError.length > 0 ? '#D8000C' : '#9194A1'
-						}
-					]}
-				/>
-
-				<Text style={[
-					styles.Feed__error,
-					{ 
-						display: feedHrefError.length > 0 ? 'flex' : 'none'
-					}
-				]}>
-					{ feedHrefError }
-				</Text>
-			</View>
+			<Input 
+				inputLabel='Feed Link'
+				onError={feedHrefError}
+				placeholderText='e.g. reddit.com/r/Basketball/.rss'
+				autoFocus={false}
+				value={feedHref}
+				onChangeText={href => set_feedHref(href)}
+			/>
 		</View>
 	);
 	
