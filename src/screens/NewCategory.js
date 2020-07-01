@@ -7,7 +7,7 @@ import {
 	ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { CreatedFeed, Input, FakeInput } from '../components';
+import { Input, FakeInput } from '../components';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -18,6 +18,7 @@ const NewCategory = (props) => {
 	const [catError, set_catError] = useState('');
 	const [catList, set_catList] = useState([]);
 	const [catFeed, set_catFeed] = useState([]);
+	const [refresh, set_refresh] = useState(false);
 
 	
 	React.useLayoutEffect(() => {
@@ -102,6 +103,16 @@ const NewCategory = (props) => {
 	}
 
 
+	const deleteFeedHandler = (name) => {
+		// find index of clicked element in an array of feeds, then deleted it from there
+		const INDEX = catFeed.findIndex(o => o.name === name);
+		catFeed.splice(INDEX, 1);
+		
+		// 'refresh' screen, so deleted feed is not longer rendered
+		set_refresh(!refresh);
+	}
+
+	console.log(catFeed);
 	return (
 	<ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
 		<View style={styles.NewCatWrapper}>			
@@ -128,9 +139,12 @@ const NewCategory = (props) => {
 					catFeed.length > 0 ?
 						catFeed.map((f) => {
 							return (
-								<CreatedFeed
-									name={f.name}
+								<FakeInput 
 									key={f.id}
+									onPress={() => deleteFeedHandler(f.name)}
+									placeholderText={f.name}
+									iconName='minus-circle'
+									width='100%'
 								/>
 							)
 						})
