@@ -4,13 +4,10 @@ import {
 	View, 
 	Text, 
 	TouchableNativeFeedback,
-	TouchableOpacity,
 	ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import CreatedFeed from '../components/CreatedFeed';
-import Input from '../components/Input';
-import FakeInput from '../components/FakeInput';
+import { CreatedFeed, Input, FakeInput } from '../components';
 
 import AsyncStorage from '@react-native-community/async-storage';
 

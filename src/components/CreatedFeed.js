@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { 
-	StyleSheet, 
-	View, 
+	StyleSheet,
 	Text,
 	TouchableOpacity
 } from 'react-native';
