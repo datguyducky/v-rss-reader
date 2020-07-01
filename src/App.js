@@ -18,14 +18,15 @@ import NewCategory from './screens/NewCategory';
 import About from './screens/About';
 import Settings from './screens/Settings';
 import NewFeed from './screens/NewFeed';
+import EditCategory from './screens/EditCategory';
 // end of screens
 
-import PopupMenu from './components/PopupMenu';
+import { MoreBtn } from './components/NavBtns';
 const Stack = createStackNavigator();
 
 
 const App = () => {
-	const PopupHandler = (eventName, index) => {
+	const MoreBtnHandler = (eventName, index) => {
 		// return when user clicks outside of popup menu
 		if(eventName !== 'itemSelected') return;
 
@@ -62,13 +63,13 @@ const App = () => {
 							elevation: 0
 						},
 						headerRight: () => (
-							<PopupMenu 
+							<MoreBtn
 								actions={[
 									'New category', 
 									'About',
 									'Settings'
 								]} 
-								onPress={PopupHandler} 
+								MoreBtnHandler={MoreBtnHandler} 
 							/>
 						),
 					}}
@@ -115,6 +116,14 @@ const App = () => {
 						headerRightContainerStyle: {
 							paddingRight: 4
 						}
+					}}
+				/>
+
+				<Stack.Screen 
+					name='EditCat'
+					component={EditCategory}
+					options={{
+						title: 'Edit Category'
 					}}
 				/>
 			</Stack.Navigator>
