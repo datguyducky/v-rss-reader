@@ -12,7 +12,8 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import CategoryCard from '../components/CategoryCard';
 import NoCategoryCard from '../components/NoCategoryCard';
-import { YellowBox } from 'react-native'
+import { CancelBtn, RenameBtn, DeleteBtn, SaveBtn, MoreBtn } from '../components/NavBtns';
+import { YellowBox } from 'react-native';
 
 
 YellowBox.ignoreWarnings([
@@ -30,6 +31,73 @@ const Home = (props) => {
 	const [editActive, set_editActive] = useState(false);
 	const [editList, set_editList] = useState([]);
 	const [refresh, set_refresh] = useState(false);
+
+
+	React.useLayoutEffect(() => {
+		props.navigation.setOptions({
+			headerRight: () => (
+				editActive ? 
+					<View style={{flexDirection: 'row'}}>
+						<RenameBtn
+							RenameBtnHandler={RenameBtnHandler}
+						/>
+						<DeleteBtn
+							DeleteBtnHandler={CancelBtnHandler}
+						/>
+						<SaveBtn
+							SaveBtnHandler={CancelBtnHandler}
+						/>
+					</View>
+				: 
+					<MoreBtn 
+						actions={[
+							'New category', 
+							'About',
+							'Settings'
+						]} 
+						MoreBtnHandler={MoreBtnHandler}
+					/>
+			),
+
+			headerLeft: () => (
+				editActive ? 
+					<CancelBtn
+						CancelBtnHandler={restartEdit}
+						MarginL={6}
+					/>
+				: null
+			),
+			
+			title: editActive ? 'Edit' : 'V - RSS Reader'
+		})
+	})
+
+
+	const CancelBtnHandler = () => {
+		console.log('works...');
+	}
+
+
+	const RenameBtnHandler = () => {
+		// navigate to EditCat screen, with list of categories that user selected to edit
+		navigate(
+			'EditCat',
+			{ editList: editList }
+		)
+	}
+
+
+	const MoreBtnHandler = (eventName, index) => {
+		// return when user clicks outside of popup menu
+		if(eventName !== 'itemSelected') return;
+
+		// new category
+		if(index === 0) navigate('NewCat');
+		// about
+		if(index === 1) navigate('About');
+		// settings
+		if(index === 2) navigate('Settings');
+	}
 
 
 	useEffect(() => {
@@ -125,24 +193,30 @@ const Home = (props) => {
 						styles.HomeWrapper
 					]}
 				>
-					<ScrollView onScroll={(event) => scrollHandler(event)} onStartShouldSetResponder={() => true} >
-									{
-										feedsList.length > 0 ?
-											<NoCategoryCard feedsList={feedsList} longPressHandler={longPressHandler} />
-										: null
-									}
+					<ScrollView 
+						onScroll={(event) => scrollHandler(event)} 
+						onStartShouldSetResponder={() => true} 
+					>
+						{
+							feedsList.length > 0 ?
+								<NoCategoryCard 
+									feedsList={feedsList} 
+									longPressHandler={longPressHandler} 
+								/>
+							: null
+						}
 			
-									{
-										catList.length > 0 ?
-											<CategoryCard 
-												catList={catList} 
-												longPressHandler={longPressHandler}
-												editActive={editActive}
-												editList={editList}
-												restartEdit={restartEdit}
-											/>
-										: null
-									}
+						{
+							catList.length > 0 ?
+								<CategoryCard 
+									catList={catList} 
+									longPressHandler={longPressHandler}
+									editActive={editActive}
+									editList={editList}
+									restartEdit={restartEdit}
+								/>
+							: null
+							}
 					</ScrollView>
 
 					{

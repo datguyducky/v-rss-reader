@@ -3,13 +3,14 @@ import {
 	StyleSheet, 
 	View, 
 	Text, 
-	TextInput,
 	TouchableNativeFeedback,
 	TouchableOpacity,
 	ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import CreatedFeed from '../components/CreatedFeed';
+import Input from '../components/Input';
+import FakeInput from '../components/FakeInput';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -106,57 +107,23 @@ const NewCategory = (props) => {
 
 	return (
 	<ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
-		<View style={styles.NewCatWrapper}>
-			<View style={{ 
-				marginBottom: 16,
-				width: '76%',
-				maxWidth: 320 
-			}}>
-				<Text style={styles.NewFeed__inputLabel}>
-					Category Name
-				</Text>
-				<TextInput
-					autoCapitalize='none'
-					autoFocus={true}
-					placeholder='e.g. Sport News'
-					placeholderTextColor='#9194A1'
-					onChangeText={name => set_catName(name)}
-					value={catName}
-					style={styles.NewCat__input}
-					style={[
-						styles.NewCat__input,
-						{
-							borderColor: catError.length > 0 ? '#D8000C' : '#9194A1'
-						}
-					]}
-				/>
-
-				<Text style={[
-					styles.Category__error,
-					{ 
-						display: catError.length > 0 ? 'flex' : 'none' 
-					}
-				]}>
-					{catError}
-				</Text>
-			</View>
-
+		<View style={styles.NewCatWrapper}>			
+			<Input 
+				inputLabel='Category Name'
+				catError={catError}
+				placeholderText='e.g. Sport News'
+				autoFocus={true}
+				value={catName}
+				onChangeText={name => set_catName(name)}
+			/>
 				
-			<TouchableOpacity 
-				activeOpacity={0.7} 
-				onPress={() => navigate(
-					'NewFeed',
-					{
-						withCategory: true,
-						feedsWithCat: catFeed
-					}
-				)}
+			<View 
 				style={{
 					width: '76%',
 					maxWidth: 320
 				}}
 			>
-				<Text style={styles.NewFeed__inputLabel}>
+				<Text style={styles.fakeInput__label}>
 					Category Feeds
 				</Text>
 
@@ -172,23 +139,20 @@ const NewCategory = (props) => {
 						})
 					: null
 				}
-					
-				<View style={styles.NewFeed__fakeInput}>
-					<Text style={styles.NewFeed_fakePlaceholder}> 
-						Click here to add a new feed
-					</Text>
-		
-					<Icon 
-						name='plus-circle' 
-						style={{
-							marginLeft: 'auto', 
-							marginRight: 2, 
-							color: '#2F3037'
-						}} 
-						size={18}
-					/>
-				</View>
-			</TouchableOpacity>
+
+				<FakeInput 
+					onPress={() => navigate(
+						'NewFeed',
+						{
+							withCategory: true,
+							feedsWithCat: catFeed
+						}
+					)}
+					placeholderText='Click here to add a new feed'
+					iconName='plus-circle'
+					width='100%'
+				/>
+			</View>
 		</View>
 	</ScrollView>
 	);
@@ -202,48 +166,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center', 
 	},
 
-	NewCat__input: {
-		borderWidth: 1,
-		borderRadius: 4,
-		fontSize: 16,
-		paddingVertical: 4,
-		paddingHorizontal: 8,
-		fontFamily: 'OpenSans-Regular',
-		backgroundColor: '#EFF0F5'
-	},
-
-	NewFeed__inputLabel: {
+	fakeInput__label: {
 		fontSize: 17,
 		marginBottom: 4,
 		fontFamily: 'Muli-SemiBold',
 		color: '#2F3037'
 	},
-
-	NewFeed__fakeInput: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		borderWidth: 1,
-		borderRadius: 4,
-		fontSize: 16,
-		paddingVertical: 5,
-		paddingHorizontal: 8,
-		fontFamily: 'OpenSans-Regular',
-		backgroundColor: '#EFF0F5',
-		borderColor: '#9194A1'
-	},
-
-	NewFeed_fakePlaceholder: {
-		fontSize: 16, 
-		padding: 2, 
-		color: '#9194A1'
-	},
-
-	Category__error: {
-		color: '#D8000C',
-		textAlign: 'center',
-		marginTop: 4,
-		maxWidth: 320,
-		display: 'none'
-	}
 });
