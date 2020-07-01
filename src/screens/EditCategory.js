@@ -2,14 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	Text, 
-	TextInput,
-	TouchableNativeFeedback,
-	TouchableOpacity,
-	ScrollView,
+	Text,
 	SectionList
 } from 'react-native';
-import FakeInput from '../components/FakeInput';
+import { FakeInput } from '../components';
 
 
 const EditCategory = (props) => {

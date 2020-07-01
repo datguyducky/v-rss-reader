@@ -10,8 +10,7 @@ import {
 	TouchableWithoutFeedback
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import CategoryCard from '../components/CategoryCard';
-import NoCategoryCard from '../components/NoCategoryCard';
+import { CategoryCard, NoCategoryCard } from '../components';
 import { CancelBtn, RenameBtn, DeleteBtn, SaveBtn, MoreBtn } from '../components/NavBtns';
 import { YellowBox } from 'react-native';
 
