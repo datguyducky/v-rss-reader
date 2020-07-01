@@ -8,7 +8,7 @@ import {
 
 
 export const Input = (props) => {
-	const { inputLabel, catError, autoFocus, placeholderText, value, onChangeText } = props;
+	const { inputLabel, onError, autoFocus, placeholderText, value, onChangeText } = props;
 	return (
 		<View style={{ 
 			marginBottom: 16,
@@ -28,7 +28,7 @@ export const Input = (props) => {
 				style={[
 					styles.input,
 					{
-						borderColor: catError.length > 0 ? '#D8000C' : '#9194A1'
+						borderColor: onError.length > 0 ? '#D8000C' : '#9194A1'
 					}
 				]}
 			/>
@@ -36,10 +36,10 @@ export const Input = (props) => {
 			<Text style={[
 				styles.input__error,
 				{ 
-					display: catError.length > 0 ? 'flex' : 'none' 
+					display: onError.length > 0 ? 'flex' : 'none' 
 				}
 			]}>
-				{catError}
+				{onError}
 			</Text>
 		</View>
 	);
