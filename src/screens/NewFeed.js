@@ -130,7 +130,9 @@ const NewFeed = (props) => {
 	const saveWithoutCategory = async (feedToSend) => {
 		// feeds id's are separate for feeds with category and without one
 		if(feedList.length > 0) {
-			feedToSend.id = feedList.length;
+			// setting new feed ID to an ID of last element in an array + 1
+			// we're doing it so IDs won't get repeated when feeds are later deleted from an array of feeds
+			feedToSend.id = feedList[feedList.length - 1].id + 1;
 		}
 
 		// DUP_CHECK is equal to whole feed object if one already exists in feedList with the same name
@@ -154,7 +156,8 @@ const NewFeed = (props) => {
 
 		// feeds id's are separate for feeds with category and without one
 		if(feedsWithCat.length > 0) {
-			// need feed ID is equal to last in an array feed ID + 1 
+			// setting new feed ID to an ID of last element in an array + 1
+			// we're doing it so IDs won't get repeated when this feed is later deleted from an array
 			feedToSend.id = feedsWithCat[feedsWithCat.length - 1].id + 1;
 		}
 
