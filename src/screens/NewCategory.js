@@ -85,7 +85,9 @@ const NewCategory = (props) => {
 
 		// feeds id's are separate for feeds and for categories
 		if(catList.length > 0) {
-			categoryToSend.id = catList.length;
+			// setting new category ID to an ID of last element in an array + 1
+			// we're doing it so IDs won't get repeated when this category is later deleted from an array
+			categoryToSend.id = catList[catList.length - 1].id + 1;
 		}
 
 		// DUP_CHECK is equal to whole category object if one already exists in catList with the same name
