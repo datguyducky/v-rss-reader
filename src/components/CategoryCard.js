@@ -185,7 +185,17 @@ const CategoryCard = (props) => {
 							
 						}}
 						renderSectionHeader={ ({section: {name, key}}) => ReadCardHeader(name, key) }
-						ItemSeparatorComponent = { ({item}) => item ? ReadCardSep() : null }
+						ItemSeparatorComponent={({section: {key}}) => {
+							// if section for this items is collapsed 
+							// don't display separatorComponent
+							const INDEX = activeCatList.indexOf(key);
+							if(INDEX > -1) {
+								return ReadCardSep()
+
+							} else {
+								return null
+							}
+						}}
 					/>
 				: null
 			}
