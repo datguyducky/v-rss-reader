@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	Text, 
-	TouchableNativeFeedback,
+	Text,
 	ScrollView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import { Input, FakeInput } from '../components';
+import { Input, FakeInput, NavBtn } from '../components';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -24,19 +22,11 @@ const NewCategory = (props) => {
 	React.useLayoutEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => (
-				// welcome to React Native, where you need to use two <View/> components and 
-				// style one of them with: 'overflow: hidden'
-				// just to make bordeRadius work properly with TouchableNativeFeedback
-				<View style={{padding: 8, borderRadius: 32, overflow: 'hidden'}}>
-					<TouchableNativeFeedback 
-						onPress={saveCategoryHandler}
-						background={TouchableNativeFeedback.Ripple('#555', true)}
-					>
-						<View>
-							<Icon name='check' size={24}/>
-						</View>
-					</TouchableNativeFeedback>
-				</View>
+				<NavBtn 
+					onPress={saveCategory}
+					iconName='check'
+					iconSize={24}
+				/>
 			)
 		})
 	})
@@ -64,7 +54,7 @@ const NewCategory = (props) => {
 	}, [props.route.params?.catFeed])
 
 
-	const saveCategoryHandler = async () => {
+	const saveCategory = async () => {
 		if(catName.length <= 0) {
 			set_catError('Category name must be at least 1 character long');
 			return
@@ -73,6 +63,11 @@ const NewCategory = (props) => {
 		if(catName.length > 32) {
 			set_catError('Category name cannot be longer than 32 characters');
 			set_catName('');
+			return
+		}
+
+		if(catFeed.length <= 0) {
+			set_catError('You need to add at least one feed to a category');
 			return
 		}
 
@@ -105,7 +100,7 @@ const NewCategory = (props) => {
 	}
 
 
-	const deleteFeedHandler = (name) => {
+	const deleteFeed = (name) => {
 		// find index of clicked element in an array of feeds, then deleted it from there
 		const INDEX = catFeed.findIndex(o => o.name === name);
 		catFeed.splice(INDEX, 1);
@@ -143,7 +138,7 @@ const NewCategory = (props) => {
 							return (
 								<FakeInput 
 									key={f.id}
-									onPress={() => deleteFeedHandler(f.name)}
+									onPress={() => deleteFeed(f.name)}
 									placeholderText={f.name}
 									iconName='minus-circle'
 									width='100%'
