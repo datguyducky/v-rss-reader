@@ -19,6 +19,7 @@ import About from './screens/About';
 import Settings from './screens/Settings';
 import NewFeed from './screens/NewFeed';
 import EditCategory from './screens/EditCategory';
+import EditFeed from './screens/EditFeed';
 // end of screens
 
 import { MoreBtn } from './components/NavBtns';
@@ -72,6 +73,9 @@ const App = () => {
 								MoreBtnHandler={MoreBtnHandler} 
 							/>
 						),
+						headerLeftContainerStyle: {
+							paddingLeft: 6
+						}
 					}}
 				/>
 
@@ -84,7 +88,7 @@ const App = () => {
 							elevation: 0
 						},
 						headerRightContainerStyle: {
-							paddingRight: 4
+							paddingRight: 6
 						}
 					}}
 				/>
@@ -114,7 +118,21 @@ const App = () => {
 							elevation: 0
 						},
 						headerRightContainerStyle: {
-							paddingRight: 4
+							paddingRight: 6
+						}
+					}}
+				/>
+
+				<Stack.Screen
+					name='EditFeed'
+					component={EditFeed}
+					options={{
+						title: 'Edit Feed',
+						headerStyle: {
+							elevation: 0
+						},
+						headerRightContainerStyle: {
+							paddingRight: 6
 						}
 					}}
 				/>
@@ -123,7 +141,13 @@ const App = () => {
 					name='EditCat'
 					component={EditCategory}
 					options={{
-						title: 'Edit Category'
+						title: 'Edit Category',
+						headerStyle: {
+							elevation: 0
+						},
+						headerRightContainerStyle: {
+							paddingRight: 6
+						}
 					}}
 				/>
 			</Stack.Navigator>

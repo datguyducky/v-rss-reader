@@ -114,7 +114,7 @@ const NewCategory = (props) => {
 		set_refresh(!refresh);
 	}
 
-	console.log(catFeed);
+
 	return (
 	<ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
 		<View style={styles.NewCatWrapper}>			
