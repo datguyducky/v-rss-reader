@@ -6,7 +6,6 @@ import * as rssParser from 'react-native-rss-parser';
 import { 
 	StyleSheet, 
 	View, 
-	TextInput,
 	TouchableNativeFeedback,
 	Text
 } from 'react-native';
@@ -14,11 +13,11 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Input } from '../components';
 
 
-const NewFeed = (props) => {
+const EditFeed = (props) => {
 	const { navigate } = props.navigation;
 	const [feedName, set_feedName] = useState('');
 	const [feedHref, set_feedHref] = useState('');
-	const [feedList, set_feedList] = useState([]);
+	const [firstFeedName, set_firstFeedName] = useState('');
 	const [feedNameError, set_feedNameError] = useState('');
 	const [feedHrefError, set_feedHrefError] = useState('');
 
@@ -45,19 +44,12 @@ const NewFeed = (props) => {
 
 
 	useEffect(() => {
-		// here we're getting all feeds that are stored in AsyncStorage without any category
-		// and then we store them in state, for a later use
-		const getSavedFeeds = async () => {
-			let result = await AsyncStorage.getItem('user_nocatfeeds');
-			result = JSON.parse(result);
-	
-			if(result !== null) {
-				set_feedList(result);
-			}
-		}
-
-		getSavedFeeds();
-	}, [])
+		const editObj = props.route.params.editObj;
+		
+		set_feedName(editObj.name);
+		set_firstFeedName(editObj.name);
+		set_feedHref(editObj.href);
+	}, [props.route.params?.editObj])
 
 
 	const saveFeedHandler = async () => {
@@ -109,18 +101,7 @@ const NewFeed = (props) => {
 					return null;
 
 				} else {
-					// check if we are saving this feed to a category or without one
-					if(props.route.params?.withCategory) {
-						saveWithCategory(feedToSend);
-					} 
-
-					else if(props.route.params?.toEdit) {
-						saveWithEdit(feedToSend);
-					}
-					
-					else {
-						saveWithoutCategory(feedToSend);
-					}
+					saveWithEdit(feedToSend);
 				}
 			})
 
@@ -132,85 +113,40 @@ const NewFeed = (props) => {
 	}
 
 
-	const saveWithoutCategory = async (feedToSend) => {
-		// feeds id's are separate for feeds with category and without one
-		if(feedList.length > 0) {
-			// setting new feed ID to an ID of last element in an array + 1
-			// we're doing it so IDs won't get repeated when feeds are later deleted from an array of feeds
-			feedToSend.id = feedList[feedList.length - 1].id + 1;
-		}
-
-		// DUP_CHECK is equal to whole feed object if one already exists in feedList with the same name
-		// otherwise it is undefined and we can proceed with saving category
-		const DUP_CHECK = feedList.find(o => o.name === feedName);
-		if(DUP_CHECK) {
-			set_feedNameError('Sorry, feeds names cannot be repeated. Please choose another one.');
-			return
-		}
-		
-		// saving whole new feed object to AsyncStorage
-		feedList.push(feedToSend);
-		await AsyncStorage.setItem('user_nocatfeeds', JSON.stringify(feedList));
-		// and navigating back to 'Home' screen
-		navigate('Home');
-	}
-
-
 	const saveWithEdit = (feedToSend) => {
 		const allFeeds = props.route.params.allFeeds.feeds;
+		const editIndex = props.route.params.editIndex;
 
-		if(allFeeds.length > 0) {
-			feedToSend.id = allFeeds[allFeeds.length - 1].id + 1;
-		}
+		// setting edited feed ID to the one that was used by him before
+		feedToSend.id = allFeeds[editIndex].id;
 		
-		// DUP_CHECK is equal to a whole feed object (if it already exists with the same name) in allFeeds
-		// otherwise it is undefined and we can proceed with saving category
-		const DUP_CHECK = allFeeds.find(o => o.name === feedName);
-		if(DUP_CHECK) {
+		// DUP_CHECK is equal to an index of feed object that have the same name as the one that user just tried to submit
+		// show error only when DUP_CHECK returns index that is different from the index of a feed that we're currently editing
+		// otherwise DUP_CHECK is equal to -1
+		const DUP_CHECK = allFeeds.findIndex(o => o.name === feedName);
+		if(DUP_CHECK >= 0 && DUP_CHECK !== editIndex) {
 			set_feedNameError('Sorry, feeds names cannot be repeated. Please choose another one.');
 			return
 		}
 
-		// passing props back to 'EditCategory' screen
+		// passing props back to the 'EditCategory' screen
 		navigate('EditCat', {
-			newFeed: feedToSend,
-			catName: props.route.params.catName
+			editObj: feedToSend,
+			editIndex: props.route.params.editIndex,
+			catIndex: props.route.params.catIndex,
+			firstName: firstFeedName
 		})
 	}
 
-
-	const saveWithCategory = (feedToSend) => {
-		const feedsWithCat = props.route.params.feedsWithCat;
-
-		// feeds id's are separate for feeds with category and without one
-		if(feedsWithCat.length > 0) {
-			// setting new feed ID to an ID of last element in an array + 1
-			// we're doing it so IDs won't get repeated when this feed is later deleted from an array
-			feedToSend.id = feedsWithCat[feedsWithCat.length - 1].id + 1;
-		}
-
-		// DUP_CHECK is equal to whole feed object (if it already exists with the same name) in feedsWithCat
-		// otherwise it is undefined and we can proceed with saving category
-		const DUP_CHECK = feedsWithCat.find(o => o.name === feedName);
-		if(DUP_CHECK) {
-			set_feedNameError('Sorry, feeds names cannot be repeated. Please choose another one.');
-			return
-		}
-
-		// passing props back to 'NewCat' screen
-		navigate('NewCat', {
-			catFeed: feedToSend
-		})
-	}
 
 
 	return (
-		<View style={styles.NewFeedWrapper}>
+		<View style={styles.EditFeed__wrapper}>
 			<Input 
-				inputLabel='Feed Names'
+				inputLabel='Feed Name'
 				onError={feedNameError}
 				placeholderText='e.g. Basketball News'
-				autoFocus={true}
+				autoFocus={false}
 				value={feedName}
 				onChangeText={name => set_feedName(name)}
 			/>
@@ -225,29 +161,11 @@ const NewFeed = (props) => {
 			/>
 		</View>
 	);
-	
-}; export default NewFeed;
+}; export default EditFeed;
 
 
 const styles = StyleSheet.create({
-	NewFeed__input: {
-		borderWidth: 1,
-		borderRadius: 4,
-		fontSize: 16,
-		paddingVertical: 4,
-		paddingHorizontal: 8,
-		fontFamily: 'OpenSans-Regular',
-		backgroundColor: '#EFF0F5'
-	},
-
-	NewFeed__inputLabel: {
-		fontSize: 17,
-		marginBottom: 4,
-		fontFamily: 'Muli-SemiBold',
-		color: '#2F3037'
-	},
-
-	NewFeedWrapper: {
+	EditFeed__wrapper: {
 		paddingTop: 6,
 		flex: 1, 
 		backgroundColor: '#fff',
