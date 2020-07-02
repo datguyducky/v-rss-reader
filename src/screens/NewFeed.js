@@ -74,6 +74,15 @@ const NewFeed = (props) => {
 		}
 
 
+		if(feedName.length > 128) {
+			set_feedNameError('Sorry, but feed name cannot be longer than 128 characters.')
+			set_feedName('');
+			
+		} else {
+			set_feedNameError('')
+		}
+
+
 		// default feed object which is saved in AsyncStorage
 		const feedToSend = {
 			name: feedName,

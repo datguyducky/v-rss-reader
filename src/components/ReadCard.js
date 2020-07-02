@@ -10,7 +10,6 @@ import {
 
 const ReadCard = (props) => {
 	const { title, date_published, url, publisher_name, categories} = props;
-
 	return (
 		<TouchableWithoutFeedback onPress={() => props.restartEdit()}>
 			<View style={styles.ReadWrapper} onStartShouldSetResponder={() => true}>
