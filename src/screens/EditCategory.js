@@ -75,8 +75,20 @@ const EditCategory = (props) => {
 						renderSectionHeader={({section: {catName}}) => CategoryHeader(catName)}
 					/>
 				: null
-
 			}
+
+			<FakeInput 
+					/*onPress={() => navigate(
+						'NewFeed',
+						{
+							withCategory: true,
+							feedsWithCat: catFeed
+						}
+					)}*/
+					placeholderText='Click here to add a new feed'
+					iconName='plus-circle'
+					width='76%'
+			/>
 		</View>
 	);
 	
