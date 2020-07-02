@@ -41,7 +41,7 @@ const Home = (props) => {
 							RenameBtnHandler={RenameBtnHandler}
 						/>
 						<DeleteBtn
-							DeleteBtnHandler={CancelBtnHandler}
+							DeleteBtnHandler={DeleteBtnHandler}
 						/>
 						<SaveBtn
 							SaveBtnHandler={CancelBtnHandler}
@@ -83,6 +83,33 @@ const Home = (props) => {
 			'EditCat',
 			{ editList: editList }
 		)
+	}
+
+
+	const DeleteBtnHandler = async () => {
+		for(let i=0; i<editList.length; i++) {
+			// getting name of selected category to search for, from editList
+			const STRING_SPLIT = editList[i].split(' / ');
+			// find an index of that category in an array of all user categories
+			const CAT_INDEX = catList.findIndex(o => o.name === STRING_SPLIT[0]);
+			if(CAT_INDEX >= 0) {
+				// find index of that category feed 
+				const FEED_INDEX = catList[CAT_INDEX].feeds.findIndex(o => o.name === STRING_SPLIT[1]);
+				if(FEED_INDEX >= 0) {
+					// delete feed from category
+					catList[CAT_INDEX].feeds.splice(FEED_INDEX, 1)
+
+					// if there are no feeds left in the category, then delete the whole category
+					if(catList[CAT_INDEX].feeds.length <= 0) {
+						catList.splice(CAT_INDEX, 1);
+					}
+				}	
+			}
+		}
+
+		// saving edited categories to AsyncStorage
+		await AsyncStorage.setItem('user_categories', JSON.stringify(catList));
+		// TODO: refresh/reload Home screen when we're done with it.
 	}
 
 
@@ -176,7 +203,7 @@ const Home = (props) => {
 		}
 	}
 
-	console.log(catList)
+
 	return (
 		<>
 			<StatusBar backgroundColor={editActive ? '#0080B0' : '#fff'} />
