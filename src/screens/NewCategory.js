@@ -6,6 +6,7 @@ import {
 	ScrollView
 } from 'react-native';
 import { Input, FakeInput, NavBtn } from '../components';
+import { scrollHandler } from '../utils/Helpers';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -111,7 +112,10 @@ const NewCategory = (props) => {
 
 
 	return (
-	<ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
+	<ScrollView 
+		style={{flex: 1, backgroundColor: '#fff'}}
+		onScroll={(event) => scrollHandler(event, props)}
+	>
 		<View style={styles.NewCatWrapper}>			
 			<Input 
 				inputLabel='Category Name'
