@@ -12,6 +12,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import { CategoryCard, NoCategoryCard, NavBtn, NavMoreBtn } from '../components';
 import { YellowBox } from 'react-native';
+import { scrollHandler } from '../utils/Helpers';
 
 
 YellowBox.ignoreWarnings([
@@ -74,7 +75,12 @@ const Home = (props) => {
 				: null
 			),
 			
-			title: editActive ? 'Edit' : 'V - RSS Reader'
+			title: editActive ? 'Edit' : 'V - RSS Reader',
+			headerStyle: {
+				// fix to set header backgroundColor to proper one when edit mode is active
+				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
+				backgroundColor: editActive ? '#0080B0' : '#fff' 
+			}	
 		})
 	})
 
@@ -155,21 +161,6 @@ const Home = (props) => {
 	}, [])
 
 
-	const scrollHandler = (event) => {
-		const SCROLL_Y = event.nativeEvent.contentOffset.y;
-		props.navigation.setOptions({
-			// hide elevation (shadow) when we're at the top of this screen
-			// and show it, when we're not
-			headerStyle: {
-				elevation: SCROLL_Y <= 8 ? 0 : 4,
-				// fix to set header backgroundColor to proper one, when edit mode is active
-				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
-				backgroundColor: editActive ? '#0080B0' : '#fff' 
-			}	
-		})
-	}
-
-
 	// enable edit mode by long pressing one of the categories names
 	// enabled mode is showcased by changing background color of StatusBar, react navigation header
 	// and category header.
@@ -227,7 +218,7 @@ const Home = (props) => {
 					]}
 				>
 					<ScrollView 
-						onScroll={(event) => scrollHandler(event)} 
+						onScroll={(event) => scrollHandler(event, props, editActive)}
 						onStartShouldSetResponder={() => true} 
 					>
 						{
