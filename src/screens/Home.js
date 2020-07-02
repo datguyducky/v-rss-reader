@@ -176,7 +176,7 @@ const Home = (props) => {
 		}
 	}
 
-
+	console.log(catList)
 	return (
 		<>
 			<StatusBar backgroundColor={editActive ? '#0080B0' : '#fff'} />
@@ -200,7 +200,8 @@ const Home = (props) => {
 							feedsList.length > 0 ?
 								<NoCategoryCard 
 									feedsList={feedsList} 
-									longPressHandler={longPressHandler} 
+									longPressHandler={longPressHandler}
+									restartEdit={restartEdit}
 								/>
 							: null
 						}
