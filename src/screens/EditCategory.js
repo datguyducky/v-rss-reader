@@ -3,12 +3,10 @@ import {
 	StyleSheet, 
 	View, 
 	Text,
-	SectionList,
-	TouchableNativeFeedback
+	SectionList
 } from 'react-native';
-import { FakeInput } from '../components';
+import { FakeInput, NavBtn } from '../components';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/Feather';
 
 
 const EditCategory = (props) => {
@@ -21,27 +19,20 @@ const EditCategory = (props) => {
 
 	React.useLayoutEffect(() => {
 		props.navigation.setOptions({
-			// welcome to React Native, where you need to use two <View/> components and 
-			// style one of them with: 'overflow: hidden'
-			// just to make bordeRadius work properly with TouchableNativeFeedback
 			headerRight: () => (
-				<View style={{padding: 8, borderRadius: 32, overflow: 'hidden'}}>
-					<TouchableNativeFeedback 
-						onPress={saveChangesHandler}
-						background={TouchableNativeFeedback.Ripple('#555', true)}
-					>
-							<View>
-								<Icon name='check' size={24}/>
-							</View>
-					</TouchableNativeFeedback>
-				</View>
+				<NavBtn 
+					onPress={saveChanges}
+					iconName='check'
+					iconSize={24}
+				/>
 			)
 		})
 	})
 
 
-	const saveChangesHandler = async () => {
+	const saveChanges = async () => {
 		// saving changes to AsyncStorage
+		console.log('a');
 		await AsyncStorage.setItem('user_categories', JSON.stringify(catList));
 		navigate('Home');
 	}

@@ -22,12 +22,12 @@ import EditCategory from './screens/EditCategory';
 import EditFeed from './screens/EditFeed';
 // end of screens
 
-import { MoreBtn } from './components/NavBtns';
+import { NavMoreBtn } from './components';
 const Stack = createStackNavigator();
 
 
 const App = () => {
-	const MoreBtnHandler = (eventName, index) => {
+	const popupRoutes = (eventName, index) => {
 		// return when user clicks outside of popup menu
 		if(eventName !== 'itemSelected') return;
 
@@ -64,13 +64,14 @@ const App = () => {
 							elevation: 0
 						},
 						headerRight: () => (
-							<MoreBtn
+							<NavMoreBtn
 								actions={[
 									'New category', 
 									'About',
 									'Settings'
 								]} 
-								MoreBtnHandler={MoreBtnHandler} 
+								onPress={popupRoutes}
+								iconSize={24}
 							/>
 						),
 						headerLeftContainerStyle: {

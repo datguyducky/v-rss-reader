@@ -10,8 +10,7 @@ import {
 	TouchableWithoutFeedback
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { CategoryCard, NoCategoryCard } from '../components';
-import { CancelBtn, RenameBtn, DeleteBtn, SaveBtn, MoreBtn } from '../components/NavBtns';
+import { CategoryCard, NoCategoryCard, NavBtn, NavMoreBtn } from '../components';
 import { YellowBox } from 'react-native';
 
 
@@ -37,31 +36,40 @@ const Home = (props) => {
 			headerRight: () => (
 				editActive ? 
 					<View style={{flexDirection: 'row'}}>
-						<RenameBtn
-							RenameBtnHandler={RenameBtnHandler}
+						<NavBtn
+							onPress={editFeeds}
+							iconName='edit-3'
+							iconSize={21}
 						/>
-						<DeleteBtn
-							DeleteBtnHandler={DeleteBtnHandler}
+						<NavBtn 
+							onPress={deleteFeedFromCat}
+							iconName='trash'
+							iconSize={21}
 						/>
-						<SaveBtn
-							SaveBtnHandler={CancelBtnHandler}
+						<NavBtn 
+							onPress={CancelBtnHandler}
+							iconName='check'
+							iconSize={24}
 						/>
 					</View>
 				: 
-					<MoreBtn 
+					<NavMoreBtn 
 						actions={[
 							'New category', 
 							'About',
 							'Settings'
 						]} 
-						MoreBtnHandler={MoreBtnHandler}
+						onPress={popupRoutes}
+						iconSize={24}
 					/>
 			),
 
 			headerLeft: () => (
 				editActive ? 
-					<CancelBtn
-						CancelBtnHandler={restartEdit}
+					<NavBtn
+						onPress={restartEdit}
+						iconName='x'
+						iconSize={24}
 					/>
 				: null
 			),
@@ -76,7 +84,7 @@ const Home = (props) => {
 	}
 
 
-	const RenameBtnHandler = () => {
+	const editFeeds = () => {
 		// navigate to EditCat screen, with list of categories that user selected to edit
 		navigate(
 			'EditCat',
@@ -85,7 +93,7 @@ const Home = (props) => {
 	}
 
 
-	const DeleteBtnHandler = async () => {
+	const deleteFeedFromCat = async () => {
 		for(let i=0; i<editList.length; i++) {
 			// getting name of selected category to search for, from editList
 			const STRING_SPLIT = editList[i].split(' / ');
@@ -95,7 +103,7 @@ const Home = (props) => {
 				// find index of that category feed 
 				const FEED_INDEX = catList[CAT_INDEX].feeds.findIndex(o => o.name === STRING_SPLIT[1]);
 				if(FEED_INDEX >= 0) {
-					// delete feed from category
+					// delete feed from that category
 					catList[CAT_INDEX].feeds.splice(FEED_INDEX, 1)
 
 					// if there are no feeds left in the category, then delete the whole category
@@ -112,7 +120,7 @@ const Home = (props) => {
 	}
 
 
-	const MoreBtnHandler = (eventName, index) => {
+	const popupRoutes = (eventName, index) => {
 		// return when user clicks outside of popup menu
 		if(eventName !== 'itemSelected') return;
 
