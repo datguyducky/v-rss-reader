@@ -104,12 +104,18 @@ const CategoryCard = (props) => {
 						collapsibleCategory(keyName);
 
 					} else {
+						// collapsing all categories when edit mode is active
+						set_activeCatList([]);
+						set_refresh(!refresh);
+
 						props.longPressHandler(name);
 					}
 				}}
-				onLongPress={() =>
+				onLongPress={() => {
+					// collapsing all categories when edit mode is active
+					set_activeCatList([]);
 					props.longPressHandler(name)
-				}
+				}}
 			>
 				<View style={[
 					{

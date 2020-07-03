@@ -76,6 +76,9 @@ const App = () => {
 						),
 						headerLeftContainerStyle: {
 							paddingLeft: 6
+						},
+						headerRightContainerStyle: {
+							paddingRight: 6
 						}
 					}}
 				/>

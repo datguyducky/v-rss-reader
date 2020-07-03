@@ -11,7 +11,7 @@ export const NavBtn = (props) => {
 	const { onPress, iconName, iconSize } = props;
 	return (
 		<View style={{
-			padding: 8, 
+			padding: 6, 
 			borderRadius: 32, 
 			overflow: 'hidden'
 		}}>

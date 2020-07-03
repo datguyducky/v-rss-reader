@@ -41,9 +41,31 @@ const NoCategoryCard = (props) => {
 	// rendered at the top
 	const ReadCardHeader = () => {
 		return (
-			<TouchableNativeFeedback onPress={collapsibleCategory}>
-				<View style={styles.CardHeaderWrapper}>
+			<TouchableNativeFeedback 
+				onPress={() => {
+					if(!props.editActive) {
+						collapsibleCategory();
 
+					} else {
+						// collapsing 'feeds without category' list when edit mode is active
+						set_hideCat(true);
+						props.longPressHandler('feeds_with_no_cat');
+					}
+				}}
+				onLongPress={() => {
+					// collapsing 'feeds without category' list when edit mode is active
+					set_hideCat(true)
+					props.longPressHandler('feeds_with_no_cat')
+				}}
+			>
+				<View style={[
+					{
+						backgroundColor: props.editList.includes('feeds_with_no_cat')
+						? '#a8cee1'
+						: '#fff',
+					},
+					styles.CardHeaderWrapper
+				]}>
 						{
 							!hideCat ?
 								<Icon name='minus' size={21} />

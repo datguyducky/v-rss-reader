@@ -32,7 +32,6 @@ const EditCategory = (props) => {
 
 	const saveChanges = async () => {
 		// saving changes to AsyncStorage
-		console.log('a');
 		await AsyncStorage.setItem('user_categories', JSON.stringify(catList));
 		navigate('Home');
 	}

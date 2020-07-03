@@ -37,20 +37,22 @@ const Home = (props) => {
 			headerRight: () => (
 				editActive ? 
 					<View style={{flexDirection: 'row'}}>
+						{
+							// display icon to delete feed from a category, when is edit mode there's 
+							// selected only one item and it is not a NoCategoryCard component
+							editList.length === 1 && !editList.includes('feeds_with_no_cat') ?
+								<NavBtn
+									onPress={deleteFeedFromCat}
+									iconName='trash'
+									iconSize={21}
+								/>
+							: null
+						}
+
 						<NavBtn
 							onPress={editFeeds}
 							iconName='edit-3'
 							iconSize={21}
-						/>
-						<NavBtn 
-							onPress={deleteFeedFromCat}
-							iconName='trash'
-							iconSize={21}
-						/>
-						<NavBtn 
-							onPress={CancelBtnHandler}
-							iconName='check'
-							iconSize={24}
 						/>
 					</View>
 				: 
@@ -69,7 +71,7 @@ const Home = (props) => {
 				editActive ? 
 					<NavBtn
 						onPress={restartEdit}
-						iconName='x'
+						iconName='arrow-left'
 						iconSize={24}
 					/>
 				: null
@@ -85,11 +87,6 @@ const Home = (props) => {
 	})
 
 
-	const CancelBtnHandler = () => {
-		console.log('works...');
-	}
-
-
 	const editFeeds = () => {
 		// navigate to EditCat screen, with list of categories that user selected to edit
 		navigate(
@@ -100,26 +97,20 @@ const Home = (props) => {
 
 
 	const deleteFeedFromCat = async () => {
-		for(let i=0; i<editList.length; i++) {
-			// getting name of selected category to search for, from editList
-			const STRING_SPLIT = editList[i].split(' / ');
-			// find an index of that category in an array of all user categories
-			const CAT_INDEX = catList.findIndex(o => o.name === STRING_SPLIT[0]);
-			if(CAT_INDEX >= 0) {
-				// find index of that category feed 
-				const FEED_INDEX = catList[CAT_INDEX].feeds.findIndex(o => o.name === STRING_SPLIT[1]);
-				if(FEED_INDEX >= 0) {
-					// delete feed from that category
-					catList[CAT_INDEX].feeds.splice(FEED_INDEX, 1)
+		// selected feed category and name
+		const STRING_SPLIT = editList[0].split(' / ');
+		// index of selected feed in an array of all categories created by user
+		const CAT_I = catList.findIndex(o => o.name === STRING_SPLIT[0]);
+		// index of selected feed in that category
+		const FEED_I = catList[CAT_I].feeds.findIndex(o => o.name === STRING_SPLIT[1]);
+		// delete selected feed from that category
+		catList[CAT_I].feeds.splice(FEED_I, 1);
 
-					// if there are no feeds left in the category, then delete the whole category
-					if(catList[CAT_INDEX].feeds.length <= 0) {
-						catList.splice(CAT_INDEX, 1);
-					}
-				}	
-			}
+		// delete whole category if there isn't any feeds left in it
+		if(catList[CAT_I].feeds.length <= 0) {
+			catList.splice(CAT_I, 1);
 		}
-
+		
 		// saving edited categories to AsyncStorage
 		await AsyncStorage.setItem('user_categories', JSON.stringify(catList));
 		// TODO: refresh/reload Home screen when we're done with it.
@@ -227,6 +218,8 @@ const Home = (props) => {
 									feedsList={feedsList} 
 									longPressHandler={longPressHandler}
 									restartEdit={restartEdit}
+									editActive={editActive}
+									editList={editList}
 								/>
 							: null
 						}
