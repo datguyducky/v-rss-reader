@@ -15,6 +15,7 @@ const EditCategory = (props) => {
 	const [loaded, set_loaded] = useState(false);
 	const [catList, set_catList] = useState([]);
 	const [refresh, set_refresh] = useState(false);
+	const { feedsList } = props.route.params;
 
 
 	React.useLayoutEffect(() => {
@@ -33,6 +34,7 @@ const EditCategory = (props) => {
 	const saveChanges = async () => {
 		// saving changes to AsyncStorage
 		await AsyncStorage.setItem('user_categories', JSON.stringify(catList));
+		await AsyncStorage.setItem('user_nocatfeeds', JSON.stringify(feedsList))
 		navigate('Home');
 	}
 
@@ -49,13 +51,23 @@ const EditCategory = (props) => {
 			// INDEX = index of category or -1 if not found
 			if(INDEX >= 0) {
 				// add another feed to category if exists already
-				toEdit[INDEX].data.push(STRING_SPLIT[1]);
+				// check if this is a normal category. Feeds without category are saved
+				// under a name: 'feeds_with_no_cat' and feeds names are saved to data at a first run
+				if(STRING_SPLIT[0] !== 'feeds_with_no_cat') {
+					toEdit[INDEX].data.push(STRING_SPLIT[1]);
+				} 
+				
 			} else {
-				// if not, then send initial object to toEdit state
+				// send initial object to toEdit state
 				const firstSave = {
 					catName: STRING_SPLIT[0], // category name
 					data: [STRING_SPLIT[1]] // category feed name
 				}
+
+				if(STRING_SPLIT[0] === 'feeds_with_no_cat') {
+					firstSave.data = feedsList.map(o => o.name);
+				}
+
 				toEdit.push(firstSave);
 			}
 		}
@@ -79,75 +91,89 @@ const EditCategory = (props) => {
 
 
 	useEffect(() => {
-		// updating newFeeds state with a new feed that was added in 'NewFeed' screen
+		// adding a new feed to the feeds list (for category and without cat state) that was created in a NewFeed screen
 		if(props.route.params?.newFeed) {
-			const newFeed = props.route.params.newFeed;
-			const CAT_NAME = props.route.params.catName;
+			const { newFeed, CAT_NAME } = props.route.params;
+			
+			// index of the category that we added this feed to
+			// used by SectionList
+			const TO_EDIT_I = toEdit.findIndex(o => o.catName === CAT_NAME);
+			toEdit[TO_EDIT_I].data.push(newFeed.name)
+			
+			if(CAT_NAME === 'feeds_with_no_cat') {
+				// adding new feed to list of feeds without category
+				// used by AsyncStorage
+				feedsList.push(newFeed);
 
-			// index of the category to which we want to add this new feed
-			// to a state with all the categories saved in AsyncStorage
-			const LIST_INDEX = catList.findIndex(o => o.name === CAT_NAME);
-			if(LIST_INDEX >= 0) {
-				catList[LIST_INDEX].feeds.push(newFeed);
+			} else {
+				// index of the category to which we added this new feed
+				// used by AsyncStorage
+				const CAT_I = catList.findIndex(o => o.name === CAT_NAME);
+				catList[CAT_I].feeds.push(newFeed);
 			}
 
-			// index of the category to which we want to add this new feed
-			// to a state with feeds names that we're currently editing
-			const DATA_INDEX = toEdit.findIndex(o => o.catName === CAT_NAME);
-			if(DATA_INDEX >= 0) {
-				toEdit[DATA_INDEX].data.push(newFeed.name);
-			}
-
-
-			// set refresh state to different one, so the EditCategory screen gets refreshed
+			// so the changes are now visible
 			set_refresh(!refresh);
 		}
 	}, [props.route.params?.newFeed])
 
 
 	useEffect(() => {
-		if(props.route.params?.editObj) {
-			const editObj = props.route.params.editObj;
-			const EDIT_INDEX = props.route.params.editIndex;
-			const CAT_INDEX = props.route.params.catIndex;
-			const firstName = props.route.params.firstName; // feed name before edit
+		if(props.route.params?.EDIT_OBJ) {
+			const { EDIT_OBJ, FEED_I, CAT_I, firstName, IS_CAT } = props.route.params;
+
+			// for feed with a category
+			if(IS_CAT) {
+				// edit selected feed with a new value that was passed from EditFeed screen
+				// used by AssyncStorage
+				catList[CAT_I].feeds[FEED_I] = EDIT_OBJ;
+				
+				// update feed name that we just edited
+				// used by SectionList
+				const CAT_DATA_I = toEdit.findIndex(o => o.catName === catList[CAT_I].name);
+				const FEED_DATA_I = toEdit[CAT_DATA_I].data.indexOf(firstName);
+				toEdit[CAT_DATA_I].data[FEED_DATA_I] = EDIT_OBJ.name;
+
+			} else {
+				// for feeds without a category
+				// edit selected with a new value that was passed from EditFeed screen
+				// used by AsyncStorage
+				feedsList[FEED_I] = EDIT_OBJ;
+
+				// update feed name that we just edited
+				// used by SectionList
+				const CAT_DATA_I = toEdit.findIndex(o => o.catName === 'feeds_with_no_cat');
+				const FEED_DATA_I = toEdit[CAT_DATA_I].data.indexOf(firstName);
+				toEdit[CAT_DATA_I].data[FEED_DATA_I] = EDIT_OBJ.name;
+			}
 			
-			// update selected feed object that's stored inside an array of all feeds for this, selected category,
-			// with new value
-			catList[CAT_INDEX].feeds[EDIT_INDEX] = editObj;
-
-			// update name of feed that we edited, with the new one
-			// used by SectionList
-			const CAT_DATA_INDEX = toEdit.findIndex(o => o.catName === catList[CAT_INDEX].name);
-			const FEED_DATA_INDEX = toEdit[CAT_DATA_INDEX].data.indexOf(firstName);
-			toEdit[CAT_DATA_INDEX].data[FEED_DATA_INDEX] = editObj.name;
-
-
 			set_refresh(!refresh);
 		}
-	}, [props.route.params?.editObj])
+	}, [props.route.params?.EDIT_OBJ])
 
 
 	const CategoryHeader = (catName) => {
+		const CAT_NAME = catName === 'feeds_with_no_cat' ? 'Feeds without category' : catName;
+		
 		return (
 			<Text style={styles.CatHeader}>
-				{'Category: ' + catName}
+				{ 'Category: ' + CAT_NAME }
 			</Text>
 		)
 	}
 
 
-	const CategoryFooter = (catName) => {
+	const CategoryFooter = (CAT_NAME) => {
 		// index of category to which we want add a new feed
-		if(catList.length > 0) { var INDEX = catList.findIndex(o => o.name === catName)};
+		if(catList.length > 0) { var INDEX = catList.findIndex(o => o.name === CAT_NAME)};
 		return (
 			<FakeInput 
 				onPress={() => navigate(
 					'NewFeed',
 					{
 						toEdit: true,
-						allFeeds: catList[INDEX] || [],
-						catName: catName
+						FEEDS_LIST: INDEX >= 0 ? catList[INDEX].feeds : feedsList,
+						CAT_NAME: CAT_NAME
 					}
 				)}
 				placeholderText='Click here to add a new feed'
@@ -158,22 +184,36 @@ const EditCategory = (props) => {
 	}
 
 
-	const toEditFeed = (feedName, catName) => {
-		// index of the category that we want to edit feed in
-		const CAT_INDEX = catList.findIndex(o => o.name === catName);
-		// index of feed in an array of feeds for this category
-		const FEED_INDEX = catList[CAT_INDEX].feeds.findIndex(o => o.name === feedName);
+	const toEditFeed = (FEED_NAME, CAT_NAME) => {
+		let FEED_I = 0;
+		let CAT_I = 0;
+		let EDIT_OBJ = {};
+		let IS_CAT = true;
 
-		// whole feed object (href, name and id)
-		const toEditObj = catList[CAT_INDEX].feeds[FEED_INDEX];
+		if(CAT_NAME === 'feeds_with_no_cat') {
+			// find an index of the feed we want to edit (without a category)
+			FEED_I = feedsList.findIndex(o => o.name === FEED_NAME);
+			EDIT_OBJ = feedsList[FEED_I];
+
+			IS_CAT = false;
+
+		} else {
+			// find an index of a category in which this feed we want to edit exists in
+			CAT_I = catList.findIndex(o => o.name === CAT_NAME);
+			// index of the feed itself
+			FEED_I = catList[CAT_I].feeds.findIndex(o => o.name === FEED_NAME);
+
+			EDIT_OBJ = catList[CAT_I].feeds[FEED_I]
+		}
 
 		navigate(
 			'EditFeed',
 			{
-				editObj: toEditObj,
-				allFeeds: catList[CAT_INDEX] || [],
-				catIndex: CAT_INDEX,
-				editIndex: FEED_INDEX
+				EDIT_OBJ: EDIT_OBJ, // feed obj
+				FEEDS_LIST: IS_CAT ? catList[CAT_I].feeds : feedsList, // list of all feeds for this category
+				CAT_I: CAT_I, // this category index
+				FEED_I: FEED_I, // this feed index
+				IS_CAT: IS_CAT // check if we're editing feed with or without a category
 			}
 		)
 	}

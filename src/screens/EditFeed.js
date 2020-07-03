@@ -17,6 +17,7 @@ const EditFeed = (props) => {
 	const [firstFeedName, set_firstFeedName] = useState('');
 	const [feedNameError, set_feedNameError] = useState('');
 	const [feedHrefError, set_feedHrefError] = useState('');
+	const { EDIT_OBJ, FEEDS_LIST,  CAT_I, FEED_I, IS_CAT } = props.route.params;
 
 
 	React.useLayoutEffect(() => {
@@ -33,12 +34,10 @@ const EditFeed = (props) => {
 
 
 	useEffect(() => {
-		const editObj = props.route.params.editObj;
-		
-		set_feedName(editObj.name);
-		set_firstFeedName(editObj.name);
-		set_feedHref(editObj.href);
-	}, [props.route.params?.editObj])
+		set_feedName(EDIT_OBJ.name);
+		set_firstFeedName(EDIT_OBJ.name);
+		set_feedHref(EDIT_OBJ.href);
+	}, [props.route.params?.EDIT_OBJ])
 
 
 	const saveEditedFeed = async () => {
@@ -90,7 +89,7 @@ const EditFeed = (props) => {
 					return null;
 
 				} else {
-					saveWithEdit(feedToSend);
+					editFeed(feedToSend);
 				}
 			})
 
@@ -102,27 +101,25 @@ const EditFeed = (props) => {
 	}
 
 
-	const saveWithEdit = (feedToSend) => {
-		const allFeeds = props.route.params.allFeeds.feeds;
-		const editIndex = props.route.params.editIndex;
-
-		// setting edited feed ID to the one that was used by him before
-		feedToSend.id = allFeeds[editIndex].id;
+	const editFeed = (feedToSend) => {
+		// setting edited feed ID to the one that was used by it before
+		feedToSend.id = FEEDS_LIST[FEED_I].id;
 		
 		// DUP_CHECK is equal to an index of feed object that have the same name as the one that user just tried to submit
 		// show error only when DUP_CHECK returns index that is different from the index of a feed that we're currently editing
 		// otherwise DUP_CHECK is equal to -1
-		const DUP_CHECK = allFeeds.findIndex(o => o.name === feedName);
-		if(DUP_CHECK >= 0 && DUP_CHECK !== editIndex) {
+		const DUP_CHECK = FEEDS_LIST.findIndex(o => o.name === feedName);
+		if(DUP_CHECK >= 0 && DUP_CHECK !== FEED_I) {
 			set_feedNameError('Sorry, feeds names cannot be repeated. Please choose another one.');
 			return
 		}
 
 		// passing props back to the 'EditCategory' screen
 		navigate('EditCat', {
-			editObj: feedToSend,
-			editIndex: props.route.params.editIndex,
-			catIndex: props.route.params.catIndex,
+			EDIT_OBJ: feedToSend,
+			FEED_I: FEED_I,
+			CAT_I: CAT_I,
+			IS_CAT: IS_CAT,
 			firstName: firstFeedName
 		})
 	}

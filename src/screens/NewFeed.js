@@ -154,15 +154,15 @@ const NewFeed = (props) => {
 
 
 	const saveWithEdit = (feedToSend) => {
-		const allFeeds = props.route.params.allFeeds.feeds;
+		const FEEDS_LIST = props.route.params.FEEDS_LIST;
 
-		if(allFeeds.length > 0) {
-			feedToSend.id = allFeeds[allFeeds.length - 1].id + 1;
+		if(FEEDS_LIST.length > 0) {
+			feedToSend.id = FEEDS_LIST[FEEDS_LIST.length - 1].id + 1;
 		}
 		
 		// DUP_CHECK is equal to a whole feed object (if it already exists with the same name) in allFeeds
 		// otherwise it is undefined and we can proceed with saving category
-		const DUP_CHECK = allFeeds.find(o => o.name === feedName);
+		const DUP_CHECK = FEEDS_LIST.find(o => o.name === feedName);
 		if(DUP_CHECK) {
 			set_feedNameError('Sorry, feeds names cannot be repeated. Please choose another one.');
 			return
@@ -171,7 +171,7 @@ const NewFeed = (props) => {
 		// passing props back to 'EditCategory' screen
 		navigate('EditCat', {
 			newFeed: feedToSend,
-			catName: props.route.params.catName
+			CAT_NAME: props.route.params.CAT_NAME
 		})
 	}
 
