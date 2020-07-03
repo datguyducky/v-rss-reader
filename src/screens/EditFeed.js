@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-import AsyncStorage from '@react-native-community/async-storage';
 import * as rssParser from 'react-native-rss-parser';
 
 import { 
@@ -17,17 +15,24 @@ const EditFeed = (props) => {
 	const [firstFeedName, set_firstFeedName] = useState('');
 	const [feedNameError, set_feedNameError] = useState('');
 	const [feedHrefError, set_feedHrefError] = useState('');
-	const { EDIT_OBJ, FEEDS_LIST,  CAT_I, FEED_I, IS_CAT } = props.route.params;
+	const { EDIT_OBJ, FEEDS_LIST, CAT_I, FEED_I, IS_CAT } = props.route.params;
 
 
 	React.useLayoutEffect(() => {
 		props.navigation.setOptions({
 			headerRight: () => (
-				<NavBtn 
-					onPress={saveEditedFeed}
-					iconName='check'
-					iconSize={24}
-				/>
+				<View style={{flexDirection: 'row'}}>
+					<NavBtn
+						onPress={deleteFeed}
+						iconName='trash'
+						iconSize={21}
+					/>
+					<NavBtn 
+						onPress={saveEditedFeed}
+						iconName='check'
+						iconSize={24}
+					/>
+				</View>
 			)
 		})
 	})
@@ -98,6 +103,17 @@ const EditFeed = (props) => {
 				console.log(err);
 				return null;
 			});
+	}
+
+
+	const deleteFeed = () => {
+		FEEDS_LIST.splice(FEED_I, 1);
+		navigate('EditCat', { 
+			deleted: true,
+			FEED_NAME: feedName,
+			IS_CAT: IS_CAT,
+			CAT_I: CAT_I
+		});
 	}
 
 

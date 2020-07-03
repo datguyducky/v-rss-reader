@@ -32,6 +32,16 @@ const EditCategory = (props) => {
 
 
 	const saveChanges = async () => {
+		for(let i=0; i<toEdit.length; i++) {
+			// deleting whole category if there aren't any feeds left in it
+			const CAT_I = catList.findIndex(o => o.name === toEdit[i].catName);
+			if(CAT_I >= 0) {
+				if(catList[CAT_I].feeds.length <= 0) {
+					catList.splice(CAT_I, 1);
+				}
+			}
+		}
+
 		// saving changes to AsyncStorage
 		await AsyncStorage.setItem('user_categories', JSON.stringify(catList));
 		await AsyncStorage.setItem('user_nocatfeeds', JSON.stringify(feedsList))
@@ -116,6 +126,22 @@ const EditCategory = (props) => {
 			set_refresh(!refresh);
 		}
 	}, [props.route.params?.newFeed])
+
+
+	useEffect(() => {
+		if(props.route.params.deleted) {
+			const { IS_CAT, FEED_NAME, CAT_I } = props.route.params;
+			const CAT_NAME = IS_CAT ? catList[CAT_I].name : 'feeds_with_no_cat';
+
+			// remove feed name that was just deleted by user from list of feeds that we edit
+			// used by SectionList
+			const CAT_DATA_I = toEdit.findIndex(o => o.catName === CAT_NAME);
+			const FEED_DATA_I = toEdit[CAT_DATA_I].data.indexOf(FEED_NAME);
+			toEdit[CAT_DATA_I].data.splice(FEED_DATA_I, 1);
+	
+			set_refresh(!refresh);
+		}
+	}, [props.route.params?.deleted, props.route.params?.FEED_NAME])
 
 
 	useEffect(() => {
