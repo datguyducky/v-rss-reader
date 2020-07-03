@@ -81,17 +81,22 @@ const Home = (props) => {
 			headerStyle: {
 				// fix to set header backgroundColor to proper one when edit mode is active
 				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
-				backgroundColor: editActive ? '#0080B0' : '#fff' 
+				backgroundColor: editActive ? '#0080B0' : '#fff',
+				elevation: 0
 			}	
 		})
 	})
 
 
 	const editFeeds = () => {
-		// navigate to EditCat screen, with list of categories that user selected to edit
+		// navigate to EditCat screen, with a list of categories that user selected to edit
+		// and with an array of feeds objects without a category
 		navigate(
 			'EditCat',
-			{ editList: editList }
+			{ 
+				editList: editList, 
+				feedsList: feedsList // feeds without category
+			}
 		)
 	}
 
