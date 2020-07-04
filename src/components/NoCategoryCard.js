@@ -155,15 +155,17 @@ const NoCategoryCard = (props) => {
 const styles = StyleSheet.create({
 	CardWrapper: {
 		backgroundColor: '#fff',
-		paddingTop: 8,
-		flex: 1
+		//paddingTop: 8,
+		flex: 1,
+		margin: 0
 	},
 
 	CardHeaderWrapper: {
 		fontSize: 21,
 		paddingHorizontal: 12,
 		flexDirection: 'row',
-		alignItems: 'center'
+		alignItems: 'center',
+		paddingVertical: 4
 	},
 
 	CardHeader: {

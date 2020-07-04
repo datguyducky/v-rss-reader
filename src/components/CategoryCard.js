@@ -214,7 +214,7 @@ const CategoryCard = (props) => {
 const styles = StyleSheet.create({
 	CardWrapper: {
 		backgroundColor: '#fff',
-		paddingTop: 4,
+		
 	},
 
 	CardHeaderWrapper: {
