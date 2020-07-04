@@ -81,7 +81,7 @@ const Home = (props) => {
 			headerStyle: {
 				// fix to set header backgroundColor to proper one when edit mode is active
 				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
-				backgroundColor: editActive ? '#0080B0' : '#fff',
+				backgroundColor: editActive ? '#0089BC' : '#fff',
 				elevation: 0
 			}	
 		})
@@ -167,7 +167,7 @@ const Home = (props) => {
 			set_editActive(true);
 			props.navigation.setOptions({
 				headerStyle: {
-					backgroundColor: '#0080B0'
+					backgroundColor: '#0089BC'
 				}
 			});
 		}
@@ -200,7 +200,7 @@ const Home = (props) => {
 
 	return (
 		<>
-			<StatusBar backgroundColor={editActive ? '#0080B0' : '#fff'} />
+			<StatusBar backgroundColor={editActive ? '#0089BC' : '#fff'} />
 			
 			<TouchableWithoutFeedback onPress={() => restartEdit()}>
 				<View 
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
 		borderRadius: 56,
 		overflow: 'hidden',
 		margin: 16,
-		backgroundColor: '#0080B0',
+		backgroundColor: '#0089BC',
 		position: 'absolute',
 		bottom: 0,
 		right: 0,
