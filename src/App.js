@@ -47,6 +47,7 @@ const App = () => {
 				screenOptions={{
 					headerStyle: {
 						backgroundColor: '#fff',
+						elevation: 0
 					},
 					headerTintColor: '#050505',
 					headerTitleStyle: {
@@ -61,9 +62,6 @@ const App = () => {
 					component={Home}
 					options={{
 						title: 'V - RSS Reader',
-						headerStyle: {
-							elevation: 0
-						},
 						headerRight: () => (
 							<NavMoreBtn
 								actions={[
@@ -89,9 +87,6 @@ const App = () => {
 					component={NewCategory}
 					options={{
 						title: 'New Category',
-						headerStyle: {
-							elevation: 0
-						},
 						headerRightContainerStyle: {
 							paddingRight: 6
 						}
@@ -119,9 +114,6 @@ const App = () => {
 					component={NewFeed}
 					options={{
 						title: 'New RSS feed',
-						headerStyle: {
-							elevation: 0
-						},
 						headerRightContainerStyle: {
 							paddingRight: 6
 						}
@@ -133,9 +125,6 @@ const App = () => {
 					component={EditFeed}
 					options={{
 						title: 'Edit Feed',
-						headerStyle: {
-							elevation: 0
-						},
 						headerRightContainerStyle: {
 							paddingRight: 6
 						}
@@ -147,9 +136,6 @@ const App = () => {
 					component={EditCategory}
 					options={{
 						title: 'Edit Category',
-						headerStyle: {
-							elevation: 0
-						},
 						headerRightContainerStyle: {
 							paddingRight: 6
 						}

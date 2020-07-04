@@ -2,10 +2,10 @@ import React from 'react';
 import { 
 	View,
 	TouchableOpacity,
-	Text,
 	StyleSheet
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { CustomText } from '../components';
 
 
 export const FakeInput = (props) => {
@@ -21,9 +21,9 @@ export const FakeInput = (props) => {
 			}}
 		>	
 			<View style={styles.fakeInput}>
-				<Text style={styles.fakeInput__placeholder}> 
+				<CustomText style={styles.fakeInput__placeholder}> 
 					{placeholderText} 
-				</Text>
+				</CustomText>
 			
 				<Icon 
 					name={iconName} 

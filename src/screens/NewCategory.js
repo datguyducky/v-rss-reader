@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	Text,
 	ScrollView
 } from 'react-native';
-import { Input, FakeInput, NavBtn } from '../components';
+import { Input, FakeInput, NavBtn, CustomText } from '../components';
 import { scrollHandler } from '../utils/Helpers';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -132,9 +131,9 @@ const NewCategory = (props) => {
 					maxWidth: 320
 				}}
 			>
-				<Text style={styles.fakeInput__label}>
+				<CustomText style={styles.fakeInput__label}>
 					Category Feeds
-				</Text>
+				</CustomText>
 
 				{
 					catFeed.length > 0 ?

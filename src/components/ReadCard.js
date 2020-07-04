@@ -1,11 +1,10 @@
 import React from 'react';
-
 import { 
 	StyleSheet, 
-	View, 
-	Text,
+	View,
 	TouchableWithoutFeedback
 } from 'react-native';
+import { CustomText } from '../components';
 
 
 const ReadCard = (props) => {
@@ -13,17 +12,17 @@ const ReadCard = (props) => {
 	return (
 		<TouchableWithoutFeedback onPress={() => props.restartEdit()}>
 			<View style={styles.ReadWrapper} onStartShouldSetResponder={() => true}>
-				<Text style={styles.ReadPubCat}>
+				<CustomText style={styles.ReadPubCat}>
 					{ publisher_name + ' / ' + categories }
-				</Text>
+				</CustomText>
 	
-				<Text style={styles.ReadTitle}>
+				<CustomText style={styles.ReadTitle}>
 					{ title }
-				</Text>
+				</CustomText>
 	
-				<Text style={styles.ReadDate}>
+				<CustomText style={styles.ReadDate}>
 					Published: { date_published }
-				</Text>
+				</CustomText>
 			</View>
 		</TouchableWithoutFeedback>
 	);

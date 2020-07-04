@@ -1,10 +1,10 @@
 import React from 'react';
 import { 
 	View,
-	Text,
 	StyleSheet,
 	TextInput
 } from 'react-native';
+import { CustomText } from '../components';
 
 
 export const Input = (props) => {
@@ -15,9 +15,9 @@ export const Input = (props) => {
 			width: '76%',
 			maxWidth: 320 
 		}}>
-			<Text style={styles.input__label}>
+			<CustomText style={styles.input__label}>
 				{inputLabel}
-			</Text>
+			</CustomText>
 			<TextInput
 				autoCapitalize='none'
 				autoFocus={autoFocus}
@@ -33,14 +33,14 @@ export const Input = (props) => {
 				]}
 			/>
 
-			<Text style={[
+			<CustomText style={[
 				styles.input__error,
 				{ 
 					display: onError.length > 0 ? 'flex' : 'none' 
 				}
 			]}>
 				{onError}
-			</Text>
+			</CustomText>
 		</View>
 	);
 }; export default Input;
