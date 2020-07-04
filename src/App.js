@@ -51,6 +51,7 @@ const App = () => {
 					headerTintColor: '#050505',
 					headerTitleStyle: {
 						fontWeight: '600',
+						fontFamily: 'Muli-Bold'
 					}
 				}}
 				initialRouteName='Home'

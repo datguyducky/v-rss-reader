@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { FakeInput, NavBtn } from '../components';
 import AsyncStorage from '@react-native-community/async-storage';
+import { scrollHandler } from '../utils/Helpers';
 
 
 const EditCategory = (props) => {
@@ -264,6 +265,7 @@ const EditCategory = (props) => {
 						}}
 						renderSectionHeader={({section: {catName}}) => CategoryHeader(catName)}
 						renderSectionFooter={({section: {catName}}) => CategoryFooter(catName)}
+						onScroll={(event) => scrollHandler(event, props)}
 					/>
 				: null
 			}

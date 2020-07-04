@@ -67,7 +67,7 @@ const NoCategoryCard = (props) => {
 					styles.CardHeaderWrapper
 				]}>
 						{
-							!hideCat ?
+							!hideCat && props.editList.length <= 0 ?
 								<Icon name='minus' size={21} />
 							: 
 								<Icon name='plus' size={21} />
@@ -126,7 +126,7 @@ const NoCategoryCard = (props) => {
 	return (
 		<View style={styles.CardWrapper}>
 			{
-				rssObj.length > 0 && !hideCat ?
+				rssObj.length > 0 && !hideCat && props.editList.length <= 0 ?
 					<FlatList
 						style={{minHeight: '100%'}}
 						data = {rssObj}
@@ -143,6 +143,12 @@ const NoCategoryCard = (props) => {
 						}
 						ListHeaderComponent = { ReadCardHeader }
 						ItemSeparatorComponent = { ReadCardSep }
+						ListFooterComponent = {() => 
+							<View/>
+						}
+						ListFooterComponentStyle = {{
+							paddingBottom: 12
+						}}
 					/>
 				: <ReadCardHeader />
 			}
@@ -155,9 +161,7 @@ const NoCategoryCard = (props) => {
 const styles = StyleSheet.create({
 	CardWrapper: {
 		backgroundColor: '#fff',
-		//paddingTop: 8,
-		flex: 1,
-		margin: 0
+		flex: 1
 	},
 
 	CardHeaderWrapper: {
