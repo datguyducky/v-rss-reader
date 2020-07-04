@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	Text,
 	SectionList
 } from 'react-native';
-import { FakeInput, NavBtn } from '../components';
+import { FakeInput, NavBtn, CustomText } from '../components';
 import AsyncStorage from '@react-native-community/async-storage';
 import { scrollHandler } from '../utils/Helpers';
 
@@ -183,9 +182,9 @@ const EditCategory = (props) => {
 		const CAT_NAME = catName === 'feeds_with_no_cat' ? 'Feeds without category' : catName;
 		
 		return (
-			<Text style={styles.CatHeader}>
+			<CustomText style={styles.CatHeader}>
 				{ 'Category: ' + CAT_NAME }
-			</Text>
+			</CustomText>
 		)
 	}
 

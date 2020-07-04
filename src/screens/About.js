@@ -2,11 +2,12 @@ import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { CustomText } from '../components';
 import Icon from 'react-native-vector-icons/Feather';
+import { scrollHandler } from '../utils/Helpers';
 
 
-const Home = () => {
+const Home = (props) => {
 	return (
-		<ScrollView style={styles.HomeWrapper}>
+		<ScrollView style={styles.HomeWrapper} onScroll={(event) => scrollHandler(event, props)}>
 			
 			<View style={{marginBottom: 12}}>
 				<Text style={styles.SubHeader}>Introduction</Text>
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingHorizontal: 12,
 		paddingVertical: 4,
-		backgroundColor: '#EFF0F5'
+		backgroundColor: '#fff'
 	},
 
 	SubHeader: {

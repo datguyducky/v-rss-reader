@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { CustomText } from '../components';
 
 
 const Home = () => {
 	return (
 		<View style={styles.HomeWrapper}>
-			<Text style={{color: "#9194A1"}}>
+			<CustomText style={{color: "#9194A1"}}>
 				settings
-			</Text>
+			</CustomText>
 		</View>
 	);
 	

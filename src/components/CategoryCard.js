@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 import { 
 	StyleSheet, 
-	View, 
-	Text,
+	View,
 	SectionList,
 	TouchableNativeFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 import ReadCard from './ReadCard';
+import { CustomText } from '../components';
 
 
 const CategoryCard = (props) => {
@@ -133,9 +133,9 @@ const CategoryCard = (props) => {
 								
 						}
 
-						<Text style={styles.CardHeader}>
+						<CustomText style={styles.CardHeader}>
 							{name}
-						</Text>
+						</CustomText>
 				</View>
 			</TouchableNativeFeedback>
 		)

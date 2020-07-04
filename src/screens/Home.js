@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { 
 	StyleSheet, 
-	View, 
-	Text,
+	View,
 	TouchableNativeFeedback,
 	ScrollView,
 	StatusBar,

@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	Text, 
 	FlatList,
 	TouchableNativeFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 import ReadCard from './ReadCard';
+import { CustomText } from '../components';
 
 
 const NoCategoryCard = (props) => {
@@ -73,9 +73,9 @@ const NoCategoryCard = (props) => {
 								<Icon name='plus' size={21} />
 						}
 
-						<Text style={styles.CardHeader}>
+						<CustomText style={styles.CardHeader}>
 							Feeds without category
-						</Text>
+						</CustomText>
 				</View>
 			</TouchableNativeFeedback>
 		)
