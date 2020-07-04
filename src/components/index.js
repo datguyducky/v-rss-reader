@@ -4,6 +4,7 @@ import Input from './Input';
 import NoCategoryCard from './NoCategoryCard';
 import ReadCard from './ReadCard';
 import { NavBtn, NavMoreBtn } from './NavBtn';
+import CustomText from './CustomText';
 
 export {
 	CategoryCard,
@@ -12,5 +13,6 @@ export {
 	NoCategoryCard,
 	ReadCard,
 	NavBtn,
-	NavMoreBtn
+	NavMoreBtn,
+	CustomText
 }

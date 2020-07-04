@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import { 
 	StyleSheet, 
@@ -7,12 +7,19 @@ import {
 	TouchableNativeFeedback,
 	ScrollView,
 	StatusBar,
-	TouchableWithoutFeedback
+	TouchableWithoutFeedback,
+	BackHandler
 } from 'react-native';
+import { 
+	CategoryCard, 
+	NoCategoryCard, 
+	NavBtn, 
+	NavMoreBtn,
+	CustomText
+} from '../components';
 import AsyncStorage from '@react-native-community/async-storage';
-import { CategoryCard, NoCategoryCard, NavBtn, NavMoreBtn } from '../components';
 import { YellowBox } from 'react-native';
-import { scrollHandler } from '../utils/Helpers';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 YellowBox.ignoreWarnings([
@@ -30,6 +37,31 @@ const Home = (props) => {
 	const [editActive, set_editActive] = useState(false);
 	const [editList, set_editList] = useState([]);
 	const [refresh, set_refresh] = useState(false);
+	const [offsetY, set_offsetY] = useState(0);
+
+	const mainScroll = useRef(null);
+
+	
+	useFocusEffect(
+		React.useCallback(() => {
+			const onBackPress = () => {
+				// custom psychical back button (for Android) handler
+				// only used when edit mode is active
+				if (editActive) {
+					restartEdit();
+					return true;
+
+				} else {
+					return false;
+				}
+			};
+	
+			BackHandler.addEventListener('hardwareBackPress', onBackPress);
+	
+			return () =>
+				BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+		}, [editActive, restartEdit])
+	);
 
 
 	React.useLayoutEffect(() => {
@@ -82,7 +114,7 @@ const Home = (props) => {
 				// fix to set header backgroundColor to proper one when edit mode is active
 				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
 				backgroundColor: editActive ? '#0089BC' : '#fff',
-				elevation: 0
+				elevation: offsetY >= 8 ? 4 : 0
 			}	
 		})
 	})
@@ -198,6 +230,11 @@ const Home = (props) => {
 	}
 
 
+	const handleScroll = (event) => {
+		set_offsetY(event.nativeEvent.contentOffset.y);
+	}
+
+
 	return (
 		<>
 			<StatusBar backgroundColor={editActive ? '#0089BC' : '#fff'} />
@@ -208,58 +245,88 @@ const Home = (props) => {
 						{ 
 							backgroundColor: feedsList.length > 0 || catList.length > 0
 							? '#fff'
-							: '#dee2ec'
+							: '#dee2ec',
+							alignItems: feedsList.length > 0 || catList.length > 0
+							? 'stretch'
+							: 'center',
+							justifyContent: feedsList.length > 0 || catList.length > 0
+							? 'flex-start'
+							: 'center'
 						},
 						styles.HomeWrapper
 					]}
 				>
-					<ScrollView 
-						onScroll={(event) => scrollHandler(event, props, editActive)}
-						onStartShouldSetResponder={() => true} 
-					>
-						{
-							feedsList.length > 0 ?
-								<NoCategoryCard 
-									feedsList={feedsList} 
-									longPressHandler={longPressHandler}
-									restartEdit={restartEdit}
-									editActive={editActive}
-									editList={editList}
-								/>
-							: null
-						}
-			
-						{
-							catList.length > 0 ?
-								<CategoryCard 
-									catList={catList} 
-									longPressHandler={longPressHandler}
-									editActive={editActive}
-									editList={editList}
-									restartEdit={restartEdit}
-								/>
-							: null
-							}
-					</ScrollView>
 
 					{
-						feedsList.length <= 0 && catList.length <= 0 ?
-							<Text style={{color: "#9194A1"}}>
+						feedsList.length > 0 || catList.length > 0 ?
+							<ScrollView 
+								onScroll={ (event) => handleScroll(event) }
+								onStartShouldSetResponder={() => true}
+								ref={mainScroll} 
+								scrollEventThrottle={8}
+							>
+								{
+									feedsList.length > 0 ?
+										<NoCategoryCard 
+											feedsList={feedsList} 
+											longPressHandler={longPressHandler}
+											restartEdit={restartEdit}
+											editActive={editActive}
+											editList={editList}
+										/>
+									: null
+								}
+					
+								{
+									catList.length > 0 ?
+										<CategoryCard 
+											catList={catList} 
+											longPressHandler={longPressHandler}
+											editActive={editActive}
+											editList={editList}
+											restartEdit={restartEdit}
+										/>
+									: null
+									}
+							</ScrollView>
+						: 
+							<CustomText style={styles.NoFeeds}>
 								Click + button to add your first RSS feed.
-							</Text>
-						: null
+							</CustomText>
 					}
-			
 
-					<View style={styles.AddFeed_btn} >
-						<TouchableNativeFeedback 
-							onPress={() => navigate('NewFeed') }
-							background={TouchableNativeFeedback.Ripple('#555', true)}
-						>
-							<View>
-								<Icon name="plus" size={36} color="#fff"/>
-							</View>
-						</TouchableNativeFeedback>
+					<View style={styles.Btn__wrapper}>
+						
+							{
+								// display scroll to top button only when y offset is at least 420
+								offsetY >= 420 ?
+								<View style={styles.ToTop__btn}>
+									<TouchableNativeFeedback 
+										onPress={() => {
+											set_offsetY(0);
+											mainScroll.current.scrollTo({x: 0, y:0, animated: true})
+										}}
+										background={TouchableNativeFeedback.Ripple('#555', true)}
+										
+									>
+										<View>
+											<Icon name="arrow-up" size={24} color="#fff"/>
+										</View>
+									</TouchableNativeFeedback>
+								</View>
+								: null
+							}
+
+						<View style={styles.AddFeed__btn} >
+							<TouchableNativeFeedback 
+								onPress={() => navigate('NewFeed') }
+								background={TouchableNativeFeedback.Ripple('#555', true)}
+							>
+								<View>
+									<Icon name="plus" size={36} color="#fff"/>
+								</View>
+							</TouchableNativeFeedback>
+						</View>
 					</View>
 				</View>
 			</TouchableWithoutFeedback>
@@ -271,12 +338,35 @@ const Home = (props) => {
 
 const styles = StyleSheet.create({
 	HomeWrapper: { 
-		flex: 1, 
-		//alignItems: 'center',
-		//justifyContent: 'center' 
+		flex: 1
 	},
 
-	AddFeed_btn: {
+	NoFeeds: {
+		color: '#9194A1', 
+		fontSize: 16,
+		textAlign: 'center'
+	},
+
+	Btn__wrapper: {
+		position: 'absolute',
+		bottom: 0,
+		right: 0,
+		alignItems: 'center'
+	},
+
+	ToTop__btn: {
+		width: 42,
+		height: 42,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 42,
+		overflow: 'hidden',
+		backgroundColor: '#0089BC',
+		elevation: 5
+	},
+
+	AddFeed__btn: {
 		width: 56,
 		height: 56,
 		display: 'flex',
@@ -284,11 +374,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderRadius: 56,
 		overflow: 'hidden',
-		margin: 16,
 		backgroundColor: '#0089BC',
-		position: 'absolute',
-		bottom: 0,
-		right: 0,
-		elevation: 5
+		elevation: 5,
+		marginBottom: 16,
+		marginHorizontal: 16,
+		marginTop: 12
 	},
 });
