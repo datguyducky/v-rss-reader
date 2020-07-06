@@ -4,7 +4,7 @@ import {
 	StyleSheet,
 	TextInput
 } from 'react-native';
-import { CustomText } from '../components';
+import CustomText from './CustomText';
 
 
 export const Input = (props) => {

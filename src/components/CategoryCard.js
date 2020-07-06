@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
+import CustomText from './CustomText';
 import ReadCard from './ReadCard';
-import { CustomText } from '../components';
 
 
 const CategoryCard = (props) => {

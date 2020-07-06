@@ -4,7 +4,7 @@ import {
 	View,
 	TouchableWithoutFeedback
 } from 'react-native';
-import { CustomText } from '../components';
+import CustomText from './CustomText';
 
 
 const ReadCard = (props) => {

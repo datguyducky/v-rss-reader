@@ -5,7 +5,7 @@ import {
 	StyleSheet
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { CustomText } from '../components';
+import CustomText from './CustomText';
 
 
 export const FakeInput = (props) => {
