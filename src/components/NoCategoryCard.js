@@ -9,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 import ReadCard from './ReadCard';
-import { CustomText } from '../components';
+import CustomText from './CustomText';
 
 
 const NoCategoryCard = (props) => {

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
 	StyleSheet, 
 	View, 
-	SectionList
+	SectionList,
+	StatusBar
 } from 'react-native';
 import { FakeInput, NavBtn, CustomText } from '../components';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -246,29 +247,33 @@ const EditCategory = (props) => {
 
 
 	return (
-		<View style={{paddingTop: 6, backgroundColor: '#fff', flex: 1}}>
-			{
-				loaded ?
-					<SectionList
-						sections={toEdit}
-						keyExtractor={(item, i) => i.toString()}
-						renderItem = {({item, section: {catName}}) => {
-								return (
-									<FakeInput
-										placeholderText={'Feed: ' + item}
-										iconName='edit-3'
-										onPress={() => toEditFeed(item, catName)}
-										width='76%'
-									/>
-								)	
-						}}
-						renderSectionHeader={({section: {catName}}) => CategoryHeader(catName)}
-						renderSectionFooter={({section: {catName}}) => CategoryFooter(catName)}
-						onScroll={(event) => scrollHandler(event, props)}
-					/>
-				: null
-			}
-		</View>
+		<>
+			<StatusBar backgroundColor='#fff'/>
+
+			<View style={{paddingTop: 6, backgroundColor: '#fff', flex: 1}}>
+				{
+					loaded ?
+						<SectionList
+							sections={toEdit}
+							keyExtractor={(item, i) => i.toString()}
+							renderItem = {({item, section: {catName}}) => {
+									return (
+										<FakeInput
+											placeholderText={'Feed: ' + item}
+											iconName='edit-3'
+											onPress={() => toEditFeed(item, catName)}
+											width='76%'
+										/>
+									)	
+							}}
+							renderSectionHeader={({section: {catName}}) => CategoryHeader(catName)}
+							renderSectionFooter={({section: {catName}}) => CategoryFooter(catName)}
+							onScroll={(event) => scrollHandler(event, props)}
+						/>
+					: null
+				}
+			</View>
+		</>
 	);
 }; export default EditCategory;
 
