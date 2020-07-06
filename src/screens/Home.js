@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import { 
-	StyleSheet, 
+import {
 	View,
 	TouchableNativeFeedback,
 	ScrollView,
@@ -19,6 +18,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import { YellowBox } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import styled, { withTheme } from 'styled-components';
 
 
 YellowBox.ignoreWarnings([
@@ -37,7 +37,7 @@ const Home = (props) => {
 	const [editList, set_editList] = useState([]);
 	const [refresh, set_refresh] = useState(false);
 	const [offsetY, set_offsetY] = useState(0);
-
+	const appTheme = props.theme;
 	const mainScroll = useRef(null);
 
 	
@@ -112,7 +112,7 @@ const Home = (props) => {
 			headerStyle: {
 				// fix to set header backgroundColor to proper one when edit mode is active
 				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
-				backgroundColor: editActive ? '#0089BC' : '#fff',
+				backgroundColor: editActive ? appTheme.BRAND : appTheme.MAIN_BG,
 				elevation: offsetY >= 8 ? 4 : 0
 			}	
 		})
@@ -233,28 +233,68 @@ const Home = (props) => {
 		set_offsetY(event.nativeEvent.contentOffset.y);
 	}
 
+	
+	// start of styled components
+	const NoFeeds = styled(CustomText)`
+		font-size: 16px;
+		color: ${appTheme.DIM_TEXT};
+		text-align: center;
+	`;
 
+	const BtnWrapper = styled.View`
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		align-items: center;
+	`;
+
+	const TopBtn = styled.View`
+		width: 42px;
+		height: 42px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 42px;
+		overflow: hidden;
+		background-color: ${appTheme.BRAND};
+		elevation: 5;
+	`;
+
+	const AddBtn = styled.View`
+		width: 56px;
+		height: 56px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 56px;
+		overflow: hidden;
+		background-color: ${appTheme.BRAND};
+		elevation: 5;
+		margin-bottom: 16px;
+		margin-horizontal: 12px;
+		margin-top: 12px;
+	`;
+	// end of styled components
+
+	
 	return (
 		<>
-			<StatusBar backgroundColor={editActive ? '#0089BC' : '#fff'} />
+			<StatusBar backgroundColor={editActive ? appTheme.BRAND : appTheme.MAIN_BG} />
 			
 			<TouchableWithoutFeedback onPress={() => restartEdit()}>
 				<View 
-					style={[
-						{ 
-							backgroundColor: feedsList.length > 0 || catList.length > 0
-							? '#fff'
-							: '#dee2ec',
-							alignItems: feedsList.length > 0 || catList.length > 0
+					style={{ 
+						backgroundColor: feedsList.length > 0 || catList.length > 0
+							? appTheme.MAIN_BG
+							: appTheme.SEC_BG,
+						alignItems: feedsList.length > 0 || catList.length > 0
 							? 'stretch'
 							: 'center',
-							justifyContent: feedsList.length > 0 || catList.length > 0
+						justifyContent: feedsList.length > 0 || catList.length > 0
 							? 'flex-start'
-							: 'center'
-						},
-						styles.HomeWrapper
-					]}
-				>
+							: 'center',
+						flex: 1
+					}}>
 
 					{
 						feedsList.length > 0 || catList.length > 0 ?
@@ -289,94 +329,47 @@ const Home = (props) => {
 									}
 							</ScrollView>
 						: 
-							<CustomText style={styles.NoFeeds}>
+							<NoFeeds>
 								Click + button to add your first RSS feed.
-							</CustomText>
+							</NoFeeds>
 					}
 
-					<View style={styles.Btn__wrapper}>
+					<BtnWrapper>
 						
 							{
 								// display scroll to top button only when y offset is at least 420
 								offsetY >= 420 ?
-								<View style={styles.ToTop__btn}>
-									<TouchableNativeFeedback 
-										onPress={() => {
-											set_offsetY(0);
-											mainScroll.current.scrollTo({x: 0, y:0, animated: true})
-										}}
-										background={TouchableNativeFeedback.Ripple('#555', true)}
-										
-									>
-										<View>
-											<Icon name="arrow-up" size={24} color="#fff"/>
-										</View>
-									</TouchableNativeFeedback>
-								</View>
+									<TopBtn>
+										<TouchableNativeFeedback 
+											onPress={() => {
+												set_offsetY(0);
+												mainScroll.current.scrollTo({x: 0, y:0, animated: true})
+											}}
+											background={TouchableNativeFeedback.Ripple('#555', true)}
+											
+										>
+											<View>
+												<Icon name="arrow-up" size={24} color='#FFF'/>
+											</View>
+										</TouchableNativeFeedback>
+									</TopBtn>
 								: null
 							}
 
-						<View style={styles.AddFeed__btn} >
+						<AddBtn>
 							<TouchableNativeFeedback 
 								onPress={() => navigate('NewFeed') }
 								background={TouchableNativeFeedback.Ripple('#555', true)}
 							>
 								<View>
-									<Icon name="plus" size={36} color="#fff"/>
+									<Icon name="plus" size={36} color='#FFF'/>
 								</View>
 							</TouchableNativeFeedback>
-						</View>
-					</View>
+						</AddBtn>
+					</BtnWrapper>
 				</View>
 			</TouchableWithoutFeedback>
 		</>
 	);
 	
-}; export default Home;
-
-
-const styles = StyleSheet.create({
-	HomeWrapper: { 
-		flex: 1
-	},
-
-	NoFeeds: {
-		color: '#9194A1', 
-		fontSize: 16,
-		textAlign: 'center'
-	},
-
-	Btn__wrapper: {
-		position: 'absolute',
-		bottom: 0,
-		right: 0,
-		alignItems: 'center'
-	},
-
-	ToTop__btn: {
-		width: 42,
-		height: 42,
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 42,
-		overflow: 'hidden',
-		backgroundColor: '#0089BC',
-		elevation: 5
-	},
-
-	AddFeed__btn: {
-		width: 56,
-		height: 56,
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 56,
-		overflow: 'hidden',
-		backgroundColor: '#0089BC',
-		elevation: 5,
-		marginBottom: 16,
-		marginHorizontal: 16,
-		marginTop: 12
-	},
-});
+}; export default withTheme(Home);

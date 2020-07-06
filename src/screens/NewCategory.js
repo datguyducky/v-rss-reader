@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
-	StyleSheet, 
 	View, 
 	ScrollView
 } from 'react-native';
-import { Input, FakeInput, NavBtn, CustomText } from '../components';
+import { Input, FakeInput, NavBtn } from '../components';
 import { scrollHandler } from '../globals/Helpers';
-
 import AsyncStorage from '@react-native-community/async-storage';
+import styled, { withTheme } from 'styled-components';
 
 
 const NewCategory = (props) => {
@@ -17,6 +16,7 @@ const NewCategory = (props) => {
 	const [catList, set_catList] = useState([]);
 	const [catFeed, set_catFeed] = useState([]);
 	const [refresh, set_refresh] = useState(false);
+	const appTheme = props.theme;
 
 	
 	React.useLayoutEffect(() => {
@@ -110,12 +110,27 @@ const NewCategory = (props) => {
 	}
 
 
+	// start of styled-components
+	const StyledNewCategory = styled.View`
+		padding-top: 6px;
+		align-items: center;
+	`;
+
+	const FakeInputLabel = styled.Text`
+		font-size: 17px;
+		margin-bottom: 4px;
+		font-family: Muli-SemiBold;
+		color: ${appTheme.SEC_TEXT};
+	`;
+	// end of styled-components
+
+
 	return (
 	<ScrollView 
-		style={{flex: 1, backgroundColor: '#fff'}}
+		style={{flex: 1, backgroundColor: appTheme.MAIN_BG}}
 		onScroll={(event) => scrollHandler(event, props)}
 	>
-		<View style={styles.NewCatWrapper}>			
+		<StyledNewCategory>			
 			<Input 
 				inputLabel='Category Name'
 				onError={catError}
@@ -131,9 +146,9 @@ const NewCategory = (props) => {
 					maxWidth: 320
 				}}
 			>
-				<CustomText style={styles.fakeInput__label}>
+				<FakeInputLabel>
 					Category Feeds
-				</CustomText>
+				</FakeInputLabel>
 
 				{
 					catFeed.length > 0 ?
@@ -164,23 +179,8 @@ const NewCategory = (props) => {
 					width='100%'
 				/>
 			</View>
-		</View>
+		</StyledNewCategory>
 	</ScrollView>
 	);
 	
-}; export default NewCategory;
-
-
-const styles = StyleSheet.create({
-	NewCatWrapper: {
-		paddingTop: 6,
-		alignItems: 'center', 
-	},
-
-	fakeInput__label: {
-		fontSize: 17,
-		marginBottom: 4,
-		fontFamily: 'Muli-SemiBold',
-		color: '#2F3037'
-	},
-});
+}; export default withTheme(NewCategory);

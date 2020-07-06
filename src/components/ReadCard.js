@@ -1,60 +1,61 @@
 import React from 'react';
-import { 
-	StyleSheet, 
-	View,
+import {
 	TouchableWithoutFeedback
 } from 'react-native';
 import CustomText from './CustomText';
+import styled, { withTheme } from 'styled-components';
 
 
 const ReadCard = (props) => {
 	const { title, date_published, url, publisher_name, categories} = props;
+	const appTheme = props.theme;
+
+
+	// start of styled-components
+	const StyledReadCard = styled.View`
+		background-color: ${appTheme.MAIN_BG};
+		padding-vertical: 12px;
+		padding-left: 24px;
+		padding-right: 12px;
+		min-height: 50px;
+	`;
+
+	const PublisherAndCategory = styled(CustomText)`
+		font-size: 12px;
+		color: ${appTheme.SEC_TEXT};
+		font-family: OpenSans-Light;
+	`;
+	
+	const Title = styled(CustomText)`
+		font-size: 16px;
+		color: ${appTheme.MAIN_TEXT};
+		font-family: OpenSans-Regular;
+	`;
+
+	const PublishDate = styled(CustomText)`
+		font-size: 12px
+		color: ${appTheme.SEC_TEXT};
+		text-align: right;
+		font-family: OpenSans-Light;
+	`;
+	// end of styled-components
+
+
 	return (
 		<TouchableWithoutFeedback onPress={() => props.restartEdit()}>
-			<View style={styles.ReadWrapper} onStartShouldSetResponder={() => true}>
-				<CustomText style={styles.ReadPubCat}>
+			<StyledReadCard onStartShouldSetResponder={() => true}>
+				<PublisherAndCategory>
 					{ publisher_name + ' / ' + categories }
-				</CustomText>
+				</PublisherAndCategory>
 	
-				<CustomText style={styles.ReadTitle}>
+				<Title>
 					{ title }
-				</CustomText>
+				</Title>
 	
-				<CustomText style={styles.ReadDate}>
+				<PublishDate>
 					Published: { date_published }
-				</CustomText>
-			</View>
+				</PublishDate>
+			</StyledReadCard>
 		</TouchableWithoutFeedback>
 	);
-	
-}; export default ReadCard;
-
-
-const styles = StyleSheet.create({
-	ReadWrapper: {
-		backgroundColor: '#fff',
-		paddingVertical: 12,
-		paddingLeft: 24,
-		paddingRight: 12,
-		minHeight: 50
-	},
-
-	ReadPubCat: {
-		fontSize: 12,
-		color: '#2F3037',
-		fontFamily: 'OpenSans-Light'
-	},
-
-	ReadTitle: {
-		fontSize: 16,
-		color: '#050505',
-		fontFamily: 'OpenSans-Regular'
-	},
-
-	ReadDate: {
-		fontSize: 12,
-		color: '#2F3037',
-		textAlign: 'right',
-		fontFamily: 'OpenSans-Light'
-	}
-});
+}; export default withTheme(ReadCard);

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import * as rssParser from 'react-native-rss-parser';
 
-import { 
-	StyleSheet, 
+import {
 	View, 
 } from 'react-native';
 import { Input, NavBtn } from '../components';
+import styled, { withTheme } from 'styled-components';
 
 
 const EditFeed = (props) => {
@@ -16,6 +16,7 @@ const EditFeed = (props) => {
 	const [feedNameError, set_feedNameError] = useState('');
 	const [feedHrefError, set_feedHrefError] = useState('');
 	const { EDIT_OBJ, FEEDS_LIST, CAT_I, FEED_I, IS_CAT } = props.route.params;
+	const appTheme = props.theme;
 
 
 	React.useLayoutEffect(() => {
@@ -140,10 +141,17 @@ const EditFeed = (props) => {
 		})
 	}
 
-
+	
+	// start of styled-components
+	const StyledEditFeed = styled.View`
+		padding-top: 6px;
+		background-color: ${appTheme.MAIN_BG};
+		align-items: center;
+	`;
+	// end of styled-components
 
 	return (
-		<View style={styles.EditFeed__wrapper}>
+		<StyledEditFeed style={{flex: 1}}>
 			<Input 
 				inputLabel='Feed Name'
 				onError={feedNameError}
@@ -161,23 +169,6 @@ const EditFeed = (props) => {
 				value={feedHref}
 				onChangeText={href => set_feedHref(href)}
 			/>
-		</View>
+		</StyledEditFeed>
 	);
-}; export default EditFeed;
-
-
-const styles = StyleSheet.create({
-	EditFeed__wrapper: {
-		paddingTop: 6,
-		flex: 1, 
-		backgroundColor: '#fff',
-		alignItems: 'center', 
-	},
-
-	Feed__error: {
-		color: '#D8000C',
-		textAlign: 'center',
-		marginTop: 4,
-		width: 260
-	}
-});
+}; export default withTheme(EditFeed);

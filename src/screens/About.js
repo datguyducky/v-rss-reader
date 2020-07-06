@@ -1,76 +1,79 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { CustomText } from '../components';
 import Icon from 'react-native-vector-icons/Feather';
 import { scrollHandler } from '../globals/Helpers';
+import styled, { withTheme } from 'styled-components';
 
 
-const Home = (props) => {
+const About = (props) => {
+	const appTheme = props.theme;
+	// start of styled components
+	const StyledAbout = styled.ScrollView`
+		padding-horizontal: 12px;
+		padding-vertical: 4px;
+		background-color: ${appTheme.MAIN_BG};
+	`;
+
+	const SectionHeader = styled.Text`
+		font-size: 18px;
+		font-family: Muli-SemiBold;
+		color: ${appTheme.MAIN_TEXT};
+	`;
+
+	const SectionText = styled(CustomText)`
+		margin-bottom: 12px;
+		font-size: 16px;
+		color: ${appTheme.MAIN_TEXT};
+	`;
+	// end of styled components
+	
+
 	return (
-		<ScrollView style={styles.HomeWrapper} onScroll={(event) => scrollHandler(event, props)}>
+		<StyledAbout style={{flex: 1}} onScroll={(event) => scrollHandler(event, props)}>
 			
 			<View style={{marginBottom: 12}}>
-				<Text style={styles.SubHeader}>Introduction</Text>
+				<SectionHeader>Introduction</SectionHeader>
 				
-				<CustomText style={styles.AboutText}>
+				<SectionText>
 					Read news and articles only from websites and topics that you are really interested in by choosing which RSS feeds you want to add, and if needed - easily categorize them.
-				</CustomText>
-				<CustomText style={styles.AboutText}>
+				</SectionText>
+				<SectionText>
 					Hope you like it and don't forget to rate it on Google Play. Leave a review of what you would like to change.
-				</CustomText>
+				</SectionText>
 			</View>
 
 			<View style={{marginBottom: 12}}>
-				<Text style={styles.SubHeader}>What's RSS?</Text>
+				<SectionHeader>What's RSS?</SectionHeader>
 				
-				<CustomText style={styles.AboutText}>
+				<SectionText>
 					RSS is a list with latest articles, podcasts episodes, blog entries and etc. (with their respective information) from a selected website in a single computer-readable format.
-				</CustomText>
-				<CustomText style={styles.AboutText}>
+				</SectionText>
+				<SectionText>
 					Mobiles apps (or websites), like V are called RSS readers or news aggregators and are used to display latest data from feeds in one single place, without a need to manually check the website for new content. 
-				</CustomText>
+				</SectionText>
 			</View>
 
 
 			<View style={{marginBottom: 12}}>
-				<Text style={styles.SubHeader}>How to find RSS feed link?</Text>
+				<SectionHeader>How to find RSS feed link?</SectionHeader>
 				
-				<CustomText style={styles.AboutText}> 
+				<SectionText> 
 					Unfortunately not all websites serves RSS feeds, but if they do, then you should be available to find somewhere on the website RSS icon, which look like this:  <Icon name='rss' size={16}/>
-				</CustomText>
-				<CustomText style={styles.AboutText}> 
+				</SectionText>
+				<SectionText> 
 					You can also try to use Google (or other search engine) to find RSS link for the website you're interested in.
-				</CustomText>
+				</SectionText>
 			</View>
 
 			<View style={{marginBottom: 12}}>
-				<Text style={styles.SubHeader}>Privacy concerns</Text>
+				<SectionHeader>Privacy concerns</SectionHeader>
 				
-				<CustomText style={styles.AboutText}> 
+				<SectionText> 
 					V - RSS Reader don't collect, send or process any personal user data. Feeds and categories added by the user are completely stored locally (on the user device) and are never send anywhere else.
-				</CustomText>
+				</SectionText>
 			</View>
-		</ScrollView>
+		</StyledAbout>
 	);
 	
-}; export default Home;
-
-
-const styles = StyleSheet.create({
-	HomeWrapper: { 
-		flex: 1,
-		paddingHorizontal: 12,
-		paddingVertical: 4,
-		backgroundColor: '#fff'
-	},
-
-	SubHeader: {
-		fontSize: 18,
-		fontFamily: 'Muli-SemiBold'
-	},
-
-	AboutText: {
-		marginBottom: 12,
-		fontSize: 16
-	}
-});
+}; export default withTheme(About);
