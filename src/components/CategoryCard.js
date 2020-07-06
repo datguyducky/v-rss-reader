@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { 
 	StyleSheet, 
 	View,
@@ -8,8 +7,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
-import CustomText from './CustomText';
 import ReadCard from './ReadCard';
+import styled, { withTheme } from 'styled-components';
 
 
 const CategoryCard = (props) => {
@@ -18,6 +17,7 @@ const CategoryCard = (props) => {
 	const [activeCatList, set_activeCatList] = useState([]);
 	const [loaded, set_loaded] = useState(false);
 	const [refresh, set_refresh] = useState(false);
+	const appTheme = props.theme;
 
 
 	useEffect(() => {
@@ -84,9 +84,8 @@ const CategoryCard = (props) => {
 		return (
 			<View style={{
 				borderBottomWidth: StyleSheet.hairlineWidth,
-				borderBottomColor: 'CFD0D3',
-				borderStyle: 'solid',
-				opacity: 0.2
+				borderBottomColor: appTheme.BORDER,
+				borderStyle: 'solid'
 			}}/>
 		)
 	};
@@ -117,26 +116,23 @@ const CategoryCard = (props) => {
 					props.longPressHandler(name)
 				}}
 			>
-				<View style={[
+				<HeaderWrapper style={{
+					backgroundColor: props.editList.includes(name)
+					? appTheme.SEC_BRAND
+					: appTheme.MAIN_BG
+				}}>
 					{
-						backgroundColor: props.editList.includes(name)
-						? '#a8cee1'
-						: '#fff',
-					},
-					styles.CardHeaderWrapper
-				]}>
-						{
-							INDEX > -1 ?
-								<Icon name='minus' size={21} />
-							: 
-								<Icon name='plus' size={21} />
+						INDEX > -1 ?
+							<Icon name='minus' size={21} />
+						: 
+							<Icon name='plus' size={21} />
 								
-						}
+					}
 
-						<CustomText style={styles.CardHeader}>
-							{name}
-						</CustomText>
-				</View>
+					<Header>
+						{name}
+					</Header>
+				</HeaderWrapper>
 			</TouchableNativeFeedback>
 		)
 	}
@@ -163,8 +159,28 @@ const CategoryCard = (props) => {
 	}
 
 
+	// start of styled-components
+	const HeaderWrapper = styled.View`
+		padding-horizontal: 12px;
+		flex-direction: row;
+		align-items: center;
+		padding-vertical: 4px;
+	`;
+
+	const Header = styled.Text`
+		font-size: 21px;
+		font-family: Muli-SemiBold;
+		margin-left: 4px;
+		color: ${appTheme.MAIN_TEXT};
+	`;
+	// end of styled-components
+
+
 	return (
-		<View style={styles.CardWrapper}>
+		<View style={{
+			backgroundColor: appTheme.MAIN_BG,
+			paddingBottom: 12
+		}}>
 			{
 				loaded ?
 					<SectionList 
@@ -208,26 +224,4 @@ const CategoryCard = (props) => {
 		</View>
 	);
 	
-}; export default CategoryCard;
-
-
-const styles = StyleSheet.create({
-	CardWrapper: {
-		backgroundColor: '#fff',
-		paddingBottom: 12
-	},
-
-	CardHeaderWrapper: {
-		fontSize: 21,
-		paddingHorizontal: 12,
-		flexDirection: 'row',
-		alignItems: 'center',
-		paddingVertical: 4
-	},
-
-	CardHeader: {
-		fontSize: 21,
-		fontFamily: 'Muli-SemiBold',
-		marginLeft: 4
-	},
-});
+}; export default withTheme(CategoryCard);

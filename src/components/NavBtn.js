@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { 
 	View,
 	UIManager, 
@@ -6,9 +6,11 @@ import {
 	TouchableNativeFeedback
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import { ThemeContext } from 'styled-components';
 
 export const NavBtn = (props) => {
 	const { onPress, iconName, iconSize } = props;
+	const appTheme = useContext(ThemeContext);
 	return (
 		<View style={{
 			padding: 6, 
@@ -23,6 +25,7 @@ export const NavBtn = (props) => {
 					<Icon 
 						name={iconName}
 						size={iconSize}
+						color={appTheme.MAIN_TEXT}
 					/>
 				</View>
 			</TouchableNativeFeedback>
@@ -33,6 +36,9 @@ export const NavBtn = (props) => {
 
 export const NavMoreBtn = (props) => {
 	const { iconSize } = props;
+	const appTheme = useContext(ThemeContext);
+	
+
 	const menu = useRef();
 	const onPress = () => {
 		const { onPress, actions } = props;
@@ -49,6 +55,7 @@ export const NavMoreBtn = (props) => {
 		console.log('Popup Error');
 	}
 
+
 	return (
 		// welcome to React Native, where you need to use two <View/> components and 
 		// style one of them with: 'overflow: hidden'
@@ -63,7 +70,12 @@ export const NavMoreBtn = (props) => {
 				background={TouchableNativeFeedback.Ripple('#555', true)}
 			>
 				<View>
-					<Icon name='more-vertical' size={iconSize} ref={menu}/>
+					<Icon 
+						name='more-vertical' 
+						size={iconSize} 
+						ref={menu}
+						color={appTheme.MAIN_TEXT}
+					/>
 				</View>
 			</TouchableNativeFeedback>
 		</View>

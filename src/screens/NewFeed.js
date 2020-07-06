@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import AsyncStorage from '@react-native-community/async-storage';
 import * as rssParser from 'react-native-rss-parser';
-
-import { 
-	StyleSheet, 
-	View, 
-} from 'react-native';
 import { Input, NavBtn } from '../components';
+import styled, { withTheme } from 'styled-components';
 
 
 const NewFeed = (props) => {
@@ -17,6 +12,7 @@ const NewFeed = (props) => {
 	const [feedList, set_feedList] = useState([]);
 	const [feedNameError, set_feedNameError] = useState('');
 	const [feedHrefError, set_feedHrefError] = useState('');
+	const appTheme = props.theme;
 
 
 	React.useLayoutEffect(() => {
@@ -201,8 +197,17 @@ const NewFeed = (props) => {
 	}
 
 
+	// start of styled-components
+	const StyledNewFeed = styled.View`
+		padding-top: 6px;
+		background-color: ${appTheme.MAIN_BG};
+		align-items: center;
+	`;
+	// end of styled-components
+
+	
 	return (
-		<View style={styles.NewFeedWrapper}>
+		<StyledNewFeed style={{flex: 1}}>
 			<Input 
 				inputLabel='Feed Name'
 				onError={feedNameError}
@@ -220,41 +225,6 @@ const NewFeed = (props) => {
 				value={feedHref}
 				onChangeText={href => set_feedHref(href)}
 			/>
-		</View>
+		</StyledNewFeed>
 	);
-	
-}; export default NewFeed;
-
-
-const styles = StyleSheet.create({
-	NewFeed__input: {
-		borderWidth: 1,
-		borderRadius: 4,
-		fontSize: 16,
-		paddingVertical: 4,
-		paddingHorizontal: 8,
-		fontFamily: 'OpenSans-Regular',
-		backgroundColor: '#EFF0F5'
-	},
-
-	NewFeed__inputLabel: {
-		fontSize: 17,
-		marginBottom: 4,
-		fontFamily: 'Muli-SemiBold',
-		color: '#2F3037'
-	},
-
-	NewFeedWrapper: {
-		paddingTop: 6,
-		flex: 1, 
-		backgroundColor: '#fff',
-		alignItems: 'center', 
-	},
-
-	Feed__error: {
-		color: '#D8000C',
-		textAlign: 'center',
-		marginTop: 4,
-		width: 260
-	}
-});
+}; export default withTheme(NewFeed);

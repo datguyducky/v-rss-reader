@@ -9,13 +9,14 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import * as rssParser from 'react-native-rss-parser';
 import ReadCard from './ReadCard';
-import CustomText from './CustomText';
+import styled, { withTheme } from 'styled-components';
 
 
 const NoCategoryCard = (props) => {
 	const [rssObj, set_rssObj] = useState([]);
 	const feedsList = props.feedsList || [];
 	const [hideCat, set_hideCat] = useState(true);
+	const appTheme = props.theme;
 
 	
 	// hiding or unhiding category handler
@@ -30,9 +31,8 @@ const NoCategoryCard = (props) => {
 		return (
 			<View style={{
 				borderBottomWidth: StyleSheet.hairlineWidth,
-				borderBottomColor: 'CFD0D3',
+				borderBottomColor: appTheme.BORDER,
 				borderStyle: 'solid',
-				opacity: 0.2
 			}}/>
 		)
 	};
@@ -58,25 +58,22 @@ const NoCategoryCard = (props) => {
 					props.longPressHandler('feeds_with_no_cat')
 				}}
 			>
-				<View style={[
+				<HeaderWrapper style={{
+					backgroundColor: props.editList.includes('feeds_with_no_cat')
+					? appTheme.SEC_BRAND
+					: appTheme.MAIN_BG,
+				}}>
 					{
-						backgroundColor: props.editList.includes('feeds_with_no_cat')
-						? '#a8cee1'
-						: '#fff',
-					},
-					styles.CardHeaderWrapper
-				]}>
-						{
-							!hideCat && props.editList.length <= 0 ?
-								<Icon name='minus' size={21} />
-							: 
-								<Icon name='plus' size={21} />
-						}
+						!hideCat && props.editList.length <= 0 ?
+							<Icon name='minus' size={21} />
+						: 
+							<Icon name='plus' size={21} />
+					}
 
-						<CustomText style={styles.CardHeader}>
-							Feeds without category
-						</CustomText>
-				</View>
+					<Header>
+						Feeds without category
+					</Header>
+				</HeaderWrapper>
 			</TouchableNativeFeedback>
 		)
 	}
@@ -121,10 +118,30 @@ const NoCategoryCard = (props) => {
 			}
 		}; fetchRSS();
 	}, [])
-	
+
+
+	// start of styled-components
+	const HeaderWrapper = styled.View`
+		padding-horizontal: 12px
+		flex-direction: row;
+		align-items: center;
+		padding-vertical: 4px;
+	`;
+
+	const Header = styled.Text`
+		font-size: 21px;
+		font-family: Muli-SemiBold;
+		margin-left: 4px;
+		color: ${appTheme.MAIN_TEXT};
+	`;
+	// end of styled-components
+
 
 	return (
-		<View style={styles.CardWrapper}>
+		<View style={{
+			flex: 1,
+			backgroundColor: appTheme.MAIN_BG
+		}}>
 			{
 				rssObj.length > 0 && !hideCat && props.editList.length <= 0 ?
 					<FlatList
@@ -155,26 +172,4 @@ const NoCategoryCard = (props) => {
 		</View>
 	);
 	
-}; export default NoCategoryCard;
-
-
-const styles = StyleSheet.create({
-	CardWrapper: {
-		backgroundColor: '#fff',
-		flex: 1
-	},
-
-	CardHeaderWrapper: {
-		fontSize: 21,
-		paddingHorizontal: 12,
-		flexDirection: 'row',
-		alignItems: 'center',
-		paddingVertical: 4
-	},
-
-	CardHeader: {
-		fontSize: 21,
-		fontFamily: 'Muli-SemiBold',
-		marginLeft: 4
-	},
-});
+}; export default withTheme(NoCategoryCard);

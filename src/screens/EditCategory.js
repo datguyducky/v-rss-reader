@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-	StyleSheet, 
+import {
 	View, 
 	SectionList,
 	StatusBar
@@ -8,6 +7,7 @@ import {
 import { FakeInput, NavBtn, CustomText } from '../components';
 import AsyncStorage from '@react-native-community/async-storage';
 import { scrollHandler } from '../globals/Helpers';
+import styled, { withTheme } from 'styled-components';
 
 
 const EditCategory = (props) => {
@@ -17,6 +17,7 @@ const EditCategory = (props) => {
 	const [catList, set_catList] = useState([]);
 	const [refresh, set_refresh] = useState(false);
 	const { feedsList } = props.route.params;
+	const appTheme = props.theme;
 
 
 	React.useLayoutEffect(() => {
@@ -183,9 +184,9 @@ const EditCategory = (props) => {
 		const CAT_NAME = catName === 'feeds_with_no_cat' ? 'Feeds without category' : catName;
 		
 		return (
-			<CustomText style={styles.CatHeader}>
+			<StyledCategoryHeader>
 				{ 'Category: ' + CAT_NAME }
-			</CustomText>
+			</StyledCategoryHeader>
 		)
 	}
 
@@ -246,11 +247,22 @@ const EditCategory = (props) => {
 	}
 
 
+	// start of styled-components
+	const StyledCategoryHeader = styled.Text`
+		font-family: Muli-SemiBold;
+		color: ${appTheme.SEC_TEXT};
+		font-size: 21px;
+		padding-horizontal: 12px;
+		padding-vertical: 4px;
+		margin-bottom: 12px;
+	`;
+	// end of styled-components
+
 	return (
 		<>
-			<StatusBar backgroundColor='#fff'/>
+			<StatusBar backgroundColor={appTheme.MAIN_BG}/>
 
-			<View style={{paddingTop: 6, backgroundColor: '#fff', flex: 1}}>
+			<View style={{paddingTop: 6, backgroundColor: appTheme.MAIN_BG, flex: 1}}>
 				{
 					loaded ?
 						<SectionList
@@ -275,16 +287,4 @@ const EditCategory = (props) => {
 			</View>
 		</>
 	);
-}; export default EditCategory;
-
-
-const styles = StyleSheet.create({
-	CatHeader: {
-		fontFamily: 'Muli-SemiBold',
-		color: '#2F3037',
-		fontSize: 21,
-		paddingHorizontal: 12,
-		paddingVertical: 4,
-		marginBottom: 12
-	}
-});
+}; export default withTheme(EditCategory);
