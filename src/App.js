@@ -9,8 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // navigation.navigate inside App.js
-import { navigationRef } from './utils/RootNavigation';
-import * as RootNavigation from './utils/RootNavigation';
+import { navigationRef } from './globals/RootNavigation';
+import * as RootNavigation from './globals/RootNavigation';
 
 // screens
 import Home from './screens/Home'; 
