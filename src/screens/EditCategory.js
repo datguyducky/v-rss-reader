@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { FakeInput, NavBtn, CustomText } from '../components';
 import AsyncStorage from '@react-native-community/async-storage';
-import { scrollHandler } from '../utils/Helpers';
+import { scrollHandler } from '../globals/Helpers';
 
 
 const EditCategory = (props) => {

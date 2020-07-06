@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { CustomText } from '../components';
 import Icon from 'react-native-vector-icons/Feather';
-import { scrollHandler } from '../utils/Helpers';
+import { scrollHandler } from '../globals/Helpers';
 
 
 const Home = (props) => {

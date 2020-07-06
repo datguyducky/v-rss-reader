@@ -5,7 +5,7 @@ import {
 	ScrollView
 } from 'react-native';
 import { Input, FakeInput, NavBtn, CustomText } from '../components';
-import { scrollHandler } from '../utils/Helpers';
+import { scrollHandler } from '../globals/Helpers';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
