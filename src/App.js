@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, useColorScheme } from 'react-native';
 
 // navigation
 import 'react-native-gesture-handler';
@@ -21,15 +21,20 @@ import EditFeed from './screens/EditFeed';
 // end of screens
 
 import { NavMoreBtn } from './components';
-const Stack = createStackNavigator();
 
-import { DarkTheme, WhiteTheme } from './styles/Themes';
+import { DarkTheme, LightTheme } from './styles/Themes';
 import { ThemeProvider } from 'styled-components';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import { color } from 'react-native-reanimated';
 
 
-const App = () => {
+const Stack = createStackNavigator();
+const App = (props) => {
+	const [appTheme, set_appTheme] = useState('LightTheme');
+	const colorScheme = useColorScheme();
+
+
 	const popupRoutes = (eventName, index) => {
 		// return when user clicks outside of popup menu
 		if(eventName !== 'itemSelected') return;
@@ -78,19 +83,72 @@ const App = () => {
 		}; loadStats();
 	}, []);
 
+	React.useLayoutEffect(() => {
+		const loadSettings = async () => {
+			let USER_SETTINGS = await AsyncStorage.getItem('user_settings');
+			USER_SETTINGS = JSON.parse(USER_SETTINGS);
+
+			if(USER_SETTINGS === null) {
+				const CREATE_SETTINGS = {
+					theme: 'light',
+					max_articles: 0, // TODO
+					brand_color: '', // TODO
+					max_cat: 0, // TODO
+					max_cat_feeds: 0 // TODO
+				}
+
+				set_appTheme('LightTheme');
+				AsyncStorage.setItem('user_settings', JSON.stringify(CREATE_SETTINGS));
+
+			} else {
+				USER_SETTINGS.theme = 'dark';
+
+				if(USER_SETTINGS.theme === 'light') { set_appTheme('LightTheme') }
+				if(USER_SETTINGS.theme === 'dark') { set_appTheme('DarkTheme') }
+				if(USER_SETTINGS.theme === 'system') {
+					if(colorScheme === 'light') {
+						set_appTheme('LightTheme');
+					}
+
+					if(colorScheme === 'dark') {
+						set_appTheme('DarkTheme');
+					}
+				}
+			}
+		}; loadSettings();
+	}, [])
+
 
 	return (
-		<ThemeProvider theme={WhiteTheme}>
+		<ThemeProvider 
+			theme={
+				appTheme === 'DarkTheme'
+				? DarkTheme
+				: LightTheme
+			}
+		>
 			<NavigationContainer ref={navigationRef}>
-				<StatusBar barStyle='dark-content' animated={true} backgroundColor={WhiteTheme.MAIN_BG}/>
+				<StatusBar 
+					barStyle={
+						appTheme === 'DarkTheme' 
+						? 'white-content'
+						: 'dark-content'
+					}
+					animated={true} 
+					backgroundColor={
+						appTheme === 'DarkTheme' 
+						? DarkTheme.MAIN_BG
+						: LightTheme.MAIN_BG
+					}
+				/>
 
 				<Stack.Navigator
 					screenOptions={{
 						headerStyle: {
-							backgroundColor: '#fff',
+							backgroundColor: appTheme === 'DarkTheme' ? DarkTheme.MAIN_BG : LightTheme.MAIN_BG,
 							elevation: 0
 						},
-						headerTintColor: '#050505',
+						headerTintColor: appTheme === 'DarkTheme' ? DarkTheme.MAIN_TEXT : LightTheme.MAIN_TEXT,
 						headerTitleStyle: {
 							fontWeight: '600',
 							fontFamily: 'Muli-Bold'

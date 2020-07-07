@@ -1,17 +1,17 @@
 export const DarkTheme = {
 	MAIN_BG: '#050505',
-	SEC_BG: '#222',
-	DIM_BG: '#444',
-	BORDER: '#0A0',
+	SEC_BG: '#171818',
+	DIM_BG: '#161616',
+	BORDER: '#3E3E3F',
 	MAIN_TEXT: '#EFF0F5',
-	SEC_TEXT: '#E3E',
-	DIM_TEXT: '#F11',
-	BRAND: '#0089BC',
-	SEC_BRAND: '#A8CEE1',
-	ERROR: '#D8000C'
+	SEC_TEXT: '#D7D8DC',
+	DIM_TEXT: '#9194A1',
+	BRAND: '#222',
+	SEC_BRAND: '#444',
+	ERROR: '#c2000a'
 }
 
-export const WhiteTheme = {
+export const LightTheme = {
 	MAIN_BG: '#FFF',
 	SEC_BG: '#EFF0F5',
 	DIM_BG: '#E5E5E5',

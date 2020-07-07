@@ -111,7 +111,7 @@ const Home = (props) => {
 			title: editActive ? 'Edit' : 'V - RSS Reader',
 			headerStyle: {
 				// fix to set header backgroundColor to proper one when edit mode is active
-				// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
+				// IMPORTANT, without this header background color is reset to default color
 				backgroundColor: editActive ? appTheme.BRAND : appTheme.MAIN_BG,
 				elevation: offsetY >= 8 ? 4 : 0
 			}	
@@ -198,7 +198,7 @@ const Home = (props) => {
 			set_editActive(true);
 			props.navigation.setOptions({
 				headerStyle: {
-					backgroundColor: '#0089BC'
+					backgroundColor: appTheme.BRAND
 				}
 			});
 		}
@@ -221,7 +221,7 @@ const Home = (props) => {
 			set_editActive(false);
 			props.navigation.setOptions({
 				headerStyle: {
-					backgroundColor: '#fff'
+					backgroundColor: appTheme.MAIN_BG
 				}
 			});
 			set_editList([]);
@@ -349,7 +349,7 @@ const Home = (props) => {
 											
 										>
 											<View>
-												<Icon name="arrow-up" size={24} color='#FFF'/>
+												<Icon name="arrow-up" size={24} color='#EFF0F5'/>
 											</View>
 										</TouchableNativeFeedback>
 									</TopBtn>
@@ -362,7 +362,7 @@ const Home = (props) => {
 								background={TouchableNativeFeedback.Ripple('#555', true)}
 							>
 								<View>
-									<Icon name="plus" size={36} color='#FFF'/>
+									<Icon name="plus" size={36} color='#EFF0F5'/>
 								</View>
 							</TouchableNativeFeedback>
 						</AddBtn>

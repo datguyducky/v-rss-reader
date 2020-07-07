@@ -1,4 +1,6 @@
 export const scrollHandler = (event, props, editActive) => {
+	const appTheme = props.theme;
+
 	const SCROLL_Y = event.nativeEvent.contentOffset.y;
 	editActive = editActive || false;
 	props.navigation.setOptions({
@@ -7,8 +9,8 @@ export const scrollHandler = (event, props, editActive) => {
 		headerStyle: {
 			elevation: SCROLL_Y <= 8 ? 0 : 4,
 			// fix to set header backgroundColor to proper one, when edit mode is active
-			// IMPORTANT, without this header background color is set to '#fff' when scrolling with edit mode enabled
-			backgroundColor: editActive ? '#0089BC' : '#fff' 
+			// IMPORTANT, without this header background color is reset to default color
+			backgroundColor: editActive ? appTheme.BRAND : appTheme.MAIN_BG
 		}	
 	})
 }

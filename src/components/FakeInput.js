@@ -25,7 +25,6 @@ export const FakeInput = (props) => {
 		align-items: center;
 		border-width: 1px;
 		border-radius: 4px;
-		font-size: 16px;
 		padding-vertical: 5px;
 		padding-horizontal: 8px;
 		font-family: OpenSans-Regular;
