@@ -8,6 +8,8 @@ import styled, { withTheme } from 'styled-components';
 
 const About = (props) => {
 	const appTheme = props.theme;
+	
+	
 	// start of styled components
 	const StyledAbout = styled.ScrollView`
 		padding-horizontal: 12px;
