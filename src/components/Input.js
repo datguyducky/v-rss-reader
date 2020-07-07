@@ -27,6 +27,7 @@ export const Input = (props) => {
 		padding-horizontal: 8px;
 		font-family: OpenSans-Regular;
 		background-color: ${appTheme.SEC_BG};
+		color: ${appTheme.MAIN_TEXT};
 	`;
 
 	const InputError = styled(CustomText)`

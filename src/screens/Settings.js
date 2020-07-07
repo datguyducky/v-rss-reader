@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-	View
+	View,
+	TouchableNativeFeedback
 } from 'react-native';
 import { CustomText } from '../components';
 import styled, { withTheme } from 'styled-components';
 import { scrollHandler } from '../globals/Helpers';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/Feather';
 
 
 const Settings = (props) => {
@@ -23,6 +25,11 @@ const Settings = (props) => {
 			};
 		}; loadStats();
 	}, []);
+
+
+	const changeTheme = async () => {
+		
+	}
 
 
 	// start of styled-components
@@ -52,6 +59,27 @@ const Settings = (props) => {
 	const StatsValue = styled(CustomText)`
 		font-size: 16px;
 		color: ${appTheme.DIM_TEXT};
+	`;
+
+	const Options = styled.View`
+		flex-direction: row;
+		align-items: center;
+		margin-Vertical: 6px;
+	`;
+
+	const OptionsText = styled.View`
+		margin-left: 8px;
+	`
+
+	const OptionsHeader = styled(CustomText)`
+		color: ${appTheme.MAIN_TEXT};
+		font-size: 16px;
+	`;
+
+	const OptionsSubHeader = styled(CustomText)`
+		color: ${appTheme.SEC_TEXT};
+		font-size: 14px;
+		font-family: OpenSans-Light;
 	`;
 	// end of styled-components
 
@@ -101,6 +129,17 @@ const Settings = (props) => {
 
 			<View style={{marginBottom: 12}}>
 				<SectionHeader>Settings</SectionHeader>
+
+				<TouchableNativeFeedback onPress={() => console.log('a')}>
+					<Options>
+						<Icon name='eye' size={21} color={appTheme.MAIN_TEXT}/>
+						
+						<OptionsText>
+							<OptionsHeader>Theme</OptionsHeader>
+							<OptionsSubHeader>Follow system</OptionsSubHeader>
+						</OptionsText>
+					</Options>
+				</TouchableNativeFeedback>
 			</View>
 
 		</StyledSettings>

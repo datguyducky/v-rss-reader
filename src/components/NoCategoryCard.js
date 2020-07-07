@@ -65,9 +65,9 @@ const NoCategoryCard = (props) => {
 				}}>
 					{
 						!hideCat && props.editList.length <= 0 ?
-							<Icon name='minus' size={21} />
+							<Icon name='minus' size={21} color={appTheme.MAIN_TEXT}/>
 						: 
-							<Icon name='plus' size={21} />
+							<Icon name='plus' size={21} color={appTheme.MAIN_TEXT}/>
 					}
 
 					<Header>
