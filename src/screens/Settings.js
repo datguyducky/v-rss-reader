@@ -64,7 +64,7 @@ const Settings = (props) => {
 
 				<Stats>
 					<StatsHeader>Number of news opened:</StatsHeader>
-					<StatsValue>{userStats.news_opened || ''}</StatsValue>
+					<StatsValue>{userStats.news_opened || '0'}</StatsValue>
 				</Stats>
 
 				<Stats>
@@ -74,12 +74,28 @@ const Settings = (props) => {
 
 				<Stats>
 					<StatsHeader>Longest reading streak:</StatsHeader>
-					<StatsValue>{userStats.reading_streak || ''}</StatsValue>
+					<StatsValue>
+						{
+							userStats.reading_streak > 1
+							? userStats.reading_streak + ' days'
+							: userStats.reading_streak + ' day'
+							
+							|| '0 days'
+						}
+					</StatsValue>
 				</Stats>
 
 				<Stats>
 					<StatsHeader>Current reading streak:</StatsHeader>
-					<StatsValue>{userStats.reading_longest_streak || ''}</StatsValue>
+					<StatsValue>
+						{
+							userStats.reading_longest_streak > 1
+							? userStats.reading_longest_streak + ' days'
+							: userStats.reading_longest_streak + ' day'
+							
+							|| '0 days'
+						}
+					</StatsValue>
 				</Stats>
 			</View>
 
