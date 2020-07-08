@@ -111,10 +111,6 @@ const NewCategory = (props) => {
 
 
 	// start of styled-components
-	const StyledNewCategory = styled.View`
-		
-	`;
-
 	const FakeInputLabel = styled.Text`
 		font-size: 17px;
 		margin-bottom: 4px;

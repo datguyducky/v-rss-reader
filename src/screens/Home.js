@@ -129,6 +129,9 @@ const Home = (props) => {
 				feedsList: feedsList // feeds without category
 			}
 		)
+
+		set_editList([]);
+		set_editActive(false);
 	}
 
 
@@ -166,28 +169,39 @@ const Home = (props) => {
 	}
 
 
-	useEffect(() => {
-		const loadFeedsWithCat = async () => {
-			let result = await AsyncStorage.getItem('user_categories');
-			result = JSON.parse(result);
-
-			if(result) {
-				set_catList(result);
+	React.useEffect(() => {
+		const unsubscribe = props.navigation.addListener(
+			'focus',
+			() => {
+				loadFeedsWithCat();
+				loadFeedsWithoutCat();
 			}
-		}; loadFeedsWithCat();
+		)
+
+		return unsubscribe;
+	}, [props.navigation])
 
 
-		const loadFeedsWithoutCat = async () => {
-			let result = await AsyncStorage.getItem('user_nocatfeeds');
-			result = JSON.parse(result);
+	const loadFeedsWithCat = async () => {
+		let result = await AsyncStorage.getItem('user_categories');
+		result = JSON.parse(result);
 
-			if(result) {
-				set_feedsList(result);
-			}
-		}; loadFeedsWithoutCat();
-	}, [])
+		if(result) {
+			set_catList(result);
+		}
+	};
 
 
+	const loadFeedsWithoutCat = async () => {
+		let result = await AsyncStorage.getItem('user_nocatfeeds');
+		result = JSON.parse(result);
+
+		if(result) {
+			set_feedsList(result);
+		}
+	};
+
+	
 	// enable edit mode by long pressing one of the categories names
 	// enabled mode is showcased by changing background color of StatusBar, react navigation header
 	// and category header.
