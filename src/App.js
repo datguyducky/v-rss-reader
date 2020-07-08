@@ -101,7 +101,7 @@ const App = (props) => {
 				AsyncStorage.setItem('user_settings', JSON.stringify(CREATE_SETTINGS));
 
 			} else {
-				USER_SETTINGS.theme = 'dark';
+				USER_SETTINGS.theme = 'light';
 
 				if(USER_SETTINGS.theme === 'light') { set_appTheme('LightTheme') }
 				if(USER_SETTINGS.theme === 'dark') { set_appTheme('DarkTheme') }

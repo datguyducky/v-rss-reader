@@ -101,11 +101,14 @@ const ReadCard = (props) => {
 
 
 	return (
-		<TouchableNativeFeedback onPress={() => {
-			props.restartEdit();
-			openLink();
-			handleUserStats();
-		}}>
+		<TouchableNativeFeedback 
+			onPress={() => {
+				props.restartEdit();
+				openLink();
+				handleUserStats();
+			}}
+			background={TouchableNativeFeedback.Ripple(appTheme.BORDER, false)}
+		>
 			<StyledReadCard onStartShouldSetResponder={() => true}>
 				<PublisherAndCategory>
 					{ publisher_name + ' / ' + categories }

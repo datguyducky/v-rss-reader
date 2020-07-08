@@ -115,6 +115,7 @@ const CategoryCard = (props) => {
 					set_activeCatList([]);
 					props.longPressHandler(name)
 				}}
+				background={TouchableNativeFeedback.Ripple(appTheme.BORDER, false)}
 			>
 				<HeaderWrapper style={{
 					backgroundColor: props.editList.includes(name)
@@ -123,9 +124,9 @@ const CategoryCard = (props) => {
 				}}>
 					{
 						INDEX > -1 ?
-							<Icon name='minus' size={21} />
+							<Icon name='minus' size={21} color={appTheme.MAIN_TEXT}/>
 						: 
-							<Icon name='plus' size={21} />
+							<Icon name='plus' size={21} color={appTheme.MAIN_TEXT}/>
 								
 					}
 
