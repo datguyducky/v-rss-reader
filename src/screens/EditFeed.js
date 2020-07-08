@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as rssParser from 'react-native-rss-parser';
-
-import {
-	View, 
-} from 'react-native';
+import { View } from 'react-native';
 import { Input, NavBtn } from '../components';
 import styled, { withTheme } from 'styled-components';
 
@@ -144,14 +141,17 @@ const EditFeed = (props) => {
 	
 	// start of styled-components
 	const StyledEditFeed = styled.View`
-		padding-top: 6px;
-		background-color: ${appTheme.MAIN_BG};
-		align-items: center;
+		
 	`;
 	// end of styled-components
 
 	return (
-		<StyledEditFeed style={{flex: 1}}>
+		<View style={{
+			flex: 1,
+			paddingTop: 6,
+			backgroundColor: appTheme.MAIN_BG,
+			alignItems: 'center'
+		}}>
 			<Input 
 				inputLabel='Feed Name'
 				onError={feedNameError}
@@ -169,6 +169,6 @@ const EditFeed = (props) => {
 				value={feedHref}
 				onChangeText={href => set_feedHref(href)}
 			/>
-		</StyledEditFeed>
+		</View>
 	);
 }; export default withTheme(EditFeed);

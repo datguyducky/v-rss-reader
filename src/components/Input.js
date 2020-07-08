@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import CustomText from './CustomText';
 import styled, { withTheme } from 'styled-components';
+import { TextInput } from 'react-native';
 
 
 export const Input = (props) => {
@@ -19,16 +20,7 @@ export const Input = (props) => {
 		color: ${appTheme.SEC_TEXT};
 	`;
 
-	const StyledInput = styled.TextInput`
-		border-width: 1px;
-		border-radius: 4px;
-		font-size: 16px;
-		padding-vertical: 4px;
-		padding-horizontal: 8px;
-		font-family: OpenSans-Regular;
-		background-color: ${appTheme.SEC_BG};
-		color: ${appTheme.MAIN_TEXT};
-	`;
+	// not using styled-components for TextInput, because it starts to re-render with every onChangeText()
 
 	const InputError = styled(CustomText)`
 		color: ${appTheme.ERROR};
@@ -50,14 +42,24 @@ export const Input = (props) => {
 				{inputLabel}
 			</InputLabel>
 
-			<StyledInput
+			<TextInput
 				autoCapitalize='none'
 				autoFocus={autoFocus}
 				placeholder={placeholderText}
 				placeholderTextColor={appTheme.DIM_TEXT}
 				onChangeText={onChangeText}
 				value={value}
-				style={{ borderColor: onError.length > 0 ? appTheme.ERROR : appTheme.DIM_TEXT }}
+				style={{ 
+					borderColor: onError.length > 0 ? appTheme.ERROR : appTheme.DIM_TEXT,
+					borderWidth: 1,
+					borderRadius: 4,
+					fontSize: 16,
+					paddingVertical: 4,
+					paddingHorizontal: 8,
+					fontFamily: 'OpenSans-Regular',
+					backgroundColor: appTheme.SEC_BG,
+					color: appTheme.MAIN_TEXT
+				}}
 			/>
 
 			<InputError style={{ display: onError.length > 0 ? 'flex' : 'none' }}>

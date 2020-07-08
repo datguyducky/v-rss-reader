@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import * as rssParser from 'react-native-rss-parser';
 import { Input, NavBtn } from '../components';
 import styled, { withTheme } from 'styled-components';
+import { View } from 'react-native';
 
 
 const NewFeed = (props) => {
@@ -196,25 +197,21 @@ const NewFeed = (props) => {
 		})
 	}
 
-
-	// start of styled-components
-	const StyledNewFeed = styled.View`
-		padding-top: 6px;
-		background-color: ${appTheme.MAIN_BG};
-		align-items: center;
-	`;
-	// end of styled-components
-
 	
 	return (
-		<StyledNewFeed style={{flex: 1}}>
+		<View style={{
+			flex: 1,
+			paddingTop: 6,
+			backgroundColor: appTheme.MAIN_BG,
+			alignItems: 'center'
+		}}>
 			<Input 
 				inputLabel='Feed Name'
 				onError={feedNameError}
 				placeholderText='e.g. Basketball News'
 				autoFocus={true}
 				value={feedName}
-				onChangeText={name => set_feedName(name)}
+				onChangeText={(name) => set_feedName(name)}
 			/>
 
 			<Input 
@@ -223,8 +220,8 @@ const NewFeed = (props) => {
 				placeholderText='e.g. reddit.com/r/Basketball/.rss'
 				autoFocus={false}
 				value={feedHref}
-				onChangeText={href => set_feedHref(href)}
+				onChangeText={(href) => set_feedHref(href)}
 			/>
-		</StyledNewFeed>
+		</View>
 	);
 }; export default withTheme(NewFeed);

@@ -112,8 +112,7 @@ const NewCategory = (props) => {
 
 	// start of styled-components
 	const StyledNewCategory = styled.View`
-		padding-top: 6px;
-		align-items: center;
+		
 	`;
 
 	const FakeInputLabel = styled.Text`
@@ -130,14 +129,17 @@ const NewCategory = (props) => {
 		style={{flex: 1, backgroundColor: appTheme.MAIN_BG}}
 		onScroll={(event) => scrollHandler(event, props)}
 	>
-		<StyledNewCategory>			
+		<View style={{
+			paddingTop: 6,
+			alignItems: 'center'
+		}}>			
 			<Input 
 				inputLabel='Category Name'
 				onError={catError}
 				placeholderText='e.g. Sport News'
 				autoFocus={true}
 				value={catName}
-				onChangeText={name => set_catName(name)}
+				onChangeText={(name) => set_catName(name)}
 			/>
 				
 			<View 
@@ -179,7 +181,7 @@ const NewCategory = (props) => {
 					width='100%'
 				/>
 			</View>
-		</StyledNewCategory>
+		</View>
 	</ScrollView>
 	);
 	
