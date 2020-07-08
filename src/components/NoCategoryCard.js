@@ -57,6 +57,7 @@ const NoCategoryCard = (props) => {
 					set_hideCat(true)
 					props.longPressHandler('feeds_with_no_cat')
 				}}
+				background={TouchableNativeFeedback.Ripple(appTheme.BORDER, false)}
 			>
 				<HeaderWrapper style={{
 					backgroundColor: props.editList.includes('feeds_with_no_cat')

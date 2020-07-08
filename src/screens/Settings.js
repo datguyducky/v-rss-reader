@@ -34,7 +34,6 @@ const Settings = (props) => {
 
 	// start of styled-components
 	const StyledSettings = styled.ScrollView`
-		padding-horizontal: 12px;
 		padding-vertical: 4px;
 		background-color: ${appTheme.MAIN_BG};
 	`;
@@ -43,11 +42,13 @@ const Settings = (props) => {
 		font-size: 18px;
 		font-family: Muli-SemiBold;
 		color: ${appTheme.MAIN_TEXT};
+		padding-horizontal: 12px;
 	`;
 
 	const Stats = styled.View`
 		flex-direction: row;
 		align-items: center;
+		padding-horizontal: 12px;
 	`;
 
 	const StatsHeader = styled(CustomText)`
@@ -64,7 +65,9 @@ const Settings = (props) => {
 	const Options = styled.View`
 		flex-direction: row;
 		align-items: center;
-		margin-Vertical: 6px;
+		margin-vertical: 6px;
+		padding-horizontal: 12px;
+		padding-vertical: 4px;
 	`;
 
 	const OptionsText = styled.View`
@@ -130,7 +133,10 @@ const Settings = (props) => {
 			<View style={{marginBottom: 12}}>
 				<SectionHeader>Settings</SectionHeader>
 
-				<TouchableNativeFeedback onPress={() => console.log('a')}>
+				<TouchableNativeFeedback 
+					onPress={() => console.log('a')}
+					background={TouchableNativeFeedback.Ripple(appTheme.BORDER, false)}
+				>
 					<Options>
 						<Icon name='eye' size={21} color={appTheme.MAIN_TEXT}/>
 						
