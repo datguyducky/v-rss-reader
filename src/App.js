@@ -26,13 +26,13 @@ import { DarkTheme, LightTheme } from './styles/Themes';
 import { ThemeProvider } from 'styled-components';
 
 import AsyncStorage from '@react-native-community/async-storage';
-import { color } from 'react-native-reanimated';
 
 
 const Stack = createStackNavigator();
-const App = (props) => {
+const App = () => {
 	const [appTheme, set_appTheme] = useState('LightTheme');
 	const colorScheme = useColorScheme();
+	const [settingsCheck, set_settingsCheck] = useState('');
 
 
 	const popupRoutes = (eventName, index) => {
@@ -83,6 +83,7 @@ const App = (props) => {
 		}; loadStats();
 	}, []);
 
+
 	React.useLayoutEffect(() => {
 		const loadSettings = async () => {
 			let USER_SETTINGS = await AsyncStorage.getItem('user_settings');
@@ -101,8 +102,6 @@ const App = (props) => {
 				AsyncStorage.setItem('user_settings', JSON.stringify(CREATE_SETTINGS));
 
 			} else {
-				USER_SETTINGS.theme = 'light';
-
 				if(USER_SETTINGS.theme === 'light') { set_appTheme('LightTheme') }
 				if(USER_SETTINGS.theme === 'dark') { set_appTheme('DarkTheme') }
 				if(USER_SETTINGS.theme === 'system') {
@@ -116,7 +115,7 @@ const App = (props) => {
 				}
 			}
 		}; loadSettings();
-	}, [])
+	}, [settingsCheck])
 
 
 	return (
@@ -205,6 +204,9 @@ const App = (props) => {
 						component={Settings}
 						options={{
 							title: 'Settings'
+						}}
+						initialParams={{
+							set_settingsCheck: set_settingsCheck
 						}}
 					/>
 

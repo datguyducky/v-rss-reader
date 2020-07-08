@@ -137,13 +137,7 @@ const EditFeed = (props) => {
 			firstName: firstFeedName
 		})
 	}
-
 	
-	// start of styled-components
-	const StyledEditFeed = styled.View`
-		
-	`;
-	// end of styled-components
 
 	return (
 		<View style={{
