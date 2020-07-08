@@ -21,6 +21,8 @@ const CategoryCard = (props) => {
 
 
 	useEffect(() => {
+		set_rssObj([]);
+
 		const fetchRSS = async () => {
 			// loop every category
 			for(let i=0; i<catList.length; i++) {			
@@ -67,16 +69,8 @@ const CategoryCard = (props) => {
 					set_rssObj(rssObj => [...rssObj, catToSave]);
 				}
 			}
-
-			// set loaded to true, so we don't call fetchRSS() every time when we refresh Home screen
-			set_loaded(true);
-		};
-
-		if(!loaded) {
-			fetchRSS();
-		}
-
-	}, [loaded])
+		}; fetchRSS();
+	}, [catList])
 
 	
 	// separator between every article within SectionList
@@ -183,7 +177,6 @@ const CategoryCard = (props) => {
 			paddingBottom: 12
 		}}>
 			{
-				loaded ?
 					<SectionList 
 						sections={rssObj}
 						keyExtractor={(item, i) => i.toString()}
@@ -220,7 +213,6 @@ const CategoryCard = (props) => {
 							}
 						}}
 					/>
-				: null
 			}
 		</View>
 	);

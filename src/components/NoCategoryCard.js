@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { 
 	StyleSheet, 
 	View, 
@@ -81,44 +80,44 @@ const NoCategoryCard = (props) => {
 
 	
 	useEffect(() => {
+		set_rssObj([]);
+		
 		const fetchRSS = async () => {
 			// hacky way to update FlatList data state only when data changes in AsyncStorage
-			if(rssObj.length < feedsList.length) {
-				// here we fetch every RSS feed in storage
-				for(let i=0; i<feedsList.length; i++){
-					fetch(feedsList[i].href)
-					.then(response => response.text())
-					.then(responseData => rssParser.parse(responseData))
-					.then((rss) => {
-						// max 16 articles per one RSS feed
-						// saving every article from RSS feed response to rssObj state
-						for(let j=0; j<=16; j++) {
-							const RSS = rss.items[j];
+			// here we fetch every RSS feed in storage
+			for(let i=0; i<feedsList.length; i++){
+				fetch(feedsList[i].href)
+				.then(response => response.text())
+				.then(responseData => rssParser.parse(responseData))
+				.then((rss) => {
+					// max 16 articles per one RSS feed
+					// saving every article from RSS feed response to rssObj state
+					for(let j=0; j<=16; j++) {
+						const RSS = rss.items[j];
 
-							// converting full date from a RSS to: YEAR-MONTH-DAY
-							let re = /[0-9]{2}:/;
-							let date = RSS.published.split('T')[0];
-							re = /[0-9]{2}\ [a-zA-Z]{3}\ [0-9]{4}/;
-							date = date.match(re) !== null ? date.match(re)[0] : date;
+						// converting full date from a RSS to: YEAR-MONTH-DAY
+						let re = /[0-9]{2}:/;
+						let date = RSS.published.split('T')[0];
+						re = /[0-9]{2}\ [a-zA-Z]{3}\ [0-9]{4}/;
+						date = date.match(re) !== null ? date.match(re)[0] : date;
 
-							// default RSS object to save in a state
-							const rssToSave = {
-								title: RSS.title,
-								date_published: date,
-								url: RSS.links[0].url,
-								publisher_name: feedsList[i].name,
-								categories: RSS.categories[0].name,
-							};
+						// default RSS object to save in a state
+						const rssToSave = {
+							title: RSS.title,
+							date_published: date,
+							url: RSS.links[0].url,
+							publisher_name: feedsList[i].name,
+							categories: RSS.categories[0].name,
+						};
 
-							// saving article to state
-							set_rssObj(rssObj => [...rssObj, rssToSave]);
-						}
-					})
-					.catch(err => console.log(err))
-				}
+						// saving article to state
+						set_rssObj(rssObj => [...rssObj, rssToSave]);
+					}
+				})
+				.catch(err => console.log(err))
 			}
 		}; fetchRSS();
-	}, [])
+	}, [feedsList])
 
 
 	// start of styled-components
