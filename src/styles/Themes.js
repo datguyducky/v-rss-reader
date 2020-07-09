@@ -1,0 +1,25 @@
+export const DarkTheme = {
+	MAIN_BG: '#111',
+	SEC_BG: '#222',
+	DIM_BG: '#262626',
+	BORDER: '#3E3E3F',
+	MAIN_TEXT: '#EFF0F5',
+	SEC_TEXT: '#D7D8DC',
+	DIM_TEXT: '#9194A1',
+	BRAND: '#0089BC',
+	SEC_BRAND: '#444',
+	ERROR: '#c2000a'
+}
+
+export const LightTheme = {
+	MAIN_BG: '#FFF',
+	SEC_BG: '#EFF0F5',
+	DIM_BG: '#E5E5E5',
+	BORDER: '#CFD0D3',
+	MAIN_TEXT: '#050505',
+	SEC_TEXT: '#2F3037',
+	DIM_TEXT: '#9194A1',
+	BRAND: '#0089BC',
+	SEC_BRAND: '#A8CEE1',
+	ERROR: '#D8000C'
+}
