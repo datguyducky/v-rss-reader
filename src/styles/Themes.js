@@ -1,7 +1,7 @@
 export const DarkTheme = {
 	MAIN_BG: '#111',
-	SEC_BG: '#171818',
-	DIM_BG: '#161616',
+	SEC_BG: '#222',
+	DIM_BG: '#262626',
 	BORDER: '#3E3E3F',
 	MAIN_TEXT: '#EFF0F5',
 	SEC_TEXT: '#D7D8DC',
