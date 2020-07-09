@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 // navigation
 import 'react-native-gesture-handler';
@@ -114,6 +115,8 @@ const App = () => {
 					}
 				}
 			}
+
+			SplashScreen.hide();
 		}; loadSettings();
 	}, [settingsCheck])
 

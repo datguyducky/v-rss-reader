@@ -90,7 +90,7 @@ const NewFeed = (props) => {
 		// adding http:// at the begining of a feed href if user forgot to do it himself
 		const HREF_CHECK  = new RegExp("^(http|https)://", "i");
 		if(HREF_CHECK.test(feedToSend.href) === false) {
-			feedToSend.href = 'http://' + feedToSend.href;
+			feedToSend.href = 'https://' + feedToSend.href;
 		}
 
 		fetch(feedToSend.href)
