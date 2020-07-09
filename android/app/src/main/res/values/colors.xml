@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="splashscreen_bg">#fff</color>
-    <color name="app_bg">#fbfbfb</color>
+  <!-- We'll use 'background' name to reference this color -->
+  <!-- Replace #HEX_VALUE with Your color -->
+  <color name="main_bg">#dee2ec</color>
+  <color name="splashscreen_bg">#fff</color>
 </resources>

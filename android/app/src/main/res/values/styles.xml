@@ -3,10 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textColor">#000000</item>
-		<item name="android:windowBackground">@color/app_bg</item>
-		<item name="android:statusBarColor">@color/app_bg</item>
-		<item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColor">#050505</item>
+		<item name="android:windowBackground">@color/main_bg</item>
     </style>
 
 	<style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
