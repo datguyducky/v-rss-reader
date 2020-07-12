@@ -5,19 +5,24 @@ import {
 	Modal,
 	TouchableOpacity
 } from 'react-native';
-import { CustomText } from '../components';
+import { 
+	CustomText, 
+	CustomBtn 
+} from '../components';
 import styled, { withTheme } from 'styled-components';
-import { scrollHandler } from '../globals/Helpers';
+import { scrollHandler, defaultSettings, defaultStats, convertToRedesign } from '../globals/Helpers';
 import AsyncStorage from '@react-native-community/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 
 
 const Settings = (props) => {
 	const appTheme = props.theme;
+	const { navigate } = props.navigation;
 	const [userStats, set_userStats] = useState({});
 	const [themeModal, set_themeModal] = useState(false);
 	const [userSettings, set_userSettings] = useState({});
-	const [newTheme, set_newTheme] = useState('')
+	const [newTheme, set_newTheme] = useState('');
+	const [displayRestore, set_displayRestore] = useState(false);
 	
 
 	useEffect(() => {
@@ -29,6 +34,15 @@ const Settings = (props) => {
 				set_userStats(result);
 			};
 		}; loadStats();
+
+		const loadOldData = async () => {
+			let result = await AsyncStorage.getItem('custom_feeds');
+			result = JSON.parse(result);
+
+			if(result !== null) {
+				set_displayRestore(true);
+			}
+		}
 
 		const loadSettigns = async () => {
 			let result = await AsyncStorage.getItem('user_settings');
@@ -54,13 +68,31 @@ const Settings = (props) => {
 		set_themeModal(false); 
 	}
 
+	
+	const deleteData = async () => {
+		const keys = [
+			'user_categories',
+			'user_nocatfeeds',
+		];
+
+		// resetting settings and stats to default values
+		defaultSettings();
+		defaultStats();
+		
+		// completely removing user categories and feeds without cat from storage
+		AsyncStorage.multiRemove(keys, (err) => {
+			if(err) {
+				console.log(err);
+			}
+		});
+
+		
+		// going back to Home screen
+		navigate('Home');
+	}
+
 
 	// start of styled-components
-	const StyledSettings = styled.ScrollView`
-		padding-vertical: 4px;
-		background-color: ${appTheme.MAIN_BG};
-	`;
-
 	const SectionHeader = styled.Text`
 		font-size: 18px;
 		font-family: Muli-SemiBold;
@@ -122,6 +154,7 @@ const Settings = (props) => {
 		padding-horizontal: 16px;
 		padding-vertical: 12px;
 		border-radius: 4px;
+		max-width: 360px;
 	`;
 
 	const ModalHeader = styled.Text`
@@ -160,13 +193,20 @@ const Settings = (props) => {
 		font-family: Muli-SemiBold;
 		font-size: 15px;
 		color: ${appTheme.BRAND};
-	`
+	`;
 	// end of styled-components
 
 
 	return (
-		<StyledSettings style={{flex: 1}} onScroll={(event) => scrollHandler(event, props)}>
-			
+		<View 
+			style={{
+				flex: 1,
+				paddingVertical: 4,
+				backgroundColor: appTheme.MAIN_BG,
+
+			}} 
+			onScroll={(event) => scrollHandler(event, props)}
+		>
 			<View style={{marginBottom: 12}}>
 				<SectionHeader>Stats</SectionHeader>
 
@@ -187,8 +227,6 @@ const Settings = (props) => {
 							userStats.reading_streak > 1
 							? userStats.reading_streak + ' days'
 							: userStats.reading_streak + ' day'
-							
-							|| '0 days'
 						}
 					</StatsValue>
 				</Stats>
@@ -229,6 +267,26 @@ const Settings = (props) => {
 						</OptionsText>
 					</Options>
 				</TouchableNativeFeedback>
+			</View>
+
+			<View style={{marginBottom: 12, justifyContent: 'flex-end', flex: 1}}>
+				{
+					displayRestore ?
+					<CustomBtn
+						border={appTheme.BRAND}
+						title='Restore data'
+						color='#FFF'
+						onPress={convertToRedesign}
+					/>
+					: null
+				}
+				
+				<CustomBtn
+					border={appTheme.ERROR}
+					title='Delete data'
+					color='#FFF'
+					onPress={deleteData}
+				/>
 			</View>
 
 			<Modal 
@@ -298,6 +356,6 @@ const Settings = (props) => {
 					</ModalContent>
 				</ModalBackground>
 			</Modal>
-		</StyledSettings>
+		</View>
 	);
 }; export default withTheme(Settings);

@@ -53,11 +53,13 @@ const CategoryCard = (props) => {
 							// default RSS object to save in a state
 							const rssToSave = {
 								title: RSS.title,
-								date_published: date,
+								date_published: date || '',
 								url: RSS.links[0].url,
-								publisher_name: catList[i].feeds[j].name,
-								categories: RSS.categories[0].name,
+								publisher_name: catList[i].feeds[j].name || '',
+								categories: RSS.categories[0].name || '',
 							};
+
+							
 
 							// pushing article to an array of feeds for a category
 							catToSave.data.push(rssToSave);

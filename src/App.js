@@ -28,6 +28,8 @@ import { ThemeProvider } from 'styled-components';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { defaultStats, defaultSettings } from './globals/Helpers';
+
 
 const Stack = createStackNavigator();
 const App = () => {
@@ -57,29 +59,7 @@ const App = () => {
 			// with initial launch of the app save default USER_STATS object to AsyncStorage
 			// with a current date for a launch app
 			if(result === null) {
-				const USER_STATS = {
-					app_launch: '',
-					news_opened: 0,
-					reading_streak: 0,
-					reading_longest_streak: 0,
-					last_day: 0
-				};
-
-
-				let LAUNCH = new Date();
-				LAUNCH.setMinutes(LAUNCH.getDate() - LAUNCH.getTimezoneOffset());
-				let TODAY = new Date(LAUNCH);
-
-				// date when app was first launched (YEAR-MONTH-DAY H:M)
-				LAUNCH = LAUNCH.toJSON().slice(0, 16).replace('T', ' ');
-
-				// setting today as a initial date for lastDay key (used later by reading_streak)
-				USER_STATS.last_day = TODAY;
-
-
-				// everything to AsyncStorage
-				USER_STATS.app_launch = LAUNCH;
-				AsyncStorage.setItem('user_stats', JSON.stringify(USER_STATS));
+				defaultStats();
 			};
 		}; loadStats();
 	}, []);
@@ -91,16 +71,8 @@ const App = () => {
 			USER_SETTINGS = JSON.parse(USER_SETTINGS);
 
 			if(USER_SETTINGS === null) {
-				const CREATE_SETTINGS = {
-					theme: 'light',
-					max_articles: 0, // TODO
-					brand_color: '', // TODO
-					max_cat: 0, // TODO
-					max_cat_feeds: 0 // TODO
-				}
-
+				defaultSettings();
 				set_appTheme('LightTheme');
-				AsyncStorage.setItem('user_settings', JSON.stringify(CREATE_SETTINGS));
 
 			} else {
 				if(USER_SETTINGS.theme === 'light') { set_appTheme('LightTheme') }

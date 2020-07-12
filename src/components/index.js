@@ -5,6 +5,7 @@ import NoCategoryCard from './NoCategoryCard';
 import ReadCard from './ReadCard';
 import { NavBtn, NavMoreBtn } from './NavBtn';
 import CustomText from './CustomText';
+import CustomBtn from './CustomBtn';
 
 export {
 	CategoryCard,
@@ -14,5 +15,6 @@ export {
 	ReadCard,
 	NavBtn,
 	NavMoreBtn,
-	CustomText
+	CustomText,
+	CustomBtn
 }
