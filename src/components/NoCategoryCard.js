@@ -104,10 +104,10 @@ const NoCategoryCard = (props) => {
 						// default RSS object to save in a state
 						const rssToSave = {
 							title: RSS.title,
-							date_published: date,
+							date_published: date || '',
 							url: RSS.links[0].url,
-							publisher_name: feedsList[i].name,
-							categories: RSS.categories[0].name,
+							publisher_name: feedsList[i].name || '',
+							categories: RSS.categories[0].name || '',
 						};
 
 						// saving article to state

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import {
 	View,
@@ -188,6 +188,9 @@ const Home = (props) => {
 
 		if(result) {
 			set_catList(result);
+
+		} else {
+			set_catList([]);
 		}
 	};
 
@@ -198,6 +201,9 @@ const Home = (props) => {
 
 		if(result) {
 			set_feedsList(result);
+
+		} else {
+			set_feedsList([]);
 		}
 	};
 
