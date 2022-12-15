@@ -1,42 +1,44 @@
 {
-  "name": "V",
-  "version": "2.1.0",
-  "private": true,
+  "name": "v",
+  "version": "3.0.0",
+  "main": "src/index.tsx",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.11.0",
-    "@react-native-community/masked-view": "^0.1.10",
-    "@react-navigation/native": "^5.5.1",
-    "@react-navigation/stack": "^5.4.2",
-    "prop-types": "^15.7.2",
-    "react": "16.11.0",
-    "react-native": "0.62.2",
-    "react-native-gesture-handler": "^1.6.1",
-    "react-native-reanimated": "^1.9.0",
-    "react-native-rss-parser": "^1.4.0",
-    "react-native-safe-area-context": "^3.0.2",
-    "react-native-screens": "^2.8.0",
-    "react-native-splash-screen": "^3.2.0",
-    "react-native-vector-icons": "^6.6.0",
-    "styled-components": "^5.1.1"
+    "@react-navigation/native": "^6.1.1",
+    "@react-navigation/native-stack": "^6.9.6",
+    "expo": "~47.0.8",
+    "expo-font": "~11.0.1",
+    "expo-splash-screen": "~0.17.5",
+    "expo-status-bar": "~1.4.2",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-native": "0.70.5",
+    "react-native-heroicons": "^3.2.0",
+    "react-native-safe-area-context": "4.4.1",
+    "react-native-screens": "~3.18.0",
+    "react-native-svg": "13.4.0",
+    "react-native-web": "~0.18.9",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
-    "@babel/core": "7.10.2",
-    "@babel/runtime": "7.10.2",
-    "@react-native-community/eslint-config": "0.0.5",
-    "babel-jest": "24.9.0",
-    "eslint": "6.8.0",
-    "jest": "24.9.0",
-    "metro-react-native-babel-preset": "0.58.0",
-    "react-test-renderer": "16.11.0"
+    "@babel/core": "^7.12.9",
+    "@types/react": "~18.0.14",
+    "@types/react-native": "~0.70.6",
+    "@types/styled-components": "^5.1.26",
+    "@types/styled-components-react-native": "^5.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.46.1",
+    "@typescript-eslint/parser": "^5.46.1",
+    "eslint-config-universe": "^11.1.1",
+    "prettier": "^2.8.1",
+    "typescript": "^4.6.3"
   },
-  "jest": {
-    "preset": "react-native"
+  "private": true,
+  "eslintConfig": {
+    "extends": "universe/native"
   }
 }
