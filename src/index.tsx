@@ -1,18 +1,20 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { registerRootComponent } from 'expo';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 
 import { Header } from './components/Header';
+import { Navigation } from './components/Navigation';
+import { AddDecider } from './drawers/AddDecider';
 import { Read } from './views/Read';
 
 SplashScreen.preventAutoHideAsync();
 
-const App = () => {
-	const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
+const App = () => {
 	const [fontsLoaded] = useFonts({
 		'Montserrat-Bold': require('../assets/fonts/Montserrat/Montserrat-Bold.ttf'),
 		'Montserrat-Medium': require('../assets/fonts/Montserrat/Montserrat-Medium.ttf'),
@@ -38,13 +40,17 @@ const App = () => {
 
 	return (
 		<NavigationContainer onReady={onLayoutRootView}>
-			<Stack.Navigator
+			<Tab.Navigator
 				screenOptions={{
 					headerShadowVisible: false,
+					header: () => <Header />,
 				}}
+				tabBar={props => <Navigation {...props} />}
 			>
-				<Stack.Screen name="Read" component={Read} options={{ header: () => <Header /> }} />
-			</Stack.Navigator>
+				<Tab.Screen name="Read" component={Read} />
+
+				<Tab.Screen name="Add" component={AddDecider} />
+			</Tab.Navigator>
 		</NavigationContainer>
 	);
 };

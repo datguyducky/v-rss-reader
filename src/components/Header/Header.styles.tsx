@@ -6,6 +6,7 @@ export const HeaderWrap = styled.View<{ marginTop?: number; width?: number }>`
 	align-items: center;
 	padding: 16px 12px;
 	padding-bottom: 0px;
+	background-color: #fff;
 `;
 
 export const HeaderTextWrap = styled.View``;
