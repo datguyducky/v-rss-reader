@@ -19,6 +19,11 @@ const App = () => {
 		'Montserrat-Regular': require('../assets/fonts/Montserrat/Montserrat-Regular.ttf'),
 		'Montserrat-SemiBold': require('../assets/fonts/Montserrat/Montserrat-SemiBold.ttf'),
 		'Montserrat-Light': require('../assets/fonts/Montserrat/Montserrat-Light.ttf'),
+		'Raleway-Bold': require('../assets/fonts/Raleway/Raleway-Bold.ttf'),
+		'Raleway-Medium': require('../assets/fonts/Raleway/Raleway-Medium.ttf'),
+		'Raleway-Regular': require('../assets/fonts/Raleway/Raleway-Regular.ttf'),
+		'Raleway-SemiBold': require('../assets/fonts/Raleway/Raleway-SemiBold.ttf'),
+		'Raleway-Light': require('../assets/fonts/Raleway/Raleway-Light.ttf'),
 	});
 
 	const onLayoutRootView = useCallback(async () => {

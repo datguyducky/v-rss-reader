@@ -1,14 +1,5 @@
-import { TextProps as NativeTextProps, TextStyle } from 'react-native';
+import { TextProps as NativeTextProps } from 'react-native';
 import styled from 'styled-components/native';
-
-/**
- * todo: font-weight is not really supported, so we need to use different font-family for different weights
- * because of this we need to add some switch or whatever to switch font-family based on provided "weight" prop.
- * Maybe something like `${fontFamily || defaultOne}-SemiBold`?
- *
- * todo: also it would be a really good idea to add support for other props here as well like color, size and etc.
- */
-// todo: Maybe have this as normal text component and a second one - Heading which would support fontSizes based on which h1,h2,... tag was provided
 
 export interface StyledNativeTextProps extends NativeTextProps {
 	weight?: 300 | 400 | 500 | 600 | 700;
@@ -21,22 +12,22 @@ export const StyledNativeText = styled.Text<StyledNativeTextProps>`
 	font-family: ${({ weight }) => {
 		switch (weight) {
 			case 300:
-				return 'Montserrat-Light';
+				return 'Raleway-Light';
 
 			case 400:
-				return 'Montserrat-Regular';
+				return 'Raleway-Regular';
 
 			case 500:
-				return 'Montserrat-Medium';
+				return 'Raleway-Medium';
 
 			case 600:
-				return 'Montserrat-SemiBold';
+				return 'Raleway-SemiBold';
 
 			case 700:
-				return 'Montserrat-Bold';
+				return 'Raleway-Bold';
 
 			default:
-				return 'Montserrat-Regular';
+				return 'Raleway-Regular';
 		}
 	}};
 `;
