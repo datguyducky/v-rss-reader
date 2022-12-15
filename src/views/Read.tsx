@@ -7,7 +7,6 @@ export const Read = () => {
 	return (
 		<Layout>
 			<Text>Feeds here...</Text>
-			<StatusBar style="auto" />
 		</Layout>
 	);
 };

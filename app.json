@@ -30,5 +30,9 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff",
+      "barStyle": "dark-content"
+    }
   }
 }
