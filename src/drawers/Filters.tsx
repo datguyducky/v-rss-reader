@@ -11,7 +11,7 @@ export const Filters = ({ navigation }: StackScreenProps<any>) => {
 
 	return (
 		<StatusBarLayout statusBarBackgroundColor="rgba(0, 0, 0, 0)" statusBarStyle="light">
-			<Drawer navigation={navigation} ref={bottomSheetRef}>
+			<Drawer navigation={navigation} ref={bottomSheetRef} snapPoints={['40%']}>
 				<Text>Filters here...</Text>
 			</Drawer>
 		</StatusBarLayout>

@@ -9,11 +9,16 @@ import { StackNavigationProp } from '@react-navigation/stack';
 interface DrawerProps {
 	navigation: StackNavigationProp<any>;
 	children: React.ReactNode;
+	snapPoints: (string | number)[];
+	initialSnapPoint?: number;
 }
 
 // Todo: add animation when opening and closing
 export const Drawer = React.forwardRef(
-	({ navigation, children }: DrawerProps, ref: any /* todo: proper type here */) => {
+	(
+		{ navigation, children, snapPoints, initialSnapPoint = 0 }: DrawerProps,
+		ref: any /* todo: proper type here */,
+	) => {
 		const handleSheetChanges = useCallback((index: number) => {
 			// -1 -> bottom sheet is closed
 			if (index === -1) {
@@ -24,8 +29,8 @@ export const Drawer = React.forwardRef(
 		return (
 			<BottomSheet
 				ref={ref}
-				index={0}
-				snapPoints={['25%', '50%']}
+				index={initialSnapPoint}
+				snapPoints={snapPoints}
 				onChange={handleSheetChanges}
 				enablePanDownToClose
 				enableHandlePanningGesture={false}
