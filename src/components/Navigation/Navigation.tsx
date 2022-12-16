@@ -10,7 +10,7 @@ import {
 } from './Navigation.styles';
 import { Pressable } from 'react-native';
 
-export const Navigation = ({ state, descriptors, navigation }: BottomTabBarProps) => {
+export const Navigation = ({ navigation }: BottomTabBarProps) => {
 	return (
 		<NavigationWrap>
 			<Shadow stretch distance={6}>

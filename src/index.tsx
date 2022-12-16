@@ -10,8 +10,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
+
 import { Read } from './views/Read';
 import { Filters } from './drawers/Filters';
+import { Feeds } from './drawers/Feeds';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -74,6 +76,7 @@ const App = () => {
 							}}
 						>
 							<Stack.Screen name="Filters" component={Filters} />
+							<Stack.Screen name="Feeds" component={Feeds} />
 						</Stack.Group>
 					</Stack.Navigator>
 				</NavigationContainer>
