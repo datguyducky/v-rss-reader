@@ -15,14 +15,16 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 		<NavigationWrap>
 			<Shadow stretch distance={6}>
 				<NavigationContent>
-					<Pressable onPress={() => navigation.navigate('Feeds')}>
-						<LeftIconWrap>
+					<LeftIconWrap>
+						<Pressable onPress={() => navigation.navigate('Feeds')}>
 							<Bars3BottomLeftIcon size={24} color="#101113" />
-						</LeftIconWrap>
-					</Pressable>
+						</Pressable>
+					</LeftIconWrap>
 
 					<RightIconWrap>
-						<Cog6ToothIcon size={24} color="#101113" />
+						<Pressable onPress={() => navigation.navigate('QuickSettings')}>
+							<Cog6ToothIcon size={24} color="#101113" />
+						</Pressable>
 					</RightIconWrap>
 				</NavigationContent>
 			</Shadow>

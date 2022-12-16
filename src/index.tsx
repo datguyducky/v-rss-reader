@@ -14,6 +14,7 @@ import { Navigation } from './components/Navigation';
 import { Read } from './views/Read';
 import { Filters } from './drawers/Filters';
 import { Feeds } from './drawers/Feeds';
+import { QuickSettings } from './drawers/QuickSettings';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -77,6 +78,7 @@ const App = () => {
 						>
 							<Stack.Screen name="Filters" component={Filters} />
 							<Stack.Screen name="Feeds" component={Feeds} />
+							<Stack.Screen name="QuickSettings" component={QuickSettings} />
 						</Stack.Group>
 					</Stack.Navigator>
 				</NavigationContainer>
