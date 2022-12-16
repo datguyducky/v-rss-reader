@@ -4,15 +4,32 @@ import { registerRootComponent } from 'expo';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
-import { AddDecider } from './drawers/AddDecider';
 import { Read } from './views/Read';
+import { Filters } from './drawers/Filters';
 
 SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const TabScreen = () => {
+	return (
+		<Tab.Navigator
+			screenOptions={{
+				headerShown: false,
+			}}
+			tabBar={props => <Navigation {...props} />}
+		>
+			<Stack.Screen name="Read" component={Read} />
+		</Tab.Navigator>
+	);
+};
 
 const App = () => {
 	const [fontsLoaded] = useFonts({
@@ -39,19 +56,29 @@ const App = () => {
 	}
 
 	return (
-		<NavigationContainer onReady={onLayoutRootView}>
-			<Tab.Navigator
-				screenOptions={{
-					headerShadowVisible: false,
-					header: () => <Header />,
-				}}
-				tabBar={props => <Navigation {...props} />}
-			>
-				<Tab.Screen name="Read" component={Read} />
+		<GestureHandlerRootView style={{ flex: 1 }}>
+			<SafeAreaProvider>
+				<NavigationContainer onReady={onLayoutRootView}>
+					<Stack.Navigator
+						screenOptions={{
+							headerShadowVisible: false,
+							header: props => <Header {...props} />,
+						}}
+					>
+						<Stack.Screen name="TabScreen" component={TabScreen} />
 
-				<Tab.Screen name="Add" component={AddDecider} />
-			</Tab.Navigator>
-		</NavigationContainer>
+						<Stack.Group
+							screenOptions={{
+								presentation: 'containedTransparentModal',
+								headerShown: false,
+							}}
+						>
+							<Stack.Screen name="Filters" component={Filters} />
+						</Stack.Group>
+					</Stack.Navigator>
+				</NavigationContainer>
+			</SafeAreaProvider>
+		</GestureHandlerRootView>
 	);
 };
 

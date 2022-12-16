@@ -3,8 +3,10 @@ import { EyeIcon } from 'react-native-heroicons/outline';
 
 import { Heading } from '../Heading';
 import { HeaderTextWrap, HeaderWrap, IconWrap } from './Header.styles';
+import { Pressable } from 'react-native';
+import { NativeStackHeaderProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 
-export const Header = () => {
+export const Header = ({ navigation }: NativeStackHeaderProps) => {
 	return (
 		<HeaderWrap marginTop={Constants?.statusBarHeight}>
 			<HeaderTextWrap>
@@ -15,7 +17,9 @@ export const Header = () => {
 			</HeaderTextWrap>
 
 			<IconWrap>
-				<EyeIcon size={24} color="black" />
+				<Pressable onPress={() => navigation.navigate('Filters')}>
+					<EyeIcon size={24} color="black" />
+				</Pressable>
 			</IconWrap>
 		</HeaderWrap>
 	);

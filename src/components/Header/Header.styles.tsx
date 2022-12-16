@@ -4,8 +4,7 @@ export const HeaderWrap = styled.View<{ marginTop?: number; width?: number }>`
 	flex-direction: row;
 	height: auto;
 	align-items: center;
-	padding: 16px 12px;
-	padding-bottom: 0px;
+	padding: 16px 12px 0;
 	background-color: #fff;
 `;
 
