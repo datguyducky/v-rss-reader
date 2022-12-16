@@ -15,6 +15,8 @@ import { Read } from './views/Read';
 import { Filters } from './drawers/Filters';
 import { Feeds } from './drawers/Feeds';
 import { QuickSettings } from './drawers/QuickSettings';
+import { CreateSelection } from './drawers/CreateSelection';
+import { QuickAction } from './drawers/QuickAction';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -79,6 +81,8 @@ const App = () => {
 							<Stack.Screen name="Filters" component={Filters} />
 							<Stack.Screen name="Feeds" component={Feeds} />
 							<Stack.Screen name="QuickSettings" component={QuickSettings} />
+							<Stack.Screen name="CreateSelection" component={CreateSelection} />
+							<Stack.Screen name="QuickAction" component={QuickAction} />
 						</Stack.Group>
 					</Stack.Navigator>
 				</NavigationContainer>
