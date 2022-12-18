@@ -1,33 +1,46 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { Bars3BottomLeftIcon, Cog6ToothIcon } from 'react-native-heroicons/outline';
-import { Shadow } from 'react-native-shadow-2';
+import { Bars3BottomLeftIcon, Cog6ToothIcon, PlusIcon } from 'react-native-heroicons/outline';
+
+import { useWindowDimensions, Pressable } from 'react-native';
 
 import {
-	NavigationWrap,
 	LeftIconWrap,
 	RightIconWrap,
-	NavigationContent,
+	NavigationContainer,
+	WrapWithCutOut,
+	CutOutContainer,
+	CutOutWrapper,
+	CutOut,
 } from './Navigation.styles';
-import { Pressable } from 'react-native';
 
 export const Navigation = ({ navigation }: BottomTabBarProps) => {
-	return (
-		<NavigationWrap>
-			<Shadow stretch distance={6}>
-				<NavigationContent>
-					<LeftIconWrap>
-						<Pressable onPress={() => navigation.navigate('Feeds')}>
-							<Bars3BottomLeftIcon size={24} color="#101113" />
-						</Pressable>
-					</LeftIconWrap>
+	const { width } = useWindowDimensions();
 
-					<RightIconWrap>
-						<Pressable onPress={() => navigation.navigate('QuickSettings')}>
-							<Cog6ToothIcon size={24} color="#101113" />
-						</Pressable>
-					</RightIconWrap>
-				</NavigationContent>
-			</Shadow>
-		</NavigationWrap>
+	return (
+		<NavigationContainer>
+			<WrapWithCutOut>
+				<LeftIconWrap>
+					<Pressable onPress={() => navigation.navigate('Feeds')}>
+						<Bars3BottomLeftIcon size={24} color="#101113" />
+					</Pressable>
+				</LeftIconWrap>
+
+				<CutOutContainer width={width}>
+					<CutOutWrapper>
+						<CutOut>
+							<Pressable onPress={() => navigation.navigate('CreateSelection')}>
+								<PlusIcon size={32} color="#101113" />
+							</Pressable>
+						</CutOut>
+					</CutOutWrapper>
+				</CutOutContainer>
+
+				<RightIconWrap>
+					<Pressable onPress={() => navigation.navigate('QuickSettings')}>
+						<Cog6ToothIcon size={24} color="#101113" />
+					</Pressable>
+				</RightIconWrap>
+			</WrapWithCutOut>
+		</NavigationContainer>
 	);
 };
