@@ -1,44 +1,81 @@
-import BottomSheet from '@gorhom/bottom-sheet';
-import { Text } from 'react-native';
-import React, { useCallback } from 'react';
-import { DrawerBackdrop } from './DrawerBackdrop';
+import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
+import React, { useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { StatusBar, setStatusBarStyle, setStatusBarBackgroundColor } from 'expo-status-bar';
+
 import { DrawerContainer } from './Drawer.styles';
 
-import { StackNavigationProp } from '@react-navigation/stack';
-
 interface DrawerProps {
-	navigation: StackNavigationProp<any>;
+	onClose: () => void;
 	children: React.ReactNode;
+	autoOpen?: boolean;
 	snapPoints: (string | number)[];
 	initialSnapPoint?: number;
 }
 
-// Todo: add animation when opening and closing
+// TODO: There's a small flash on a statusBar when the `Drawer` is closed, maybe is not that noticeable but it still would be a good idea to fix it.
 export const Drawer = React.forwardRef(
 	(
-		{ navigation, children, snapPoints, initialSnapPoint = 0 }: DrawerProps,
-		ref: any /* todo: proper type here */,
+		{ onClose, children, snapPoints, initialSnapPoint = 0, autoOpen = true }: DrawerProps,
+		ref,
 	) => {
-		const handleSheetChanges = useCallback((index: number) => {
-			// -1 -> bottom sheet is closed
-			if (index === -1) {
-				navigation.navigate('TabScreen', { screen: 'Read' });
+		const drawerInnerRef = useRef<BottomSheetModal>(null);
+
+		useImperativeHandle(
+			ref,
+			() => ({
+				present: () => {
+					(drawerInnerRef?.current as BottomSheetModal).present(); // TODO: Double check if this brakes something. :)
+				},
+			}),
+			[drawerInnerRef?.current],
+		);
+
+		/**
+		 * `autoOpen` enables to open the bottomSheetModal automatically when it mounts in a view.
+		 */
+		useEffect(() => {
+			if (drawerInnerRef?.current && autoOpen) {
+				drawerInnerRef.current.present();
+			}
+		}, [drawerInnerRef?.current, autoOpen]);
+
+		/**
+		 * `handleOnAnimate` makes sure that the status bar background and style are synces to the  rest of the app.
+		 * TODO: Probably color and style should be provided by a theme or something as right now this would only work for "light" themed app.
+		 */
+		const handleOnAnimate = useCallback((from: number, to: number) => {
+			if (to === -1) {
+				setStatusBarBackgroundColor('#fff', false);
+				setStatusBarStyle('dark');
 			}
 		}, []);
 
 		return (
-			<BottomSheet
-				ref={ref}
-				index={initialSnapPoint}
-				snapPoints={snapPoints}
-				onChange={handleSheetChanges}
-				enablePanDownToClose
-				enableHandlePanningGesture={false}
-				handleStyle={{ display: 'none' }}
-				backdropComponent={DrawerBackdrop}
-			>
-				<DrawerContainer>{children}</DrawerContainer>
-			</BottomSheet>
+			<>
+				<StatusBar style="light" backgroundColor="rgba(0, 0, 0, 0)" />
+
+				<BottomSheetModal
+					ref={drawerInnerRef}
+					index={initialSnapPoint}
+					snapPoints={snapPoints}
+					enablePanDownToClose
+					enableHandlePanningGesture={false}
+					handleStyle={{ display: 'none' }}
+					backdropComponent={props => (
+						<BottomSheetBackdrop
+							{...props}
+							appearsOnIndex={0}
+							disappearsOnIndex={-1}
+							pressBehavior="close"
+							onPress={onClose}
+						/>
+					)}
+					onDismiss={onClose}
+					onAnimate={handleOnAnimate}
+				>
+					<DrawerContainer>{children}</DrawerContainer>
+				</BottomSheetModal>
+			</>
 		);
 	},
 );

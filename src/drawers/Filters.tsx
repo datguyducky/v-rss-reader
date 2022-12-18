@@ -1,19 +1,20 @@
 import React, { useRef } from 'react';
-import BottomSheet from '@gorhom/bottom-sheet';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import { Drawer } from '../components/Drawer';
-import { StatusBarLayout } from '../layouts/StatusBarLayout';
 import { Text } from '../components/Text';
 
 export const Filters = ({ navigation }: StackScreenProps<any>) => {
-	const bottomSheetRef = useRef<BottomSheet>(null);
+	const filtersDrawersRef = useRef<BottomSheetModal>(null);
 
 	return (
-		<StatusBarLayout statusBarBackgroundColor="rgba(0, 0, 0, 0)" statusBarStyle="light">
-			<Drawer navigation={navigation} ref={bottomSheetRef} snapPoints={['40%']}>
-				<Text>Filters here...</Text>
-			</Drawer>
-		</StatusBarLayout>
+		<Drawer
+			onClose={() => navigation.navigate('TabScreen', { screen: 'Read' })}
+			ref={filtersDrawersRef}
+			snapPoints={['40%']}
+		>
+			<Text>Filters here...</Text>
+		</Drawer>
 	);
 };
