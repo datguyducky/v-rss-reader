@@ -13,7 +13,9 @@ export const WrapWithCutOut = styled.View`
 	background-color: #fff;
 `;
 
-export const LeftIconWrap = styled.View``;
+export const LeftIconWrap = styled.View`
+	z-index: 20;
+`;
 
 export const CutOutContainer = styled.View<{ width: number }>`
 	flex-direction: row;
@@ -23,6 +25,7 @@ export const CutOutContainer = styled.View<{ width: number }>`
 	height: 175px;
 	width: ${({ width }) => width}px;
 	justify-content: space-around;
+	z-index: 10;
 `;
 
 export const CutOutWrapper = styled.View`
@@ -48,4 +51,5 @@ export const CutOut = styled.View`
 
 export const RightIconWrap = styled.View`
 	margin-left: auto;
+	z-index: 20;
 `;
