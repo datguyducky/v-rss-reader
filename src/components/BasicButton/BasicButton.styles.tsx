@@ -16,3 +16,7 @@ export const BasicButtonContent = styled.View`
 export const IconWrap = styled.View<Pick<BasicButtonStylesProps, 'spacing'>>`
 	margin-right: ${({ spacing }) => spacing || 0}px;
 `;
+
+export const RightInfoWrap = styled.View`
+	margin-left: auto;
+`;

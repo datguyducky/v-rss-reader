@@ -7,6 +7,7 @@ import {
 	BasicButtonStylesProps,
 	BasicButtonWrap,
 	IconWrap,
+	RightInfoWrap,
 } from './BasicButton.styles';
 import { Pressable } from 'react-native';
 
@@ -14,6 +15,7 @@ interface BasicButtonProps extends BasicButtonStylesProps {
 	children: ReactNode;
 	onPress: () => void;
 	icon?: ReactNode;
+	rightInfo?: ReactNode;
 }
 
 export const BasicButton = ({
@@ -22,6 +24,7 @@ export const BasicButton = ({
 	icon,
 	spacing = 12,
 	marginBottom = 0,
+	rightInfo,
 }: BasicButtonProps) => {
 	return (
 		<BasicButtonWrap marginBottom={marginBottom}>
@@ -30,6 +33,8 @@ export const BasicButton = ({
 					{icon && <IconWrap spacing={spacing}>{icon}</IconWrap>}
 
 					<Text fontFamily="Montserrat">{children}</Text>
+
+					{rightInfo && <RightInfoWrap>{rightInfo}</RightInfoWrap>}
 				</BasicButtonContent>
 			</Pressable>
 		</BasicButtonWrap>
