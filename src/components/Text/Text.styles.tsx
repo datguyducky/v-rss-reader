@@ -5,29 +5,30 @@ export interface StyledNativeTextProps extends NativeTextProps {
 	weight?: 300 | 400 | 500 | 600 | 700;
 	color?: string;
 	fontSize?: number;
+	fontFamily?: 'Raleway' | 'Montserrat';
 }
 export const StyledNativeText = styled.Text<StyledNativeTextProps>`
 	font-size: ${({ fontSize }) => fontSize || 16}px;
 	color: ${({ color }) => color || '#101113'}};
-	font-family: ${({ weight }) => {
+	font-family: ${({ weight, fontFamily }) => {
 		switch (weight) {
 			case 300:
-				return 'Raleway-Light';
+				return `${fontFamily}-Light`;
 
 			case 400:
-				return 'Raleway-Regular';
+				return `${fontFamily}-Regular`;
 
 			case 500:
-				return 'Raleway-Medium';
+				return `${fontFamily}-Medium`;
 
 			case 600:
-				return 'Raleway-SemiBold';
+				return `${fontFamily}-SemiBold`;
 
 			case 700:
-				return 'Raleway-Bold';
+				return `${fontFamily}-Bold`;
 
 			default:
-				return 'Raleway-Regular';
+				return `${fontFamily}-Regular`;
 		}
 	}};
 `;
