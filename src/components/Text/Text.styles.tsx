@@ -6,10 +6,12 @@ export interface StyledNativeTextProps extends NativeTextProps {
 	color?: string;
 	fontSize?: number;
 	fontFamily?: 'Raleway' | 'Montserrat';
+	mb?: number;
 }
 export const StyledNativeText = styled.Text<StyledNativeTextProps>`
 	font-size: ${({ fontSize }) => fontSize || 16}px;
-	color: ${({ color }) => color || '#101113'}};
+	color: ${({ color }) => color || '#101113'};
+	margin-bottom: ${({ mb }) => mb || 0}px;
 	font-family: ${({ weight, fontFamily }) => {
 		switch (weight) {
 			case 300:

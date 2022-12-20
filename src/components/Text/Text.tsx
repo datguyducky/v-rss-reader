@@ -8,9 +8,16 @@ export const Text = ({
 	fontSize,
 	color,
 	fontFamily = 'Raleway',
+	mb,
 }: StyledNativeTextProps) => {
 	return (
-		<StyledNativeText weight={weight} fontSize={fontSize} color={color} fontFamily={fontFamily}>
+		<StyledNativeText
+			weight={weight}
+			fontSize={fontSize}
+			color={color}
+			fontFamily={fontFamily}
+			mb={mb}
+		>
 			{children}
 		</StyledNativeText>
 	);
