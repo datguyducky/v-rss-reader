@@ -1,0 +1,1 @@
+export { TextOnlyCard } from './TextOnlyCard';

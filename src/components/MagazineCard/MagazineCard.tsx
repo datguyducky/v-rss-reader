@@ -11,13 +11,9 @@ import {
 	StyledPressable,
 	DetailsWrap,
 } from './MagazineCard.styles';
+import { FeedCardProps } from '../../types';
 
-interface MagazineCardProps extends MagazineCardStylesProps {
-	title: string;
-	url: string;
-	thumbnailUrl?: string;
-	onLongPress?: () => void;
-}
+interface MagazineCardProps extends FeedCardProps, MagazineCardStylesProps {}
 
 export const MagazineCard = ({
 	title,
