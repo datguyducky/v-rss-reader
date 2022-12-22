@@ -22,7 +22,7 @@ export const Feeds = ({ navigation }: StackScreenProps<any>) => {
 			<BasicButton
 				onPress={() => console.log('TODO: open all articles view')}
 				icon={<InboxStackIcon size={20} color="#101113" />}
-				marginBottom={16}
+				mb={16}
 				rightInfo={
 					<Text color="#4DABF7" fontSize={14} fontFamily="Montserrat">
 						000
@@ -53,7 +53,7 @@ export const Feeds = ({ navigation }: StackScreenProps<any>) => {
 						style={{ backgroundColor: 'red', width: 20, height: 20, borderRadius: 20 }}
 					/>
 				}
-				marginBottom={16}
+				mb={16}
 				rightInfo={
 					<Text color="#4DABF7" fontSize={14} fontFamily="Montserrat">
 						000

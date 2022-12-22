@@ -16,6 +16,7 @@ interface BasicButtonProps extends BasicButtonStylesProps {
 	onPress: () => void;
 	icon?: ReactNode;
 	rightInfo?: ReactNode;
+	textSize?: number;
 }
 
 export const BasicButton = ({
@@ -23,16 +24,20 @@ export const BasicButton = ({
 	onPress,
 	icon,
 	spacing = 12,
-	marginBottom = 0,
+	mb = 0,
 	rightInfo,
+	textSize,
+	vertical = false,
 }: BasicButtonProps) => {
 	return (
-		<BasicButtonWrap marginBottom={marginBottom}>
+		<BasicButtonWrap mb={mb} vertical={vertical}>
 			<Pressable onPress={onPress}>
-				<BasicButtonContent>
+				<BasicButtonContent vertical={vertical}>
 					{icon && <IconWrap spacing={spacing}>{icon}</IconWrap>}
 
-					<Text fontFamily="Montserrat">{children}</Text>
+					<Text fontFamily="Montserrat" fontSize={textSize}>
+						{children}
+					</Text>
 
 					{rightInfo && <RightInfoWrap>{rightInfo}</RightInfoWrap>}
 				</BasicButtonContent>

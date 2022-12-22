@@ -18,7 +18,7 @@ export const CreateSelection = ({ navigation }: StackScreenProps<any>) => {
 			<BasicButton
 				onPress={() => console.log('TODO: open new feed view')}
 				icon={<PlusIcon size={20} color="#101113" />}
-				marginBottom={16}
+				mb={16}
 			>
 				Add new RSS feed
 			</BasicButton>

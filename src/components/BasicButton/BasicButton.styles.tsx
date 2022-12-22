@@ -2,14 +2,18 @@ import styled from 'styled-components/native';
 
 export interface BasicButtonStylesProps {
 	spacing?: number;
-	marginBottom?: number;
+	mb?: number;
+	vertical?: boolean;
 }
 
-export const BasicButtonWrap = styled.View<Pick<BasicButtonStylesProps, 'marginBottom'>>`
-	margin-bottom: ${({ marginBottom }) => marginBottom || 0}px;
+export const BasicButtonWrap = styled.View<
+	Required<Pick<BasicButtonStylesProps, 'mb' | 'vertical'>>
+>`
+	margin-bottom: ${({ mb }) => mb}px;
+	align-self: ${({ vertical }) => (vertical ? 'flex-start' : 'stretch')};
 `;
-export const BasicButtonContent = styled.View`
-	flex-direction: row;
+export const BasicButtonContent = styled.View<Required<Pick<BasicButtonStylesProps, 'vertical'>>>`
+	flex-direction: ${({ vertical }) => (vertical ? 'column' : 'row')};
 	align-items: center;
 `;
 

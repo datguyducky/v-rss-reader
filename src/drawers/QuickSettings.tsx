@@ -22,7 +22,7 @@ export const QuickSettings = ({ navigation }: StackScreenProps<any>) => {
 			<BasicButton
 				onPress={() => console.log('TODO: app settings view')}
 				icon={<Cog6ToothIcon size={20} color="#101113" />}
-				marginBottom={16}
+				mb={16}
 			>
 				App settings
 			</BasicButton>
