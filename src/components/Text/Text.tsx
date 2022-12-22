@@ -9,6 +9,7 @@ export const Text = ({
 	color,
 	fontFamily = 'Raleway',
 	mb,
+	numberOfLines,
 }: StyledNativeTextProps) => {
 	return (
 		<StyledNativeText
@@ -17,6 +18,7 @@ export const Text = ({
 			color={color}
 			fontFamily={fontFamily}
 			mb={mb}
+			numberOfLines={numberOfLines}
 		>
 			{children}
 		</StyledNativeText>
