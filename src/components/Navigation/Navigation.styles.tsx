@@ -34,7 +34,6 @@ export const CutOutWrapper = styled.View`
 	border-radius: 40px;
 	justify-content: center;
 	align-items: center;
-	background-color: #fff;
 	overflow: hidden;
 	margin-top: 72px;
 `;
