@@ -2,9 +2,9 @@ import { BottomSheetBackdrop, BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 import { StatusBar, setStatusBarStyle, setStatusBarBackgroundColor } from 'expo-status-bar';
 
-import { DrawerContainer } from './Drawer.styles';
+import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
 
-interface DrawerProps {
+interface DrawerProps extends DrawerStylesProps {
 	onClose: () => void;
 	children: React.ReactNode;
 	autoOpen?: boolean;
@@ -15,7 +15,14 @@ interface DrawerProps {
 // TODO: There's a small flash on a statusBar when the `Drawer` is closed, maybe is not that noticeable but it still would be a good idea to fix it.
 export const Drawer = React.forwardRef(
 	(
-		{ onClose, children, snapPoints, initialSnapPoint = 0, autoOpen = true }: DrawerProps,
+		{
+			onClose,
+			children,
+			snapPoints,
+			initialSnapPoint = 0,
+			autoOpen = true,
+			horizontalContent = false,
+		}: DrawerProps,
 		ref,
 	) => {
 		const drawerInnerRef = useRef<BottomSheetModal>(null);
@@ -73,7 +80,9 @@ export const Drawer = React.forwardRef(
 					onDismiss={onClose}
 					onAnimate={handleOnAnimate}
 				>
-					<DrawerContainer>{children}</DrawerContainer>
+					<DrawerContainer horizontalContent={horizontalContent}>
+						{children}
+					</DrawerContainer>
 				</BottomSheetModal>
 			</>
 		);
