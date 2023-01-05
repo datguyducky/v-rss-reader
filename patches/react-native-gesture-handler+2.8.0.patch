@@ -1,0 +1,18 @@
+diff --git a/node_modules/react-native-gesture-handler/src/components/Swipeable.tsx b/node_modules/react-native-gesture-handler/src/components/Swipeable.tsx
+index 18f71f5..563baa2 100644
+--- a/node_modules/react-native-gesture-handler/src/components/Swipeable.tsx
++++ b/node_modules/react-native-gesture-handler/src/components/Swipeable.tsx
+@@ -425,6 +425,13 @@ export default class Swipeable extends Component<
+     this.animateRow(this.currentOffset(), 0);
+   };
+ 
++  closeInstantly = () => {
++    const { dragX, rowTranslation } = this.state;
++    dragX.setValue(0);
++    rowTranslation.setValue(0);
++    this.setState({ rowState: Math.sign(0) });
++  }
++
+   openLeft = () => {
+     const { leftWidth = 0 } = this.state;
+     this.animateRow(this.currentOffset(), leftWidth);
