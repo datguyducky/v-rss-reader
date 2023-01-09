@@ -1,0 +1,1 @@
+export { SwipeableFeedItem } from './SwipeableFeedItem';

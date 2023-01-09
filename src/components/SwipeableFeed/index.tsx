@@ -1,1 +1,0 @@
-export { SwipeableFeed } from './SwipeableFeed';

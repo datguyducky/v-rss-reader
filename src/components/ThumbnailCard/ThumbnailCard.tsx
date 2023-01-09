@@ -1,30 +1,21 @@
-import { openURL } from 'expo-linking';
 import { LinearGradient } from 'expo-linear-gradient';
+import { openURL } from 'expo-linking';
 import { Pressable } from 'react-native';
 
+import { FeedCardProps } from '../../types';
 import { Text } from '../Text';
-
 import {
-	ThumbnailCardStylesProps,
 	ThumbnailCardWrap,
 	ThumbnailTextWrap,
 	TitleWrap,
 	StyledImageBackground,
 } from './ThumbnailCard.styles';
 
-import { FeedCardProps } from '../../types';
+interface ThumbnailCardProps extends FeedCardProps {}
 
-interface ThumbnailCardProps extends FeedCardProps, ThumbnailCardStylesProps {}
-
-export const ThumbnailCard = ({
-	title,
-	onLongPress,
-	mb = 0,
-	thumbnailUrl,
-	url,
-}: ThumbnailCardProps) => {
+export const ThumbnailCard = ({ title, onLongPress, thumbnailUrl, url }: ThumbnailCardProps) => {
 	return (
-		<ThumbnailCardWrap mb={mb}>
+		<ThumbnailCardWrap>
 			<Pressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
 				<StyledImageBackground
 					source={{

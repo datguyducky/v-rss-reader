@@ -23,6 +23,8 @@ export const FEEDS = [
 		updated: '2022-12-22T00:58:19+00:00',
 		published: '2022-12-22T00:58:19+00:00',
 		title: 'Woman accused of murdering her stepdad because she found nude photos of herself on his phone hears guilty verdict.',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -44,6 +46,8 @@ export const FEEDS = [
 		updated: '2022-12-21T21:20:25+00:00',
 		published: '2022-12-21T21:20:25+00:00',
 		title: 'What actors had the best on-screen chemistry?',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -69,6 +73,8 @@ export const FEEDS = [
 		updated: '2022-12-22T00:06:29+00:00',
 		published: '2022-12-22T00:06:29+00:00',
 		title: 'Netflix to Begin Cracking Down on Password Sharing in Early 2023',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -90,6 +96,8 @@ export const FEEDS = [
 		updated: '2022-12-22T10:34:01+00:00',
 		published: '2022-12-22T10:34:01+00:00',
 		title: "Russia's Only Aircraft Carrier Has Caught Fire",
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -115,6 +123,8 @@ export const FEEDS = [
 		updated: '2022-12-22T00:50:30+00:00',
 		published: '2022-12-22T00:50:30+00:00',
 		title: 'Zelensky greeted with loud and sustained applause as he enters the House floor',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -136,6 +146,8 @@ export const FEEDS = [
 		updated: '2022-12-22T02:25:42+00:00',
 		published: '2022-12-22T02:25:42+00:00',
 		title: 'Adventure + STL Giveaway! We’re giving away our complete 💀Legion of Steel💀 collection, a playtested 5e adventure + 30 STL miniatures worth $60, for free. Just comment in the next 48 hours to win.[Full rules in the comments] [OC] [ART]',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -161,6 +173,8 @@ export const FEEDS = [
 		updated: '2022-12-22T11:18:11+00:00',
 		published: '2022-12-22T11:18:11+00:00',
 		title: 'A true icon for us all',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -186,6 +200,8 @@ export const FEEDS = [
 		updated: '2022-12-22T00:26:13+00:00',
 		published: '2022-12-22T00:26:13+00:00',
 		title: 'Matt Gaetz and Lauren Boebert blow through Capitol security and refuse screenings before Zelensky speech',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -211,6 +227,8 @@ export const FEEDS = [
 		updated: '2022-12-22T01:16:56+00:00',
 		published: '2022-12-22T01:16:56+00:00',
 		title: "Libs of TikTok hates you and wishes harm upon you if you're different.",
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -232,6 +250,8 @@ export const FEEDS = [
 		updated: '2022-12-21T21:19:26+00:00',
 		published: '2022-12-21T21:19:26+00:00',
 		title: 'Oh hell yeah… Windows XP',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -253,6 +273,8 @@ export const FEEDS = [
 		updated: '2022-12-22T08:56:37+00:00',
 		published: '2022-12-22T08:56:37+00:00',
 		title: 'If you had the power to shut down a company for good, which company would it be?',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -278,6 +300,8 @@ export const FEEDS = [
 		updated: '2022-12-21T16:38:53+00:00',
 		published: '2022-12-21T16:38:53+00:00',
 		title: 'Trumps claimed negative income in four of six years between 2015 and 2020: report',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -303,6 +327,8 @@ export const FEEDS = [
 		updated: '2022-12-22T03:30:25+00:00',
 		published: '2022-12-22T03:30:25+00:00',
 		title: 'My wife loves movies, but dislikes unnecessary sexual scenes. This is a gift she got from some work friends.',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -324,6 +350,8 @@ export const FEEDS = [
 		updated: '2022-12-21T17:18:45+00:00',
 		published: '2022-12-21T17:18:45+00:00',
 		title: "Some of the dumbest people I've met were doctors.",
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -345,6 +373,8 @@ export const FEEDS = [
 		updated: '2022-12-21T19:38:31+00:00',
 		published: '2022-12-21T19:38:31+00:00',
 		title: "What's going on with people hating Snowden?",
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -370,6 +400,8 @@ export const FEEDS = [
 		updated: '2022-12-21T23:58:15+00:00',
 		published: '2022-12-21T23:58:15+00:00',
 		title: 'He is 7’6”',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -395,6 +427,8 @@ export const FEEDS = [
 		updated: '2022-12-21T20:51:26+00:00',
 		published: '2022-12-21T20:51:26+00:00',
 		title: 'Got my 5th covid vaccine today',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -416,6 +450,8 @@ export const FEEDS = [
 		updated: '2022-12-22T01:24:06+00:00',
 		published: '2022-12-22T01:24:06+00:00',
 		title: 'my boss refused to let me buy a box of pads during my shift',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -441,6 +477,8 @@ export const FEEDS = [
 		updated: '2022-12-22T02:11:59+00:00',
 		published: '2022-12-22T02:11:59+00:00',
 		title: 'That applause from both sides of the isle',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -466,6 +504,8 @@ export const FEEDS = [
 		updated: '2022-12-22T07:56:15+00:00',
 		published: '2022-12-22T07:56:15+00:00',
 		title: 'Using your cat to put underground cable',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -491,6 +531,8 @@ export const FEEDS = [
 		updated: '2022-12-22T08:05:04+00:00',
 		published: '2022-12-22T08:05:04+00:00',
 		title: "It's never too late",
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -516,6 +558,8 @@ export const FEEDS = [
 		updated: '2022-12-22T01:02:23+00:00',
 		published: '2022-12-22T01:02:23+00:00',
 		title: 'Chainsaw protective pants',
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -537,6 +581,8 @@ export const FEEDS = [
 		updated: '2022-12-21T22:25:41+00:00',
 		published: '2022-12-21T22:25:41+00:00',
 		title: 'Ali Ahmed Aslam, inventor of chicken tikka masala, dies at 77',
+		isRead: true,
+		isSaved: false,
 	},
 	{
 		author: {
@@ -562,6 +608,8 @@ export const FEEDS = [
 		updated: '2022-12-22T10:44:22+00:00',
 		published: '2022-12-22T10:44:22+00:00',
 		title: "It's Official",
+		isRead: false,
+		isSaved: true,
 	},
 	{
 		author: {
@@ -587,5 +635,7 @@ export const FEEDS = [
 		updated: '2022-12-21T20:06:52+00:00',
 		published: '2022-12-21T20:06:52+00:00',
 		title: 'Zelenskyy and Biden have begun their meeting',
+		isRead: true,
+		isSaved: false,
 	},
 ];

@@ -1,11 +1,8 @@
 import styled from 'styled-components/native';
 
-export interface MagazineCardStylesProps {
-	mb?: number;
-}
-
-export const MagazineCardWrap = styled.View<Required<Pick<MagazineCardStylesProps, 'mb'>>>`
-	margin-bottom: ${({ mb }) => mb}px;
+export const MagazineCardWrap = styled.View`
+	background-color: #fff;
+	border-radius: 6px;
 `;
 
 export const StyledPressable = styled.Pressable`

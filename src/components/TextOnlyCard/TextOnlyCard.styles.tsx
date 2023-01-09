@@ -1,11 +1,8 @@
 import styled from 'styled-components/native';
 
-export interface TextOnlyCardStylesProps {
-	mb?: number;
-}
-
-export const TextOnlyCardWrap = styled.View<Required<Pick<TextOnlyCardStylesProps, 'mb'>>>`
-	margin-bottom: ${({ mb }) => mb}px;
+export const TextOnlyCardWrap = styled.View`
+	background-color: #fff;
+	padding: 0 12px;
 `;
 
 export const StyledPressable = styled.Pressable`

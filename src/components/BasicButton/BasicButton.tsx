@@ -10,6 +10,7 @@ import {
 	RightInfoWrap,
 } from './BasicButton.styles';
 import { Pressable } from 'react-native';
+import { StyledNativeTextProps } from '../Text/Text.styles';
 
 interface BasicButtonProps extends BasicButtonStylesProps {
 	children: ReactNode;
@@ -17,6 +18,8 @@ interface BasicButtonProps extends BasicButtonStylesProps {
 	icon?: ReactNode;
 	rightInfo?: ReactNode;
 	textSize?: number;
+	textColor?: string;
+	textWeight?: StyledNativeTextProps['weight'];
 }
 
 export const BasicButton = ({
@@ -28,14 +31,21 @@ export const BasicButton = ({
 	rightInfo,
 	textSize,
 	vertical = false,
+	textColor,
+	textWeight,
 }: BasicButtonProps) => {
 	return (
-		<BasicButtonWrap mb={mb} vertical={vertical}>
+		<BasicButtonWrap mb={mb}>
 			<Pressable onPress={onPress}>
 				<BasicButtonContent vertical={vertical}>
 					{icon && <IconWrap spacing={spacing}>{icon}</IconWrap>}
 
-					<Text fontFamily="Montserrat" fontSize={textSize}>
+					<Text
+						fontFamily="Montserrat"
+						fontSize={textSize}
+						color={textColor}
+						weight={textWeight}
+					>
 						{children}
 					</Text>
 

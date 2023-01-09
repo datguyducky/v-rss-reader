@@ -1,21 +1,21 @@
 import { openURL } from 'expo-linking';
 
+import { FeedCardProps } from '../../types';
+
 import { Text } from '../Text';
 
 import {
-	TextOnlyCardStylesProps,
 	TextOnlyCardWrap,
 	TextOnlyTextWrap,
 	TitleWrap,
 	StyledPressable,
 } from './TextOnlyCard.styles';
-import { FeedCardProps } from '../../types';
 
-interface TextOnlyCardProps extends FeedCardProps, TextOnlyCardStylesProps {}
+interface TextOnlyCardProps extends FeedCardProps {}
 
-export const TextOnlyCard = ({ title, onLongPress, mb = 0, url }: TextOnlyCardProps) => {
+export const TextOnlyCard = ({ title, onLongPress, url }: TextOnlyCardProps) => {
 	return (
-		<TextOnlyCardWrap mb={mb}>
+		<TextOnlyCardWrap>
 			<StyledPressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
 				<TextOnlyTextWrap>
 					<TitleWrap>

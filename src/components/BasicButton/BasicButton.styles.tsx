@@ -6,11 +6,8 @@ export interface BasicButtonStylesProps {
 	vertical?: boolean;
 }
 
-export const BasicButtonWrap = styled.View<
-	Required<Pick<BasicButtonStylesProps, 'mb' | 'vertical'>>
->`
+export const BasicButtonWrap = styled.View<Required<Pick<BasicButtonStylesProps, 'mb'>>>`
 	margin-bottom: ${({ mb }) => mb}px;
-	align-self: ${({ vertical }) => (vertical ? 'flex-start' : 'stretch')};
 `;
 export const BasicButtonContent = styled.View<Required<Pick<BasicButtonStylesProps, 'vertical'>>>`
 	flex-direction: ${({ vertical }) => (vertical ? 'column' : 'row')};

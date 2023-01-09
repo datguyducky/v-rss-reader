@@ -1,9 +1,10 @@
 import { openURL } from 'expo-linking';
 
+import { FeedCardProps } from '../../types';
+
 import { Text } from '../Text';
 
 import {
-	MagazineCardStylesProps,
 	MagazineCardWrap,
 	MagazineTextWrap,
 	TitleWrap,
@@ -11,19 +12,12 @@ import {
 	StyledPressable,
 	DetailsWrap,
 } from './MagazineCard.styles';
-import { FeedCardProps } from '../../types';
 
-interface MagazineCardProps extends FeedCardProps, MagazineCardStylesProps {}
+interface MagazineCardProps extends FeedCardProps {}
 
-export const MagazineCard = ({
-	title,
-	onLongPress,
-	mb = 0,
-	thumbnailUrl,
-	url,
-}: MagazineCardProps) => {
+export const MagazineCard = ({ title, onLongPress, thumbnailUrl, url }: MagazineCardProps) => {
 	return (
-		<MagazineCardWrap mb={mb}>
+		<MagazineCardWrap>
 			<StyledPressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
 				<StyledImage
 					source={{

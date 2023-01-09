@@ -1,7 +1,11 @@
 import styled from 'styled-components/native';
 
-export const Layout = styled.View`
+interface LayoutProps {
+	viewType: 'MAGAZINE' | 'TEXT_ONLY' | 'THUMBNAIL';
+}
+
+export const Layout = styled.View<LayoutProps>`
 	flex: 1;
 	background-color: #fff;
-	padding: 24px 12px 0;
+	padding: 24px ${({ viewType }) => (viewType === 'TEXT_ONLY' ? 0 : 12)}px 0;
 `;
