@@ -27,7 +27,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 
 				<CutOutContainer width={width} pointerEvents="box-none">
 					<CutOutWrapper>
-						<CutOut style={{ backgroundColor: 'red' }}>
+						<CutOut>
 							<Pressable onPress={() => navigation.navigate('CreateSelection')}>
 								<PlusIcon size={32} color="#101113" />
 							</Pressable>
