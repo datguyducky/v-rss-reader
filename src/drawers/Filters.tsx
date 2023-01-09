@@ -1,19 +1,31 @@
-import React, { useRef, useState } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { StackScreenProps } from '@react-navigation/stack';
+import React, { useRef } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import { Drawer } from '../components/Drawer';
-import { Text } from '../components/Text';
 import { Divider } from '../components/Divider';
+import { Drawer } from '../components/Drawer';
 import { Radio } from '../components/Radio';
-import { View } from 'react-native';
+import { Text } from '../components/Text';
+
+type FilterFormValues = {
+	SORT_BY: 'LATEST' | 'OLDEST';
+	FEED_VIEW: 'TEXT_ONLY' | 'MAGAZINE' | 'THUMBNAIL';
+	FEED_DENSITY: 'COMPACT' | 'COMFORTABLE';
+};
 
 export const Filters = ({ navigation }: StackScreenProps<any>) => {
 	const filtersDrawersRef = useRef<BottomSheetModal>(null);
 
-	// TODO: Radio Group component?
-	// TODO: Handle how values are stored and changed.
-	const [selectedSort, setSelectedSort] = useState(false);
+	// TODO: Store and retrieve values from a storage via a custom hook.
+	const filterForm = useForm<FilterFormValues>({
+		defaultValues: {
+			SORT_BY: 'LATEST',
+			FEED_VIEW: 'MAGAZINE',
+			FEED_DENSITY: 'COMFORTABLE',
+		},
+	});
+	const onSubmit = (values: FilterFormValues) => console.log(values);
 
 	return (
 		<Drawer
@@ -21,66 +33,34 @@ export const Filters = ({ navigation }: StackScreenProps<any>) => {
 			ref={filtersDrawersRef}
 			snapPoints={[460]}
 		>
-			<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
-				Sort by
-			</Text>
+			<FormProvider {...filterForm}>
+				<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
+					Sort by
+				</Text>
+				<Radio.Group name="SORT_BY" onValueChange={filterForm.handleSubmit(onSubmit)}>
+					<Radio label="Latest" mb={16} value="LATEST" />
+					<Radio label="Oldest" value="OLDEST" />
+				</Radio.Group>
 
-			<Radio
-				isChecked={selectedSort}
-				onChange={newValue => setSelectedSort(newValue)}
-				label="Latest"
-				mb={16}
-			/>
+				<Divider my={16} />
 
-			<Radio
-				isChecked={selectedSort}
-				onChange={newValue => setSelectedSort(newValue)}
-				label="Oldest"
-			/>
+				<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
+					View
+				</Text>
+				<Radio.Group name="FEED_VIEW" onValueChange={filterForm.handleSubmit(onSubmit)}>
+					<Radio label="Text-only" mb={16} value="TEXT_ONLY" />
+					<Radio label="Magazine" mb={16} value="MAGAZINE" />
+					<Radio label="Thumbnail" mb={16} value="THUMBNAIL" />
+				</Radio.Group>
 
-			<Divider my={16} />
-
-			<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
-				View
-			</Text>
-
-			<Radio
-				isChecked={selectedSort}
-				onChange={newValue => setSelectedSort(newValue)}
-				label="Compact"
-				mb={16}
-			/>
-
-			<Radio
-				isChecked={selectedSort}
-				onChange={newValue => setSelectedSort(newValue)}
-				label="Comfortable"
-				mb={16}
-			/>
-
-			<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
-				Density
-			</Text>
-
-			<Radio
-				isChecked={selectedSort}
-				onChange={newValue => setSelectedSort(newValue)}
-				label="Text-only"
-				mb={16}
-			/>
-
-			<Radio
-				isChecked={selectedSort}
-				onChange={newValue => setSelectedSort(newValue)}
-				label="Magazine"
-				mb={16}
-			/>
-
-			<Radio
-				isChecked={selectedSort}
-				onChange={newValue => setSelectedSort(newValue)}
-				label="Thumbnail"
-			/>
+				<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
+					Density
+				</Text>
+				<Radio.Group name="FEED_DENSITY" onValueChange={filterForm.handleSubmit(onSubmit)}>
+					<Radio label="Compact" mb={16} value="COMPACT" />
+					<Radio label="Comfortable" value="COMFORTABLE" />
+				</Radio.Group>
+			</FormProvider>
 		</Drawer>
 	);
 };
