@@ -7,5 +7,5 @@ interface LayoutProps {
 export const Layout = styled.View<LayoutProps>`
 	flex: 1;
 	background-color: #fff;
-	padding: 24px ${({ viewType }) => (viewType === 'TEXT_ONLY' ? 0 : 12)}px 0;
+	padding: 0 ${({ viewType }) => (viewType === 'TEXT_ONLY' ? 0 : 12)}px;
 `;

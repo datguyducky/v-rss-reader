@@ -22,6 +22,7 @@ export const Read = ({ navigation }: StackScreenProps<any>) => {
 					)}
 					keyExtractor={item => item.id}
 					ItemSeparatorComponent={() => <View style={{ marginBottom: 16 }} />}
+					contentContainerStyle={{ paddingVertical: 24 }}
 				/>
 			</Layout>
 		</>
