@@ -1,34 +1,32 @@
-import React, { useRef } from 'react';
-import BottomSheet from '@gorhom/bottom-sheet';
-import { StackScreenProps } from '@react-navigation/stack';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { ForwardedRef, forwardRef } from 'react';
 import { PlusIcon, FolderPlusIcon } from 'react-native-heroicons/outline';
 
-import { Drawer } from '../components/Drawer';
 import { BasicButton } from '../components/BasicButton';
+import { Drawer } from '../components/Drawer';
 
-export const CreateSelection = ({ navigation }: StackScreenProps<any>) => {
-	const createSelectionDrawerRef = useRef<BottomSheet>(null);
+export const CreateSelection = forwardRef(
+	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
+		return (
+			<Drawer ref={ref} snapPoints={[112]}>
+				<BasicButton
+					onPress={() => {
+						ref?.current?.forceClose();
+						navigation.navigate('Feed');
+					}}
+					icon={<PlusIcon size={20} color="#101113" />}
+					mb={16}
+				>
+					Add new RSS feed
+				</BasicButton>
 
-	return (
-		<Drawer
-			onClose={() => navigation.navigate('TabScreen', { screen: 'Read' })}
-			ref={createSelectionDrawerRef}
-			snapPoints={[112]}
-		>
-			<BasicButton
-				onPress={() => console.log('TODO: open new feed view')}
-				icon={<PlusIcon size={20} color="#101113" />}
-				mb={16}
-			>
-				Add new RSS feed
-			</BasicButton>
-
-			<BasicButton
-				onPress={() => console.log('TODO: open new category view')}
-				icon={<FolderPlusIcon size={20} color="#101113" />}
-			>
-				Create new category
-			</BasicButton>
-		</Drawer>
-	);
-};
+				<BasicButton
+					onPress={() => console.log('TODO: open new category view')}
+					icon={<FolderPlusIcon size={20} color="#101113" />}
+				>
+					Create new category
+				</BasicButton>
+			</Drawer>
+		);
+	},
+);
