@@ -1,22 +1,13 @@
-import React, { useRef } from 'react';
-import { View } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
-import { StackScreenProps } from '@react-navigation/stack';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import React, { ForwardedRef, forwardRef } from 'react';
 import { CheckCircleIcon, ArchiveBoxIcon, ShareIcon } from 'react-native-heroicons/outline';
 
-import { Drawer } from '../components/Drawer';
 import { BasicButton } from '../components/BasicButton';
+import { Drawer } from '../components/Drawer';
 
-export const QuickAction = ({ navigation }: StackScreenProps<any>) => {
-	const actionDrawerRef = useRef<BottomSheet>(null);
-
+export const QuickAction = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	return (
-		<Drawer
-			onClose={() => navigation.navigate('TabScreen', { screen: 'Read' })}
-			ref={actionDrawerRef}
-			snapPoints={[98]}
-			horizontalContent
-		>
+		<Drawer ref={ref} snapPoints={[98]} horizontalContent>
 			<BasicButton
 				onPress={() => console.log('TODO: handle `mark as read` action')}
 				icon={<CheckCircleIcon size={24} color="#101113" />}
@@ -48,4 +39,4 @@ export const QuickAction = ({ navigation }: StackScreenProps<any>) => {
 			</BasicButton>
 		</Drawer>
 	);
-};
+});

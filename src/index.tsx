@@ -1,23 +1,20 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { registerRootComponent } from 'expo';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Header } from './components/Header';
+import { HeaderBack } from './components/HeaderBack';
 import { Navigation } from './components/Navigation';
-
+import { Category } from './views/Category';
+import { Feed } from './views/Feed';
 import { Read } from './views/Read';
-import { Filters } from './drawers/Filters';
-import { Feeds } from './drawers/Feeds';
-import { QuickSettings } from './drawers/QuickSettings';
-import { CreateSelection } from './drawers/CreateSelection';
-import { QuickAction } from './drawers/QuickAction';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -69,22 +66,19 @@ const App = () => {
 						<Stack.Navigator
 							screenOptions={{
 								headerShadowVisible: false,
-								header: props => <Header {...props} />,
+								header: () => <Header />,
 							}}
 						>
 							<Stack.Screen name="TabScreen" component={TabScreen} />
 
 							<Stack.Group
 								screenOptions={{
-									presentation: 'containedTransparentModal',
-									headerShown: false,
+									header: props => <HeaderBack {...props} />,
+									animation: 'fade_from_bottom',
 								}}
 							>
-								<Stack.Screen name="Filters" component={Filters} />
-								<Stack.Screen name="Feeds" component={Feeds} />
-								<Stack.Screen name="QuickSettings" component={QuickSettings} />
-								<Stack.Screen name="CreateSelection" component={CreateSelection} />
-								<Stack.Screen name="QuickAction" component={QuickAction} />
+								<Stack.Screen name="Feed" component={Feed} />
+								<Stack.Screen name="Category" component={Category} />
 							</Stack.Group>
 						</Stack.Navigator>
 					</NavigationContainer>

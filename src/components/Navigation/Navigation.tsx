@@ -1,8 +1,12 @@
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useRef } from 'react';
+import { useWindowDimensions, Pressable } from 'react-native';
 import { Bars3BottomLeftIcon, Cog6ToothIcon, PlusIcon } from 'react-native-heroicons/outline';
 
-import { useWindowDimensions, Pressable } from 'react-native';
-
+import { CreateSelection } from '../../drawers/CreateSelection';
+import { Feeds } from '../../drawers/Feeds';
+import { QuickSettings } from '../../drawers/QuickSettings';
 import {
 	LeftIconWrap,
 	RightIconWrap,
@@ -15,32 +19,41 @@ import {
 
 export const Navigation = ({ navigation }: BottomTabBarProps) => {
 	const { width } = useWindowDimensions();
+	const createSelectionRef = useRef<BottomSheetModal>(null);
+	const feedsRef = useRef<BottomSheetModal>(null);
+	const quickSettingsRef = useRef<BottomSheetModal>(null);
 
 	return (
-		<NavigationContainer>
-			<WrapWithCutOut>
-				<LeftIconWrap>
-					<Pressable onPress={() => navigation.navigate('Feeds')}>
-						<Bars3BottomLeftIcon size={24} color="#101113" />
-					</Pressable>
-				</LeftIconWrap>
+		<>
+			<NavigationContainer>
+				<WrapWithCutOut>
+					<LeftIconWrap>
+						<Pressable onPress={() => feedsRef?.current?.present()}>
+							<Bars3BottomLeftIcon size={24} color="#101113" />
+						</Pressable>
+					</LeftIconWrap>
 
-				<CutOutContainer width={width} pointerEvents="box-none">
-					<CutOutWrapper>
-						<CutOut>
-							<Pressable onPress={() => navigation.navigate('CreateSelection')}>
-								<PlusIcon size={32} color="#101113" />
-							</Pressable>
-						</CutOut>
-					</CutOutWrapper>
-				</CutOutContainer>
+					<CutOutContainer width={width} pointerEvents="box-none">
+						<CutOutWrapper>
+							<CutOut>
+								<Pressable onPress={() => createSelectionRef?.current?.present()}>
+									<PlusIcon size={32} color="#101113" />
+								</Pressable>
+							</CutOut>
+						</CutOutWrapper>
+					</CutOutContainer>
 
-				<RightIconWrap>
-					<Pressable onPress={() => navigation.navigate('QuickSettings')}>
-						<Cog6ToothIcon size={24} color="#101113" />
-					</Pressable>
-				</RightIconWrap>
-			</WrapWithCutOut>
-		</NavigationContainer>
+					<RightIconWrap>
+						<Pressable onPress={() => quickSettingsRef?.current?.present()}>
+							<Cog6ToothIcon size={24} color="#101113" />
+						</Pressable>
+					</RightIconWrap>
+				</WrapWithCutOut>
+			</NavigationContainer>
+
+			<CreateSelection navigation={navigation} ref={createSelectionRef} />
+			<Feeds ref={feedsRef} />
+			<QuickSettings ref={quickSettingsRef} />
+		</>
 	);
 };

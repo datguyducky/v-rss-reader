@@ -1,24 +1,17 @@
-import React, { useRef } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { ForwardedRef, forwardRef } from 'react';
 import { View } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
-import { StackScreenProps } from '@react-navigation/stack';
 import { InboxStackIcon, ArchiveBoxIcon } from 'react-native-heroicons/outline';
 
-import { Drawer } from '../components/Drawer';
 import { BasicButton } from '../components/BasicButton';
 import { Divider } from '../components/Divider';
+import { Drawer } from '../components/Drawer';
 import { Text } from '../components/Text';
 
-export const Feeds = ({ navigation }: StackScreenProps<any>) => {
-	const feedsDrawerRef = useRef<BottomSheet>(null);
-
+export const Feeds = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	// TODO: this Drawer needs to be scrollable
 	return (
-		<Drawer
-			onClose={() => navigation.navigate('TabScreen', { screen: 'Read' })}
-			ref={feedsDrawerRef}
-			snapPoints={[256, '85%']}
-		>
+		<Drawer ref={ref} snapPoints={[256, '85%']}>
 			<BasicButton
 				onPress={() => console.log('TODO: open all articles view')}
 				icon={<InboxStackIcon size={20} color="#101113" />}
@@ -50,7 +43,12 @@ export const Feeds = ({ navigation }: StackScreenProps<any>) => {
 				onPress={() => console.log('TODO: open all articles view')}
 				icon={
 					<View
-						style={{ backgroundColor: 'red', width: 20, height: 20, borderRadius: 20 }}
+						style={{
+							backgroundColor: 'red',
+							width: 20,
+							height: 20,
+							borderRadius: 20,
+						}}
 					/>
 				}
 				mb={16}
@@ -66,4 +64,4 @@ export const Feeds = ({ navigation }: StackScreenProps<any>) => {
 			{/* TODO: Add Accordion component for categories... */}
 		</Drawer>
 	);
-};
+});

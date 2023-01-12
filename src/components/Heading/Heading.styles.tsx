@@ -6,6 +6,7 @@ export interface StyledNativeHeadingTextProps extends NativeTextProps {
 	color?: string;
 	fontSize?: number;
 	tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+	mb?: number;
 }
 export const StyledNativeHeadingText = styled.Text<StyledNativeHeadingTextProps>`
 	font-size: ${({ fontSize, tag }) => {
@@ -36,7 +37,7 @@ export const StyledNativeHeadingText = styled.Text<StyledNativeHeadingTextProps>
 				return 64; // default is set to so big size just to showcase that neither the tag and fontSize props were provided and that it requires fixing
 		}
 	}}px;
-	color: ${({ color }) => color || '#101113'}};
+	color: ${({ color }) => color || '#101113'};
 	font-family: ${({ weight }) => {
 		switch (weight) {
 			case 300:
@@ -58,4 +59,5 @@ export const StyledNativeHeadingText = styled.Text<StyledNativeHeadingTextProps>
 				return 'Montserrat-SemiBold';
 		}
 	}};
+	margin-bottom: ${({ mb }) => mb || 0}px;
 `;

@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
-import BottomSheet from '@gorhom/bottom-sheet';
-import { StackScreenProps } from '@react-navigation/stack';
+import React, { ForwardedRef, forwardRef } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { Cog6ToothIcon, ChartPieIcon } from 'react-native-heroicons/outline';
 import { Pressable, View } from 'react-native';
 
@@ -10,15 +9,9 @@ import { Divider } from '../components/Divider';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
 
-export const QuickSettings = ({ navigation }: StackScreenProps<any>) => {
-	const quickSettingsDrawerRef = useRef<BottomSheet>(null);
-
+export const QuickSettings = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	return (
-		<Drawer
-			onClose={() => navigation.navigate('TabScreen', { screen: 'Read' })}
-			ref={quickSettingsDrawerRef}
-			snapPoints={[387]}
-		>
+		<Drawer ref={ref} snapPoints={[387]}>
 			<BasicButton
 				onPress={() => console.log('TODO: app settings view')}
 				icon={<Cog6ToothIcon size={20} color="#101113" />}
@@ -68,4 +61,4 @@ export const QuickSettings = ({ navigation }: StackScreenProps<any>) => {
 			<ThemeSection />
 		</Drawer>
 	);
-};
+});

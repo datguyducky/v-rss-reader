@@ -1,6 +1,5 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { StackScreenProps } from '@react-navigation/stack';
-import React, { useRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { Divider } from '../components/Divider';
@@ -14,9 +13,7 @@ type FilterFormValues = {
 	FEED_DENSITY: 'COMPACT' | 'COMFORTABLE';
 };
 
-export const Filters = ({ navigation }: StackScreenProps<any>) => {
-	const filtersDrawersRef = useRef<BottomSheetModal>(null);
-
+export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	// TODO: Store and retrieve values from a storage via a custom hook.
 	const filterForm = useForm<FilterFormValues>({
 		defaultValues: {
@@ -28,11 +25,7 @@ export const Filters = ({ navigation }: StackScreenProps<any>) => {
 	const onSubmit = (values: FilterFormValues) => console.log(values);
 
 	return (
-		<Drawer
-			onClose={() => navigation.navigate('TabScreen', { screen: 'Read' })}
-			ref={filtersDrawersRef}
-			snapPoints={[460]}
-		>
+		<Drawer ref={ref} snapPoints={[460]}>
 			<FormProvider {...filterForm}>
 				<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
 					Sort by
@@ -63,4 +56,4 @@ export const Filters = ({ navigation }: StackScreenProps<any>) => {
 			</FormProvider>
 		</Drawer>
 	);
-};
+});
