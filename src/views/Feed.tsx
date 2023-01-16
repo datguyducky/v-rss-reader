@@ -1,10 +1,10 @@
-import { Text } from '../components/Text';
+import { FeedForm } from '../forms/FeedForm';
 import { LayoutForm } from '../layouts/LayoutForm';
 
 export const Feed = () => {
 	return (
 		<LayoutForm title="Add new feed">
-			<Text>feed form here...</Text>
+			<FeedForm />
 		</LayoutForm>
 	);
 };

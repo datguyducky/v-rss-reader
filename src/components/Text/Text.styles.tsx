@@ -8,6 +8,7 @@ export interface StyledNativeTextProps extends NativeTextProps {
 	fontFamily?: 'Raleway' | 'Montserrat';
 	mb?: number;
 }
+
 export const StyledNativeText = styled.Text<StyledNativeTextProps>`
 	font-size: ${({ fontSize }) => fontSize || 16}px;
 	color: ${({ color }) => color || '#101113'};
