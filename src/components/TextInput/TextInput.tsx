@@ -13,47 +13,54 @@ import {
 
 interface TextInputProps extends TextInputStylesProps {
 	label: string;
-	value: string;
-	name?: string;
+	//value: string;
+	name: string;
 	onValueChange?: () => void;
 }
 
 export const TextInput = ({ label, mb, name, onValueChange }: TextInputProps) => {
-	//const { control } = useFormContext();
+	const { control, getValues } = useFormContext();
 	const inputRef = useRef<NativeTextInput>(null);
-	const [value, setValue] = useState('');
 
 	const [isFocused, setIsFocused] = useState(false);
 
 	const [fontSizeAnimated, setFontSizeAnimated] = useState(16);
 	const [topAnimated, setTopAnimated] = useState(16);
 
-	const onChangeText = (text: string) => {
-		setValue(text);
-	};
+	console.log(getValues(name));
 
 	useEffect(() => {
-		if (value !== '' || isFocused) {
+		if (
+			(getValues(name) !== '' && getValues(name) !== null && getValues(name) !== undefined) ||
+			isFocused
+		) {
 			setIsFocused(true);
-		} else if (value === '' || value === null) {
+		} else if (
+			getValues(name) === '' ||
+			getValues(name) === null ||
+			getValues(name) === undefined
+		) {
 			setIsFocused(false);
 		}
-	}, [value, isFocused]);
+	}, [getValues(name), isFocused]);
 
 	useEffect(() => {
-		if (isFocused || value !== '') {
+		if (
+			isFocused ||
+			(getValues(name) !== '' && getValues(name) !== null && getValues(name) !== undefined)
+		) {
 			animateFocus();
 		} else {
 			animateBlur();
 		}
-	}, [isFocused, value]);
+	}, [isFocused, getValues(name)]);
 
 	function handleFocus() {
 		setIsFocused(true);
 	}
 
 	function handleBlur() {
-		if (value === '') {
+		if (getValues(name) === '') {
 			setIsFocused(false);
 		}
 	}
@@ -91,32 +98,39 @@ export const TextInput = ({ label, mb, name, onValueChange }: TextInputProps) =>
 	});
 
 	return (
-		<Pressable onPress={() => inputRef?.current?.focus()}>
-			<TextInputWrap mb={mb || 0}>
-				<AbsoluteAnimatedView>
-					<Animated.View
-						style={{
-							...topAnimatedStyles,
-						}}
-					>
-						<AnimatedLabel
-							style={{
-								...textAnimatedStyles,
-							}}
-						>
-							{label}
-						</AnimatedLabel>
-					</Animated.View>
-				</AbsoluteAnimatedView>
-				<StyledNativeTextInput
-					onFocus={handleFocus}
-					onBlur={handleBlur}
-					blurOnSubmit
-					value={value}
-					ref={inputRef}
-					onChangeText={(text: string) => onChangeText(text)}
-				/>
-			</TextInputWrap>
-		</Pressable>
+		<Controller
+			control={control}
+			render={({ field: { onChange, value: fieldValue } }) => (
+				<Pressable onPress={() => inputRef?.current?.focus()}>
+					<TextInputWrap mb={mb || 0}>
+						<AbsoluteAnimatedView>
+							<Animated.View
+								style={{
+									...topAnimatedStyles,
+								}}
+							>
+								<AnimatedLabel
+									style={{
+										...textAnimatedStyles,
+									}}
+								>
+									{label}
+								</AnimatedLabel>
+							</Animated.View>
+						</AbsoluteAnimatedView>
+
+						<StyledNativeTextInput
+							onFocus={handleFocus}
+							onBlur={handleBlur}
+							blurOnSubmit
+							value={fieldValue}
+							ref={inputRef}
+							onChangeText={onChange}
+						/>
+					</TextInputWrap>
+				</Pressable>
+			)}
+			name={name}
+		/>
 	);
 };
