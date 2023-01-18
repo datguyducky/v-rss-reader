@@ -77,8 +77,8 @@ const App = () => {
 									animation: 'fade_from_bottom',
 								}}
 							>
-								<Stack.Screen name="Feed" component={Feed} />
 								<Stack.Screen name="Category" component={Category} />
+								<Stack.Screen name="Feed" component={Feed} />
 							</Stack.Group>
 						</Stack.Navigator>
 					</NavigationContainer>

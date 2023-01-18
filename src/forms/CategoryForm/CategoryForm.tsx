@@ -5,10 +5,10 @@ import { Image, View, Keyboard } from 'react-native';
 
 import { Button } from '../../components/Button';
 import { TextInput } from '../../components/TextInput';
-import { feedSchema } from '../../validation/feedSchema';
+import { categorySchema } from '../../validation/categorySchema';
 
-export const FeedForm = () => {
-	const feedForm = useForm({ resolver: zodResolver(feedSchema), mode: 'onChange' });
+export const CategoryForm = () => {
+	const categoryForm = useForm({ resolver: zodResolver(categorySchema), mode: 'onChange' });
 	const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
 	useEffect(() => {
@@ -35,11 +35,13 @@ export const FeedForm = () => {
 
 	return (
 		<>
-			<FormProvider {...feedForm}>
-				<TextInput label="Feed name" name="NAME" mb={16} onFocus={handleKeyboardOnFocus} />
-				<TextInput label="Feed url" name="URL" mb={16} onFocus={handleKeyboardOnFocus} />
-
-				{/* TODO: Select here... */}
+			<FormProvider {...categoryForm}>
+				<TextInput
+					label="Category name"
+					name="NAME"
+					mb={16}
+					onFocus={handleKeyboardOnFocus}
+				/>
 
 				{!isKeyboardVisible && (
 					<View
@@ -49,11 +51,11 @@ export const FeedForm = () => {
 						}}
 					>
 						<Image
-							source={require('../../assets/feedFormImage.png')}
+							source={require('../../assets/categoryFormImage.png')}
 							resizeMode="contain"
 							style={{
 								width: '100%',
-								height: 240,
+								height: 210,
 							}}
 						/>
 					</View>
@@ -61,8 +63,8 @@ export const FeedForm = () => {
 
 				<Button
 					style={{ marginTop: isKeyboardVisible ? 'auto' : 0 }}
-					onPress={feedForm.handleSubmit(onSubmit)}
-					disabled={!feedForm.formState.isValid || !feedForm.formState.isDirty}
+					onPress={categoryForm.handleSubmit(onSubmit)}
+					disabled={!categoryForm.formState.isValid || !categoryForm.formState.isDirty}
 				>
 					Save
 				</Button>

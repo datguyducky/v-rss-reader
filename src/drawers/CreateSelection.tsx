@@ -21,7 +21,10 @@ export const CreateSelection = forwardRef(
 				</BasicButton>
 
 				<BasicButton
-					onPress={() => console.log('TODO: open new category view')}
+					onPress={() => {
+						ref?.current?.forceClose();
+						navigation.navigate('Category');
+					}}
 					icon={<FolderPlusIcon size={20} color="#101113" />}
 				>
 					Create new category
