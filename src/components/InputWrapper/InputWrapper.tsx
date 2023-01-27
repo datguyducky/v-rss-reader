@@ -18,31 +18,34 @@ interface TextInputProps extends InputWrapperStylesProps {
 	children: React.ReactElement;
 	onFocus?: () => void;
 	onBlur?: () => void;
+	onPress?: () => void;
+	forceUnfocus?: boolean;
 }
 
-export const InputWrapper = ({ label, mb, name, onFocus, onBlur, children }: TextInputProps) => {
+export const InputWrapper = ({
+	label,
+	mb,
+	name,
+	onFocus,
+	onBlur,
+	children,
+	onPress,
+	forceUnfocus,
+}: TextInputProps) => {
 	const { control, getValues } = useFormContext();
-	const inputRef = useRef<unknown>(null);
 
 	const [isFocused, setIsFocused] = useState(false);
 
 	const [fontSizeAnimated, setFontSizeAnimated] = useState(16);
 	const [topAnimated, setTopAnimated] = useState(12);
 
+	// TODO: Not sure if this is my favourite solution this, as it looks a little bit weird
+	// especially that this prop is passed as one value and then set to an opposite one
 	useEffect(() => {
-		if (
-			(getValues(name) !== '' && getValues(name) !== null && getValues(name) !== undefined) ||
-			isFocused
-		) {
-			setIsFocused(true);
-		} else if (
-			getValues(name) === '' ||
-			getValues(name) === null ||
-			getValues(name) === undefined
-		) {
-			setIsFocused(false);
+		if (forceUnfocus) {
+			setIsFocused(!forceUnfocus);
 		}
-	}, [getValues(name), isFocused]);
+	}, [forceUnfocus]);
 
 	useEffect(() => {
 		if (
@@ -61,7 +64,7 @@ export const InputWrapper = ({ label, mb, name, onFocus, onBlur, children }: Tex
 	}
 
 	function handleBlur() {
-		if (getValues(name) === '') {
+		if (getValues(name) === '' || getValues(name) === null || getValues(name) === undefined) {
 			setIsFocused(false);
 			onBlur?.();
 		}
@@ -104,7 +107,7 @@ export const InputWrapper = ({ label, mb, name, onFocus, onBlur, children }: Tex
 			control={control}
 			name={name}
 			render={({ field: { onChange, value: fieldValue }, fieldState: { error } }) => (
-				<Pressable onPress={() => inputRef?.current?.focus()}>
+				<Pressable onPress={() => onPress?.()}>
 					<InputWrapperContainer mb={mb || 0}>
 						<ContentWithLabelWrap isInvalid={!!error?.message}>
 							<AbsoluteAnimatedView>

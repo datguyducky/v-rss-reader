@@ -639,3 +639,66 @@ export const FEEDS = [
 		isSaved: false,
 	},
 ];
+
+export const CATEGORIES = [
+	{
+		label: 'Category 1',
+		value: 'VALUE1',
+	},
+	{
+		label: 'Category 2',
+		value: 'VALUE2',
+	},
+	{
+		label: 'Category 3',
+		value: 'VALUE3',
+	},
+	{
+		label: 'Category 4',
+		value: 'VALUE4',
+	},
+	{
+		label: 'Category 5',
+		value: 'VALUE5',
+	},
+	{
+		label: 'Category 6',
+		value: 'VALUE6',
+	},
+	{
+		label: 'Category 7',
+		value: 'VALUE7',
+	},
+	{
+		label: 'Category 8',
+		value: 'VALUE8',
+	},
+	{
+		label: 'Category 9',
+		value: 'VALUE9',
+	},
+	{
+		label: 'Category 10',
+		value: 'VALUE10',
+	},
+	{
+		label: 'Category 11',
+		value: 'VALUE11',
+	},
+	{
+		label: 'Category 12',
+		value: 'VALUE12',
+	},
+	{
+		label: 'Category 13',
+		value: 'VALUE13',
+	},
+	{
+		label: 'Category 14',
+		value: 'VALUE14',
+	},
+	{
+		label: 'Category 15',
+		value: 'VALUE15',
+	},
+];

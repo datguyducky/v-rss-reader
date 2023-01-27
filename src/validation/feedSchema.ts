@@ -8,4 +8,5 @@ export const feedSchema = z.object({
 		.regex(/^(ht)tps?:\/\//, {
 			message: 'Feed URL needs to start with "https://" or "http://',
 		}),
+	CATEGORY: z.string().nullish(),
 });

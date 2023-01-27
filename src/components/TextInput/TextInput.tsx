@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { TextInput as NativeTextInput } from 'react-native';
+import { TextInput as NativeTextInput, TextInputProps as NativeTextInputProps } from 'react-native';
 
 import { InputWrapper } from '../InputWrapper';
 import { TextInputStylesProps, StyledNativeTextInput } from './TextInput.styles';
@@ -9,14 +9,15 @@ interface TextInputProps extends TextInputStylesProps {
 	name: string;
 	onFocus?: () => void;
 	onBlur?: () => void;
+	autoCapitalize?: NativeTextInputProps['autoCapitalize'];
 }
 
-export const TextInput = ({ label, mb, name, onFocus, onBlur }: TextInputProps) => {
+export const TextInput = ({ label, mb, name, onFocus, onBlur, autoCapitalize }: TextInputProps) => {
 	const inputRef = useRef<NativeTextInput>(null);
 
 	return (
 		<InputWrapper label={label} name={name} mb={mb} onBlur={onBlur} onFocus={onFocus}>
-			<StyledNativeTextInput blurOnSubmit ref={inputRef} />
+			<StyledNativeTextInput blurOnSubmit ref={inputRef} autoCapitalize={autoCapitalize} />
 		</InputWrapper>
 	);
 };
