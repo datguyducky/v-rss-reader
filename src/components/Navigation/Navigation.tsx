@@ -34,13 +34,13 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 					</LeftIconWrap>
 
 					<CutOutContainer width={width} pointerEvents="box-none">
-						<CutOutWrapper>
-							<CutOut>
-								<Pressable onPress={() => createSelectionRef?.current?.present()}>
+						<Pressable onPress={() => createSelectionRef?.current?.present()}>
+							<CutOutWrapper>
+								<CutOut>
 									<PlusIcon size={32} color="#101113" />
-								</Pressable>
-							</CutOut>
-						</CutOutWrapper>
+								</CutOut>
+							</CutOutWrapper>
+						</Pressable>
 					</CutOutContainer>
 
 					<RightIconWrap>

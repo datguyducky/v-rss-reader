@@ -6,6 +6,7 @@ import { ChevronDownIcon } from 'react-native-heroicons/outline';
 
 import { InputWrapper } from '../InputWrapper';
 import { Text } from '../Text';
+import { SelectModalHeading, ValueWithIconWrap } from './Select.styles';
 
 interface Props {
 	label: string;
@@ -42,21 +43,23 @@ export const Select = ({ label, data, name, modalTitle }: Props) => {
 						onPress={toggleDropdown}
 						forceUnfocus={isSelectModalVisible}
 					>
-						{fieldValue !== null && fieldValue !== undefined && fieldValue !== '' ? (
-							<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+						<ValueWithIconWrap style={{ flexDirection: 'row', alignItems: 'center' }}>
+							{fieldValue !== null &&
+							fieldValue !== undefined &&
+							fieldValue !== '' ? (
 								<Text style={{ paddingLeft: 12 }}>
 									{data.find(item => item.value === fieldValue)?.label}
 								</Text>
+							) : (
+								<></>
+							)}
 
-								<ChevronDownIcon
-									size={16}
-									color="#101113"
-									style={{ marginLeft: 'auto', marginRight: 12 }}
-								/>
-							</View>
-						) : (
-							<></>
-						)}
+							<ChevronDownIcon
+								size={16}
+								color="#101113"
+								style={{ marginLeft: 'auto', marginRight: 12 }}
+							/>
+						</ValueWithIconWrap>
 					</InputWrapper>
 
 					<Modal
@@ -66,15 +69,7 @@ export const Select = ({ label, data, name, modalTitle }: Props) => {
 						onRequestClose={() => setSelectModalVisibility(false)}
 					>
 						<View>
-							<View
-								style={{
-									paddingHorizontal: 12,
-									paddingTop: 16,
-									paddingBottom: 16,
-									flexDirection: 'row',
-									alignItems: 'center',
-								}}
-							>
+							<SelectModalHeading>
 								<Pressable onPress={() => setSelectModalVisibility(false)}>
 									<ArrowLeftIconMini size={24} color="#101113" />
 								</Pressable>
@@ -88,7 +83,7 @@ export const Select = ({ label, data, name, modalTitle }: Props) => {
 								>
 									{modalTitle}
 								</Text>
-							</View>
+							</SelectModalHeading>
 
 							<FlatList
 								style={{ marginTop: 8, marginBottom: 24 }}
@@ -114,7 +109,13 @@ export const Select = ({ label, data, name, modalTitle }: Props) => {
 										</View>
 									</Pressable>
 								)}
-								ItemSeparatorComponent={() => <View style={{ marginBottom: 16 }} />}
+								ItemSeparatorComponent={() => (
+									<View
+										style={{
+											marginBottom: 16,
+										}}
+									/>
+								)}
 								keyExtractor={(item, index) => index.toString()}
 							/>
 						</View>

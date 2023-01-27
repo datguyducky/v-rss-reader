@@ -13,11 +13,9 @@ interface TextInputProps extends TextInputStylesProps {
 }
 
 export const TextInput = ({ label, mb, name, onFocus, onBlur, autoCapitalize }: TextInputProps) => {
-	const inputRef = useRef<NativeTextInput>(null);
-
 	return (
 		<InputWrapper label={label} name={name} mb={mb} onBlur={onBlur} onFocus={onFocus}>
-			<StyledNativeTextInput blurOnSubmit ref={inputRef} autoCapitalize={autoCapitalize} />
+			<StyledNativeTextInput blurOnSubmit autoCapitalize={autoCapitalize} />
 		</InputWrapper>
 	);
 };
