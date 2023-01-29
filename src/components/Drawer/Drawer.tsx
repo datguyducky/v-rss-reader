@@ -8,12 +8,23 @@ interface DrawerProps extends DrawerStylesProps {
 	children: React.ReactNode;
 	snapPoints: (string | number)[];
 	initialSnapPoint?: number;
+	detached?: boolean;
+	bottomInset?: number;
+	name?: string;
 }
 
 // TODO: There's a small flash on a statusBar when the `Drawer` is closed, maybe is not that noticeable but it still would be a good idea to fix it.
 export const Drawer = forwardRef(
 	(
-		{ children, snapPoints, initialSnapPoint = 0, horizontalContent = false }: DrawerProps,
+		{
+			name,
+			children,
+			snapPoints,
+			initialSnapPoint = 0,
+			horizontalContent = false,
+			detached = false,
+			bottomInset = 0,
+		}: DrawerProps,
 		ref: ForwardedRef<BottomSheetModal>,
 	) => {
 		/**
@@ -35,6 +46,7 @@ export const Drawer = forwardRef(
 		return (
 			<>
 				<BottomSheetModal
+					name={name}
 					ref={ref}
 					index={initialSnapPoint}
 					snapPoints={snapPoints}
@@ -50,6 +62,9 @@ export const Drawer = forwardRef(
 						/>
 					)}
 					onAnimate={handleOnAnimate}
+					detached={detached}
+					bottomInset={bottomInset}
+					containerStyle={{ marginHorizontal: detached ? 12 : 0 }}
 				>
 					{props => {
 						console.log(props, 'TODO: Handle data...'); // here I have access to data passed via the "present" method

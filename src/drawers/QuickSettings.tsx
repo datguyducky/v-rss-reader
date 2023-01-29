@@ -1,5 +1,5 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { ForwardedRef, forwardRef, useState } from 'react';
+import { BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
+import React, { ForwardedRef, forwardRef, useRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { Cog6ToothIcon, ChartPieIcon } from 'react-native-heroicons/outline';
 
@@ -9,10 +9,15 @@ import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
+import { ReadingStats } from './ReadingStats';
 
 export const QuickSettings = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
+		const { dismiss } = useBottomSheetModal();
+
 		const currentView = 'FEED';
+
+		const readingStatsRef = useRef<BottomSheetModal>(null);
 		const [deleteCurrentView, setDeleteCurrentView] = useState(false);
 		const handleEditCurrentView = () => {
 			// TODO: This function should retrieve data if the currently opened view is a category or just a feed
@@ -32,7 +37,7 @@ export const QuickSettings = forwardRef(
 
 		return (
 			<>
-				<Drawer ref={ref} snapPoints={[387]}>
+				<Drawer ref={ref} snapPoints={[387]} name="quickSettingsDrawer">
 					<BasicButton
 						onPress={() => console.log('TODO: app settings view')}
 						icon={<Cog6ToothIcon size={20} color="#101113" />}
@@ -42,7 +47,11 @@ export const QuickSettings = forwardRef(
 					</BasicButton>
 
 					<BasicButton
-						onPress={() => console.log('TODO: open reading stats view')}
+						onPress={() => {
+							dismiss('quickSettingsDrawer');
+
+							readingStatsRef?.current?.present();
+						}}
 						icon={<ChartPieIcon size={20} color="#101113" />}
 					>
 						Reading stats
@@ -80,6 +89,8 @@ export const QuickSettings = forwardRef(
 					</Text>
 					<ThemeSection />
 				</Drawer>
+
+				<ReadingStats navigation={navigation} ref={readingStatsRef} />
 
 				<DeletePopup
 					isOpen={deleteCurrentView}
