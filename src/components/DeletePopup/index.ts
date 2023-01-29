@@ -1,0 +1,1 @@
+export { DeletePopup } from './DeletePopup';

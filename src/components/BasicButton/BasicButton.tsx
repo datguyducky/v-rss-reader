@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 
 import { Text } from '../Text';
-
+import { StyledNativeTextProps } from '../Text/Text.styles';
 import {
 	BasicButtonContent,
 	BasicButtonStylesProps,
@@ -9,8 +10,6 @@ import {
 	IconWrap,
 	RightInfoWrap,
 } from './BasicButton.styles';
-import { Pressable } from 'react-native';
-import { StyledNativeTextProps } from '../Text/Text.styles';
 
 interface BasicButtonProps extends BasicButtonStylesProps {
 	children: ReactNode;
@@ -20,6 +19,7 @@ interface BasicButtonProps extends BasicButtonStylesProps {
 	textSize?: number;
 	textColor?: string;
 	textWeight?: StyledNativeTextProps['weight'];
+	style?: StyleProp<ViewStyle>;
 }
 
 export const BasicButton = ({
@@ -33,9 +33,10 @@ export const BasicButton = ({
 	vertical = false,
 	textColor,
 	textWeight,
+	style,
 }: BasicButtonProps) => {
 	return (
-		<BasicButtonWrap mb={mb}>
+		<BasicButtonWrap mb={mb} style={style}>
 			<Pressable onPress={onPress}>
 				<BasicButtonContent vertical={vertical}>
 					{icon && <IconWrap spacing={spacing}>{icon}</IconWrap>}

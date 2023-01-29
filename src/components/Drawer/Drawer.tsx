@@ -52,7 +52,7 @@ export const Drawer = forwardRef(
 					onAnimate={handleOnAnimate}
 				>
 					{props => {
-						console.log(props); // here I have access to data passed via the "present" method
+						console.log(props, 'TODO: Handle data...'); // here I have access to data passed via the "present" method
 						return (
 							<DrawerContainer horizontalContent={horizontalContent}>
 								{children}

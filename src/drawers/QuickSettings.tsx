@@ -1,64 +1,94 @@
-import React, { ForwardedRef, forwardRef } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { Cog6ToothIcon, ChartPieIcon } from 'react-native-heroicons/outline';
+import React, { ForwardedRef, forwardRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
+import { Cog6ToothIcon, ChartPieIcon } from 'react-native-heroicons/outline';
 
-import { Drawer } from '../components/Drawer';
 import { BasicButton } from '../components/BasicButton';
+import { DeletePopup } from '../components/DeletePopup';
 import { Divider } from '../components/Divider';
+import { Drawer } from '../components/Drawer';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
 
-export const QuickSettings = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
-	return (
-		<Drawer ref={ref} snapPoints={[387]}>
-			<BasicButton
-				onPress={() => console.log('TODO: app settings view')}
-				icon={<Cog6ToothIcon size={20} color="#101113" />}
-				mb={16}
-			>
-				App settings
-			</BasicButton>
+export const QuickSettings = forwardRef(
+	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
+		const currentView = 'FEED';
+		const [deleteCurrentView, setDeleteCurrentView] = useState(false);
+		const handleEditCurrentView = () => {
+			// TODO: This function should retrieve data if the currently opened view is a category or just a feed
+			// and then based on that navigate to a correct view to edit it
 
-			<BasicButton
-				onPress={() => console.log('TODO: open reading stats view')}
-				icon={<ChartPieIcon size={20} color="#101113" />}
-			>
-				Reading stats
-			</BasicButton>
+			ref?.current?.forceClose();
+			if (currentView === 'FEED') {
+				navigation.navigate('Feed');
+			} else {
+				navigation.navigate('Category');
+			}
+		};
 
-			<Divider my={16} />
+		// TODO: For methods below and basically for the rest of this file - retrieve if feed or category is currently opened and display correct text and call correct methods
+		const handleRemoveCategory = () => {};
+		const handleRemoveFeed = () => {};
 
-			<View style={{ marginBottom: 16 }}>
-				<Pressable
-					onPress={() =>
-						console.log('TODO: display view to rename current feed/category')
-					}
-				>
-					<Text fontFamily="Montserrat">{`Rename feed/category`}</Text>
-					<Text fontFamily="Montserrat" weight={300} fontSize={12}>
-						{`Change name of ${'NAME'} feed/category`}
+		return (
+			<>
+				<Drawer ref={ref} snapPoints={[387]}>
+					<BasicButton
+						onPress={() => console.log('TODO: app settings view')}
+						icon={<Cog6ToothIcon size={20} color="#101113" />}
+						mb={16}
+					>
+						App settings
+					</BasicButton>
+
+					<BasicButton
+						onPress={() => console.log('TODO: open reading stats view')}
+						icon={<ChartPieIcon size={20} color="#101113" />}
+					>
+						Reading stats
+					</BasicButton>
+
+					<Divider my={16} />
+
+					<View style={{ marginBottom: 16 }}>
+						<Pressable onPress={handleEditCurrentView}>
+							<Text fontFamily="Montserrat">{`Rename feed/category`}</Text>
+							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
+								{`Change name of ${'NAME'} feed/category`}
+							</Text>
+						</Pressable>
+					</View>
+
+					<View>
+						<Pressable
+							onPress={() => {
+								ref?.current?.forceClose();
+								setDeleteCurrentView(true);
+							}}
+						>
+							<Text fontFamily="Montserrat">{`Delete feed/category`}</Text>
+							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
+								{`Delete currently selected feed/category: ${'NAME'}`}
+							</Text>
+						</Pressable>
+					</View>
+
+					<Divider my={16} />
+
+					<Text fontFamily="Montserrat" mb={16}>
+						Themes
 					</Text>
-				</Pressable>
-			</View>
+					<ThemeSection />
+				</Drawer>
 
-			<View>
-				<Pressable
-					onPress={() => console.log('TODO: display view to delete this feed/category')}
-				>
-					<Text fontFamily="Montserrat">{`Delete feed/category`}</Text>
-					<Text fontFamily="Montserrat" weight={300} fontSize={12}>
-						{`Delete currently selected feed/category: ${'NAME'}`}
-					</Text>
-				</Pressable>
-			</View>
-
-			<Divider my={16} />
-
-			<Text fontFamily="Montserrat" mb={16}>
-				Themes
-			</Text>
-			<ThemeSection />
-		</Drawer>
-	);
-});
+				<DeletePopup
+					isOpen={deleteCurrentView}
+					onClose={() => setDeleteCurrentView(false)}
+					title="Remove the '{Name}' category?"
+					subTitle="Remember, this action cannot be undone!"
+					handleRemove={handleRemoveCategory}
+				/>
+			</>
+		);
+	},
+);

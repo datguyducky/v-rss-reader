@@ -22,15 +22,42 @@ export const Button = ({
 	textColor,
 	style,
 	disabled,
+	backgroundColor = '#228be6',
+	size = 'regular',
+	variant = 'filled',
 }: ButtonProps) => {
+	const selectTextColor = () => {
+		// TODO: Use switch here?
+		if (disabled) {
+			return '#adb5bd';
+		}
+
+		if (textColor) {
+			return textColor;
+		}
+
+		if (variant === 'outline') {
+			return '#101113';
+		}
+
+		if (variant === 'filled') {
+			return '#fff';
+		}
+	};
+
 	return (
 		<ButtonWrap mb={mb} style={style}>
 			<Pressable onPress={() => !disabled && onPress()}>
-				<ButtonContent disabled={disabled}>
+				<ButtonContent
+					disabled={disabled}
+					backgroundColor={backgroundColor}
+					size={size}
+					variant={variant}
+				>
 					<Text
 						fontFamily="Montserrat"
 						fontSize={textSize}
-						color={disabled ? '#adb5bd' : textColor || '#fff'}
+						color={selectTextColor()}
 						weight={600}
 					>
 						{children}
