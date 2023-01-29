@@ -27,7 +27,7 @@ export const Radio = ({ label, mb, name, value, onValueChange }: RadioProps) => 
 						}}
 					>
 						<RadioCircle isChecked={fieldValue === value} />
-						<Text>{label}</Text>
+						<Text fontFamily="Montserrat">{label}</Text>
 					</StyledPressable>
 				</RadioWrap>
 			)}
