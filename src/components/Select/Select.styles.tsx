@@ -6,7 +6,7 @@ export const ValueWithIconWrap = styled.View`
 `;
 
 export const SelectModalHeading = styled.View`
-	padding-horizontal: 12;
+	padding-horizontal: 12px;
 	padding-top: 16px;
 	padding-bottom: 16px;
 	flex-direction: row;
