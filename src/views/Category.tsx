@@ -1,10 +1,10 @@
 import { CategoryForm } from '../forms/CategoryForm';
-import { LayoutForm } from '../layouts/LayoutForm';
+import { LayoutWithTitle } from '../layouts/LayoutWithTitle';
 
 export const Category = () => {
 	return (
-		<LayoutForm title="Create new category">
+		<LayoutWithTitle title="Create new category">
 			<CategoryForm />
-		</LayoutForm>
+		</LayoutWithTitle>
 	);
 };
