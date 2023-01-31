@@ -8,7 +8,7 @@ import { InputWrapper } from '../InputWrapper';
 import { Text } from '../Text';
 import { SelectModalHeading, ValueWithIconWrap } from './Select.styles';
 
-interface Props {
+interface SelectProps {
 	label: string;
 	name: string;
 	data: { label: string; value: string }[];
@@ -16,7 +16,7 @@ interface Props {
 }
 
 // TODO: Maybe I could move the Modal component to a separate one, but I'm not 100% certain about that, as this wouldn't change much and it would require to have some props passed down
-export const Select = ({ label, data, name, modalTitle }: Props) => {
+export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 	const { control } = useFormContext();
 
 	const [isSelectModalVisible, setSelectModalVisibility] = useState(false);
