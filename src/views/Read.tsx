@@ -1,5 +1,5 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FlatList, View } from 'react-native';
 
 import { FEEDS } from '../common/constants';
@@ -7,8 +7,14 @@ import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
 import { QuickAction } from '../drawers/QuickAction';
 import { Layout } from '../layouts/Layout';
 
-export const Read = () => {
+export const Read = ({ route }) => {
+	const { id } = route?.params || {};
+
 	const quickActionDrawerRef = useRef<BottomSheetModal>(null);
+
+	useEffect(() => {
+		console.log(id); // TODO: Handle displaying correct feeds via retrieved id
+	}, [id]);
 
 	return (
 		<>

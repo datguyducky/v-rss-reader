@@ -67,7 +67,7 @@ const App = () => {
 						<Stack.Navigator
 							screenOptions={{
 								headerShadowVisible: false,
-								header: () => <Header />,
+								header: ({ route }) => <Header title={route.params?.name} />,
 							}}
 						>
 							<Stack.Screen name="TabScreen" component={TabScreen} />

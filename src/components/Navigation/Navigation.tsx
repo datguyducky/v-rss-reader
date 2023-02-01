@@ -52,7 +52,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 			</NavigationContainer>
 
 			<CreateSelection navigation={navigation} ref={createSelectionRef} />
-			<Feeds ref={feedsRef} />
+			<Feeds navigation={navigation} ref={feedsRef} />
 			<QuickSettings ref={quickSettingsRef} navigation={navigation} />
 		</>
 	);

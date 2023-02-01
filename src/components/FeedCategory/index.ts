@@ -1,0 +1,1 @@
+export { FeedCategory } from './FeedCategory';
