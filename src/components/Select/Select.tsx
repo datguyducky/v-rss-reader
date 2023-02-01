@@ -6,6 +6,7 @@ import { ChevronDownIcon } from 'react-native-heroicons/outline';
 
 import { InputWrapper } from '../InputWrapper';
 import { Text } from '../Text';
+import { BasicSelect } from './BasicSelect/BasicSelect';
 import { SelectModalHeading, ValueWithIconWrap } from './Select.styles';
 
 interface SelectProps {
@@ -125,3 +126,5 @@ export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 		/>
 	);
 };
+
+Select.Basic = BasicSelect;
