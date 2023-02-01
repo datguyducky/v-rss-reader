@@ -39,7 +39,10 @@ export const QuickSettings = forwardRef(
 			<>
 				<Drawer ref={ref} snapPoints={[387]} name="quickSettingsDrawer">
 					<BasicButton
-						onPress={() => console.log('TODO: app settings view')}
+						onPress={() => {
+							ref?.current?.forceClose();
+							navigation.navigate('Settings');
+						}}
 						icon={<Cog6ToothIcon size={20} color="#101113" />}
 						mb={16}
 					>

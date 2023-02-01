@@ -15,6 +15,7 @@ import { Navigation } from './components/Navigation';
 import { Category } from './views/Category';
 import { Feed } from './views/Feed';
 import { Read } from './views/Read';
+import { Settings } from './views/Settings';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -79,6 +80,7 @@ const App = () => {
 							>
 								<Stack.Screen name="Category" component={Category} />
 								<Stack.Screen name="Feed" component={Feed} />
+								<Stack.Screen name="Settings" component={Settings} />
 							</Stack.Group>
 						</Stack.Navigator>
 					</NavigationContainer>
