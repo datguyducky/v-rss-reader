@@ -8,6 +8,7 @@ import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { FeedCategory } from '../components/FeedCategory';
 import { FeedItem } from '../components/FeedItem';
+import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -43,11 +44,13 @@ export const Feeds = forwardRef(
 					item={{ name: 'All articles', id: 'ALL_ARTICLES_VIEW' }}
 					handleItemNavigate={handleItemNavigate}
 					mb={16}
+					icon={<InboxStackIcon size={20} color="#101113" />}
 				/>
 
 				<FeedItem
 					item={{ name: 'Read later', id: 'READ_LATER_VIEW' }}
 					handleItemNavigate={handleItemNavigate}
+					icon={<ArchiveBoxIcon size={20} color="#101113" />}
 				/>
 
 				<Divider my={16} />

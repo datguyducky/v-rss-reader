@@ -9,12 +9,13 @@ type FeedItemProps = {
 	handleItemNavigate: (item: Record<string, unknown>) => void;
 	style?: StyleProp<ViewStyle>;
 	mb?: number;
+	icon?: React.ReactElement;
 };
-export const FeedItem = ({ item, handleItemNavigate, style, mb }: FeedItemProps) => {
+export const FeedItem = ({ item, handleItemNavigate, style, mb, icon }: FeedItemProps) => {
 	return (
 		<BasicButton
 			onPress={() => handleItemNavigate(item)}
-			icon={<NoFeedImageFound />}
+			icon={icon || <NoFeedImageFound />}
 			mb={mb}
 			rightInfo={
 				<Text color="#4DABF7" fontSize={14} fontFamily="Montserrat">
