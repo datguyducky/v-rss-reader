@@ -78,7 +78,7 @@ export const Drawer = forwardRef(
 					containerStyle={{ marginHorizontal: detached ? 12 : 0 }}
 				>
 					{props => {
-						console.log(props, 'TODO: Handle data...'); // here I have access to data passed via the "present" method
+						console.log(props, 'TODO: Handle data...'); // Here we have access to data passed via the "present" method
 						if (useFlatList) {
 							return (
 								<DrawerContainer horizontalContent={horizontalContent}>

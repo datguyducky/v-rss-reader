@@ -10,7 +10,7 @@ import { BasicButton } from '../BasicButton';
 import { LeftSwipeWrap, RightSwipeWrap } from './SwipeableFeedItem.styles';
 
 interface SwipeableFeedItemProps {
-	item: Record<string, unknown>; // TODO: better type.
+	item: Record<string, unknown>; // TODO: Better type.
 	onLongPress: () => void;
 }
 
@@ -117,9 +117,9 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 	const onOpen = (direction: 'left' | 'right') => {
 		console.log(direction, 'onOpen stuff');
 		if (direction === 'left') {
-			// TODO: handle left action
+			// TODO: Handle left action
 		} else {
-			// TODO: handle right action
+			// TODO: Handle right action
 		}
 
 		swipeRef?.current?.closeInstantly();

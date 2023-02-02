@@ -2,7 +2,7 @@ import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 
 interface SwipeableFeedItemStylesProps {
-	viewType?: 'MAGAZINE' | 'TEXT_ONLY' | 'THUMBNAIL'; // TODO: this type should be defined in one place rather than re-typing it everywhere where it's needed
+	viewType?: 'MAGAZINE' | 'TEXT_ONLY' | 'THUMBNAIL'; // TODO: This type should be defined in one place rather than re-typing it everywhere where it's needed
 }
 
 export const LeftSwipeWrap = styled(Animated.View)<

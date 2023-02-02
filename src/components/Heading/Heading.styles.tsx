@@ -34,7 +34,7 @@ export const StyledNativeHeadingText = styled.Text<StyledNativeHeadingTextProps>
 				return 12;
 
 			default:
-				return 64; // default is set to so big size just to showcase that neither the tag and fontSize props were provided and that it requires fixing
+				return 64; // Default is set to so big size just to showcase that neither the tag and fontSize props were provided and that it requires fixing
 		}
 	}}px;
 	color: ${({ color }) => color || '#101113'};

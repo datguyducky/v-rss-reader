@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-// todo: not sure if this one is required
+// TODO: Not sure if this one is required
 export const NavigationContainer = styled.View``;
 
 export const WrapWithCutOut = styled.View`
