@@ -32,6 +32,8 @@ export const InputWrapper = ({
 	onPress,
 	forceUnfocus,
 }: TextInputProps) => {
+	const inputRef = useRef(null);
+
 	const { control, getValues } = useFormContext();
 
 	const [isFocused, setIsFocused] = useState(false);
@@ -120,6 +122,10 @@ export const InputWrapper = ({
 										style={{
 											...textAnimatedStyles,
 										}}
+										onPress={() => {
+											inputRef?.current?.focus();
+											handleFocus();
+										}}
 									>
 										{label}
 									</AnimatedLabel>
@@ -132,6 +138,7 @@ export const InputWrapper = ({
 								value: fieldValue,
 								onChangeText: onChange,
 								isInvalid: !!error?.message,
+								ref: inputRef,
 							})}
 						</ContentWithLabelWrap>
 

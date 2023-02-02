@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { ForwardedRef, forwardRef, useRef } from 'react';
 import { TextInput as NativeTextInput, TextInputProps as NativeTextInputProps } from 'react-native';
 
 import { InputWrapper } from '../InputWrapper';
@@ -12,10 +12,15 @@ interface TextInputProps extends TextInputStylesProps {
 	autoCapitalize?: NativeTextInputProps['autoCapitalize'];
 }
 
-export const TextInput = ({ label, mb, name, onFocus, onBlur, autoCapitalize }: TextInputProps) => {
-	return (
-		<InputWrapper label={label} name={name} mb={mb} onBlur={onBlur} onFocus={onFocus}>
-			<StyledNativeTextInput blurOnSubmit autoCapitalize={autoCapitalize} />
-		</InputWrapper>
-	);
-};
+export const TextInput = forwardRef(
+	(
+		{ label, mb, name, onFocus, onBlur, autoCapitalize }: TextInputProps,
+		ref: ForwardedRef<NativeTextInput>,
+	) => {
+		return (
+			<InputWrapper label={label} name={name} mb={mb} onBlur={onBlur} onFocus={onFocus}>
+				<StyledNativeTextInput blurOnSubmit autoCapitalize={autoCapitalize} ref={ref} />
+			</InputWrapper>
+		);
+	},
+);
