@@ -7,6 +7,7 @@ import { BasicButton } from '../components/BasicButton';
 import { DeletePopup } from '../components/DeletePopup';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
+import { Icon } from '../components/Icon';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
 import { ReadingStats } from './ReadingStats';
@@ -43,7 +44,7 @@ export const QuickSettings = forwardRef(
 							ref?.current?.forceClose();
 							navigation.navigate('Settings');
 						}}
-						icon={<Cog6ToothIcon size={20} color="#101113" />}
+						icon={<Icon name={Cog6ToothIcon} size={20} />}
 						mb={16}
 					>
 						App settings
@@ -55,7 +56,7 @@ export const QuickSettings = forwardRef(
 
 							readingStatsRef?.current?.present();
 						}}
-						icon={<ChartPieIcon size={20} color="#101113" />}
+						icon={<Icon name={ChartPieIcon} size={20} />}
 					>
 						Reading stats
 					</BasicButton>
@@ -64,7 +65,7 @@ export const QuickSettings = forwardRef(
 
 					<View style={{ marginBottom: 16 }}>
 						<Pressable onPress={handleEditCurrentView}>
-							<Text fontFamily="Montserrat">{`Rename feed/category`}</Text>
+							<Text fontFamily="Montserrat">Rename feed/category</Text>
 							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
 								{`Change name of ${'NAME'} feed/category`}
 							</Text>
@@ -78,7 +79,7 @@ export const QuickSettings = forwardRef(
 								setDeleteCurrentView(true);
 							}}
 						>
-							<Text fontFamily="Montserrat">{`Delete feed/category`}</Text>
+							<Text fontFamily="Montserrat">Delete feed/category</Text>
 							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
 								{`Delete currently selected feed/category: ${'NAME'}`}
 							</Text>

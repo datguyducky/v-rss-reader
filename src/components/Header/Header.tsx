@@ -6,6 +6,7 @@ import { EyeIcon } from 'react-native-heroicons/outline';
 
 import { Filters } from '../../drawers/Filters';
 import { Heading } from '../Heading';
+import { Icon } from '../Icon';
 import { HeaderTextWrap, HeaderWrap, IconWrap } from './Header.styles';
 
 type HeaderProps = {
@@ -29,7 +30,7 @@ export const Header = ({ title }: HeaderProps) => {
 					<Pressable
 						onPress={() => filtersDrawerRef?.current?.present({ sdasda: 'sadasd' })}
 					>
-						<EyeIcon size={24} color="black" />
+						<Icon name={EyeIcon} size={24} />
 					</Pressable>
 				</IconWrap>
 			</HeaderWrap>

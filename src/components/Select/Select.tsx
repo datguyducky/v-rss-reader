@@ -4,6 +4,7 @@ import { FlatList, Modal, View, Pressable } from 'react-native';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 import { ChevronDownIcon } from 'react-native-heroicons/outline';
 
+import { Icon } from '../Icon';
 import { InputWrapper } from '../InputWrapper';
 import { Text } from '../Text';
 import { BasicSelect } from './BasicSelect/BasicSelect';
@@ -55,9 +56,9 @@ export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 								<></>
 							)}
 
-							<ChevronDownIcon
+							<Icon
+								name={ChevronDownIcon}
 								size={16}
-								color="#101113"
 								style={{ marginLeft: 'auto', marginRight: 12 }}
 							/>
 						</ValueWithIconWrap>
@@ -72,7 +73,7 @@ export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 						<View>
 							<SelectModalHeading>
 								<Pressable onPress={() => setSelectModalVisibility(false)}>
-									<ArrowLeftIconMini size={24} color="#101113" />
+									<Icon name={ArrowLeftIconMini} size={24} />
 								</Pressable>
 
 								<Text

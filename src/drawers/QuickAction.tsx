@@ -4,13 +4,14 @@ import { CheckCircleIcon, ArchiveBoxIcon, ShareIcon } from 'react-native-heroico
 
 import { BasicButton } from '../components/BasicButton';
 import { Drawer } from '../components/Drawer';
+import { Icon } from '../components/Icon';
 
 export const QuickAction = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	return (
 		<Drawer ref={ref} snapPoints={[98]} horizontalContent>
 			<BasicButton
 				onPress={() => console.log('TODO: handle `mark as read` action')}
-				icon={<CheckCircleIcon size={24} color="#101113" />}
+				icon={<Icon name={CheckCircleIcon} size={24} />}
 				textSize={12}
 				vertical
 				spacing={0}
@@ -20,7 +21,7 @@ export const QuickAction = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) =
 
 			<BasicButton
 				onPress={() => console.log('TODO: handle `save` action')}
-				icon={<ArchiveBoxIcon size={24} color="#101113" />}
+				icon={<Icon name={ArchiveBoxIcon} size={24} />}
 				textSize={12}
 				vertical
 				spacing={0}
@@ -30,7 +31,7 @@ export const QuickAction = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) =
 
 			<BasicButton
 				onPress={() => console.log('TODO: handle `share` action')}
-				icon={<ShareIcon size={24} color="#101113" />}
+				icon={<Icon name={ShareIcon} size={24} />}
 				textSize={12}
 				vertical
 				spacing={0}

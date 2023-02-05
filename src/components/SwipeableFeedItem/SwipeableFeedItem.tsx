@@ -2,11 +2,11 @@ import React, { useRef } from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ArchiveBoxIcon, CheckIcon, ArrowUturnLeftIcon } from 'react-native-heroicons/outline';
 
-import { TextOnlyCard } from '../TextOnlyCard';
-import { MagazineCard } from '../MagazineCard';
-import { ThumbnailCard } from '../ThumbnailCard';
 import { BasicButton } from '../BasicButton';
-
+import { Icon } from '../Icon';
+import { MagazineCard } from '../MagazineCard';
+import { TextOnlyCard } from '../TextOnlyCard';
+import { ThumbnailCard } from '../ThumbnailCard';
 import { LeftSwipeWrap, RightSwipeWrap } from './SwipeableFeedItem.styles';
 
 interface SwipeableFeedItemProps {
@@ -29,7 +29,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					onPress={() => {
 						/* onPress handler is not needed here, as action for this component is completely handled by swipe */
 					}}
-					icon={<ArchiveBoxIcon size={16} color="#fff" strokeWidth={2.5} />}
+					icon={<Icon name={ArchiveBoxIcon} size={16} color="#fff" strokeWidth={2.5} />}
 					textColor="#fff"
 					textSize={12}
 					spacing={8}
@@ -53,16 +53,16 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					spacing={8}
 					rightInfo={
 						item.isRead ? (
-							<ArrowUturnLeftIcon
+							<Icon
+								name={ArrowUturnLeftIcon}
 								size={16}
-								color="#101113"
 								style={{ marginLeft: 8 }}
 								strokeWidth={2.5}
 							/>
 						) : (
-							<CheckIcon
+							<Icon
+								name={CheckIcon}
 								size={16}
-								color="#101113"
 								style={{ marginLeft: 8 }}
 								strokeWidth={2.5}
 							/>

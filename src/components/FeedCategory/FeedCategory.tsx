@@ -4,6 +4,7 @@ import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outlin
 
 import { BasicButton } from '../BasicButton';
 import { FeedItem } from '../FeedItem';
+import { Icon } from '../Icon';
 
 type FeedCategoryProps = {
 	category: Record<string, unknown>;
@@ -19,9 +20,9 @@ export const FeedCategory = ({ category, handleItemNavigate }: FeedCategoryProps
 				onPress={() => setIsOpen(prevState => !prevState)}
 				icon={
 					isOpen ? (
-						<ChevronDownIcon size={20} color="#101113" />
+						<Icon name={ChevronDownIcon} size={20} />
 					) : (
-						<ChevronRightIcon size={20} color="#101113" />
+						<Icon name={ChevronRightIcon} size={20} />
 					)
 				}
 				mb={isOpen ? 16 : 0}

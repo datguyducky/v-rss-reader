@@ -7,6 +7,7 @@ import { Bars3BottomLeftIcon, Cog6ToothIcon, PlusIcon } from 'react-native-heroi
 import { CreateSelection } from '../../drawers/CreateSelection';
 import { Feeds } from '../../drawers/Feeds';
 import { QuickSettings } from '../../drawers/QuickSettings';
+import { Icon } from '../Icon';
 import {
 	LeftIconWrap,
 	RightIconWrap,
@@ -29,7 +30,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 				<WrapWithCutOut>
 					<LeftIconWrap>
 						<Pressable onPress={() => feedsRef?.current?.present()}>
-							<Bars3BottomLeftIcon size={24} color="#101113" />
+							<Icon name={Bars3BottomLeftIcon} size={24} />
 						</Pressable>
 					</LeftIconWrap>
 
@@ -37,7 +38,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 						<Pressable onPress={() => createSelectionRef?.current?.present()}>
 							<CutOutWrapper>
 								<CutOut>
-									<PlusIcon size={32} color="#101113" />
+									<Icon name={PlusIcon} size={32} />
 								</CutOut>
 							</CutOutWrapper>
 						</Pressable>
@@ -45,7 +46,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 
 					<RightIconWrap>
 						<Pressable onPress={() => quickSettingsRef?.current?.present()}>
-							<Cog6ToothIcon size={24} color="#101113" />
+							<Icon name={Cog6ToothIcon} size={24} />
 						</Pressable>
 					</RightIconWrap>
 				</WrapWithCutOut>

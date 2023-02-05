@@ -2,13 +2,14 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
 import { ForwardedRef, forwardRef } from 'react';
 import { View } from 'react-native';
+import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
 
 import { FEEDS_AND_CATEGORIES_LIST } from '../common/constants';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { FeedCategory } from '../components/FeedCategory';
 import { FeedItem } from '../components/FeedItem';
-import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
+import { Icon } from '../components/Icon';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -44,13 +45,13 @@ export const Feeds = forwardRef(
 					item={{ name: 'All articles', id: 'ALL_ARTICLES_VIEW' }}
 					handleItemNavigate={handleItemNavigate}
 					mb={16}
-					icon={<InboxStackIcon size={20} color="#101113" />}
+					icon={<Icon name={InboxStackIcon} size={20} />}
 				/>
 
 				<FeedItem
 					item={{ name: 'Read later', id: 'READ_LATER_VIEW' }}
 					handleItemNavigate={handleItemNavigate}
-					icon={<ArchiveBoxIcon size={20} color="#101113" />}
+					icon={<Icon name={ArchiveBoxIcon} size={20} />}
 				/>
 
 				<Divider my={16} />

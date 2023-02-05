@@ -1,8 +1,9 @@
+import { NativeStackHeaderProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 import Constants from 'expo-constants';
+import { Pressable } from 'react-native';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 
-import { Pressable } from 'react-native';
-import { NativeStackHeaderProps } from '@react-navigation/native-stack/lib/typescript/src/types';
+import { Icon } from '../Icon';
 import { BackIconWrap, HeaderBackWrap } from './HeaderBack.styles';
 
 export const HeaderBack = ({ navigation }: NativeStackHeaderProps) => {
@@ -10,7 +11,7 @@ export const HeaderBack = ({ navigation }: NativeStackHeaderProps) => {
 		<HeaderBackWrap marginTop={Constants?.statusBarHeight}>
 			<BackIconWrap>
 				<Pressable onPress={navigation.goBack}>
-					<ArrowLeftIconMini size={24} color="#101113" />
+					<Icon name={ArrowLeftIconMini} size={24} />
 				</Pressable>
 			</BackIconWrap>
 		</HeaderBackWrap>

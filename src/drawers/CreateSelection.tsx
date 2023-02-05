@@ -4,6 +4,7 @@ import { PlusIcon, FolderPlusIcon } from 'react-native-heroicons/outline';
 
 import { BasicButton } from '../components/BasicButton';
 import { Drawer } from '../components/Drawer';
+import { Icon } from '../components/Icon';
 
 export const CreateSelection = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -14,7 +15,7 @@ export const CreateSelection = forwardRef(
 						ref?.current?.forceClose();
 						navigation.navigate('Feed');
 					}}
-					icon={<PlusIcon size={20} color="#101113" />}
+					icon={<Icon name={PlusIcon} size={20} />}
 					mb={16}
 				>
 					Add new RSS feed
@@ -25,7 +26,7 @@ export const CreateSelection = forwardRef(
 						ref?.current?.forceClose();
 						navigation.navigate('Category');
 					}}
-					icon={<FolderPlusIcon size={20} color="#101113" />}
+					icon={<Icon name={FolderPlusIcon} size={20} />}
 				>
 					Create new category
 				</BasicButton>
