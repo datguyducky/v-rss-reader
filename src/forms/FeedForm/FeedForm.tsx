@@ -56,7 +56,7 @@ export const FeedForm = () => {
 					autoCapitalize="none"
 				/>
 
-				<Select
+				<Select.Page
 					label="Category"
 					data={CATEGORIES}
 					name="CATEGORY"

@@ -1,10 +1,10 @@
 import styled from 'styled-components/native';
 
-export interface BasicSelectStylesProps {
+export interface SelectPopupStylesProps {
 	mb?: number;
 }
 
-export const BasicSelectContainer = styled.Pressable<Pick<BasicSelectStylesProps, 'mb'>>`
+export const SelectPopupContainer = styled.Pressable<Pick<SelectPopupStylesProps, 'mb'>>`
 	flex-direction: row;
 	align-items: center;
 	margin-bottom: ${({ mb }) => mb || 0}px;

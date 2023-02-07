@@ -7,26 +7,26 @@ import { Popup } from '../../Popup';
 import { Radio } from '../../Radio';
 import { Text } from '../../Text';
 import {
-	BasicSelectContainer,
-	BasicSelectStylesProps,
+	SelectPopupContainer,
+	SelectPopupStylesProps,
 	StyledScrollView,
-} from './BasicSelect.styles';
+} from './SelectPopup.styles';
 
-interface BasicSelectProps extends BasicSelectStylesProps {
+interface SelectPopupProps extends SelectPopupStylesProps {
 	label: string;
 	name: string;
 	options: { label: string; value: string }[];
 	onValueChange?: () => void;
 }
 
-export const BasicSelect = ({ label, name, options = [], onValueChange, mb }: BasicSelectProps) => {
+export const SelectPopup = ({ label, name, options = [], onValueChange, mb }: SelectPopupProps) => {
 	const { getValues } = useFormContext();
 
 	const [popupVisible, setPopupVisible] = useState(false);
 
 	return (
 		<>
-			<BasicSelectContainer onPress={() => setPopupVisible(true)} mb={mb}>
+			<SelectPopupContainer onPress={() => setPopupVisible(true)} mb={mb}>
 				<Text fontFamily="Montserrat">{label}</Text>
 
 				<Text
@@ -38,7 +38,7 @@ export const BasicSelect = ({ label, name, options = [], onValueChange, mb }: Ba
 				>
 					{options.find(item => item.value === getValues(name))?.label || ''}
 				</Text>
-			</BasicSelectContainer>
+			</SelectPopupContainer>
 
 			<Popup isOpen={popupVisible} onClose={() => setPopupVisible(false)} title={label}>
 				<View>

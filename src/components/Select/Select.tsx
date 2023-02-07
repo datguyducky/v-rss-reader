@@ -7,11 +7,11 @@ import { ChevronDownIcon } from 'react-native-heroicons/outline';
 import { Icon } from '../Icon';
 import { InputWrapper } from '../InputWrapper';
 import { Text } from '../Text';
-import { BasicSelect } from './BasicSelect/BasicSelect';
+import { SelectPopup } from './SelectPopup/SelectPopup';
 import { SelectModalHeading, ValueWithIconWrap } from './Select.styles';
 import { RadioCircle } from '../Radio/Radio.styles';
 
-interface SelectProps {
+interface SelectPageProps {
 	label: string;
 	name: string;
 	data: { label: string; value: string }[];
@@ -19,7 +19,8 @@ interface SelectProps {
 }
 
 // TODO: Maybe I could move the Modal component to a separate one, but I'm not 100% certain about that, as this wouldn't change much and it would require to have some props passed down
-export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
+export const Select = () => {};
+const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 	const { control } = useFormContext();
 
 	const [isSelectModalVisible, setSelectModalVisibility] = useState(false);
@@ -154,4 +155,5 @@ export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 	);
 };
 
-Select.Basic = BasicSelect;
+Select.Page = SelectPage;
+Select.Popup = SelectPopup;

@@ -39,7 +39,7 @@ export const SettingsForm = () => {
 				onValueChange={settingsForm.handleSubmit(onSubmit)}
 				mb={16}
 			/>
-			<Select.Basic
+			<Select.Popup
 				name="SCROLL_BEHAVIOUR"
 				label="Scrolling behaviour"
 				options={[
@@ -60,7 +60,7 @@ export const SettingsForm = () => {
 			<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
 				Gestures
 			</Heading>
-			<Select.Basic
+			<Select.Popup
 				name="QUICK_ACTION_DRAWER_GESTURE"
 				label="Quick Actions drawer gesture"
 				options={[
@@ -111,7 +111,7 @@ export const SettingsForm = () => {
 				Interface
 			</Heading>
 			<Text fontFamily="Montserrat" mb={16} />
-			<Select.Basic
+			<Select.Popup
 				name="TEXT_SIZE"
 				label="Text size"
 				options={[
