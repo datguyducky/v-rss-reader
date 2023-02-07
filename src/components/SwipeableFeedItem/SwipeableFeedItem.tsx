@@ -122,7 +122,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 			// TODO: Handle right action
 		}
 
-		swipeRef?.current?.closeInstantly();
+		swipeRef?.current?.closeFromEnd();
 	};
 
 	return (
