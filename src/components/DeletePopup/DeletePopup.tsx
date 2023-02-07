@@ -3,6 +3,8 @@ import { View } from 'react-native';
 import { Button } from '../Button';
 import { Popup } from '../Popup';
 import { Text } from '../Text';
+import { BasicButton } from '../BasicButton';
+import React from 'react';
 
 type DeletePopupProps = {
 	isOpen: boolean;
@@ -26,24 +28,28 @@ export const DeletePopup = ({
 			<View>
 				<Text mb={subTitle ? 24 : 0}>{subTitle}</Text>
 
-				<Button
-					onPress={() => handleRemove?.()}
-					mb={12}
-					size="small"
-					textSize={12}
-					backgroundColor="#fa5252"
-				>
-					YES, REMOVE
-				</Button>
+				<View style={{ flexDirection: 'row', marginLeft: 'auto' }}>
+					<BasicButton
+						//style={{ marginLeft: 'auto' }}
+						onPress={() => handleCancel?.() || onClose()}
+						textWeight={600}
+						textColor="#909296"
+						style={{ marginRight: 12 }}
+					>
+						Cancel
+					</BasicButton>
 
-				<Button
-					onPress={() => handleCancel?.() || onClose()}
-					size="small"
-					textSize={12}
-					variant="outline"
-				>
-					CANCEL
-				</Button>
+					<BasicButton
+						onPress={() => handleRemove?.()}
+						mb={12}
+						//size="small"
+						textColor="#fa5252"
+						textWeight={600}
+						//backgroundColor="#fa5252"
+					>
+						Yes, Remove
+					</BasicButton>
+				</View>
 			</View>
 		</Popup>
 	);
