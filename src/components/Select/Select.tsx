@@ -9,6 +9,7 @@ import { InputWrapper } from '../InputWrapper';
 import { Text } from '../Text';
 import { BasicSelect } from './BasicSelect/BasicSelect';
 import { SelectModalHeading, ValueWithIconWrap } from './Select.styles';
+import { RadioCircle } from '../Radio/Radio.styles';
 
 interface SelectProps {
 	label: string;
@@ -65,12 +66,12 @@ export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 					</InputWrapper>
 
 					<Modal
-						animationType="slide"
+						animationType="fade"
 						transparent={false}
 						visible={isSelectModalVisible}
 						onRequestClose={() => setSelectModalVisibility(false)}
 					>
-						<View>
+						<View style={{ flex: 1 }}>
 							<SelectModalHeading>
 								<Pressable onPress={() => setSelectModalVisibility(false)}>
 									<Icon name={ArrowLeftIconMini} size={24} />
@@ -88,7 +89,9 @@ export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 							</SelectModalHeading>
 
 							<FlatList
-								style={{ marginTop: 8, marginBottom: 24 }}
+								contentContainerStyle={{
+									paddingBottom: 24,
+								}}
 								data={data}
 								renderItem={({ item }) => (
 									<Pressable
@@ -104,17 +107,40 @@ export const Select = ({ label, data, name, modalTitle }: SelectProps) => {
 										<View
 											style={{
 												paddingHorizontal: 12,
-												paddingVertical: 8,
+												paddingVertical: 16,
+												flexDirection: 'row',
+												alignItems: 'center',
 											}}
 										>
-											<Text style={{ lineHeight: 16 }}>{item.label}</Text>
+											<View>
+												<Text
+													style={{ lineHeight: 16 }}
+													fontFamily="Montserrat"
+												>
+													{item.label}
+												</Text>
+												<Text
+													fontSize={12}
+													fontFamily="Montserrat"
+													weight={300}
+												>
+													00 feeds
+												</Text>
+												{/* TODO: handle displaying correct amount of feeds per category, also maybe move this part outside the Select component and pass it as a 'children' prop? */}
+											</View>
+
+											<RadioCircle
+												isChecked={fieldValue === item.value}
+												style={{ marginLeft: 'auto' }}
+											/>
 										</View>
 									</Pressable>
 								)}
 								ItemSeparatorComponent={() => (
 									<View
 										style={{
-											marginBottom: 16,
+											borderBottomWidth: 1,
+											borderColor: '#CED4DA',
 										}}
 									/>
 								)}
