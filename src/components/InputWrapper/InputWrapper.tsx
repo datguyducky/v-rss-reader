@@ -146,8 +146,9 @@ export const InputWrapper = ({
 							<Text
 								color="#fa5252"
 								fontSize={12}
-								weight={400}
+								weight={300}
 								style={{ marginTop: 4 }}
+								fontFamily="Montserrat"
 							>
 								{error.message}
 							</Text>

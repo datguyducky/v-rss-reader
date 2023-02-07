@@ -34,5 +34,5 @@ export const AbsoluteAnimatedView = styled.View`
 export const AnimatedLabel = styled(Animated.Text)`
 	font-size: 16px;
 	color: #adb5bd;
-	font-family: 'Raleway-Medium';
+	font-family: 'Montserrat-Medium';
 `;

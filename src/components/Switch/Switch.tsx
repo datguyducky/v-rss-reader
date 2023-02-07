@@ -71,7 +71,7 @@ export const Switch = ({ name, label, onValueChange, mb }: SwitchProps) => {
 					}}
 					mb={mb}
 				>
-					{label && <SwitchLabel>{label}</SwitchLabel>}
+					{label && <SwitchLabel fontFamily="Montserrat">{label}</SwitchLabel>}
 
 					<AnimatedSwitch style={backgroundColorStyles}>
 						<AnimatedSwitchThumb style={translateStyles} />
