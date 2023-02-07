@@ -11,6 +11,7 @@ export const Text = ({
 	mb,
 	numberOfLines,
 	style,
+	textAlign = 'auto',
 }: StyledNativeTextProps) => {
 	return (
 		<StyledNativeText
@@ -21,6 +22,7 @@ export const Text = ({
 			mb={mb}
 			numberOfLines={numberOfLines}
 			style={style}
+			textAlign={textAlign}
 		>
 			{children}
 		</StyledNativeText>

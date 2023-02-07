@@ -7,6 +7,7 @@ export interface StyledNativeTextProps extends NativeTextProps {
 	fontSize?: number;
 	fontFamily?: 'Raleway' | 'Montserrat';
 	mb?: number;
+	textAlign?: 'left' | 'center' | 'right' | 'auto';
 }
 
 export const StyledNativeText = styled.Text<StyledNativeTextProps>`
@@ -34,4 +35,5 @@ export const StyledNativeText = styled.Text<StyledNativeTextProps>`
 				return `${fontFamily}-Regular`;
 		}
 	}};
+	text-align: ${({ textAlign }) => textAlign};
 `;

@@ -18,7 +18,7 @@ export const ReadingStats = forwardRef(
 						color="#228BE6"
 						weight={600}
 						mb={16}
-						style={{ textAlign: 'center' }}
+						textAlign="center"
 					>
 						Reading Stats
 					</Text>
