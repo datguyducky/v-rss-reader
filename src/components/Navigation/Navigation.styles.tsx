@@ -26,6 +26,7 @@ export const CutOutContainer = styled.View<{ width: number }>`
 	width: ${({ width }) => width}px;
 	justify-content: space-around;
 	z-index: 10;
+	background-color: transparent;
 `;
 
 export const CutOutWrapper = styled.View`
@@ -36,6 +37,7 @@ export const CutOutWrapper = styled.View`
 	align-items: center;
 	overflow: hidden;
 	margin-top: 72px;
+	background-color: transparent;
 `;
 
 export const CutOut = styled.View`
