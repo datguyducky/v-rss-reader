@@ -49,6 +49,5 @@ export const CutOut = styled.View`
 `;
 
 export const RightIconWrap = styled.View`
-	margin-left: auto;
 	z-index: 20;
 `;

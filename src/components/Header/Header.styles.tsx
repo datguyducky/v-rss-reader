@@ -9,7 +9,3 @@ export const HeaderWrap = styled.View<{ marginTop?: number; width?: number }>`
 `;
 
 export const HeaderTextWrap = styled.View``;
-
-export const IconWrap = styled.View`
-	margin-left: auto;
-`;

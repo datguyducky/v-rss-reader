@@ -7,7 +7,7 @@ export interface SwitchStylesProps {
 	mb?: number;
 }
 
-export const PressableSwitchWrap = styled.Pressable<Pick<SwitchStylesProps, 'mb'>>`
+export const SwitchWrap = styled.View<Pick<SwitchStylesProps, 'mb'>>`
 	flex-direction: row;
 	align-items: center;
 	margin-bottom: ${({ mb }) => mb || 0}px;

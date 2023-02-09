@@ -10,10 +10,11 @@ import {
 import {
 	AnimatedSwitch,
 	AnimatedSwitchThumb,
-	PressableSwitchWrap,
 	SwitchLabel,
 	SwitchStylesProps,
+	SwitchWrap,
 } from './Switch.styles';
+import { Pressable } from 'react-native';
 
 interface SwitchProps extends SwitchStylesProps {
 	name: string;
@@ -62,21 +63,22 @@ export const Switch = ({ name, label, onValueChange, mb }: SwitchProps) => {
 			control={control}
 			name={name}
 			render={({ field: { onChange, value: fieldValue } }) => (
-				<PressableSwitchWrap
+				<Pressable
 					onPress={() => {
 						setInternalValue(!fieldValue);
 
 						onChange(!fieldValue);
 						onValueChange?.();
 					}}
-					mb={mb}
 				>
-					{label && <SwitchLabel fontFamily="Montserrat">{label}</SwitchLabel>}
+					<SwitchWrap mb={mb}>
+						{label && <SwitchLabel fontFamily="Montserrat">{label}</SwitchLabel>}
 
-					<AnimatedSwitch style={backgroundColorStyles}>
-						<AnimatedSwitchThumb style={translateStyles} />
-					</AnimatedSwitch>
-				</PressableSwitchWrap>
+						<AnimatedSwitch style={backgroundColorStyles}>
+							<AnimatedSwitchThumb style={translateStyles} />
+						</AnimatedSwitch>
+					</SwitchWrap>
+				</Pressable>
 			)}
 		/>
 	);

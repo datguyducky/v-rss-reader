@@ -36,8 +36,8 @@ export const BasicButton = ({
 	style,
 }: BasicButtonProps) => {
 	return (
-		<BasicButtonWrap mb={mb} style={style}>
-			<Pressable onPress={onPress}>
+		<Pressable onPress={onPress}>
+			<BasicButtonWrap mb={mb} style={style}>
 				<BasicButtonContent vertical={vertical}>
 					{icon && <IconWrap spacing={spacing}>{icon}</IconWrap>}
 
@@ -52,7 +52,7 @@ export const BasicButton = ({
 
 					{rightInfo && <RightInfoWrap>{rightInfo}</RightInfoWrap>}
 				</BasicButtonContent>
-			</Pressable>
-		</BasicButtonWrap>
+			</BasicButtonWrap>
+		</Pressable>
 	);
 };

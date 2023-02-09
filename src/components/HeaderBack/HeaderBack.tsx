@@ -9,11 +9,11 @@ import { BackIconWrap, HeaderBackWrap } from './HeaderBack.styles';
 export const HeaderBack = ({ navigation }: NativeStackHeaderProps) => {
 	return (
 		<HeaderBackWrap marginTop={Constants?.statusBarHeight}>
-			<BackIconWrap>
-				<Pressable onPress={navigation.goBack}>
+			<Pressable onPress={navigation.goBack}>
+				<BackIconWrap>
 					<Icon name={ArrowLeftIconMini} size={24} />
-				</Pressable>
-			</BackIconWrap>
+				</BackIconWrap>
+			</Pressable>
 		</HeaderBackWrap>
 	);
 };

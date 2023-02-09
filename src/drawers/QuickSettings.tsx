@@ -63,28 +63,28 @@ export const QuickSettings = forwardRef(
 
 					<Divider my={16} />
 
-					<View style={{ marginBottom: 16 }}>
-						<Pressable onPress={handleEditCurrentView}>
+					<Pressable onPress={handleEditCurrentView}>
+						<View style={{ marginBottom: 16 }}>
 							<Text fontFamily="Montserrat">Rename feed/category</Text>
 							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
 								{`Change name of ${'NAME'} feed/category`}
 							</Text>
-						</Pressable>
-					</View>
+						</View>
+					</Pressable>
 
-					<View>
-						<Pressable
-							onPress={() => {
-								ref?.current?.forceClose();
-								setDeleteCurrentView(true);
-							}}
-						>
+					<Pressable
+						onPress={() => {
+							ref?.current?.forceClose();
+							setDeleteCurrentView(true);
+						}}
+					>
+						<View>
 							<Text fontFamily="Montserrat">Delete feed/category</Text>
 							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
 								{`Delete currently selected feed/category: ${'NAME'}`}
 							</Text>
-						</Pressable>
-					</View>
+						</View>
+					</Pressable>
 
 					<Divider my={16} />
 

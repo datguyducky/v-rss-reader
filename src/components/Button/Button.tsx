@@ -46,8 +46,8 @@ export const Button = ({
 	};
 
 	return (
-		<ButtonWrap mb={mb} style={style}>
-			<Pressable onPress={() => !disabled && onPress()}>
+		<Pressable onPress={() => !disabled && onPress()}>
+			<ButtonWrap mb={mb} style={style}>
 				<ButtonContent
 					disabled={disabled}
 					backgroundColor={backgroundColor}
@@ -63,7 +63,7 @@ export const Button = ({
 						{children}
 					</Text>
 				</ButtonContent>
-			</Pressable>
-		</ButtonWrap>
+			</ButtonWrap>
+		</Pressable>
 	);
 };

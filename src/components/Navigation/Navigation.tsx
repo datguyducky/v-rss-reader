@@ -28,11 +28,11 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 		<>
 			<NavigationContainer>
 				<WrapWithCutOut>
-					<LeftIconWrap>
-						<Pressable onPress={() => feedsRef?.current?.present()}>
+					<Pressable onPress={() => feedsRef?.current?.present()}>
+						<LeftIconWrap>
 							<Icon name={Bars3BottomLeftIcon} size={24} />
-						</Pressable>
-					</LeftIconWrap>
+						</LeftIconWrap>
+					</Pressable>
 
 					<CutOutContainer width={width} pointerEvents="box-none">
 						<Pressable onPress={() => createSelectionRef?.current?.present()}>
@@ -44,11 +44,14 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 						</Pressable>
 					</CutOutContainer>
 
-					<RightIconWrap>
-						<Pressable onPress={() => quickSettingsRef?.current?.present()}>
+					<Pressable
+						onPress={() => quickSettingsRef?.current?.present()}
+						style={{ marginLeft: 'auto' }}
+					>
+						<RightIconWrap>
 							<Icon name={Cog6ToothIcon} size={24} />
-						</Pressable>
-					</RightIconWrap>
+						</RightIconWrap>
+					</Pressable>
 				</WrapWithCutOut>
 			</NavigationContainer>
 
