@@ -110,7 +110,6 @@ export const SettingsForm = () => {
 			<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
 				Interface
 			</Heading>
-			<Text fontFamily="Montserrat" mb={16} />
 			<Select.Popup
 				name="TEXT_SIZE"
 				label="Text size"
