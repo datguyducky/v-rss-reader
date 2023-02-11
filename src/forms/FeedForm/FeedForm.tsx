@@ -58,7 +58,7 @@ export const FeedForm = () => {
 
 				<Select.Page
 					label="Category"
-					data={CATEGORIES}
+					data={CATEGORIES.map(category => ({ ...category, extraInfo: '00 feeds' }))}
 					name="CATEGORY"
 					modalTitle="Select category"
 				/>

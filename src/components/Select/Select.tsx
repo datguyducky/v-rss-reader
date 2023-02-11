@@ -4,21 +4,26 @@ import { FlatList, Modal, View, Pressable } from 'react-native';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 import { ChevronDownIcon } from 'react-native-heroicons/outline';
 
+import { Divider } from '../Divider';
 import { Icon } from '../Icon';
 import { InputWrapper } from '../InputWrapper';
-import { Text } from '../Text';
-import { SelectPopup } from './SelectPopup/SelectPopup';
-import { SelectModalHeading, ValueWithIconWrap } from './Select.styles';
 import { RadioCircle } from '../Radio/Radio.styles';
+import { Text } from '../Text';
+import {
+	SelectModalHeading,
+	SelectModalRow,
+	SelectModalTitle,
+	ValueWithIconWrap,
+} from './Select.styles';
+import { SelectPopup } from './SelectPopup/SelectPopup';
 
 interface SelectPageProps {
 	label: string;
 	name: string;
-	data: { label: string; value: string }[];
+	data: { label: string; value: string; extraInfo?: string }[];
 	modalTitle: string;
 }
 
-// TODO: Maybe I could move the Modal component to a separate one, but I'm not 100% certain about that, as this wouldn't change much and it would require to have some props passed down
 export const Select = () => {};
 const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 	const { control } = useFormContext();
@@ -78,15 +83,7 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 									<Icon name={ArrowLeftIconMini} size={24} />
 								</Pressable>
 
-								<Text
-									style={{
-										marginLeft: 24,
-										lineHeight: 16,
-									}}
-									weight={600}
-								>
-									{modalTitle}
-								</Text>
+								<SelectModalTitle weight={600}>{modalTitle}</SelectModalTitle>
 							</SelectModalHeading>
 
 							<FlatList
@@ -105,14 +102,7 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 											setSelectModalVisibility(false);
 										}}
 									>
-										<View
-											style={{
-												paddingHorizontal: 12,
-												paddingVertical: 16,
-												flexDirection: 'row',
-												alignItems: 'center',
-											}}
-										>
+										<SelectModalRow>
 											<View>
 												<Text
 													style={{ lineHeight: 16 }}
@@ -120,31 +110,25 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 												>
 													{item.label}
 												</Text>
-												<Text
-													fontSize={12}
-													fontFamily="Montserrat"
-													weight={300}
-												>
-													00 feeds
-												</Text>
-												{/* TODO: handle displaying correct amount of feeds per category, also maybe move this part outside the Select component and pass it as a 'children' prop? */}
+												{item?.extraInfo && (
+													<Text
+														fontSize={12}
+														fontFamily="Montserrat"
+														weight={300}
+													>
+														{item.extraInfo}
+													</Text>
+												)}
 											</View>
 
 											<RadioCircle
 												isChecked={fieldValue === item.value}
 												style={{ marginLeft: 'auto' }}
 											/>
-										</View>
+										</SelectModalRow>
 									</Pressable>
 								)}
-								ItemSeparatorComponent={() => (
-									<View
-										style={{
-											borderBottomWidth: 1,
-											borderColor: '#CED4DA',
-										}}
-									/>
-								)}
+								ItemSeparatorComponent={() => <Divider />}
 								keyExtractor={(item, index) => index.toString()}
 							/>
 						</View>
