@@ -8,7 +8,7 @@ import { BackIconWrap, HeaderBackWrap } from './HeaderBack.styles';
 
 export const HeaderBack = ({ navigation }: NativeStackHeaderProps) => {
 	return (
-		<HeaderBackWrap marginTop={Constants?.statusBarHeight}>
+		<HeaderBackWrap>
 			<Pressable onPress={navigation.goBack}>
 				<BackIconWrap>
 					<Icon name={ArrowLeftIconMini} size={24} />
