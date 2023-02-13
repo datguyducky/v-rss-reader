@@ -6,27 +6,35 @@ import { Heading } from '../components/Heading';
 import { Select } from '../components/Select';
 import { Switch } from '../components/Switch';
 import { Text } from '../components/Text';
+import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
+import { useMMKVObject } from 'react-native-mmkv';
+import { FilterFormValues } from '../drawers/Filters';
+
+export type SettingsFormValues = {
+	READ_ON_SCROLL: boolean;
+	SCROLL_BEHAVIOUR: 'SMOOTH' | 'PAGINATED';
+	AUTO_NEXT_SECTION: boolean;
+	QUICK_ACTION_DRAWER_GESTURE: 'LONG_PRESS' | 'DOUBLE_TAP';
+	INVERT_SWIPE: boolean;
+	DISABLE_PULL_REFRESH: boolean;
+	SORT_ALPHABETICALLY: boolean;
+	HIDE_FEED_UNREAD_COUNT: boolean;
+	HIDE_FEED_ICONS: boolean;
+	TEXT_SIZE: 'TINY' | 'SMALL' | 'NORMAL' | 'BIG' | 'HUGE';
+	DISABLE_ARTICLE_IMAGES: boolean;
+	TRACKER_ON_HEADER: boolean;
+	DISABLE_READING_STATISTICS: boolean;
+};
 
 export const SettingsForm = () => {
-	const settingsForm = useForm({
-		defaultValues: {
-			READ_ON_SCROLL: false,
-			SCROLL_BEHAVIOUR: 'SMOOTH',
-			AUTO_NEXT_SECTION: true,
-			QUICK_ACTION_DRAWER_GESTURE: 'LONG_PRESS',
-			INVERT_SWIPE: false,
-			DISABLE_PULL_REFRESH: false,
-			SORT_ALPHABETICALLY: true,
-			HIDE_FEED_UNREAD_COUNT: false,
-			HIDE_FEED_ICONS: false,
-			TEXT_SIZE: 'NORMAL',
-			DISABLE_ARTICLE_IMAGES: false,
-			TRACKER_ON_HEADER: true,
-			DISABLE_READING_STATISTICS: false,
-		},
+	const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
+		useMMKVObject<SettingsFormValues>('appSettings');
+
+	const settingsForm = useForm<SettingsFormValues>({
+		defaultValues: appSettings,
 	});
 
-	const onSubmit = values => console.log(values);
+	const onSubmit = (values: SettingsFormValues) => setAppSettings(values);
 
 	return (
 		<FormProvider {...settingsForm}>

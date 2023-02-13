@@ -1,4 +1,5 @@
 import { FilterFormValues } from '../drawers/Filters';
+import { SettingsFormValues } from '../forms/SettingsForm';
 
 export const FEEDS = [
 	{
@@ -887,4 +888,20 @@ export const DEFAULT_FILTERS_VALUES: FilterFormValues = {
 	SORT_BY: 'LATEST',
 	FEED_VIEW: 'MAGAZINE',
 	FEED_DENSITY: 'COMFORTABLE',
+};
+
+export const DEFAULT_SETTINGS_VALUES: SettingsFormValues = {
+	READ_ON_SCROLL: false,
+	SCROLL_BEHAVIOUR: 'SMOOTH',
+	AUTO_NEXT_SECTION: true,
+	QUICK_ACTION_DRAWER_GESTURE: 'LONG_PRESS',
+	INVERT_SWIPE: false,
+	DISABLE_PULL_REFRESH: false,
+	SORT_ALPHABETICALLY: true,
+	HIDE_FEED_UNREAD_COUNT: false,
+	HIDE_FEED_ICONS: false,
+	TEXT_SIZE: 'NORMAL',
+	DISABLE_ARTICLE_IMAGES: false,
+	TRACKER_ON_HEADER: true,
+	DISABLE_READING_STATISTICS: false,
 };
