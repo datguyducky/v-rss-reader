@@ -1,5 +1,4 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import Constants from 'expo-constants';
 import { useRef } from 'react';
 import { Pressable } from 'react-native';
 import { EyeIcon } from 'react-native-heroicons/outline';
@@ -18,7 +17,7 @@ export const Header = ({ title }: HeaderProps) => {
 
 	return (
 		<>
-			<HeaderWrap marginTop={Constants?.statusBarHeight}>
+			<HeaderWrap>
 				<HeaderTextWrap>
 					<Heading tag="h4">{title || 'All articles'}</Heading>
 					<Heading weight={300} color="#5C5F66" tag="h6">

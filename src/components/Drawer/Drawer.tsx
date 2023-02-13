@@ -1,6 +1,6 @@
 import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { setStatusBarStyle, setStatusBarBackgroundColor } from 'expo-status-bar';
-import { ForwardedRef, forwardRef, useCallback, ReactNode } from 'react';
+import { ForwardedRef, forwardRef, useCallback } from 'react';
 import { FlatListProps } from 'react-native';
 
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
@@ -49,7 +49,7 @@ export const Drawer = forwardRef(
 			}
 
 			if (to === 0) {
-				setStatusBarBackgroundColor('rgba(0, 0, 0, 0)', false);
+				setStatusBarBackgroundColor('rgba(0, 0, 0, 0.5)', false);
 				setStatusBarStyle('light');
 			}
 		}, []);
