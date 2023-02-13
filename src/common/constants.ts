@@ -1,3 +1,5 @@
+import { FilterFormValues } from '../drawers/Filters';
+
 export const FEEDS = [
 	{
 		author: {
@@ -880,3 +882,9 @@ export const FEEDS_AND_CATEGORIES_LIST = [
 		id: 'f10',
 	},
 ];
+
+export const DEFAULT_FILTERS_VALUES: FilterFormValues = {
+	SORT_BY: 'LATEST',
+	FEED_VIEW: 'MAGAZINE',
+	FEED_DENSITY: 'COMFORTABLE',
+};

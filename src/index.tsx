@@ -5,11 +5,14 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { MMKV } from 'react-native-mmkv';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Routes } from './routing/Routes';
 
 SplashScreen.preventAutoHideAsync();
+
+export const storage = new MMKV();
 
 const App = () => {
 	const [fontsLoaded] = useFonts({

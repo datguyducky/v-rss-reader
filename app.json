@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "V",
-    "facebookDisplayName": "V",
+    "name": "V - RSS Reader",
+    "facebookDisplayName": "V - RSS Reader",
     "slug": "v-rss-reader",
     "version": "3.0.0",
     "orientation": "portrait",
@@ -19,13 +19,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.vrssreader"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.anonymous.vrssreader"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +35,12 @@
     "androidStatusBar": {
       "backgroundColor": "#ffffff",
       "barStyle": "dark-content"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d624250a-148b-45b5-9e07-e4e8f6801a0f"
+      }
+    },
+    "owner": "datguysheepy"
   }
 }
