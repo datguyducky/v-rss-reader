@@ -1,7 +1,10 @@
 import React, { useRef } from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ArchiveBoxIcon, CheckIcon, ArrowUturnLeftIcon } from 'react-native-heroicons/outline';
+import { useMMKVObject } from 'react-native-mmkv';
 
+import { DEFAULT_FILTERS_VALUES } from '../../common/constants';
+import { FilterFormValues } from '../../drawers/Filters';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
@@ -14,17 +17,13 @@ interface SwipeableFeedItemProps {
 	onLongPress: () => void;
 }
 
-/**
- *  TODO: Right now, the react-native-gesture-handler is patched by me to add a handler to close an "open" swipeable instantly, so without any animation and some extra fluff.
- *	As I didn't liked how the default close handler animation looked like, but maybe this should be re-visited as I'm not 100% sure if I like the "instant close" no-animation that we have here right now.
- */
 export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps) => {
 	const swipeRef = useRef<Swipeable>(null);
-	const viewType = 'MAGAZINE'; // TODO: Use hook and get it from a storage.
+	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 
 	const renderLeftActions = () => {
 		return (
-			<LeftSwipeWrap viewType={viewType}>
+			<LeftSwipeWrap viewType={feedFilters.FEED_VIEW}>
 				<BasicButton
 					onPress={() => {
 						/* onPress handler is not needed here, as action for this component is completely handled by swipe */
@@ -43,7 +42,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 
 	const renderRightActions = () => {
 		return (
-			<RightSwipeWrap viewType={viewType}>
+			<RightSwipeWrap viewType={feedFilters.FEED_VIEW}>
 				<BasicButton
 					onPress={() => {
 						/* onPress handler is not needed here, as action for this component is completely handled by swipe */
@@ -77,7 +76,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 	};
 
 	const renderFeedCard = () => {
-		switch (viewType) {
+		switch (feedFilters.FEED_VIEW) {
 			case 'TEXT_ONLY':
 				return (
 					<TextOnlyCard
@@ -132,7 +131,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 			friction={1.1}
 			onSwipeableOpen={onOpen}
 			ref={swipeRef}
-			containerStyle={{ borderRadius: viewType === 'TEXT_ONLY' ? 0 : 6 }}
+			containerStyle={{ borderRadius: feedFilters.FEED_VIEW === 'TEXT_ONLY' ? 0 : 6 }}
 			leftThreshold={75}
 			rightThreshold={75}
 		>

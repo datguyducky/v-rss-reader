@@ -1,28 +1,29 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { ForwardedRef, forwardRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useMMKVObject } from 'react-native-mmkv';
 
+import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { Radio } from '../components/Radio';
 import { Text } from '../components/Text';
 
-type FilterFormValues = {
+export type FilterFormValues = {
 	SORT_BY: 'LATEST' | 'OLDEST';
 	FEED_VIEW: 'TEXT_ONLY' | 'MAGAZINE' | 'THUMBNAIL';
 	FEED_DENSITY: 'COMPACT' | 'COMFORTABLE';
 };
 
 export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
-	// TODO: Store and retrieve values from a storage via a custom hook.
+	const [feedFilters = DEFAULT_FILTERS_VALUES, setFeedFilters] =
+		useMMKVObject<FilterFormValues>('feedFilters');
+
 	const filterForm = useForm<FilterFormValues>({
-		defaultValues: {
-			SORT_BY: 'LATEST',
-			FEED_VIEW: 'MAGAZINE',
-			FEED_DENSITY: 'COMFORTABLE',
-		},
+		defaultValues: feedFilters,
 	});
-	const onSubmit = (values: FilterFormValues) => console.log(values);
+
+	const onSubmit = (values: FilterFormValues) => setFeedFilters(values);
 
 	return (
 		<Drawer ref={ref} snapPoints={[460]}>
