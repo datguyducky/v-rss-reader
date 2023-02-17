@@ -5,9 +5,12 @@ import { Image, View, Keyboard } from 'react-native';
 
 import { Button } from '../../components/Button';
 import { TextInput } from '../../components/TextInput';
+import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 import { categorySchema } from '../../validation/categorySchema';
 
-export const CategoryForm = () => {
+export const CategoryForm = ({ onClose }) => {
+	const { createCategory } = useFeedsCategories();
+
 	const categoryForm = useForm({ resolver: zodResolver(categorySchema), mode: 'onChange' });
 	const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
@@ -26,7 +29,9 @@ export const CategoryForm = () => {
 	}, []);
 
 	const onSubmit = data => {
-		console.log(data);
+		createCategory(data);
+
+		onClose();
 	};
 
 	const handleKeyboardOnFocus = () => {

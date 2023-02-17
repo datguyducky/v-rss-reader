@@ -1,10 +1,10 @@
 import { CategoryForm } from '../forms/CategoryForm';
 import { LayoutWithTitle } from '../layouts/LayoutWithTitle';
 
-export const Category = () => {
+export const Category = ({ navigation }) => {
 	return (
 		<LayoutWithTitle title="Create new category">
-			<CategoryForm />
+			<CategoryForm onClose={() => navigation.navigate('Read')} />
 		</LayoutWithTitle>
 	);
 };

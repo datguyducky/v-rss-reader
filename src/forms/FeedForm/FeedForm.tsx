@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useId } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Image, View, Keyboard } from 'react-native';
 
@@ -8,6 +8,7 @@ import { Button } from '../../components/Button';
 import { Select } from '../../components/Select';
 import { TextInput } from '../../components/TextInput';
 import { feedSchema } from '../../validation/feedSchema';
+import { useMMKVObject } from 'react-native-mmkv';
 
 type FeedFormValues = {
 	NAME: string;
@@ -15,7 +16,9 @@ type FeedFormValues = {
 	CATEGORY?: string;
 };
 
-export const FeedForm = () => {
+export const FeedForm = ({ goBack }) => {
+	const [feedsAndCategories = [], setFeedsAndCategories] = useMMKVObject('feedsAndCategories');
+
 	const feedForm = useForm<FeedFormValues>({
 		resolver: zodResolver(feedSchema),
 		mode: 'onChange',
@@ -37,13 +40,19 @@ export const FeedForm = () => {
 	}, []);
 
 	const onSubmit = (values: FeedFormValues) => {
-		console.log(values);
+		setFeedsAndCategories([
+			...feedsAndCategories,
+			{ ...values, id: 'TODO: gen here', type: 'FEED' },
+		]);
+
+		goBack();
 	};
 
 	const handleKeyboardOnFocus = () => {
 		setIsKeyboardVisible(true);
 	};
 
+	console.log(feedsAndCategories, 'array here pls');
 	return (
 		<>
 			<FormProvider {...feedForm}>
