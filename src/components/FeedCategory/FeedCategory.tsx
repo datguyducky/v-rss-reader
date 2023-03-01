@@ -5,6 +5,7 @@ import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outlin
 import { BasicButton } from '../BasicButton';
 import { FeedItem } from '../FeedItem';
 import { Icon } from '../Icon';
+import { Text } from '../Text';
 
 type FeedCategoryProps = {
 	category: Record<string, unknown>;
@@ -31,18 +32,29 @@ export const FeedCategory = ({ category, handleItemNavigate }: FeedCategoryProps
 			</BasicButton>
 
 			{isOpen &&
-				(category.feeds as Record<string, unknown>[]).map((feed, index) => (
-					<FeedItem
-						item={feed}
-						handleItemNavigate={handleItemNavigate}
+				(category?.feeds?.length > 0 ? (
+					(category.feeds as Record<string, unknown>[]).map((feed, index) => (
+						<FeedItem
+							item={feed}
+							handleItemNavigate={handleItemNavigate}
+							style={{ marginLeft: 32 }}
+							key={feed.id as string}
+							mb={
+								index === (category.feeds as Record<string, unknown>[]).length - 1
+									? 0
+									: 16
+							}
+						/>
+					))
+				) : (
+					<Text
 						style={{ marginLeft: 32 }}
-						key={feed.id as string}
-						mb={
-							index === (category.feeds as Record<string, unknown>[]).length - 1
-								? 0
-								: 16
-						}
-					/>
+						fontSize={12}
+						weight={300}
+						fontFamily="Montserrat"
+					>
+						No feeds exist in this category yet.
+					</Text>
 				))}
 		</View>
 	);

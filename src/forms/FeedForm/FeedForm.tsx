@@ -1,23 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useEffect, useState, useId } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Image, View, Keyboard } from 'react-native';
 
-import { CATEGORIES } from '../../common/constants';
 import { Button } from '../../components/Button';
 import { Select } from '../../components/Select';
 import { TextInput } from '../../components/TextInput';
 import { feedSchema } from '../../validation/feedSchema';
-import { useMMKVObject } from 'react-native-mmkv';
+import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 
 type FeedFormValues = {
-	NAME: string;
-	URL: string;
-	CATEGORY?: string;
+	name: string;
+	url: string;
+	category?: string;
 };
 
 export const FeedForm = ({ goBack }) => {
-	const [feedsAndCategories = [], setFeedsAndCategories] = useMMKVObject('feedsAndCategories');
+	const { createFeed, onlyCategories } = useFeedsCategories();
 
 	const feedForm = useForm<FeedFormValues>({
 		resolver: zodResolver(feedSchema),
@@ -40,10 +39,7 @@ export const FeedForm = ({ goBack }) => {
 	}, []);
 
 	const onSubmit = (values: FeedFormValues) => {
-		setFeedsAndCategories([
-			...feedsAndCategories,
-			{ ...values, id: 'TODO: gen here', type: 'FEED' },
-		]);
+		createFeed(values);
 
 		goBack();
 	};
@@ -52,14 +48,13 @@ export const FeedForm = ({ goBack }) => {
 		setIsKeyboardVisible(true);
 	};
 
-	console.log(feedsAndCategories, 'array here pls');
 	return (
 		<>
 			<FormProvider {...feedForm}>
-				<TextInput label="Feed name" name="NAME" mb={16} onFocus={handleKeyboardOnFocus} />
+				<TextInput label="Feed name" name="name" mb={16} onFocus={handleKeyboardOnFocus} />
 				<TextInput
 					label="Feed url"
-					name="URL"
+					name="url"
 					mb={16}
 					onFocus={handleKeyboardOnFocus}
 					autoCapitalize="none"
@@ -67,8 +62,12 @@ export const FeedForm = ({ goBack }) => {
 
 				<Select.Page
 					label="Category"
-					data={CATEGORIES.map(category => ({ ...category, extraInfo: '00 feeds' }))}
-					name="CATEGORY"
+					data={onlyCategories.map(category => ({
+						label: category.name,
+						value: category.id,
+						extraInfo: `${category.feeds.length} feeds`,
+					}))} // TODO: Function to display "0" at the beginning, if needed, and to display correct form.
+					name="category"
 					modalTitle="Select category"
 				/>
 
@@ -91,7 +90,7 @@ export const FeedForm = ({ goBack }) => {
 				)}
 
 				<Button
-					style={{ marginTop: isKeyboardVisible ? 'auto' : 0 }}
+					style={{ marginTop: isKeyboardVisible ? 16 : 0 }}
 					onPress={feedForm.handleSubmit(onSubmit)}
 					disabled={!feedForm.formState.isValid || !feedForm.formState.isDirty}
 				>

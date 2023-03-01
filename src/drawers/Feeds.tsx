@@ -4,15 +4,18 @@ import { ForwardedRef, forwardRef } from 'react';
 import { View } from 'react-native';
 import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
 
-import { FEEDS_AND_CATEGORIES_LIST } from '../common/constants';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { FeedCategory } from '../components/FeedCategory';
 import { FeedItem } from '../components/FeedItem';
 import { Icon } from '../components/Icon';
 
+import { useFeedsCategories } from '../hooks/useFeedsCategories';
+
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
+		const { feedsCategories } = useFeedsCategories();
+
 		const handleItemNavigate = item => {
 			ref?.current?.forceClose();
 
@@ -30,7 +33,8 @@ export const Feeds = forwardRef(
 				ref={ref}
 				snapPoints={[256, '85%']}
 				useFlatList
-				data={FEEDS_AND_CATEGORIES_LIST}
+				data={feedsCategories}
+				emptyListText="Click the '+' button to begin adding new feeds or categories."
 				renderItem={({ item }) =>
 					item.type === 'CATEGORY' ? (
 						<FeedCategory category={item} handleItemNavigate={handleItemNavigate} />

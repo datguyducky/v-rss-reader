@@ -3,6 +3,8 @@ import { setStatusBarStyle, setStatusBarBackgroundColor } from 'expo-status-bar'
 import { ForwardedRef, forwardRef, useCallback } from 'react';
 import { FlatListProps } from 'react-native';
 
+import { Text } from '../Text';
+
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
 
 interface DrawerProps extends DrawerStylesProps {
@@ -17,6 +19,7 @@ interface DrawerProps extends DrawerStylesProps {
 	keyExtractor?: FlatListProps<any>['keyExtractor'];
 	renderItem?: FlatListProps<any>['renderItem'];
 	ItemSeparatorComponent?: FlatListProps<any>['ItemSeparatorComponent'];
+	emptyListText?: string;
 }
 
 // TODO: There's a small flash on a statusBar when the `Drawer` is closed, maybe is not that noticeable but it still would be a good idea to fix it.
@@ -35,6 +38,7 @@ export const Drawer = forwardRef(
 			keyExtractor,
 			renderItem,
 			ItemSeparatorComponent,
+			emptyListText,
 		}: DrawerProps,
 		ref: ForwardedRef<BottomSheetModal>,
 	) => {
@@ -89,6 +93,11 @@ export const Drawer = forwardRef(
 										renderItem={renderItem}
 										keyExtractor={keyExtractor}
 										ItemSeparatorComponent={ItemSeparatorComponent}
+										ListEmptyComponent={() => (
+											<Text weight={300} fontSize={12} textAlign="center">
+												{emptyListText}
+											</Text>
+										)}
 									/>
 								</DrawerContainer>
 							);

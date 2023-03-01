@@ -43,7 +43,7 @@ export const CategoryForm = ({ onClose }) => {
 			<FormProvider {...categoryForm}>
 				<TextInput
 					label="Category name"
-					name="NAME"
+					name="name"
 					mb={16}
 					onFocus={handleKeyboardOnFocus}
 				/>
@@ -67,7 +67,7 @@ export const CategoryForm = ({ onClose }) => {
 				)}
 
 				<Button
-					style={{ marginTop: isKeyboardVisible ? 'auto' : 0 }}
+					style={{ marginTop: isKeyboardVisible ? 16 : 0 }}
 					onPress={categoryForm.handleSubmit(onSubmit)}
 					disabled={!categoryForm.formState.isValid || !categoryForm.formState.isDirty}
 				>
