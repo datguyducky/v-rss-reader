@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
 
-import { BasicButton } from '../BasicButton';
 import { FeedItem } from '../FeedItem';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
@@ -17,19 +16,28 @@ export const FeedCategory = ({ category, handleItemNavigate }: FeedCategoryProps
 
 	return (
 		<View>
-			<BasicButton
-				onPress={() => setIsOpen(prevState => !prevState)}
-				icon={
-					isOpen ? (
+			<View
+				style={{
+					marginBottom: isOpen ? 16 : 0,
+					flexDirection: 'row',
+					alignItems: 'center',
+				}}
+			>
+				<Pressable
+					onPress={() => setIsOpen(prevState => !prevState)}
+					style={{ marginRight: 12 }}
+				>
+					{isOpen ? (
 						<Icon name={ChevronDownIcon} size={20} />
 					) : (
 						<Icon name={ChevronRightIcon} size={20} />
-					)
-				}
-				mb={isOpen ? 16 : 0}
-			>
-				{category.name}
-			</BasicButton>
+					)}
+				</Pressable>
+
+				<Pressable onPress={() => handleItemNavigate(category)}>
+					<Text fontFamily="Montserrat">{category.name}</Text>
+				</Pressable>
+			</View>
 
 			{isOpen &&
 				(category?.feeds?.length > 0 ? (

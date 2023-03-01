@@ -14,10 +14,19 @@ import { useFeedsCategories } from '../hooks/useFeedsCategories';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
-		const { feedsCategories } = useFeedsCategories();
+		const { feedsCategories, setActiveItemDetails } = useFeedsCategories();
 
 		const handleItemNavigate = item => {
 			ref?.current?.forceClose();
+
+			/**
+			 * Saving selected feed or category details to MMKV storage for later use.
+			 */
+			if (item.id === 'ALL_ARTICLES_VIEW' || item.id === 'READ_LATER_VIEW') {
+				setActiveItemDetails();
+			} else {
+				setActiveItemDetails(item.id);
+			}
 
 			navigation.navigate('TabScreen', {
 				name: item.name,

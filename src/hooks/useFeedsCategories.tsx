@@ -3,6 +3,7 @@ import uuid from 'react-native-uuid';
 
 export const useFeedsCategories = () => {
 	const [feedsCategories = [], setFeedsCategories] = useMMKVObject('feedsCategories');
+	const [activeItemDetails, storageSetActiveItemDetails] = useMMKVObject('activeItemDetails');
 
 	const sortBySetting = 'LATEST'; // TODO: Use storage here.
 
@@ -47,16 +48,15 @@ export const useFeedsCategories = () => {
 			 * Then we add this new category under the "feeds" field on that category
 			 * and the we save all of that back to MMKV storage.
 			 */
-			return setFeedsCategories(
-				feedsCategories.map(item => {
-					if (item.id === category) {
-						console.log({ ...item, feeds: [...item.feeds, newFeedObject] }?.feeds);
-						return { ...item, feeds: [...item.feeds, newFeedObject] };
-					} else {
-						return item;
-					}
-				}),
-			);
+			const itemsWithNewItem = feedsCategories.map(item => {
+				if (item.id === category) {
+					return { ...item, feeds: [...item.feeds, newFeedObject] };
+				} else {
+					return item;
+				}
+			});
+
+			return setFeedsCategories(itemsWithNewItem);
 		}
 
 		return setFeedsCategories([...feedsCategories, newFeedObject]);
@@ -75,6 +75,23 @@ export const useFeedsCategories = () => {
 		]);
 	};
 
+	const findFeedCategory = (id: string) => feedsCategories.find(item => item.id === id);
+
+	const setActiveItemDetails = (id?: string) => {
+		if (id) {
+			const foundItem = findFeedCategory(id);
+
+			return storageSetActiveItemDetails(foundItem);
+		}
+
+		storageSetActiveItemDetails(undefined);
+	};
+
+	const deleteItem = (id: string) => {
+		const afterDeleteItems = feedsCategories.filter(obj => obj.id !== id);
+		setFeedsCategories(afterDeleteItems);
+	};
+
 	// TODO: Add delete function for both categories and feeds.
 	// TODO: Add edit function for both categories and feeds.
 	// TODO: Check if listeners for changes are needed to make sure that all the data/changes are synced across the whole app.
@@ -85,5 +102,9 @@ export const useFeedsCategories = () => {
 		createFeed,
 		createCategory,
 		feedsCategories: sortedFeedsCategories,
+		findFeedCategory,
+		activeItemDetails,
+		setActiveItemDetails,
+		deleteItem,
 	};
 };

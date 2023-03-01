@@ -26,7 +26,7 @@ export const Header = ({ title }: HeaderProps) => {
 				</HeaderTextWrap>
 
 				<Pressable
-					onPress={() => filtersDrawerRef?.current?.present({ sdasda: 'sadasd' })}
+					onPress={() => filtersDrawerRef?.current?.present()}
 					style={{ marginLeft: 'auto' }}
 				>
 					<Icon name={EyeIcon} size={24} />

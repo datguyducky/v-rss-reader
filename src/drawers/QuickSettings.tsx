@@ -11,30 +11,39 @@ import { Icon } from '../components/Icon';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
 import { ReadingStats } from './ReadingStats';
+import { useFeedsCategories } from '../hooks/useFeedsCategories';
 
 export const QuickSettings = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
-		const { dismiss } = useBottomSheetModal();
+		const { activeItemDetails, deleteItem, setActiveItemDetails } = useFeedsCategories();
 
-		const currentView = 'FEED';
+		const { dismiss } = useBottomSheetModal();
 
 		const readingStatsRef = useRef<BottomSheetModal>(null);
 		const [deleteCurrentView, setDeleteCurrentView] = useState(false);
 		const handleEditCurrentView = () => {
-			// TODO: This function should retrieve data if the currently opened view is a category or just a feed
-			// and then based on that navigate to a correct view to edit it
-
 			ref?.current?.forceClose();
-			if (currentView === 'FEED') {
+
+			if (activeItemDetails?.type === 'FEED') {
 				navigation.navigate('Feed');
-			} else {
+			} else if (activeItemDetails?.type === 'CATEGORY') {
 				navigation.navigate('Category');
 			}
 		};
 
-		// TODO: For methods below and basically for the rest of this file - retrieve if feed or category is currently opened and display correct text and call correct methods
-		const handleRemoveCategory = () => {};
-		const handleRemoveFeed = () => {};
+		const handleRemoveItem = () => {
+			setDeleteCurrentView(false);
+
+			setActiveItemDetails();
+
+			navigation.navigate('TabScreen', {
+				name: 'All articles',
+				screen: 'Read',
+				params: { id: 'ALL_ARTICLES_VIEW' },
+			});
+
+			deleteItem(activeItemDetails.id);
+		};
 
 		return (
 			<>
@@ -61,30 +70,42 @@ export const QuickSettings = forwardRef(
 						Reading stats
 					</BasicButton>
 
-					<Divider my={16} />
+					{activeItemDetails?.id && (
+						<>
+							<Divider my={16} />
 
-					<Pressable onPress={handleEditCurrentView}>
-						<View style={{ marginBottom: 16 }}>
-							<Text fontFamily="Montserrat">Rename feed/category</Text>
-							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
-								{`Change name of ${'NAME'} feed/category`}
-							</Text>
-						</View>
-					</Pressable>
+							<Pressable onPress={handleEditCurrentView}>
+								<View style={{ marginBottom: 16 }}>
+									<Text fontFamily="Montserrat">{`Rename ${
+										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
+									}`}</Text>
+									<Text fontFamily="Montserrat" weight={300} fontSize={12}>
+										{`Change name of ${activeItemDetails.name} ${
+											activeItemDetails.type === 'FEED' ? 'feed' : 'category'
+										}`}
+									</Text>
+								</View>
+							</Pressable>
 
-					<Pressable
-						onPress={() => {
-							ref?.current?.forceClose();
-							setDeleteCurrentView(true);
-						}}
-					>
-						<View>
-							<Text fontFamily="Montserrat">Delete feed/category</Text>
-							<Text fontFamily="Montserrat" weight={300} fontSize={12}>
-								{`Delete currently selected feed/category: ${'NAME'}`}
-							</Text>
-						</View>
-					</Pressable>
+							<Pressable
+								onPress={() => {
+									ref?.current?.forceClose();
+									setDeleteCurrentView(true);
+								}}
+							>
+								<View>
+									<Text fontFamily="Montserrat">{`Delete ${
+										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
+									}`}</Text>
+									<Text fontFamily="Montserrat" weight={300} fontSize={12}>
+										{`Delete currently selected ${
+											activeItemDetails.type === 'FEED' ? 'feed' : 'category'
+										}: ${activeItemDetails.name}`}
+									</Text>
+								</View>
+							</Pressable>
+						</>
+					)}
 
 					<Divider my={16} />
 
@@ -99,9 +120,11 @@ export const QuickSettings = forwardRef(
 				<DeletePopup
 					isOpen={deleteCurrentView}
 					onClose={() => setDeleteCurrentView(false)}
-					title="Remove the '{Name}' category?"
+					title={`Remove the ${activeItemDetails?.name} ${
+						activeItemDetails?.type === 'FEED' ? 'feed' : 'category'
+					}?`}
 					subTitle="Remember, this action cannot be undone!"
-					handleRemove={handleRemoveCategory}
+					handleRemove={handleRemoveItem}
 				/>
 			</>
 		);
