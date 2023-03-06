@@ -34,8 +34,8 @@ export const FeedCategory = ({ category, handleItemNavigate }: FeedCategoryProps
 					)}
 				</Pressable>
 
-				<Pressable onPress={() => handleItemNavigate(category)}>
-					<Text fontFamily="Montserrat">{category.name}</Text>
+				<Pressable onPress={() => handleItemNavigate(category)} style={{ flex: 1 }}>
+					<Text fontFamily="Montserrat">{category.name as string}</Text>
 				</Pressable>
 			</View>
 
