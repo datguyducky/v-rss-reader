@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 
-import { Button } from '../Button';
 import { Popup } from '../Popup';
 import { Text } from '../Text';
 import { BasicButton } from '../BasicButton';
@@ -30,7 +29,6 @@ export const DeletePopup = ({
 
 				<View style={{ flexDirection: 'row', marginLeft: 'auto' }}>
 					<BasicButton
-						//style={{ marginLeft: 'auto' }}
 						onPress={() => handleCancel?.() || onClose()}
 						textWeight={600}
 						textColor="#909296"
@@ -41,11 +39,8 @@ export const DeletePopup = ({
 
 					<BasicButton
 						onPress={() => handleRemove?.()}
-						mb={12}
-						//size="small"
 						textColor="#fa5252"
 						textWeight={600}
-						//backgroundColor="#fa5252"
 					>
 						Yes, Remove
 					</BasicButton>
