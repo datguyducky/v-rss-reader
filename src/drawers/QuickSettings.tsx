@@ -47,7 +47,11 @@ export const QuickSettings = forwardRef(
 
 		return (
 			<>
-				<Drawer ref={ref} snapPoints={[387]} name="quickSettingsDrawer">
+				<Drawer
+					ref={ref}
+					snapPoints={activeItemDetails?.id ? [387] : [256]}
+					name="quickSettingsDrawer"
+				>
 					<BasicButton
 						onPress={() => {
 							ref?.current?.forceClose();
