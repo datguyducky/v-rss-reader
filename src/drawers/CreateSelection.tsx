@@ -24,7 +24,7 @@ export const CreateSelection = forwardRef(
 				<BasicButton
 					onPress={() => {
 						ref?.current?.forceClose();
-						navigation.navigate('Category');
+						navigation.navigate('Category', { mode: 'create' });
 					}}
 					icon={<Icon name={FolderPlusIcon} size={20} />}
 				>

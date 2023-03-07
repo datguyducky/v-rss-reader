@@ -8,10 +8,20 @@ import { TextInput } from '../../components/TextInput';
 import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 import { categorySchema } from '../../validation/categorySchema';
 
-export const CategoryForm = ({ onClose }) => {
-	const { createCategory } = useFeedsCategories();
+type CategoryFormProps = {
+	onClose: () => void;
+	mode: 'edit' | 'create';
+	data?: Record<string, unknown>;
+};
 
-	const categoryForm = useForm({ resolver: zodResolver(categorySchema), mode: 'onChange' });
+export const CategoryForm = ({ onClose, mode, data }: CategoryFormProps) => {
+	const { createCategory, editCategory } = useFeedsCategories();
+
+	const categoryForm = useForm({
+		resolver: zodResolver(categorySchema),
+		mode: 'onChange',
+	});
+
 	const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
 	useEffect(() => {
@@ -28,8 +38,20 @@ export const CategoryForm = ({ onClose }) => {
 		};
 	}, []);
 
-	const onSubmit = data => {
-		createCategory(data);
+	// Setting form values to the ones that were passed via props
+	useEffect(() => {
+		if (data) {
+			const { name } = data;
+			categoryForm.reset({ name });
+		}
+	}, [data]);
+
+	const onSubmit = submitData => {
+		if (mode === 'edit' && data?.id) {
+			editCategory(data.id as string, submitData);
+		} else {
+			createCategory(submitData);
+		}
 
 		onClose();
 	};
