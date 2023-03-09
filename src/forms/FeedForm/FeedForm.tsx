@@ -8,6 +8,7 @@ import { Select } from '../../components/Select';
 import { TextInput } from '../../components/TextInput';
 import { feedSchema } from '../../validation/feedSchema';
 import { useFeedsCategories } from '../../hooks/useFeedsCategories';
+import { formatItemCount } from '../../utils/formatItemCount';
 
 type FeedFormValues = {
 	name: string;
@@ -15,8 +16,14 @@ type FeedFormValues = {
 	category?: string;
 };
 
-export const FeedForm = ({ goBack }) => {
-	const { createFeed, onlyCategories } = useFeedsCategories();
+type FeedFormProps = {
+	goBack: () => void;
+	mode: 'edit' | 'create';
+	data?: Record<string, unknown>;
+};
+
+export const FeedForm = ({ goBack, mode, data }: FeedFormProps) => {
+	const { createFeed, onlyCategories, editFeed } = useFeedsCategories();
 
 	const feedForm = useForm<FeedFormValues>({
 		resolver: zodResolver(feedSchema),
@@ -38,8 +45,20 @@ export const FeedForm = ({ goBack }) => {
 		};
 	}, []);
 
+	// Setting form values to the ones that were passed via props
+	useEffect(() => {
+		if (data) {
+			const { name, url, categoryId } = data;
+			feedForm.reset({ name, url, category: categoryId });
+		}
+	}, [data]);
+
 	const onSubmit = (values: FeedFormValues) => {
-		createFeed(values);
+		if (mode === 'edit' && data?.id) {
+			editFeed(data.id as string, values);
+		} else {
+			createFeed(values);
+		}
 
 		goBack();
 	};
@@ -65,8 +84,8 @@ export const FeedForm = ({ goBack }) => {
 					data={onlyCategories.map(category => ({
 						label: category.name,
 						value: category.id,
-						extraInfo: `${category.feeds.length} feeds`,
-					}))} // TODO: Function to display "0" at the beginning, if needed, and to display correct form.
+						extraInfo: formatItemCount(category.feeds.length),
+					}))}
 					name="category"
 					modalTitle="Select category"
 				/>

@@ -10,7 +10,7 @@ export const Category = ({ navigation, route }) => {
 
 	useEffect(() => {
 		if (route?.params?.categoryId) {
-			const category = findFeedCategory(route.params.categoryId);
+			const category = findFeedCategory(route.params.categoryId)?.item;
 			setCurrentCategory(category);
 		}
 	}, [route?.params?.categoryId]);

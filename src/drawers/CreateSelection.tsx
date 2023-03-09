@@ -13,7 +13,7 @@ export const CreateSelection = forwardRef(
 				<BasicButton
 					onPress={() => {
 						ref?.current?.forceClose();
-						navigation.navigate('Feed');
+						navigation.navigate('Feed', { mode: 'create' });
 					}}
 					icon={<Icon name={PlusIcon} size={20} />}
 					mb={16}

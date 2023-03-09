@@ -2,6 +2,7 @@ import { useMMKVObject } from 'react-native-mmkv';
 import uuid from 'react-native-uuid';
 import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { FilterFormValues } from '../drawers/Filters';
+import { findItemAndParentById } from '../utils/findItemAndParentById';
 
 export const useFeedsCategories = () => {
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
@@ -78,11 +79,11 @@ export const useFeedsCategories = () => {
 		]);
 	};
 
-	const findFeedCategory = (id: string) => feedsCategories.find(item => item.id === id);
+	const findFeedCategory = (id: string) => findItemAndParentById(id, feedsCategories);
 
 	const setActiveItemDetails = (id?: string) => {
 		if (id) {
-			const foundItem = findFeedCategory(id);
+			const foundItem = findFeedCategory(id)?.item;
 
 			return storageSetActiveItemDetails(foundItem);
 		}
@@ -96,7 +97,7 @@ export const useFeedsCategories = () => {
 	};
 
 	const editCategory = (id: string, newValues: Record<string, unknown>) => {
-		const categoryToEdit = findFeedCategory(id);
+		const categoryToEdit = findFeedCategory(id)?.item;
 
 		if (!categoryToEdit) {
 			throw new Error('CATEGORY_DOES_NOT_EXIST');
@@ -118,22 +119,104 @@ export const useFeedsCategories = () => {
 		setFeedsCategories(updatedList);
 	};
 
+	/**
+	 * We can edit a feed in a variety of ways:
+	 * - values can be just changed, without moving it somewhere else;
+	 * - feed can be be moved from root array to one of the categories;
+	 * - feed can be moved from one category to another
+	 * - move it from a category to the root array
+	 */
 	const editFeed = (id: string, newValues: Record<string, unknown>) => {
-		/**
-		 * Here we need to do couple of things to correctly update a feed:
-		 * 	- first we need to check that the feed we try to edit even exists
-		 * 	- then we find that feed we try to edit (it may be just in the root array or inside one of the "feeds" fields on a category)
-		 * 	- then we need to edit the values of that feed
-		 * 	- and we need to do one of those things:
-		 * 		- remove it from root array and add it under an existing category
-		 * 		- remove it from one category and add it under a different one
-		 * 		- remove it from a category and add it in the root array of thw items
-		 * 	- and then we save all of these changes to storage and hope that it works :)
-		 */
+		const { category, ...values } = newValues;
+
+		const feedToEdit = findFeedCategory(id);
+
+		if (!feedToEdit?.item) {
+			throw new Error('FEED_DOES_NOT_EXIST');
+		}
+
+		// Making sure that the edited values are also synced with the activeItemDetails object
+		if (id === activeItemDetails?.id) {
+			storageSetActiveItemDetails({ ...feedToEdit, ...values });
+		}
+
+		// Removing it from one category and putting it under another one
+		if (feedToEdit?.parent?.id && category !== feedToEdit?.parent?.id) {
+			const afterRemoveData = feedsCategories.map(obj => {
+				if (obj.id === feedToEdit?.parent?.id && obj.feeds && obj.feeds.length > 0) {
+					obj.feeds = obj.feeds.filter(feed => feed.id !== id);
+					return obj;
+				}
+
+				return obj;
+			});
+
+			// Putting it under different category
+			if (category) {
+				const editedFeedsCategories = afterRemoveData.map(item =>
+					item.id === category
+						? { ...item, feeds: [...item.feeds, { ...feedToEdit?.item, ...values }] }
+						: { ...item },
+				);
+
+				return setFeedsCategories(editedFeedsCategories);
+			}
+			// Putting it under the root array
+			else {
+				const editedFeedsCategories = [
+					...afterRemoveData,
+					{ ...feedToEdit?.item, ...values },
+				];
+
+				return setFeedsCategories(editedFeedsCategories);
+			}
+		}
+		// Editing it when category was not changed
+		else if (category === feedToEdit?.parent?.id) {
+			// When feed is under category
+			if (feedToEdit?.parent?.id) {
+				const editedFeedsCategories = feedsCategories.map(item =>
+					item.id === category
+						? {
+								...item,
+								feeds: item.feeds.map(feedItem =>
+									feedItem.id === id
+										? { ...feedItem, ...values }
+										: { ...feedItem },
+								),
+						  }
+						: { ...item },
+				);
+
+				return setFeedsCategories(editedFeedsCategories);
+			}
+			// When feed is under the root category
+			else {
+				const editedFeedsCategories = feedsCategories.map(item =>
+					item.id === id ? { ...item, ...values } : { ...item },
+				);
+
+				return setFeedsCategories(editedFeedsCategories);
+			}
+		}
+		// When feed is under the root array and we try to move it under a category
+		else if (category && !feedToEdit?.parent?.id) {
+			const afterRemoveData = feedsCategories.filter(obj => obj.id !== id);
+
+			const editedFeedsCategories = afterRemoveData.map(item =>
+				item.id === category
+					? {
+							...item,
+							feeds: [...item.feeds, { ...feedToEdit?.item, ...values }],
+					  }
+					: { ...item },
+			);
+
+			return setFeedsCategories(editedFeedsCategories);
+		}
 	};
 
 	// TODO: Check if listeners for changes are needed to make sure that all the data/changes are synced across the whole app.
-
 	return {
 		onlyFeeds,
 		onlyCategories,
@@ -145,5 +228,6 @@ export const useFeedsCategories = () => {
 		setActiveItemDetails,
 		deleteItem,
 		editCategory,
+		editFeed,
 	};
 };

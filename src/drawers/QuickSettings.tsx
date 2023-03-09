@@ -25,7 +25,7 @@ export const QuickSettings = forwardRef(
 			ref?.current?.forceClose();
 
 			if (activeItemDetails?.type === 'FEED') {
-				navigation.navigate('Feed');
+				navigation.navigate('Feed', { feedId: activeItemDetails.id, mode: 'edit' });
 			} else if (activeItemDetails?.type === 'CATEGORY') {
 				navigation.navigate('Category', { categoryId: activeItemDetails.id, mode: 'edit' });
 			}
