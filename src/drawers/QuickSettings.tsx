@@ -45,6 +45,7 @@ export const QuickSettings = forwardRef(
 			deleteItem(activeItemDetails.id);
 		};
 
+		console.log(activeItemDetails);
 		return (
 			<>
 				<Drawer

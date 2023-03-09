@@ -92,8 +92,29 @@ export const useFeedsCategories = () => {
 	};
 
 	const deleteItem = (id: string) => {
-		const afterDeleteItems = feedsCategories.filter(obj => obj.id !== id);
-		setFeedsCategories(afterDeleteItems);
+		const clearedFeedsCategories = feedsCategories
+			.map(obj => {
+				if (obj.id === id) {
+					return null;
+				}
+
+				const newObj = { ...obj };
+
+				if (newObj.feeds) {
+					newObj.feeds = newObj.feeds.filter(feed => {
+						if (feed.id === id) {
+							return false;
+						}
+
+						return true;
+					});
+				}
+
+				return newObj;
+			})
+			.filter(Boolean);
+
+		setFeedsCategories(clearedFeedsCategories);
 	};
 
 	const editCategory = (id: string, newValues: Record<string, unknown>) => {
@@ -137,7 +158,7 @@ export const useFeedsCategories = () => {
 
 		// Making sure that the edited values are also synced with the activeItemDetails object
 		if (id === activeItemDetails?.id) {
-			storageSetActiveItemDetails({ ...feedToEdit, ...values });
+			storageSetActiveItemDetails({ ...feedToEdit?.item, ...values });
 		}
 
 		// Removing it from one category and putting it under another one
