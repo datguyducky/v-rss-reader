@@ -13,7 +13,13 @@ import {
 
 interface TextOnlyCardProps extends FeedCardProps {}
 
-export const TextOnlyCard = ({ title, onLongPress, url }: TextOnlyCardProps) => {
+export const TextOnlyCard = ({
+	title,
+	onLongPress,
+	url,
+	domainName,
+	publishedAt,
+}: TextOnlyCardProps) => {
 	return (
 		<TextOnlyCardWrap>
 			<StyledPressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
@@ -25,7 +31,7 @@ export const TextOnlyCard = ({ title, onLongPress, url }: TextOnlyCardProps) => 
 					</TitleWrap>
 
 					<Text fontSize={10} weight={300} color="#5C5F66">
-						Website name / 00 days
+						{`${domainName} / ${publishedAt}`}
 					</Text>
 				</TextOnlyTextWrap>
 			</StyledPressable>

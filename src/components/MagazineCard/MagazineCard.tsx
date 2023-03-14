@@ -1,9 +1,9 @@
 import { openURL } from 'expo-linking';
+import { PhotoIcon } from 'react-native-heroicons/outline';
 
 import { FeedCardProps } from '../../types';
-
+import { Icon } from '../Icon';
 import { Text } from '../Text';
-
 import {
 	MagazineCardWrap,
 	MagazineTextWrap,
@@ -15,7 +15,14 @@ import {
 
 interface MagazineCardProps extends FeedCardProps {}
 
-export const MagazineCard = ({ title, onLongPress, thumbnailUrl, url }: MagazineCardProps) => {
+export const MagazineCard = ({
+	title,
+	onLongPress,
+	thumbnailUrl,
+	url,
+	domainName,
+	publishedAt,
+}: MagazineCardProps) => {
 	return (
 		<MagazineCardWrap>
 			<StyledPressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
@@ -23,7 +30,9 @@ export const MagazineCard = ({ title, onLongPress, thumbnailUrl, url }: Magazine
 					source={{
 						uri: thumbnailUrl,
 					}}
-				/>
+				>
+					{!thumbnailUrl && <Icon name={PhotoIcon} size={27} color="#909296" />}
+				</StyledImage>
 
 				<MagazineTextWrap>
 					<TitleWrap>
@@ -34,7 +43,7 @@ export const MagazineCard = ({ title, onLongPress, thumbnailUrl, url }: Magazine
 
 					<DetailsWrap>
 						<Text fontSize={10} weight={300} color="#5C5F66">
-							Website name / 00 days
+							{`${domainName} / ${publishedAt}`}
 						</Text>
 					</DetailsWrap>
 				</MagazineTextWrap>

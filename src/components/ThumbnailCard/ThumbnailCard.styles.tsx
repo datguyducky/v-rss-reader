@@ -7,6 +7,8 @@ export const StyledImageBackground = styled.ImageBackground`
 	background-color: #d9d9d9;
 	border-radius: 6px;
 	overflow: hidden;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const ThumbnailTextWrap = styled.View`

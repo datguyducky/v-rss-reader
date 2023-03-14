@@ -1,0 +1,28 @@
+diff --git a/node_modules/react-native-rss-parser/parsers/atomv1.js b/node_modules/react-native-rss-parser/parsers/atomv1.js
+index 8f75bbd..417ab31 100644
+--- a/node_modules/react-native-rss-parser/parsers/atomv1.js
++++ b/node_modules/react-native-rss-parser/parsers/atomv1.js
+@@ -80,7 +80,22 @@ const getItemDescription = (node) =>
+ 
+ const getItemContent = (node) => utils.getElementTextContent(node, 'content');
+ 
+-const getItemImage = (node) => utils.getElementTextContent(node, 'icon');
++const getItemImage = (node) => {
++  let img = utils.getElementTextContent(node, 'icon');
++  
++  if (img === '' || img === undefined) {
++    // For some reason I can't just get the first, and only element here, but I need to get it as an array and map it. Just doing it like ?.[0] breaks the app.
++    const mediaThumbnails = utils.getChildElements(node, 'media:thumbnail');
++    
++    const imagesUrl = mediaThumbnails.map((mediaThumbnail) => ({
++      url: mediaThumbnail.getAttribute('url'),
++    }));
++    
++    img = imagesUrl?.[0]?.url || undefined;
++  }
++  
++  return img;
++};
+ 
+ const getItemAuthors = (node) => {
+   const authors = utils.getChildElements(node, 'author');

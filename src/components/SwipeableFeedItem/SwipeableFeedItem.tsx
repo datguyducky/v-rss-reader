@@ -5,6 +5,7 @@ import { useMMKVObject } from 'react-native-mmkv';
 
 import { DEFAULT_FILTERS_VALUES } from '../../common/constants';
 import { FilterFormValues } from '../../drawers/Filters';
+import { calculateTimePassed } from '../../utils/calculateTimePassed';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
@@ -76,13 +77,24 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 	};
 
 	const renderFeedCard = () => {
+		const domainName = item.links[0].url
+			.match(/^(?:https?:\/\/)?([^\/]+)/)[1]
+			.split('.')
+			.slice(-2)
+			.join('.')
+			.replace(/^\w/, c => c.toUpperCase());
+
+		const formattedPublishedAt = calculateTimePassed(item.published);
+
 		switch (feedFilters.FEED_VIEW) {
 			case 'TEXT_ONLY':
 				return (
 					<TextOnlyCard
 						title={item.title}
 						onLongPress={onLongPress}
-						url={item.link._href}
+						url={item.links[0].url}
+						domainName={domainName}
+						publishedAt={formattedPublishedAt}
 					/>
 				);
 
@@ -91,8 +103,10 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					<MagazineCard
 						title={item.title}
 						onLongPress={onLongPress}
-						thumbnailUrl={item.thumbnail?._url}
-						url={item.link._href}
+						thumbnailUrl={item?.imageUrl}
+						url={item.links[0].url}
+						domainName={domainName}
+						publishedAt={formattedPublishedAt}
 					/>
 				);
 
@@ -101,8 +115,10 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					<ThumbnailCard
 						title={item.title}
 						onLongPress={onLongPress}
-						thumbnailUrl={item.thumbnail?._url}
-						url={item.link._href}
+						thumbnailUrl={item?.imageUrl}
+						url={item.links[0].url}
+						domainName={domainName}
+						publishedAt={formattedPublishedAt}
 					/>
 				);
 		}

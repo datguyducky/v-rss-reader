@@ -9,12 +9,14 @@ export const StyledPressable = styled.Pressable`
 	flex-direction: row;
 `;
 
-export const StyledImage = styled.Image`
+export const StyledImage = styled.ImageBackground`
 	width: 64px;
 	height: 64px;
 	background-color: #d9d9d9;
 	margin-right: 8px;
 	border-radius: 6px;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const MagazineTextWrap = styled.View`
