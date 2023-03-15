@@ -42,7 +42,7 @@ export const Read = ({ scrollY, title }) => {
 
 	return (
 		<>
-			<Layout scrollY={scrollY} title={activeItemDetails?.name || title}>
+			<Layout scrollY={scrollY} animatedTitle={activeItemDetails?.name || title}>
 				{loading ? (
 					<ActivityIndicator size="large" color="#228be6" />
 				) : (

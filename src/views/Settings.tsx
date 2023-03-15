@@ -1,14 +1,14 @@
 import { ScrollView } from 'react-native';
 
 import { SettingsForm } from '../forms/SettingsForm';
-import { LayoutWithTitle } from '../layouts/LayoutWithTitle';
+import { Layout } from '../layouts/Layout';
 
-export const Settings = () => {
+export const Settings = ({ scrollY }) => {
 	return (
-		<ScrollView>
-			<LayoutWithTitle title="Settings">
+		<Layout animatedTitle="Settings" scrollY={scrollY} style={{ paddingTop: 24 }}>
+			<ScrollView>
 				<SettingsForm />
-			</LayoutWithTitle>
-		</ScrollView>
+			</ScrollView>
+		</Layout>
 	);
 };

@@ -47,13 +47,17 @@ export const Routes = () => {
 
 			<Stack.Group
 				screenOptions={{
-					header: props => <HeaderBack {...props} />,
+					header: props => (
+						<HeaderBack {...props} scrollY={scrollY} title={props.route.params?.name} />
+					),
 					animation: 'fade_from_bottom',
 				}}
 			>
 				<Stack.Screen name="Category" component={Category} />
 				<Stack.Screen name="Feed" component={Feed} />
-				<Stack.Screen name="Settings" component={Settings} />
+				<Stack.Screen name="Settings">
+					{props => <Settings {...props} scrollY={scrollY} />}
+				</Stack.Screen>
 			</Stack.Group>
 		</Stack.Navigator>
 	);

@@ -1,7 +1,8 @@
-import { CategoryForm } from '../forms/CategoryForm';
-import { LayoutWithTitle } from '../layouts/LayoutWithTitle';
 import { useEffect, useState } from 'react';
+
+import { CategoryForm } from '../forms/CategoryForm';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
+import { Layout } from '../layouts/Layout';
 
 export const Category = ({ navigation, route }) => {
 	const { findFeedCategory } = useFeedsCategories();
@@ -16,9 +17,7 @@ export const Category = ({ navigation, route }) => {
 	}, [route?.params?.categoryId]);
 
 	return (
-		<LayoutWithTitle
-			title={route?.params?.mode === 'edit' ? 'Edit category' : 'Create new category'}
-		>
+		<Layout title={route?.params?.mode === 'edit' ? 'Edit category' : 'Create new category'}>
 			<CategoryForm
 				onClose={() => {
 					navigation.navigate('Read');
@@ -26,6 +25,6 @@ export const Category = ({ navigation, route }) => {
 				mode={route?.params?.mode}
 				data={currentCategory}
 			/>
-		</LayoutWithTitle>
+		</Layout>
 	);
 };

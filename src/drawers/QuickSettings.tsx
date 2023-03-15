@@ -10,8 +10,8 @@ import { Drawer } from '../components/Drawer';
 import { Icon } from '../components/Icon';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
-import { ReadingStats } from './ReadingStats';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
+import { ReadingStats } from './ReadingStats';
 
 export const QuickSettings = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -55,7 +55,7 @@ export const QuickSettings = forwardRef(
 					<BasicButton
 						onPress={() => {
 							ref?.current?.forceClose();
-							navigation.navigate('Settings');
+							navigation.navigate('Settings', { name: 'Settings' });
 						}}
 						icon={<Icon name={Cog6ToothIcon} size={20} />}
 						mb={16}

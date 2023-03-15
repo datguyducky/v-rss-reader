@@ -16,3 +16,7 @@ export const BackIconWrap = styled.View`
 	justify-content: center;
 	border-radius: 26px;
 `;
+
+export const HeaderTextWrap = styled.View`
+	margin-left: 12px;
+`;
