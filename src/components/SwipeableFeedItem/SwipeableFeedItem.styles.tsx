@@ -18,7 +18,7 @@ export const LeftSwipeWrap = styled(Animated.View)<
 export const RightSwipeWrap = styled(Animated.View)<
 	Required<Pick<SwipeableFeedItemStylesProps, 'viewType'>>
 >`
-	background-color: #40c057;
+	background-color: #228be6;
 	justify-content: center;
 	align-items: flex-end;
 	flex: 1;
