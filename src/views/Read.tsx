@@ -10,7 +10,7 @@ import { useFeedsCategories } from '../hooks/useFeedsCategories';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
 
-export const Read = () => {
+export const Read = ({ scrollY, title }) => {
 	const { activeItemDetails } = useFeedsCategories();
 
 	const [fetchRss, { loading }] = useRssFetch();
@@ -40,15 +40,9 @@ export const Read = () => {
 		//return () => abortController.abort(); TODO: re-add this?
 	}, [activeItemDetails]);
 
-	/**
-	 * TODO: Refactor layout for this view?
-	 * - Display nothing on the header when we're at the top of the view? Display big text on layout.
-	 * - On scroll (after we scrolled 'x' pixels) -> hide the text on a layout, and display a text on the header with some smooth animation (probably just opacity transform)
-	 */
-
 	return (
 		<>
-			<Layout>
+			<Layout scrollY={scrollY} title={activeItemDetails?.name || title}>
 				{loading ? (
 					<ActivityIndicator size="large" color="#228be6" />
 				) : (
@@ -62,13 +56,14 @@ export const Read = () => {
 						)}
 						keyExtractor={item => item?.id || item.links?.[0]?.url}
 						ItemSeparatorComponent={() => <View style={{ marginBottom: 16 }} />}
-						contentContainerStyle={{ paddingVertical: 24 }}
+						contentContainerStyle={{ paddingVertical: 8 }}
 						ListEmptyComponent={() => (
 							<Text weight={300} fontSize={12}>
 								Sorry, something went wrong and no articles were found for this
 								feed.
 							</Text>
 						)}
+						scrollEventThrottle={16}
 					/>
 				)}
 			</Layout>

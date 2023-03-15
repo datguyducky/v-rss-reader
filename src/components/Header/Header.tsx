@@ -4,16 +4,17 @@ import { Pressable } from 'react-native';
 import { EyeIcon } from 'react-native-heroicons/outline';
 
 import { Filters } from '../../drawers/Filters';
-import { Heading } from '../Heading';
+import { useFeedsCategories } from '../../hooks/useFeedsCategories';
+import { HeadingAnimated } from '../HeadingAnimated';
 import { Icon } from '../Icon';
 import { HeaderTextWrap, HeaderWrap } from './Header.styles';
-import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 
 type HeaderProps = {
 	title?: string;
+	scrollY: any;
 };
 
-export const Header = ({ title }: HeaderProps) => {
+export const Header = ({ title, scrollY }: HeaderProps) => {
 	const { activeItemDetails } = useFeedsCategories();
 
 	const filtersDrawerRef = useRef<BottomSheetModal>(null);
@@ -22,10 +23,12 @@ export const Header = ({ title }: HeaderProps) => {
 		<>
 			<HeaderWrap>
 				<HeaderTextWrap>
-					<Heading tag="h4">{activeItemDetails?.name || title}</Heading>
-					<Heading weight={300} color="#5C5F66" tag="h6">
-						00 unread
-					</Heading>
+					<HeadingAnimated
+						scrollY={scrollY}
+						title={activeItemDetails?.name || title}
+						action="unhide"
+						tag="h5"
+					/>
 				</HeaderTextWrap>
 
 				<Pressable

@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { Animated } from 'react-native';
 
 import { Header } from '../components/Header';
 import { HeaderBack } from '../components/HeaderBack';
@@ -13,7 +14,7 @@ import { Settings } from '../views/Settings';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const TabScreen = () => {
+const TabScreen = ({ scrollY, title }) => {
 	return (
 		<Tab.Navigator
 			screenOptions={{
@@ -21,20 +22,28 @@ const TabScreen = () => {
 			}}
 			tabBar={props => <Navigation {...props} />}
 		>
-			<Stack.Screen name="Read" component={Read} />
+			<Stack.Screen name="Read">
+				{props => <Read {...props} title={title} scrollY={scrollY} />}
+			</Stack.Screen>
 		</Tab.Navigator>
 	);
 };
 
 export const Routes = () => {
+	const scrollY = new Animated.Value(0);
+
 	return (
 		<Stack.Navigator
 			screenOptions={{
 				headerShadowVisible: false,
-				header: ({ route }) => <Header title={route.params?.name} />,
+				header: ({ route }) => <Header title={route.params?.name} scrollY={scrollY} />,
 			}}
 		>
-			<Stack.Screen name="TabScreen" component={TabScreen} />
+			<Stack.Screen name="TabScreen">
+				{props => (
+					<TabScreen {...props} scrollY={scrollY} title={props.route.params?.name} />
+				)}
+			</Stack.Screen>
 
 			<Stack.Group
 				screenOptions={{
