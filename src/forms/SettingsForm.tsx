@@ -1,14 +1,12 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { useMMKVObject } from 'react-native-mmkv';
 
+import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { Button } from '../components/Button';
 import { Divider } from '../components/Divider';
 import { Heading } from '../components/Heading';
 import { Select } from '../components/Select';
 import { Switch } from '../components/Switch';
-import { Text } from '../components/Text';
-import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
-import { useMMKVObject } from 'react-native-mmkv';
-import { FilterFormValues } from '../drawers/Filters';
 
 export type SettingsFormValues = {
 	READ_ON_SCROLL: boolean;
@@ -41,12 +39,12 @@ export const SettingsForm = () => {
 			<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
 				App behaviour
 			</Heading>
-			<Switch
-				name="READ_ON_SCROLL"
-				label="Mark as read on scroll"
-				onValueChange={settingsForm.handleSubmit(onSubmit)}
-				mb={16}
-			/>
+			{/*<Switch*/}
+			{/*	name="READ_ON_SCROLL"*/}
+			{/*	label="Mark as read on scroll"*/}
+			{/*	onValueChange={settingsForm.handleSubmit(onSubmit)}*/}
+			{/*	mb={16}*/}
+			{/*/>*/}
 			<Select.Popup
 				name="SCROLL_BEHAVIOUR"
 				label="Scrolling behaviour"
@@ -55,13 +53,12 @@ export const SettingsForm = () => {
 					{ label: 'Paginated', value: 'PAGINATED' },
 				]}
 				onValueChange={settingsForm.handleSubmit(onSubmit)}
-				mb={16}
 			/>
-			<Switch
-				name="AUTO_NEXT_SECTION"
-				label="Advance to next unread section"
-				onValueChange={settingsForm.handleSubmit(onSubmit)}
-			/>
+			{/*<Switch*/}
+			{/*	name="AUTO_NEXT_SECTION"*/}
+			{/*	label="Advance to next unread section"*/}
+			{/*	onValueChange={settingsForm.handleSubmit(onSubmit)}*/}
+			{/*/>*/}
 
 			<Divider my={16} />
 
@@ -101,12 +98,12 @@ export const SettingsForm = () => {
 				onValueChange={settingsForm.handleSubmit(onSubmit)}
 				mb={16}
 			/>
-			<Switch
-				name="HIDE_FEED_UNREAD_COUNT"
-				label="Hide unread count"
-				onValueChange={settingsForm.handleSubmit(onSubmit)}
-				mb={16}
-			/>
+			{/*<Switch*/}
+			{/*	name="HIDE_FEED_UNREAD_COUNT"*/}
+			{/*	label="Hide unread count"*/}
+			{/*	onValueChange={settingsForm.handleSubmit(onSubmit)}*/}
+			{/*	mb={16}*/}
+			{/*/>*/}
 			<Switch
 				name="HIDE_FEED_ICONS"
 				label="Hide feed icons"
@@ -135,13 +132,12 @@ export const SettingsForm = () => {
 				name="DISABLE_ARTICLE_IMAGES"
 				label="Disable articles images"
 				onValueChange={settingsForm.handleSubmit(onSubmit)}
-				mb={16}
 			/>
-			<Switch
-				name="TRACKER_ON_HEADER"
-				label="Display unread tracker on header"
-				onValueChange={settingsForm.handleSubmit(onSubmit)}
-			/>
+			{/*<Switch*/}
+			{/*	name="TRACKER_ON_HEADER"*/}
+			{/*	label="Display unread tracker on header"*/}
+			{/*	onValueChange={settingsForm.handleSubmit(onSubmit)}*/}
+			{/*/>*/}
 
 			<Divider my={16} />
 

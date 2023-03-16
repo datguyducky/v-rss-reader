@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { ArchiveBoxIcon, CheckIcon, ArrowUturnLeftIcon } from 'react-native-heroicons/outline';
+import { ArchiveBoxIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
 
 import { DEFAULT_FILTERS_VALUES } from '../../common/constants';
@@ -11,7 +11,7 @@ import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
 import { TextOnlyCard } from '../TextOnlyCard';
 import { ThumbnailCard } from '../ThumbnailCard';
-import { LeftSwipeWrap, RightSwipeWrap } from './SwipeableFeedItem.styles';
+import { LeftSwipeWrap } from './SwipeableFeedItem.styles';
 
 interface SwipeableFeedItemProps {
 	item: Record<string, unknown>; // TODO: Better type.
@@ -41,40 +41,41 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 		);
 	};
 
-	const renderRightActions = () => {
-		return (
-			<RightSwipeWrap viewType={feedFilters.FEED_VIEW}>
-				<BasicButton
-					onPress={() => {
-						/* onPress handler is not needed here, as action for this component is completely handled by swipe */
-					}}
-					textColor="#101113"
-					textSize={12}
-					spacing={8}
-					rightInfo={
-						item.isRead ? (
-							<Icon
-								name={ArrowUturnLeftIcon}
-								size={16}
-								style={{ marginLeft: 8 }}
-								strokeWidth={2.5}
-							/>
-						) : (
-							<Icon
-								name={CheckIcon}
-								size={16}
-								style={{ marginLeft: 8 }}
-								strokeWidth={2.5}
-							/>
-						)
-					}
-					textWeight={600}
-				>
-					{item.isRead ? 'MARK AS UNREAD' : 'MARK AS READ'}
-				</BasicButton>
-			</RightSwipeWrap>
-		);
-	};
+	// TODO: Some day this will be implemented...
+	// const renderRightActions = () => {
+	// 	return (
+	// 		<RightSwipeWrap viewType={feedFilters.FEED_VIEW}>
+	// 			<BasicButton
+	// 				onPress={() => {
+	// 					/* onPress handler is not needed here, as action for this component is completely handled by swipe */
+	// 				}}
+	// 				textColor="#101113"
+	// 				textSize={12}
+	// 				spacing={8}
+	// 				rightInfo={
+	// 					item.isRead ? (
+	// 						<Icon
+	// 							name={ArrowUturnLeftIcon}
+	// 							size={16}
+	// 							style={{ marginLeft: 8 }}
+	// 							strokeWidth={2.5}
+	// 						/>
+	// 					) : (
+	// 						<Icon
+	// 							name={CheckIcon}
+	// 							size={16}
+	// 							style={{ marginLeft: 8 }}
+	// 							strokeWidth={2.5}
+	// 						/>
+	// 					)
+	// 				}
+	// 				textWeight={600}
+	// 			>
+	// 				{item.isRead ? 'MARK AS UNREAD' : 'MARK AS READ'}
+	// 			</BasicButton>
+	// 		</RightSwipeWrap>
+	// 	);
+	// };
 
 	const renderFeedCard = () => {
 		const domainName = item.links[0].url
@@ -143,13 +144,13 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 	return (
 		<Swipeable
 			renderLeftActions={renderLeftActions}
-			renderRightActions={renderRightActions}
+			//renderRightActions={renderRightActions}
 			friction={1.1}
 			onSwipeableOpen={onOpen}
 			ref={swipeRef}
 			containerStyle={{ borderRadius: feedFilters.FEED_VIEW === 'TEXT_ONLY' ? 0 : 6 }}
 			leftThreshold={75}
-			rightThreshold={75}
+			//rightThreshold={75}
 		>
 			{renderFeedCard()}
 		</Swipeable>
