@@ -20,3 +20,5 @@ export const TitleWrap = styled.View`
 export const DetailsWrap = styled.View`
 	margin-top: auto;
 `;
+
+export const DescriptionWrap = styled.View``;

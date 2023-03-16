@@ -87,6 +87,8 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 
 		const formattedPublishedAt = calculateTimePassed(item.published);
 
+		console.log(item);
+
 		switch (feedFilters.FEED_VIEW) {
 			case 'TEXT_ONLY':
 				return (
@@ -96,6 +98,8 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						url={item.links[0].url}
 						domainName={domainName}
 						publishedAt={formattedPublishedAt}
+						density={feedFilters.FEED_DENSITY}
+						description={item?.description || item?.content}
 					/>
 				);
 
@@ -108,6 +112,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						url={item.links[0].url}
 						domainName={domainName}
 						publishedAt={formattedPublishedAt}
+						density={feedFilters.FEED_DENSITY}
 					/>
 				);
 
@@ -120,6 +125,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						url={item.links[0].url}
 						domainName={domainName}
 						publishedAt={formattedPublishedAt}
+						density={feedFilters.FEED_DENSITY}
 					/>
 				);
 		}
