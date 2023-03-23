@@ -87,8 +87,6 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 
 		const formattedPublishedAt = calculateTimePassed(item.published);
 
-		console.log(item);
-
 		switch (feedFilters.FEED_VIEW) {
 			case 'TEXT_ONLY':
 				return (
