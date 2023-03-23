@@ -113,6 +113,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						domainName={domainName}
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
+						description={item?.description || item?.content}
 					/>
 				);
 
@@ -126,6 +127,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						domainName={domainName}
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
+						description={item?.description || item?.content}
 					/>
 				);
 		}

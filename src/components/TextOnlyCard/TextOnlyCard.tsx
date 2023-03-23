@@ -1,4 +1,5 @@
 import { openURL } from 'expo-linking';
+import { View } from 'react-native';
 
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
@@ -8,7 +9,6 @@ import {
 	TextOnlyTextWrap,
 	TitleWrap,
 	StyledPressable,
-	DescriptionWrap,
 } from './TextOnlyCard.styles';
 
 interface TextOnlyCardProps extends FeedCardProps {}
@@ -29,17 +29,17 @@ export const TextOnlyCard = ({
 			<StyledPressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
 				<TextOnlyTextWrap>
 					<TitleWrap>
-						<Text fontSize={14} numberOfLines={3}>
+						<Text fontSize={14} numberOfLines={3} weight={500}>
 							{title}
 						</Text>
 					</TitleWrap>
 
 					{density === 'COMFORTABLE' && parsedDescription.length > 0 && (
-						<DescriptionWrap>
-							<Text fontSize={12} numberOfLines={4}>
+						<View>
+							<Text fontSize={12} numberOfLines={4} mb={8} color="#5C5F66">
 								{parsedDescription}
 							</Text>
-						</DescriptionWrap>
+						</View>
 					)}
 
 					<Text fontSize={10} weight={300} color="#5C5F66">

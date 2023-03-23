@@ -1,7 +1,9 @@
 import { openURL } from 'expo-linking';
+import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 
 import { FeedCardProps } from '../../types';
+import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
 import {
@@ -11,6 +13,7 @@ import {
 	StyledImage,
 	StyledPressable,
 	DetailsWrap,
+	TitleText,
 } from './MagazineCard.styles';
 
 interface MagazineCardProps extends FeedCardProps {}
@@ -22,7 +25,11 @@ export const MagazineCard = ({
 	url,
 	domainName,
 	publishedAt,
+	density,
+	description,
 }: MagazineCardProps) => {
+	const parsedDescription = description ? parseHtmlString(description) : '';
+
 	return (
 		<MagazineCardWrap>
 			<StyledPressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
@@ -30,22 +37,31 @@ export const MagazineCard = ({
 					source={{
 						uri: thumbnailUrl,
 					}}
+					density={density}
 				>
 					{!thumbnailUrl && <Icon name={PhotoIcon} size={27} color="#909296" />}
 				</StyledImage>
 
 				<MagazineTextWrap>
-					<TitleWrap>
-						<Text fontSize={14} numberOfLines={2}>
+					<TitleWrap density={density}>
+						<TitleText fontSize={14} numberOfLines={2} weight={500} density={density}>
 							{title}
-						</Text>
+						</TitleText>
 					</TitleWrap>
 
-					<DetailsWrap>
+					<DetailsWrap density={density}>
 						<Text fontSize={10} weight={300} color="#5C5F66">
 							{`${domainName} / ${publishedAt}`}
 						</Text>
 					</DetailsWrap>
+
+					{density === 'COMFORTABLE' && parsedDescription.length > 0 && (
+						<View>
+							<Text fontSize={12} numberOfLines={3} color="#5C5F66">
+								{parsedDescription}
+							</Text>
+						</View>
+					)}
 				</MagazineTextWrap>
 			</StyledPressable>
 		</MagazineCardWrap>

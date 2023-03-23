@@ -16,9 +16,3 @@ export const TitleWrap = styled.View`
 	max-height: 63px;
 	margin-bottom: 4px;
 `;
-
-export const DetailsWrap = styled.View`
-	margin-top: auto;
-`;
-
-export const DescriptionWrap = styled.View``;
