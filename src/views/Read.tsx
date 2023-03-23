@@ -1,16 +1,20 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
-import { FeedItem } from 'react-native-rss-parser';
+import { useMMKVObject } from 'react-native-mmkv';
+import { Feed, FeedItem } from 'react-native-rss-parser';
 
+import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
 import { Text } from '../components/Text';
+import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
 
 export const Read = ({ scrollY, title }) => {
+	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 	const { activeItemDetails } = useFeedsCategories();
 
 	const [fetchRss, { loading }] = useRssFetch();
@@ -21,15 +25,35 @@ export const Read = ({ scrollY, title }) => {
 	useEffect(() => {
 		const handleItems = async () => {
 			if (activeItemDetails.type === 'CATEGORY') {
-				/**
-				 * TODO: Here we need to fetch every feed separately and store the returned data in local state, I think there's two solutions here:
-				 * - Just map activeItemsDetails feeds and fetch each feed separately and add it to the local state
-				 * - or maybe we can refactor the fetchRss hook so it accepts array of urls
-				 */
+				const urlArray = activeItemDetails.feeds.map(
+					(feed: Record<string, unknown>) => feed.url,
+				);
+
+				const { data } = await fetchRss(urlArray);
+
+				if (data) {
+					const items: FeedItem[] = data
+						.reduce((acc: FeedItem[], feed: Feed) => {
+							return [...acc, ...feed.items];
+						}, [])
+						.sort((a, b) => {
+							const dateA = new Date(a.published);
+							const dateB = new Date(b.published);
+							if (feedFilters.SORT_BY === 'OLDEST') {
+								return dateA.getTime() - dateB.getTime();
+							} else {
+								return dateB.getTime() - dateA.getTime();
+							}
+						});
+
+					setRssItems(items);
+				}
 			} else {
 				const { data } = await fetchRss(activeItemDetails.url);
 
-				setRssItems(data?.items || []);
+				if (data) {
+					setRssItems(data[0].items);
+				}
 			}
 		};
 
@@ -38,7 +62,7 @@ export const Read = ({ scrollY, title }) => {
 		}
 
 		//return () => abortController.abort(); TODO: re-add this?
-	}, [activeItemDetails]);
+	}, [activeItemDetails, feedFilters?.SORT_BY]);
 
 	return (
 		<>
