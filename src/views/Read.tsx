@@ -15,7 +15,7 @@ import { Layout } from '../layouts/Layout';
 
 export const Read = ({ scrollY, title }) => {
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
-	const { activeItemDetails } = useFeedsCategories();
+	const { activeItemDetails, feedsCategories } = useFeedsCategories();
 
 	const [fetchRss, { loading }] = useRssFetch();
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
@@ -47,7 +47,7 @@ export const Read = ({ scrollY, title }) => {
 						} else {
 							return dateB.getTime() - dateA.getTime();
 						}
-					});
+					}); // TODO: As this is repeated a couple of times already I think it needs to be refactored to a reusable utility function. :)
 
 				setRssItems(items);
 			}
@@ -70,9 +70,53 @@ export const Read = ({ scrollY, title }) => {
 		}
 	};
 
+	const retrieveAllRssFeeds = async () => {
+		const urlArray = feedsCategories.reduce((urls: string[], item) => {
+			if (item.url) {
+				urls.push(item.url);
+			}
+			if (item.feeds && item.feeds.length) {
+				const nestedUrls = item.feeds.reduce((nestedUrls, nestedItem) => {
+					if (nestedItem.url) {
+						nestedUrls.push(nestedItem.url);
+					}
+					return nestedUrls;
+				}, []);
+				urls = urls.concat(nestedUrls);
+			}
+			return urls;
+		}, []);
+
+		const { data } = await fetchRss(urlArray);
+
+		if (data) {
+			const items: FeedItem[] = data
+				.reduce((acc: FeedItem[], feed: Feed) => {
+					return [...acc, ...feed.items];
+				}, [])
+				.sort((a, b) => {
+					const dateA = new Date(a.published);
+					const dateB = new Date(b.published);
+					if (feedFilters.SORT_BY === 'OLDEST') {
+						return dateA.getTime() - dateB.getTime();
+					} else {
+						return dateB.getTime() - dateA.getTime();
+					}
+				});
+
+			setRssItems(items);
+		}
+	};
+
 	useEffect(() => {
 		if (activeItemDetails?.id) {
 			retrieveRssFeeds();
+		}
+		// Here we handle if the current view is the build-in "Read later" or "All articles" view
+		else {
+			if (title === 'All articles') {
+				retrieveAllRssFeeds();
+			}
 		}
 
 		//return () => abortController.abort(); TODO: re-add this?
