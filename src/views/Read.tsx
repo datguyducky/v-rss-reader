@@ -1,6 +1,6 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, View } from 'react-native';
 import { useMMKVObject } from 'react-native-mmkv';
 import { Feed, FeedItem } from 'react-native-rss-parser';
 
@@ -19,50 +19,68 @@ export const Read = ({ scrollY, title }) => {
 
 	const [fetchRss, { loading }] = useRssFetch();
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
+	const [refreshing, setRefreshing] = useState(false);
 
 	const quickActionDrawerRef = useRef<BottomSheetModal>(null);
 
-	useEffect(() => {
-		const handleItems = async () => {
-			if (activeItemDetails.type === 'CATEGORY') {
-				const urlArray = activeItemDetails.feeds.map(
-					(feed: Record<string, unknown>) => feed.url,
-				);
+	const retrieveRssFeeds = async () => {
+		if (activeItemDetails.type === 'CATEGORY') {
+			const urlArray = activeItemDetails.feeds.map(
+				(feed: Record<string, unknown>) => feed.url,
+			);
 
-				const { data } = await fetchRss(urlArray);
+			const { data } = await fetchRss(urlArray);
 
-				if (data) {
-					const items: FeedItem[] = data
-						.reduce((acc: FeedItem[], feed: Feed) => {
-							return [...acc, ...feed.items];
-						}, [])
-						.sort((a, b) => {
-							const dateA = new Date(a.published);
-							const dateB = new Date(b.published);
-							if (feedFilters.SORT_BY === 'OLDEST') {
-								return dateA.getTime() - dateB.getTime();
-							} else {
-								return dateB.getTime() - dateA.getTime();
-							}
-						});
+			if (data) {
+				const items: FeedItem[] = data
+					.reduce((acc: FeedItem[], feed: Feed) => {
+						return [...acc, ...feed.items];
+					}, [])
+					.sort((a, b) => {
+						const dateA = new Date(a.published);
+						const dateB = new Date(b.published);
+						if (feedFilters.SORT_BY === 'OLDEST') {
+							return dateA.getTime() - dateB.getTime();
+						} else {
+							return dateB.getTime() - dateA.getTime();
+						}
+					});
 
-					setRssItems(items);
-				}
-			} else {
-				const { data } = await fetchRss(activeItemDetails.url);
-
-				if (data) {
-					setRssItems(data[0].items);
-				}
+				setRssItems(items);
 			}
-		};
+		} else {
+			const { data } = await fetchRss(activeItemDetails.url);
 
+			if (data) {
+				const sortedItems = data[0].items.sort((a, b) => {
+					const dateA = new Date(a.published);
+					const dateB = new Date(b.published);
+					if (feedFilters.SORT_BY === 'OLDEST') {
+						return dateA.getTime() - dateB.getTime();
+					} else {
+						return dateB.getTime() - dateA.getTime();
+					}
+				});
+
+				setRssItems(sortedItems);
+			}
+		}
+	};
+
+	useEffect(() => {
 		if (activeItemDetails?.id) {
-			handleItems();
+			retrieveRssFeeds();
 		}
 
 		//return () => abortController.abort(); TODO: re-add this?
 	}, [activeItemDetails, feedFilters?.SORT_BY]);
+
+	const handleRefresh = async () => {
+		setRefreshing(true);
+		await retrieveRssFeeds();
+
+		setRefreshing(false);
+	};
 
 	return (
 		<>
@@ -88,6 +106,9 @@ export const Read = ({ scrollY, title }) => {
 							</Text>
 						)}
 						scrollEventThrottle={16}
+						refreshControl={
+							<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+						}
 					/>
 				)}
 			</Layout>
