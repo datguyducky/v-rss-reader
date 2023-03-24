@@ -10,12 +10,14 @@ import { Text } from '../components/Text';
 import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
+import { useReadLater } from '../hooks/useReadLater';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
 
 export const Read = ({ scrollY, title }) => {
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 	const { activeItemDetails, feedsCategories } = useFeedsCategories();
+	const { readLaterFeedsCategories } = useReadLater();
 
 	const [fetchRss, { loading }] = useRssFetch();
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
@@ -116,11 +118,13 @@ export const Read = ({ scrollY, title }) => {
 		else {
 			if (title === 'All articles') {
 				retrieveAllRssFeeds();
+			} else if (title === 'Read later') {
+				setRssItems(readLaterFeedsCategories);
 			}
 		}
 
 		//return () => abortController.abort(); TODO: re-add this?
-	}, [activeItemDetails, feedFilters?.SORT_BY]);
+	}, [activeItemDetails, feedFilters?.SORT_BY, title, readLaterFeedsCategories]);
 
 	const handleRefresh = async () => {
 		setRefreshing(true);

@@ -7,6 +7,7 @@ import { FeedItem } from 'react-native-rss-parser';
 import { BasicButton } from '../components/BasicButton';
 import { Drawer } from '../components/Drawer';
 import { Icon } from '../components/Icon';
+import { useReadLater } from '../hooks/useReadLater';
 
 type QuickActionProps = {
 	selectedFeedData?: FeedItem;
@@ -14,6 +15,8 @@ type QuickActionProps = {
 
 export const QuickAction = forwardRef(
 	({ selectedFeedData }: QuickActionProps, ref: ForwardedRef<BottomSheetModal>) => {
+		const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
+
 		const handleShare = async () => {
 			try {
 				await Share.share({
@@ -22,6 +25,14 @@ export const QuickAction = forwardRef(
 				});
 			} catch (error: any) {
 				console.log(error.message);
+			}
+		};
+
+		const handleReadLater = () => {
+			if (isSavedInReadLater(selectedFeedData.id)) {
+				removeFromReadLater(selectedFeedData.id);
+			} else {
+				addToReadLater(selectedFeedData);
 			}
 		};
 
@@ -38,13 +49,13 @@ export const QuickAction = forwardRef(
 				{/*</BasicButton>*/}
 
 				<BasicButton
-					onPress={() => console.log('TODO: handle `save` action')}
+					onPress={handleReadLater}
 					icon={<Icon name={ArchiveBoxIcon} size={24} />}
 					textSize={12}
 					vertical
 					spacing={0}
 				>
-					Save
+					{isSavedInReadLater(selectedFeedData.id) ? 'Unsave' : 'Save'}
 				</BasicButton>
 
 				<BasicButton

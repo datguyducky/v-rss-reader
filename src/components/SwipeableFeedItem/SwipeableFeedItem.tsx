@@ -5,6 +5,7 @@ import { useMMKVObject } from 'react-native-mmkv';
 
 import { DEFAULT_FILTERS_VALUES } from '../../common/constants';
 import { FilterFormValues } from '../../drawers/Filters';
+import { useReadLater } from '../../hooks/useReadLater';
 import { calculateTimePassed } from '../../utils/calculateTimePassed';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
@@ -21,6 +22,7 @@ interface SwipeableFeedItemProps {
 export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps) => {
 	const swipeRef = useRef<Swipeable>(null);
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
+	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
 
 	const renderLeftActions = () => {
 		return (
@@ -35,7 +37,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					spacing={8}
 					textWeight={600}
 				>
-					{item.isSaved ? 'UNDO SAVE' : 'READ LATER'}
+					{isSavedInReadLater(item.id as string) ? 'UNDO SAVE' : 'READ LATER'}
 				</BasicButton>
 			</LeftSwipeWrap>
 		);
@@ -137,9 +139,12 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 	 * - when opened from right: we mark this specific item as "READ", but if it's marked as one already then we mark it as "UNREAD"
 	 */
 	const onOpen = (direction: 'left' | 'right') => {
-		console.log(direction, 'onOpen stuff');
 		if (direction === 'left') {
-			// TODO: Handle left action
+			if (isSavedInReadLater(item.id)) {
+				removeFromReadLater(item.id);
+			} else {
+				addToReadLater(item);
+			}
 		} else {
 			// TODO: Handle right action
 		}
