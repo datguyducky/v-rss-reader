@@ -55,7 +55,7 @@ export const QuickAction = forwardRef(
 					vertical
 					spacing={0}
 				>
-					{isSavedInReadLater(selectedFeedData.id) ? 'Unsave' : 'Save'}
+					{isSavedInReadLater(selectedFeedData?.id || '') ? 'Unsave' : 'Save'}
 				</BasicButton>
 
 				<BasicButton
