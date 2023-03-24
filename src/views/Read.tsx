@@ -21,6 +21,9 @@ export const Read = ({ scrollY, title }) => {
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
 	const [refreshing, setRefreshing] = useState(false);
 
+	// TODO: I wonder is there a better way to handle this than this state? Maybe context could work here...
+	const [selectedFeedData, setSelectedFeedData] = useState<FeedItem | undefined>();
+
 	const quickActionDrawerRef = useRef<BottomSheetModal>(null);
 
 	const retrieveRssFeeds = async () => {
@@ -93,7 +96,10 @@ export const Read = ({ scrollY, title }) => {
 						renderItem={p => (
 							<SwipeableFeedItem
 								item={p.item}
-								onLongPress={() => quickActionDrawerRef?.current?.present()}
+								onLongPress={() => {
+									setSelectedFeedData(p.item);
+									quickActionDrawerRef?.current?.present();
+								}}
 							/>
 						)}
 						keyExtractor={item => item?.id || item.links?.[0]?.url}
@@ -113,7 +119,7 @@ export const Read = ({ scrollY, title }) => {
 				)}
 			</Layout>
 
-			<QuickAction ref={quickActionDrawerRef} />
+			<QuickAction ref={quickActionDrawerRef} selectedFeedData={selectedFeedData} />
 		</>
 	);
 };
