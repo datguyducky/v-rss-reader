@@ -5,10 +5,20 @@ import { View } from 'react-native';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { Text } from '../components/Text';
+import { useAppStats } from '../hooks/useAppStats';
 import { SectionCount, SectionTitle, SectionWrap } from './ReadingStats.styles';
 
 export const ReadingStats = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
+		const {
+			feedsOpened,
+			averageFeedsPerDay,
+			currentStreak,
+			currentStreakAverageFeedsPerDay,
+			longestStreak,
+			longestStreakAverageFeedsPerDay,
+		} = useAppStats();
+
 		return (
 			<Drawer ref={ref} snapPoints={[376]} detached bottomInset={24}>
 				<Text
@@ -24,24 +34,44 @@ export const ReadingStats = forwardRef(
 
 				<SectionWrap mb={16}>
 					<SectionTitle>Total articles read</SectionTitle>
-					<SectionCount>XX</SectionCount>
+					<SectionCount>{feedsOpened}</SectionCount>
 				</SectionWrap>
 
 				<SectionWrap>
 					<SectionTitle>Average number of articles read per day:</SectionTitle>
-					<SectionCount>XX</SectionCount>
+					<SectionCount>{averageFeedsPerDay}</SectionCount>
 				</SectionWrap>
 
 				<Divider my={16} />
 
 				<SectionWrap mb={16}>
-					<SectionTitle>Current reading streak (5 articles/day)</SectionTitle>
-					<SectionCount>XX</SectionCount>
+					<View style={{ width: '80%' }}>
+						<SectionTitle style={{ width: '100%' }}>
+							Current reading streak
+						</SectionTitle>
+						<SectionTitle
+							weight={300}
+							fontSize={12}
+							style={{ width: '100%' }}
+						>{`With average of ${currentStreakAverageFeedsPerDay} articles/day`}</SectionTitle>
+					</View>
+
+					<SectionCount>{currentStreak}</SectionCount>
 				</SectionWrap>
 
 				<SectionWrap>
-					<SectionTitle>Longest reading streak (5 articles/day)</SectionTitle>
-					<SectionCount>XX</SectionCount>
+					<View>
+						<SectionTitle style={{ width: '100%' }}>
+							Longest reading streak
+						</SectionTitle>
+						<SectionTitle
+							weight={300}
+							fontSize={12}
+							style={{ width: '100%' }}
+						>{`With average of ${longestStreakAverageFeedsPerDay} articles/day`}</SectionTitle>
+					</View>
+
+					<SectionCount>{longestStreak}</SectionCount>
 				</SectionWrap>
 
 				<Divider my={16} />

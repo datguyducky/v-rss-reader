@@ -7,6 +7,7 @@ import { Divider } from '../components/Divider';
 import { Heading } from '../components/Heading';
 import { Select } from '../components/Select';
 import { Switch } from '../components/Switch';
+import { useAppStats } from '../hooks/useAppStats';
 
 export type SettingsFormValues = {
 	READ_ON_SCROLL: boolean;
@@ -27,6 +28,7 @@ export type SettingsFormValues = {
 export const SettingsForm = () => {
 	const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
 		useMMKVObject<SettingsFormValues>('appSettings');
+	const { reset } = useAppStats();
 
 	const settingsForm = useForm<SettingsFormValues>({
 		defaultValues: appSettings,
@@ -34,6 +36,7 @@ export const SettingsForm = () => {
 
 	const onSubmit = (values: SettingsFormValues) => setAppSettings(values);
 
+	// TODO: I should use modalConfirm before resetting reading/app data
 	return (
 		<FormProvider {...settingsForm}>
 			<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
@@ -154,7 +157,7 @@ export const SettingsForm = () => {
 			<Button onPress={() => console.log('TODO: handle reset app')} mb={16} size="small">
 				RESET APP DATA
 			</Button>
-			<Button onPress={() => console.log('TODO: handle reset reading stats')} size="small">
+			<Button onPress={() => reset()} size="small">
 				RESET READING STATS
 			</Button>
 		</FormProvider>

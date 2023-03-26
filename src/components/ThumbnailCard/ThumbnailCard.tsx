@@ -3,7 +3,9 @@ import { openURL } from 'expo-linking';
 import { Pressable, View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 
+import { useAppStats } from '../../hooks/useAppStats';
 import { FeedCardProps } from '../../types';
+import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
 import {
@@ -12,7 +14,6 @@ import {
 	TitleWrap,
 	StyledImageBackground,
 } from './ThumbnailCard.styles';
-import { parseHtmlString } from '../../utils/parseHtmlString';
 
 interface ThumbnailCardProps extends FeedCardProps {}
 
@@ -26,11 +27,18 @@ export const ThumbnailCard = ({
 	density,
 	description,
 }: ThumbnailCardProps) => {
+	const { handleFeedPressStats } = useAppStats();
+
 	const parsedDescription = description ? parseHtmlString(description) : '';
+
+	const handlePress = () => {
+		handleFeedPressStats();
+		openURL(url);
+	};
 
 	return (
 		<ThumbnailCardWrap>
-			<Pressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
+			<Pressable onLongPress={() => onLongPress?.()} onPress={handlePress}>
 				<StyledImageBackground
 					density={density}
 					source={{

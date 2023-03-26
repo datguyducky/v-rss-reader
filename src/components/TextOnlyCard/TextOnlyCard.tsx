@@ -1,6 +1,7 @@
 import { openURL } from 'expo-linking';
 import { View } from 'react-native';
 
+import { useAppStats } from '../../hooks/useAppStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Text } from '../Text';
@@ -22,11 +23,18 @@ export const TextOnlyCard = ({
 	density,
 	description,
 }: TextOnlyCardProps) => {
+	const { handleFeedPressStats } = useAppStats();
+
 	const parsedDescription = description ? parseHtmlString(description) : '';
+
+	const handlePress = () => {
+		handleFeedPressStats();
+		openURL(url);
+	};
 
 	return (
 		<TextOnlyCardWrap>
-			<StyledPressable onLongPress={() => onLongPress?.()} onPress={() => openURL(url)}>
+			<StyledPressable onLongPress={() => onLongPress?.()} onPress={handlePress}>
 				<TextOnlyTextWrap>
 					<TitleWrap>
 						<Text fontSize={14} numberOfLines={3} weight={500}>
