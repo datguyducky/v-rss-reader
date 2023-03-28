@@ -7,7 +7,7 @@ import { Divider } from '../components/Divider';
 import { Heading } from '../components/Heading';
 import { Select } from '../components/Select';
 import { Switch } from '../components/Switch';
-import { useAppStats } from '../hooks/useAppStats';
+import { useReadingStats } from '../hooks/useReadingStats';
 
 export type SettingsFormValues = {
 	READ_ON_SCROLL: boolean;
@@ -28,7 +28,7 @@ export type SettingsFormValues = {
 export const SettingsForm = () => {
 	const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
 		useMMKVObject<SettingsFormValues>('appSettings');
-	const { reset } = useAppStats();
+	const { reset } = useReadingStats();
 
 	const settingsForm = useForm<SettingsFormValues>({
 		defaultValues: appSettings,

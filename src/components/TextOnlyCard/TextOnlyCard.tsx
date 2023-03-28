@@ -1,7 +1,7 @@
 import { openURL } from 'expo-linking';
 import { View } from 'react-native';
 
-import { useAppStats } from '../../hooks/useAppStats';
+import { useReadingStats } from '../../hooks/useReadingStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Text } from '../Text';
@@ -23,7 +23,7 @@ export const TextOnlyCard = ({
 	density,
 	description,
 }: TextOnlyCardProps) => {
-	const { handleFeedPressStats } = useAppStats();
+	const { handleFeedPressStats } = useReadingStats();
 
 	const parsedDescription = description ? parseHtmlString(description) : '';
 

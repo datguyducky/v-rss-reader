@@ -4,7 +4,6 @@ import { ForwardedRef, forwardRef, useCallback } from 'react';
 import { FlatListProps } from 'react-native';
 
 import { Text } from '../Text';
-
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
 
 interface DrawerProps extends DrawerStylesProps {
@@ -20,6 +19,7 @@ interface DrawerProps extends DrawerStylesProps {
 	renderItem?: FlatListProps<any>['renderItem'];
 	ItemSeparatorComponent?: FlatListProps<any>['ItemSeparatorComponent'];
 	emptyListText?: string;
+	onChange?: (index: number) => void;
 }
 
 // TODO: There's a small flash on a statusBar when the `Drawer` is closed, maybe is not that noticeable but it still would be a good idea to fix it.
@@ -39,6 +39,7 @@ export const Drawer = forwardRef(
 			renderItem,
 			ItemSeparatorComponent,
 			emptyListText,
+			onChange,
 		}: DrawerProps,
 		ref: ForwardedRef<BottomSheetModal>,
 	) => {
@@ -76,6 +77,7 @@ export const Drawer = forwardRef(
 							pressBehavior="close"
 						/>
 					)}
+					onChange={onChange}
 					onAnimate={handleOnAnimate}
 					detached={detached}
 					bottomInset={bottomInset}

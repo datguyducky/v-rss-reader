@@ -5,7 +5,8 @@ import { View } from 'react-native';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { Text } from '../components/Text';
-import { useAppStats } from '../hooks/useAppStats';
+import { useReadingStats } from '../hooks/useReadingStats';
+import { formatMinutes } from '../utils/formatMinutes';
 import { SectionCount, SectionTitle, SectionWrap } from './ReadingStats.styles';
 
 export const ReadingStats = forwardRef(
@@ -17,10 +18,24 @@ export const ReadingStats = forwardRef(
 			currentStreakAverageFeedsPerDay,
 			longestStreak,
 			longestStreakAverageFeedsPerDay,
-		} = useAppStats();
+			retrieveElapsedTime,
+			appUsageTime,
+		} = useReadingStats();
+
+		const handleDrawerChange = (index: number) => {
+			if (index === 0) {
+				retrieveElapsedTime();
+			}
+		};
 
 		return (
-			<Drawer ref={ref} snapPoints={[376]} detached bottomInset={24}>
+			<Drawer
+				ref={ref}
+				snapPoints={[376]}
+				detached
+				bottomInset={24}
+				onChange={handleDrawerChange}
+			>
 				<Text
 					fontFamily="Montserrat"
 					fontSize={18}
@@ -78,7 +93,7 @@ export const ReadingStats = forwardRef(
 
 				<SectionWrap>
 					<SectionTitle>Total time spent reading</SectionTitle>
-					<SectionCount>XX</SectionCount>
+					<SectionCount>{formatMinutes(parseInt(appUsageTime, 10))}</SectionCount>
 				</SectionWrap>
 			</Drawer>
 		);

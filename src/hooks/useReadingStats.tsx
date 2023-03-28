@@ -1,6 +1,18 @@
+import { useEffect, useState } from 'react';
+import { AppState, AppStateStatus } from 'react-native';
 import { useMMKVNumber, useMMKVObject, useMMKVString } from 'react-native-mmkv';
 
-export const useAppStats = () => {
+export const useReadingStats = () => {
+	/**
+	 * App usage stats - storage/state
+	 */
+	const [appState, setAppState] = useState(AppState.currentState);
+	const [startTime = null, setStartTime] = useMMKVNumber('statistics.startTime');
+	const [appUsageTime = 0, setAppUsageTime] = useMMKVNumber('statistics.appUsageTime');
+
+	/**
+	 * Feeds opened statistics - storage/state
+	 */
 	const [feedsOpened = 0, setFeedsOpened] = useMMKVNumber('statistics.feedsOpened');
 	const [feedsPerDay = {}, setFeedsPerDay] =
 		useMMKVObject<Record<string, number>>('statistics.feedsPerDay');
@@ -16,6 +28,45 @@ export const useAppStats = () => {
 		'statistics.longestStreakEnd',
 	);
 
+	/**
+	 * App usage stats - methods
+	 */
+	const updateElapsedTime = () => {
+		if (startTime) {
+			const elapsedTimeInMinutes = Math.round((Date.now() - startTime) / 60000);
+
+			setAppUsageTime(appUsageTime + elapsedTimeInMinutes);
+		}
+		setStartTime(undefined);
+	};
+
+	useEffect(() => {
+		// Making sure that startTime is set when app it's just freshly opened
+		if (startTime === null) {
+			setStartTime(Date.now());
+		}
+
+		const appStateListener = (nextAppState: AppStateStatus) => {
+			if (appState.match(/inactive|background/) && nextAppState === 'active') {
+				// App has become active again, so start tracking time
+				setStartTime(Date.now());
+			} else if (appState === 'active' && nextAppState.match(/inactive|background/)) {
+				// App has been minimized, so stop tracking time and update elapsed time
+				updateElapsedTime();
+			}
+			setAppState(nextAppState);
+		};
+
+		const subscription = AppState.addEventListener('change', appStateListener);
+
+		return () => {
+			subscription.remove();
+		};
+	}, [appState, startTime]);
+
+	/**
+	 * Feeds opened statistics - storage/state
+	 */
 	const handleFeedPressStats = () => {
 		// Not sure how I feel about using this variables here, but from all the things that I've tried this is one, is the only that really worked.
 		// As this is used to make sure that all the data (from storage) in this function is synced, so the proper "if" statements can be used.
@@ -90,6 +141,7 @@ export const useAppStats = () => {
 	};
 
 	const reset = () => {
+		// Feeds opened statistics - reset storage
 		setFeedsOpened(undefined);
 		setFeedsPerDay(undefined);
 		setCurrentStreak(undefined);
@@ -97,6 +149,10 @@ export const useAppStats = () => {
 		setCurrentStreakStart(undefined);
 		setLongestStreakStart(undefined);
 		setLongestStreakEnd(undefined);
+
+		// App usage stats - reset storage
+		setStartTime(undefined);
+		setAppUsageTime(undefined);
 	};
 
 	// Calculate average feeds opened per day
@@ -162,8 +218,10 @@ export const useAppStats = () => {
 	const formattedLongestStreakAverageFeedsPerDay = formatFixedNumber(
 		longestStreakAverageFeedsPerDay,
 	);
+	const formattedAppUsageTime = appUsageTime.toString().padStart(2, '0');
 
 	return {
+		// Feeds opened statistics - returned methods/data
 		feedsOpened: formattedFeedsOpened,
 		averageFeedsPerDay: formattedAverageFeedsPerDay,
 		currentStreak: formattedCurrentStreak,
@@ -171,6 +229,10 @@ export const useAppStats = () => {
 		currentStreakAverageFeedsPerDay: formattedCurrentStreakAverageFeedsPerDay,
 		longestStreakAverageFeedsPerDay: formattedLongestStreakAverageFeedsPerDay,
 		handleFeedPressStats,
+		// App usage stats - returned methods/data
+		appUsageTime: formattedAppUsageTime,
+		retrieveElapsedTime: updateElapsedTime,
+		// Reset method
 		reset,
 	};
 };

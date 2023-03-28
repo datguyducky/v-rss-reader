@@ -3,7 +3,7 @@ import { openURL } from 'expo-linking';
 import { Pressable, View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 
-import { useAppStats } from '../../hooks/useAppStats';
+import { useReadingStats } from '../../hooks/useReadingStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
@@ -27,7 +27,7 @@ export const ThumbnailCard = ({
 	density,
 	description,
 }: ThumbnailCardProps) => {
-	const { handleFeedPressStats } = useAppStats();
+	const { handleFeedPressStats } = useReadingStats();
 
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
