@@ -9,10 +9,15 @@ import { Text } from '../Text';
 type FeedCategoryProps = {
 	category: Record<string, unknown>;
 	handleItemNavigate: (item: Record<string, unknown>) => void;
+	initiallyOpen?: boolean;
 };
 
-export const FeedCategory = ({ category, handleItemNavigate }: FeedCategoryProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+export const FeedCategory = ({
+	category,
+	handleItemNavigate,
+	initiallyOpen = false,
+}: FeedCategoryProps) => {
+	const [isOpen, setIsOpen] = useState(initiallyOpen);
 
 	return (
 		<View>

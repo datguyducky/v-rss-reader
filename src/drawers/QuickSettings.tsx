@@ -4,7 +4,7 @@ import { Pressable, View } from 'react-native';
 import { Cog6ToothIcon, ChartPieIcon } from 'react-native-heroicons/outline';
 
 import { BasicButton } from '../components/BasicButton';
-import { DeletePopup } from '../components/DeletePopup';
+import { ConfirmPopup } from '../components/ConfirmPopup';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { Icon } from '../components/Icon';
@@ -121,14 +121,15 @@ export const QuickSettings = forwardRef(
 
 				<ReadingStats navigation={navigation} ref={readingStatsRef} />
 
-				<DeletePopup
+				<ConfirmPopup
 					isOpen={deleteCurrentView}
 					onClose={() => setDeleteCurrentView(false)}
 					title={`Remove the ${activeItemDetails?.name} ${
 						activeItemDetails?.type === 'FEED' ? 'feed' : 'category'
 					}?`}
 					subTitle="Remember, this action cannot be undone!"
-					handleRemove={handleRemoveItem}
+					handleConfirm={handleRemoveItem}
+					confirmText="Yes, Remove"
 				/>
 			</>
 		);

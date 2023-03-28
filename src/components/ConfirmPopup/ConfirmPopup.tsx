@@ -1,27 +1,30 @@
 import { View } from 'react-native';
 
+import { BasicButton } from '../BasicButton';
 import { Popup } from '../Popup';
 import { Text } from '../Text';
-import { BasicButton } from '../BasicButton';
-import React from 'react';
 
-type DeletePopupProps = {
+type ConfirmPopupProps = {
 	isOpen: boolean;
 	onClose: () => void;
+	confirmText: string;
 	title?: string;
 	subTitle?: string;
-	handleRemove?: () => void;
+	cancelText?: string;
+	handleConfirm?: () => void;
 	handleCancel?: () => void;
 };
 
-export const DeletePopup = ({
+export const ConfirmPopup = ({
 	isOpen,
 	onClose,
 	title,
 	subTitle,
+	cancelText = 'Cancel',
 	handleCancel,
-	handleRemove,
-}: DeletePopupProps) => {
+	confirmText = '',
+	handleConfirm,
+}: ConfirmPopupProps) => {
 	return (
 		<Popup isOpen={isOpen} onClose={onClose} title={title}>
 			<View>
@@ -34,15 +37,15 @@ export const DeletePopup = ({
 						textColor="#909296"
 						style={{ marginRight: 12 }}
 					>
-						Cancel
+						{cancelText}
 					</BasicButton>
 
 					<BasicButton
-						onPress={() => handleRemove?.()}
+						onPress={() => handleConfirm?.()}
 						textColor="#fa5252"
 						textWeight={600}
 					>
-						Yes, Remove
+						{confirmText}
 					</BasicButton>
 				</View>
 			</View>

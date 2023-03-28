@@ -10,6 +10,7 @@ export const useFeedsCategories = () => {
 	const [feedsCategories = [], setFeedsCategories] = useMMKVObject('feedsCategories');
 	const [activeItemDetails, storageSetActiveItemDetails] = useMMKVObject('activeItemDetails');
 
+	// TODO: It should be sorted alphabetically
 	/**
 	 * Before doing anything else with the feeds and categories array, we first sort it by the 'createdAt' field.
 	 * It's possible to sort it by latest or oldest feeds/categories.
