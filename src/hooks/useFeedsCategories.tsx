@@ -1,16 +1,17 @@
 import { useMMKVObject } from 'react-native-mmkv';
 import uuid from 'react-native-uuid';
-import { DEFAULT_FILTERS_VALUES } from '../common/constants';
-import { FilterFormValues } from '../drawers/Filters';
+
+import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
+import { SettingsFormValues } from '../forms/SettingsForm';
 import { findItemAndParentById } from '../utils/findItemAndParentById';
 
 export const useFeedsCategories = () => {
-	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
+	const [appSettings = DEFAULT_SETTINGS_VALUES] =
+		useMMKVObject<SettingsFormValues>('appSettings');
 
 	const [feedsCategories = [], setFeedsCategories] = useMMKVObject('feedsCategories');
 	const [activeItemDetails, storageSetActiveItemDetails] = useMMKVObject('activeItemDetails');
 
-	// TODO: It should be sorted alphabetically
 	/**
 	 * Before doing anything else with the feeds and categories array, we first sort it by the 'createdAt' field.
 	 * It's possible to sort it by latest or oldest feeds/categories.
@@ -21,17 +22,27 @@ export const useFeedsCategories = () => {
 		.map(item => ({
 			...item,
 			feeds: item?.feeds
-				? item.feeds.sort(
-						(a, b) =>
-							`${feedFilters.SORT_BY === 'OLDEST' ? '' : '-'}` +
-							a.createdAt.localeCompare(b.createdAt),
+				? item.feeds.sort((a, b) =>
+						(appSettings.sortAlphabetically ? a : b).name.localeCompare(
+							(appSettings.sortAlphabetically ? b : a).name,
+							undefined,
+							{
+								ignorePunctuation: true,
+								sensitivity: 'base',
+							},
+						),
 				  )
 				: undefined,
 		}))
-		.sort(
-			(a, b) =>
-				`${feedFilters.SORT_BY === 'OLDEST' ? '' : '-'}` +
-				a.createdAt.localeCompare(b.createdAt),
+		.sort((a, b) =>
+			(appSettings.sortAlphabetically ? a : b).name.localeCompare(
+				(appSettings.sortAlphabetically ? b : a).name,
+				undefined,
+				{
+					ignorePunctuation: true,
+					sensitivity: 'base',
+				},
+			),
 		);
 
 	const onlyFeeds = sortedFeedsCategories.filter(o => o.type === 'FEED');
