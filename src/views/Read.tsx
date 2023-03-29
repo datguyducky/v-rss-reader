@@ -4,17 +4,20 @@ import { ActivityIndicator, FlatList, RefreshControl, View } from 'react-native'
 import { useMMKVObject } from 'react-native-mmkv';
 import { Feed, FeedItem } from 'react-native-rss-parser';
 
-import { DEFAULT_FILTERS_VALUES } from '../common/constants';
+import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
 import { Text } from '../components/Text';
 import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
+import { SettingsFormValues } from '../forms/SettingsForm';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
 import { useReadLater } from '../hooks/useReadLater';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
 
 export const Read = ({ scrollY, title }) => {
+	const [appSettings = DEFAULT_SETTINGS_VALUES] =
+		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 	const { activeItemDetails, feedsCategories } = useFeedsCategories();
 	const { readLaterFeedsCategories } = useReadLater();
@@ -162,6 +165,17 @@ export const Read = ({ scrollY, title }) => {
 						scrollEventThrottle={16}
 						refreshControl={
 							<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+						}
+						// I would watch out with using the 'pagingEnabled' prop, as per the React Native (v0.71) docs it's not supported for vertical lists,
+						// but as shown in our app - it works, but it's possible that it's buggy in some untested ways or devices, so if there's ever a bug reported about this functionality then
+						// it would be smart to start here.
+						pagingEnabled={appSettings?.scrollBehaviour === 'PAGED' ? true : undefined}
+						decelerationRate={appSettings?.scrollBehaviour === 'PAGED' ? 0 : undefined}
+						disableIntervalMomentum={
+							appSettings?.scrollBehaviour === 'PAGED' ? true : undefined
+						}
+						snapToAlignment={
+							appSettings?.scrollBehaviour === 'PAGED' ? 'start' : undefined
 						}
 					/>
 				)}

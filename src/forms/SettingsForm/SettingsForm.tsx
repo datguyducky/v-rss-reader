@@ -13,7 +13,7 @@ import { useReadingStats } from '../../hooks/useReadingStats';
 
 export type SettingsFormValues = {
 	readOnScroll: boolean;
-	scrollBehaviour: 'SMOOTH' | 'PAGINATED';
+	scrollBehaviour: 'SMOOTH' | 'PAGED';
 	autoNextSection: boolean;
 	quickActionDrawerGesture: 'LONG_PRESS' | 'DOUBLE_TAP';
 	invertSwipe: boolean;
@@ -73,7 +73,7 @@ export const SettingsForm = () => {
 					label="Scrolling behaviour"
 					options={[
 						{ label: 'Smooth', value: 'SMOOTH' },
-						{ label: 'Paginated', value: 'PAGINATED' },
+						{ label: 'Paged', value: 'PAGED' },
 					]}
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
 				/>
