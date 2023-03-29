@@ -167,7 +167,7 @@ export const Read = ({ scrollY, title }) => {
 							<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
 						}
 						// I would watch out with using the 'pagingEnabled' prop, as per the React Native (v0.71) docs it's not supported for vertical lists,
-						// but as shown in our app - it works, but it's possible that it's buggy in some untested ways or devices, so if there's ever a bug reported about this functionality then
+						// but as shown in our app - it works, but it's possible that it's buggy in some untested ways or devices, so if there's ever an issue reported about this functionality then
 						// it would be smart to start here.
 						pagingEnabled={appSettings?.scrollBehaviour === 'PAGED' ? true : undefined}
 						decelerationRate={appSettings?.scrollBehaviour === 'PAGED' ? 0 : undefined}
