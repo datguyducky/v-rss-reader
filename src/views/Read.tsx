@@ -1,7 +1,7 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl, View } from 'react-native';
-import { useMMKVObject } from 'react-native-mmkv';
+import { useMMKVListener, useMMKVObject } from 'react-native-mmkv';
 import { Feed, FeedItem } from 'react-native-rss-parser';
 
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
@@ -25,6 +25,7 @@ export const Read = ({ scrollY, title }) => {
 	const [fetchRss, { loading }] = useRssFetch();
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
 	const [refreshing, setRefreshing] = useState(false);
+	const [reRender, setReRender] = useState(new Date().getTime());
 
 	// TODO: I wonder is there a better way to handle this than this state? Maybe context could work here...
 	const [selectedFeedData, setSelectedFeedData] = useState<FeedItem | undefined>();
@@ -136,6 +137,13 @@ export const Read = ({ scrollY, title }) => {
 		setRefreshing(false);
 	};
 
+	// Updating local state when app settings are changed to make sure that the FlatList is rendered again, with new props based on the new app settings values
+	useMMKVListener(key => {
+		if (key === 'appSettings') {
+			setReRender(new Date().getTime());
+		}
+	});
+
 	return (
 		<>
 			<Layout scrollY={scrollY} animatedTitle={activeItemDetails?.name || title}>
@@ -143,6 +151,7 @@ export const Read = ({ scrollY, title }) => {
 					<ActivityIndicator size="large" color="#228be6" />
 				) : (
 					<FlatList
+						key={reRender}
 						data={rssItems}
 						renderItem={p => (
 							<SwipeableFeedItem
