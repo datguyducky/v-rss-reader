@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { useMMKVNumber, useMMKVObject, useMMKVString } from 'react-native-mmkv';
+import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
+import { SettingsFormValues } from '../forms/SettingsForm';
 
 export const useReadingStats = () => {
+	const [appSettings = DEFAULT_SETTINGS_VALUES] =
+		useMMKVObject<SettingsFormValues>('appSettings');
+
 	/**
 	 * App usage stats - storage/state
 	 */
@@ -32,12 +37,15 @@ export const useReadingStats = () => {
 	 * App usage stats - methods
 	 */
 	const updateElapsedTime = () => {
-		if (startTime) {
-			const elapsedTimeInMinutes = Math.round((Date.now() - startTime) / 60000);
+		if (!appSettings.disableReadingStatistics) {
+			if (startTime) {
+				const elapsedTimeInMinutes = Math.round((Date.now() - startTime) / 60000);
 
-			setAppUsageTime(appUsageTime + elapsedTimeInMinutes);
+				setAppUsageTime(appUsageTime + elapsedTimeInMinutes);
+			}
+
+			setStartTime(undefined);
 		}
-		setStartTime(undefined);
 	};
 
 	useEffect(() => {
@@ -47,14 +55,16 @@ export const useReadingStats = () => {
 		}
 
 		const appStateListener = (nextAppState: AppStateStatus) => {
-			if (appState.match(/inactive|background/) && nextAppState === 'active') {
-				// App has become active again, so start tracking time
-				setStartTime(Date.now());
-			} else if (appState === 'active' && nextAppState.match(/inactive|background/)) {
-				// App has been minimized, so stop tracking time and update elapsed time
-				updateElapsedTime();
+			if (!appSettings.disableReadingStatistics) {
+				if (appState.match(/inactive|background/) && nextAppState === 'active') {
+					// App has become active again, so start tracking time
+					setStartTime(Date.now());
+				} else if (appState === 'active' && nextAppState.match(/inactive|background/)) {
+					// App has been minimized, so stop tracking time and update elapsed time
+					updateElapsedTime();
+				}
+				setAppState(nextAppState);
 			}
-			setAppState(nextAppState);
 		};
 
 		const subscription = AppState.addEventListener('change', appStateListener);
@@ -62,81 +72,85 @@ export const useReadingStats = () => {
 		return () => {
 			subscription.remove();
 		};
-	}, [appState, startTime]);
+	}, [appState, startTime, appSettings.disableReadingStatistics]);
 
 	/**
 	 * Feeds opened statistics - storage/state
 	 */
 	const handleFeedPressStats = () => {
-		// Not sure how I feel about using this variables here, but from all the things that I've tried this is one, is the only that really worked.
-		// As this is used to make sure that all the data (from storage) in this function is synced, so the proper "if" statements can be used.
-		let copyCurrentStreak = currentStreak;
-		let copyCurrentStreakStart = currentStreakStart;
-		let copyFeedsPerDay = feedsPerDay;
+		if (!appSettings.disableReadingStatistics) {
+			// Not sure how I feel about using this variables here, but from all the things that I've tried this is one, is the only that really worked.
+			// As this is used to make sure that all the data (from storage) in this function is synced, so the proper "if" statements can be used.
+			let copyCurrentStreak = currentStreak;
+			let copyCurrentStreakStart = currentStreakStart;
+			let copyFeedsPerDay = feedsPerDay;
 
-		// Get today's date
-		const today = new Date().toISOString().slice(0, 10);
+			// Get today's date
+			const today = new Date().toISOString().slice(0, 10);
 
-		// Check if user already clicked on a feed today
-		const clickedToday = feedsPerDay[today] !== undefined;
+			// Check if user already clicked on a feed today
+			const clickedToday = feedsPerDay[today] !== undefined;
 
-		// Update feeds opened countsa
-		setFeedsOpened(feedsOpened + 1);
+			// Update feeds opened countsa
+			setFeedsOpened(feedsOpened + 1);
 
-		// Update feeds opened per day
-		const clicksForToday = feedsPerDay[today] || 0;
-		setFeedsPerDay({ ...feedsPerDay, [today]: clicksForToday + 1 });
-		copyFeedsPerDay = { ...copyFeedsPerDay, [today]: (copyFeedsPerDay?.[today] || 0) + 1 };
+			// Update feeds opened per day
+			const clicksForToday = feedsPerDay[today] || 0;
+			setFeedsPerDay({ ...feedsPerDay, [today]: clicksForToday + 1 });
+			copyFeedsPerDay = { ...copyFeedsPerDay, [today]: (copyFeedsPerDay?.[today] || 0) + 1 };
 
-		// This checks how many days passed from the last time that a feed was opened (0 and 1 are fine, more than that breaks the streak)
-		const localFeedsPerDayArray = Object.keys(copyFeedsPerDay);
-		const millisecondsPerDay = 1000 * 60 * 60 * 24;
-		const timeDiff =
-			localFeedsPerDayArray.length > 1
-				? Date.parse(localFeedsPerDayArray[localFeedsPerDayArray.length - 1]) -
-				  Date.parse(localFeedsPerDayArray[localFeedsPerDayArray.length - 2])
-				: 0;
-		const daysDiff = Math.floor(timeDiff / millisecondsPerDay);
+			// This checks how many days passed from the last time that a feed was opened (0 and 1 are fine, more than that breaks the streak)
+			const localFeedsPerDayArray = Object.keys(copyFeedsPerDay);
+			const millisecondsPerDay = 1000 * 60 * 60 * 24;
+			const timeDiff =
+				localFeedsPerDayArray.length > 1
+					? Date.parse(localFeedsPerDayArray[localFeedsPerDayArray.length - 1]) -
+					  Date.parse(localFeedsPerDayArray[localFeedsPerDayArray.length - 2])
+					: 0;
+			const daysDiff = Math.floor(timeDiff / millisecondsPerDay);
 
-		// Here we start the consecutive days count
-		if (!clickedToday && currentStreakStart === null) {
-			setCurrentStreak(0);
-			setCurrentStreakStart(today);
+			// Here we start the consecutive days count
+			if (!clickedToday && currentStreakStart === null) {
+				setCurrentStreak(0);
+				setCurrentStreakStart(today);
 
-			copyCurrentStreak = 0;
-			copyCurrentStreakStart = today;
-		}
-		// This start the consecutive days count again, after it was reset to 0 when the streak was broken
-		else if (currentStreak === 0 && clicksForToday === 0 && currentStreakStart) {
-			setCurrentStreak(current => (current || 0) + 1);
+				copyCurrentStreak = 0;
+				copyCurrentStreakStart = today;
+			}
+			// This start the consecutive days count again, after it was reset to 0 when the streak was broken
+			else if (currentStreak === 0 && clicksForToday === 0 && currentStreakStart) {
+				setCurrentStreak(current => (current || 0) + 1);
 
-			copyCurrentStreak += 1;
-		}
-		// Here we add another day to the consecutive days count - as long as it was the first feed press today
-		// and as long as today is the next day after the last time that feed was opened
-		else if (currentStreak > 0 && clicksForToday === 0 && daysDiff <= 1) {
-			setCurrentStreak(current => (current || 0) + 1);
+				copyCurrentStreak += 1;
+			}
+			// Here we add another day to the consecutive days count - as long as it was the first feed press today
+			// and as long as today is the next day after the last time that feed was opened
+			else if (currentStreak > 0 && clicksForToday === 0 && daysDiff <= 1) {
+				setCurrentStreak(current => (current || 0) + 1);
 
-			copyCurrentStreak += 1;
-		}
-		// This reset the consecutive days count when the streak is broken by opening a feed later than an another day from the last time that it was opened
-		else if (daysDiff > 1) {
-			// end longest streak?
-			if (currentStreak === longestStreak) {
-				setLongestStreakEnd(Object.keys(feedsPerDay)[Object.keys(feedsPerDay).length - 1]);
+				copyCurrentStreak += 1;
+			}
+			// This reset the consecutive days count when the streak is broken by opening a feed later than an another day from the last time that it was opened
+			else if (daysDiff > 1) {
+				// end longest streak?
+				if (currentStreak === longestStreak) {
+					setLongestStreakEnd(
+						Object.keys(feedsPerDay)[Object.keys(feedsPerDay).length - 1],
+					);
+				}
+
+				setCurrentStreak(0);
+				setCurrentStreakStart(today);
+
+				copyCurrentStreak = 0;
+				copyCurrentStreakStart = today;
 			}
 
-			setCurrentStreak(0);
-			setCurrentStreakStart(today);
-
-			copyCurrentStreak = 0;
-			copyCurrentStreakStart = today;
-		}
-
-		// Update longest streak count and start date
-		if (copyCurrentStreak >= longestStreak && copyCurrentStreakStart !== null) {
-			setLongestStreak(copyCurrentStreak);
-			setLongestStreakStart(copyCurrentStreakStart);
+			// Update longest streak count and start date
+			if (copyCurrentStreak >= longestStreak && copyCurrentStreakStart !== null) {
+				setLongestStreak(copyCurrentStreak);
+				setLongestStreakStart(copyCurrentStreakStart);
+			}
 		}
 	};
 
