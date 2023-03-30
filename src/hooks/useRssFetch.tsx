@@ -33,12 +33,6 @@ export const useRssFetch = (): [
 					if (response.ok) {
 						const parsedRss = await parse(responseText);
 
-						console.log(
-							parsedRss.items.map(item => ({ id: item.id })),
-							feed?.name,
-							'huh',
-						);
-
 						data.push({
 							...parsedRss,
 							feedAppCategory: feed?.name || '',
@@ -71,8 +65,6 @@ export const useRssFetch = (): [
 
 				if (response.ok) {
 					const parsedRss = await parse(responseText);
-
-					console.log(parsedRss.items, 'this!!');
 
 					setRssFetchResult(prevResults => ({
 						...prevResults,
