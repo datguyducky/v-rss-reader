@@ -3,7 +3,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ArchiveBoxIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
 
-import { DEFAULT_FILTERS_VALUES } from '../../common/constants';
+import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/constants';
 import { FilterFormValues } from '../../drawers/Filters';
 import { useReadLater } from '../../hooks/useReadLater';
 import { calculateTimePassed } from '../../utils/calculateTimePassed';
@@ -13,6 +13,7 @@ import { MagazineCard } from '../MagazineCard';
 import { TextOnlyCard } from '../TextOnlyCard';
 import { ThumbnailCard } from '../ThumbnailCard';
 import { LeftSwipeWrap } from './SwipeableFeedItem.styles';
+import { SettingsFormValues } from '../../forms/SettingsForm';
 
 interface SwipeableFeedItemProps {
 	item: Record<string, unknown>; // TODO: Better type.
@@ -21,6 +22,9 @@ interface SwipeableFeedItemProps {
 
 export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps) => {
 	const swipeRef = useRef<Swipeable>(null);
+
+	const [appSettings = DEFAULT_SETTINGS_VALUES] =
+		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
 
@@ -108,7 +112,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					<MagazineCard
 						title={item.title}
 						onLongPress={onLongPress}
-						thumbnailUrl={item?.imageUrl}
+						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
 						url={item.links[0].url}
 						domainName={domainName}
 						publishedAt={formattedPublishedAt}
@@ -122,7 +126,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					<ThumbnailCard
 						title={item.title}
 						onLongPress={onLongPress}
-						thumbnailUrl={item?.imageUrl}
+						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
 						url={item.links[0].url}
 						domainName={domainName}
 						publishedAt={formattedPublishedAt}
