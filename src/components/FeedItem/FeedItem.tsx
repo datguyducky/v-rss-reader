@@ -1,6 +1,8 @@
 import { StyleProp, ViewStyle } from 'react-native';
+import { MinusSmallIcon } from 'react-native-heroicons/outline';
 
 import { BasicButton } from '../BasicButton';
+import { Icon } from '../Icon';
 import { NoFeedImageFound } from './FeedItem.styles';
 
 type FeedItemProps = {
@@ -9,12 +11,26 @@ type FeedItemProps = {
 	style?: StyleProp<ViewStyle>;
 	mb?: number;
 	icon?: React.ReactElement;
+	iconDisabled?: boolean;
 };
-export const FeedItem = ({ item, handleItemNavigate, style, mb, icon }: FeedItemProps) => {
+export const FeedItem = ({
+	item,
+	handleItemNavigate,
+	style,
+	mb,
+	icon,
+	iconDisabled,
+}: FeedItemProps) => {
 	return (
 		<BasicButton
 			onPress={() => handleItemNavigate(item)}
-			icon={icon || <NoFeedImageFound />}
+			icon={
+				iconDisabled ? (
+					<Icon name={MinusSmallIcon} size={20} />
+				) : (
+					icon || <NoFeedImageFound />
+				)
+			}
 			mb={mb}
 			style={style}
 		>
