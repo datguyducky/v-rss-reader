@@ -25,6 +25,7 @@ export type SettingsFormValues = {
 	disableArticleImages: boolean;
 	trackOnHeader: boolean;
 	disableReadingStatistics: boolean;
+	startWithCategoriesOpen: boolean;
 };
 
 export const SettingsForm = () => {
@@ -46,6 +47,7 @@ export const SettingsForm = () => {
 	 */
 	const handleResetApp = () => {
 		setAppSettings(undefined);
+		// TODO: Also reset this form to default values.
 
 		setResetAppPopup(false);
 	};
@@ -131,6 +133,13 @@ export const SettingsForm = () => {
 					name="hideFeedIcons"
 					label="Hide feed icons"
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
+					mb={16}
+				/>
+				<Switch
+					name="startWithCategoriesOpen"
+					label="Start with categories open"
+					onValueChange={settingsForm.handleSubmit(onSubmit)}
+					mb={16}
 				/>
 
 				<Divider my={16} />

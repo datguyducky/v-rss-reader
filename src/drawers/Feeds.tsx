@@ -17,7 +17,7 @@ import { useFeedsCategories } from '../hooks/useFeedsCategories';
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
 		const { feedsCategories, setActiveItemDetails } = useFeedsCategories();
-		const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
+		const [appSettings = DEFAULT_SETTINGS_VALUES] =
 			useMMKVObject<SettingsFormValues>('appSettings');
 
 		const handleItemNavigate = item => {
@@ -54,6 +54,7 @@ export const Feeds = forwardRef(
 							category={item}
 							handleItemNavigate={handleItemNavigate}
 							feedIconDisabled={appSettings.hideFeedIcons}
+							initiallyOpen={appSettings.startWithCategoriesOpen}
 						/>
 					) : (
 						<FeedItem
