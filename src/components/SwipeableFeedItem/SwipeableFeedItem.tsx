@@ -118,7 +118,11 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						title={item.title}
 						onLongPress={onLongPress}
 						url={item.links[0].url}
-						domainName={domainName}
+						domainName={`${domainName} ${
+							item?.feedAppCategory && item?.feedAppCategory?.length > 0
+								? ' / ' + item.feedAppCategory
+								: ''
+						}`}
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
 						description={item?.description || item?.content}
@@ -132,7 +136,11 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						onLongPress={onLongPress}
 						thumbnailUrl={item?.imageUrl}
 						url={item.links[0].url}
-						domainName={domainName}
+						domainName={`${domainName} ${
+							item?.feedAppCategory && item?.feedAppCategory?.length > 0
+								? ' / ' + item.feedAppCategory
+								: ''
+						}`}
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
 						description={item?.description || item?.content}
@@ -146,7 +154,11 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						onLongPress={onLongPress}
 						thumbnailUrl={item?.imageUrl}
 						url={item.links[0].url}
-						domainName={domainName}
+						domainName={`${domainName} ${
+							item?.feedAppCategory && item?.feedAppCategory?.length > 0
+								? ' / ' + item.feedAppCategory
+								: ''
+						}`}
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
 						description={item?.description || item?.content}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Feed, parse } from 'react-native-rss-parser';
+import uuid from 'react-native-uuid';
 
 type RssFetchResult = {
 	loading: boolean;
@@ -16,19 +17,36 @@ export const useRssFetch = (): [
 		data: undefined,
 	});
 
-	const fetchRss = async (url: string | string[]): Promise<{ data?: Feed[]; error?: string }> => {
+	const fetchRss = async (
+		sources: string | Record<string, unknown>[],
+	): Promise<{ data?: Feed[]; error?: string }> => {
 		setRssFetchResult(prevResults => ({ ...prevResults, isLoading: true }));
 
 		try {
-			if (Array.isArray(url)) {
+			if (Array.isArray(sources)) {
 				const data: Feed[] = [];
-				for (const u of url) {
-					const response = await fetch(u);
+
+				for (const feed of sources) {
+					const response = await fetch(feed.url as string);
 					const responseText = await response.text();
 
 					if (response.ok) {
 						const parsedRss = await parse(responseText);
-						data.push(parsedRss);
+
+						console.log(
+							parsedRss.items.map(item => ({ id: item.id })),
+							feed?.name,
+							'huh',
+						);
+
+						data.push({
+							...parsedRss,
+							feedAppCategory: feed?.name || '',
+							items: parsedRss.items.map(item => ({
+								...item,
+								id: `${item.id}_${uuid.v4()}${feed?.name ? '_' + feed.name : ''}`, // we are not only using the feed id, but we also generate one ourselves to make sure that there won't be any id duplicates anywhere in the app
+							})),
+						});
 					} else {
 						setRssFetchResult(prevResults => ({
 							...prevResults,
@@ -48,11 +66,13 @@ export const useRssFetch = (): [
 
 				return { data };
 			} else {
-				const response = await fetch(url);
+				const response = await fetch(sources);
 				const responseText = await response.text();
 
 				if (response.ok) {
 					const parsedRss = await parse(responseText);
+
+					console.log(parsedRss.items, 'this!!');
 
 					setRssFetchResult(prevResults => ({
 						...prevResults,

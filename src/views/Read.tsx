@@ -34,16 +34,18 @@ export const Read = ({ scrollY, title }) => {
 
 	const retrieveRssFeeds = async () => {
 		if (activeItemDetails.type === 'CATEGORY') {
-			const urlArray = activeItemDetails.feeds.map(
-				(feed: Record<string, unknown>) => feed.url,
-			);
-
-			const { data } = await fetchRss(urlArray);
+			const { data } = await fetchRss(activeItemDetails.feeds);
 
 			if (data) {
 				const items: FeedItem[] = data
 					.reduce((acc: FeedItem[], feed: Feed) => {
-						return [...acc, ...feed.items];
+						return [
+							...acc,
+							...feed.items.map(item => ({
+								...item,
+								feedAppCategory: feed.feedAppCategory,
+							})),
+						];
 					}, [])
 					.sort((a, b) => {
 						const dateA = new Date(a.published);
@@ -79,12 +81,12 @@ export const Read = ({ scrollY, title }) => {
 	const retrieveAllRssFeeds = async () => {
 		const urlArray = feedsCategories.reduce((urls: string[], item) => {
 			if (item.url) {
-				urls.push(item.url);
+				urls.push(item);
 			}
 			if (item.feeds && item.feeds.length) {
 				const nestedUrls = item.feeds.reduce((nestedUrls, nestedItem) => {
 					if (nestedItem.url) {
-						nestedUrls.push(nestedItem.url);
+						nestedUrls.push(nestedItem);
 					}
 					return nestedUrls;
 				}, []);
@@ -98,7 +100,13 @@ export const Read = ({ scrollY, title }) => {
 		if (data) {
 			const items: FeedItem[] = data
 				.reduce((acc: FeedItem[], feed: Feed) => {
-					return [...acc, ...feed.items];
+					return [
+						...acc,
+						...feed.items.map(item => ({
+							...item,
+							feedAppCategory: feed.feedAppCategory,
+						})),
+					];
 				}, [])
 				.sort((a, b) => {
 					const dateA = new Date(a.published);
