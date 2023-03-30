@@ -103,7 +103,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 
 	const renderFeedCard = () => {
 		const domainName = item.links[0].url
-			.match(/^(?:https?:\/\/)?([^\/]+)/)[1]
+			.match(/^(?:https?:\/\/)?([^/]+)/)[1]
 			.split('.')
 			.slice(-2)
 			.join('.')
