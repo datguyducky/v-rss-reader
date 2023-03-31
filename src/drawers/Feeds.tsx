@@ -8,8 +8,8 @@ import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { FeedCategory } from '../components/FeedCategory';
 import { FeedItem } from '../components/FeedItem';
+import { FeedItemIcon } from '../components/FeedItemIcon';
 import { Icon } from '../components/Icon';
-
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
 
 export const Feeds = forwardRef(
@@ -48,7 +48,11 @@ export const Feeds = forwardRef(
 					item.type === 'CATEGORY' ? (
 						<FeedCategory category={item} handleItemNavigate={handleItemNavigate} />
 					) : (
-						<FeedItem item={item} handleItemNavigate={handleItemNavigate} />
+						<FeedItem
+							icon={item?.url ? <FeedItemIcon url={item.url} /> : undefined}
+							item={item}
+							handleItemNavigate={handleItemNavigate}
+						/>
 					)
 				}
 				keyExtractor={item => item.id}

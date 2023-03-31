@@ -3,6 +3,7 @@ import { Pressable, View } from 'react-native';
 import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
 
 import { FeedItem } from '../FeedItem';
+import { FeedItemIcon } from '../FeedItemIcon';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
 
@@ -49,6 +50,7 @@ export const FeedCategory = ({
 					(category.feeds as Record<string, unknown>[]).map((feed, index) => (
 						<FeedItem
 							item={feed}
+							icon={feed?.url ? <FeedItemIcon url={feed.url} /> : undefined}
 							handleItemNavigate={handleItemNavigate}
 							style={{ marginLeft: 32 }}
 							key={feed.id as string}
