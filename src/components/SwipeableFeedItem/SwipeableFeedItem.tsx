@@ -134,7 +134,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					<MagazineCard
 						title={item.title}
 						onLongPress={onLongPress}
-						thumbnailUrl={item?.imageUrl}
+						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
 						url={item.links[0].url}
 						domainName={`${domainName} ${
 							item?.feedAppCategory && item?.feedAppCategory?.length > 0
@@ -152,7 +152,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 					<ThumbnailCard
 						title={item.title}
 						onLongPress={onLongPress}
-						thumbnailUrl={item?.imageUrl}
+						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
 						url={item.links[0].url}
 						domainName={`${domainName} ${
 							item?.feedAppCategory && item?.feedAppCategory?.length > 0

@@ -12,12 +12,14 @@ type FeedCategoryProps = {
 	category: Record<string, unknown>;
 	handleItemNavigate: (item: Record<string, unknown>) => void;
 	initiallyOpen?: boolean;
+	feedIconDisabled?: boolean;
 };
 
 export const FeedCategory = ({
 	category,
 	handleItemNavigate,
 	initiallyOpen = false,
+	feedIconDisabled,
 }: FeedCategoryProps) => {
 	const [isOpen, setIsOpen] = useState(initiallyOpen);
 
@@ -61,6 +63,7 @@ export const FeedCategory = ({
 									? 0
 									: 16
 							}
+							iconDisabled={feedIconDisabled}
 						/>
 					))
 				) : (

@@ -21,4 +21,5 @@ export const DEFAULT_SETTINGS_VALUES: SettingsFormValues = {
 	disableArticleImages: false,
 	trackOnHeader: true,
 	disableReadingStatistics: false,
+	startWithCategoriesOpen: false,
 };
