@@ -7,6 +7,7 @@ import {
 	withSpring,
 } from 'react-native-reanimated';
 
+import { Pressable } from '../Pressable';
 import {
 	AnimatedSwitch,
 	AnimatedSwitchThumb,
@@ -14,7 +15,6 @@ import {
 	SwitchStylesProps,
 	SwitchWrap,
 } from './Switch.styles';
-import { Pressable } from 'react-native';
 
 interface SwitchProps extends SwitchStylesProps {
 	name: string;

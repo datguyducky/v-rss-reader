@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { Pressable } from '../Pressable';
+
 export interface RadioStylesProps {
 	mb?: number;
 }
@@ -8,7 +10,7 @@ export const RadioWrap = styled.View<Required<Pick<RadioStylesProps, 'mb'>>>`
 	margin-bottom: ${({ mb }) => mb}px;
 `;
 
-export const StyledPressable = styled.Pressable`
+export const StyledPressable = styled(Pressable.Background)`
 	flex-direction: row;
 	align-items: center;
 `;

@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
-import { Pressable, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
+import { Pressable } from '../Pressable';
 import { Text } from '../Text';
 import { ButtonContent, ButtonStylesProps, ButtonWrap } from './Button.styles';
 
@@ -46,8 +47,8 @@ export const Button = ({
 	};
 
 	return (
-		<Pressable onPress={() => !disabled && onPress()}>
-			<ButtonWrap mb={mb} style={style}>
+		<ButtonWrap mb={mb} style={style}>
+			<Pressable.Background onPress={() => !disabled && onPress()}>
 				<ButtonContent
 					disabled={disabled}
 					backgroundColor={backgroundColor}
@@ -63,7 +64,7 @@ export const Button = ({
 						{children}
 					</Text>
 				</ButtonContent>
-			</ButtonWrap>
-		</Pressable>
+			</Pressable.Background>
+		</ButtonWrap>
 	);
 };

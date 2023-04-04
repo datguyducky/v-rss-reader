@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { Pressable } from 'react-native';
 import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
+import { Pressable } from '../Pressable';
 import { Text } from '../Text';
 import {
 	ContentWithLabelWrap,

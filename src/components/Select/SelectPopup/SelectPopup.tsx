@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { BasicButton } from '../../BasicButton';
 import { Popup } from '../../Popup';
+import { Pressable } from '../../Pressable';
 import { Radio } from '../../Radio';
 import { Text } from '../../Text';
 import {
@@ -41,7 +42,7 @@ export const SelectPopup = ({ label, name, options = [], onValueChange, mb }: Se
 			</SelectPopupContainer>
 
 			<Popup isOpen={popupVisible} onClose={() => setPopupVisible(false)} title={label}>
-				<View>
+				<GestureHandlerRootView>
 					<StyledScrollView>
 						<Radio.Group
 							name={name}
@@ -66,10 +67,11 @@ export const SelectPopup = ({ label, name, options = [], onValueChange, mb }: Se
 						onPress={() => setPopupVisible(false)}
 						textWeight={600}
 						textColor="#228be6"
+						pressableComponent={<Pressable.Opacity />}
 					>
 						Cancel
 					</BasicButton>
-				</View>
+				</GestureHandlerRootView>
 			</Popup>
 		</>
 	);

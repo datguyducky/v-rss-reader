@@ -1,12 +1,12 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useRef } from 'react';
-import { Pressable } from 'react-native';
 import { EyeIcon } from 'react-native-heroicons/outline';
 
 import { Filters } from '../../drawers/Filters';
 import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 import { HeadingAnimated } from '../HeadingAnimated';
 import { Icon } from '../Icon';
+import { Pressable } from '../Pressable';
 import { HeaderTextWrap, HeaderWrap } from './Header.styles';
 
 type HeaderProps = {
@@ -31,12 +31,13 @@ export const Header = ({ title, scrollY }: HeaderProps) => {
 					/>
 				</HeaderTextWrap>
 
-				<Pressable
+				<Pressable.Background
 					onPress={() => filtersDrawerRef?.current?.present()}
 					style={{ marginLeft: 'auto' }}
+					borderless
 				>
 					<Icon name={EyeIcon} size={24} />
-				</Pressable>
+				</Pressable.Background>
 			</HeaderWrap>
 
 			<Filters ref={filtersDrawerRef} />

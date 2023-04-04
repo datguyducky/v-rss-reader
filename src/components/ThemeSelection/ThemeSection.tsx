@@ -10,7 +10,8 @@ import {
 	ThemeSectionStylesProps,
 	ThemeSectionWrap,
 } from './ThemeSection.styles';
-import { Pressable } from 'react-native';
+import { Pressable } from '../Pressable';
+import { View } from 'react-native';
 
 interface ThemeSectionProps extends ThemeSectionStylesProps {}
 export const ThemeSection = ({}: ThemeSectionProps) => {
@@ -18,40 +19,54 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 
 	return (
 		<ThemeSectionWrap>
-			<Pressable onPress={() => console.log('todo: set app theme to light')}>
-				<LightThemeWrap>
-					<ThemePreview color="light" isActive={currentlyActive === 'LIGHT'} />
+			<LightThemeWrap>
+				<ThemePreview color="light" isActive={currentlyActive === 'LIGHT'}>
+					<Pressable.Background
+						borderless
+						style={{ flex: 1 }}
+						foreground={false}
+						onPress={() => console.log('todo: set app theme to light')}
+					/>
+				</ThemePreview>
 
-					<Text weight={300} fontSize={12}>
-						Light
-					</Text>
-				</LightThemeWrap>
-			</Pressable>
+				<Text weight={300} fontSize={12}>
+					Light
+				</Text>
+			</LightThemeWrap>
 
-			<Pressable onPress={() => console.log('todo: set app theme to dark')}>
-				<DarkThemeWrap>
-					<ThemePreview color="dark" isActive={currentlyActive === 'DARK'} />
+			<DarkThemeWrap>
+				<ThemePreview color="dark" isActive={currentlyActive === 'DARK'}>
+					<Pressable.Background
+						borderless
+						style={{ flex: 1 }}
+						foreground={false}
+						underlayColor="rgba(255, 255, 255, 12)"
+						onPress={() => console.log('todo: set app theme to dark')}
+					/>
+				</ThemePreview>
 
-					<Text weight={300} fontSize={12}>
-						Dark
-					</Text>
-				</DarkThemeWrap>
-			</Pressable>
+				<Text weight={300} fontSize={12}>
+					Dark
+				</Text>
+			</DarkThemeWrap>
 
-			<Pressable
-				onPress={() => console.log('todo: set app theme to follow users system settings')}
-			>
-				<DarkThemeWrap>
-					<AutoThemePreviewWrap isActive={currentlyActive === 'AUTO'}>
+			<DarkThemeWrap>
+				<AutoThemePreviewWrap isActive={currentlyActive === 'AUTO'}>
+					<Pressable.Background
+						onPress={() =>
+							console.log('todo: set app theme to follow users system settings')
+						}
+						style={{ flex: 1, flexDirection: 'row' }}
+					>
 						<AutoLightSection />
 						<AutoDarkSection />
-					</AutoThemePreviewWrap>
+					</Pressable.Background>
+				</AutoThemePreviewWrap>
 
-					<Text weight={300} fontSize={12}>
-						Auto
-					</Text>
-				</DarkThemeWrap>
-			</Pressable>
+				<Text weight={300} fontSize={12}>
+					Auto
+				</Text>
+			</DarkThemeWrap>
 		</ThemeSectionWrap>
 	);
 };

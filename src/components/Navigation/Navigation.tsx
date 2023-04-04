@@ -1,7 +1,7 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useRef } from 'react';
-import { useWindowDimensions, Pressable } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { Bars3BottomLeftIcon, Cog6ToothIcon, PlusIcon } from 'react-native-heroicons/outline';
 import { Shadow } from 'react-native-shadow-2';
 
@@ -18,6 +18,7 @@ import {
 	CutOutWrapper,
 	CutOut,
 } from './Navigation.styles';
+import { Pressable } from '../Pressable';
 
 export const Navigation = ({ navigation }: BottomTabBarProps) => {
 	const { width } = useWindowDimensions();
@@ -36,30 +37,44 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 			>
 				<NavigationContainer>
 					<WrapWithCutOut>
-						<Pressable onPress={() => feedsRef?.current?.present()}>
+						<Pressable.Background
+							onPress={() => feedsRef?.current?.present()}
+							borderless
+						>
 							<LeftIconWrap>
 								<Icon name={Bars3BottomLeftIcon} size={24} />
 							</LeftIconWrap>
-						</Pressable>
+						</Pressable.Background>
 
 						<CutOutContainer width={width} pointerEvents="box-none">
-							<Pressable onPress={() => createSelectionRef?.current?.present()}>
-								<CutOutWrapper>
-									<CutOut>
+							<CutOutWrapper>
+								<CutOut>
+									<Pressable.Background
+										foreground={false}
+										borderless
+										onPress={() => createSelectionRef?.current?.present()}
+										style={{
+											width: '100%',
+											height: '100%',
+											justifyContent: 'center',
+											alignItems: 'center',
+										}}
+									>
 										<Icon name={PlusIcon} size={32} />
-									</CutOut>
-								</CutOutWrapper>
-							</Pressable>
+									</Pressable.Background>
+								</CutOut>
+							</CutOutWrapper>
 						</CutOutContainer>
 
-						<Pressable
+						<Pressable.Background
+							borderless
 							onPress={() => quickSettingsRef?.current?.present()}
 							style={{ marginLeft: 'auto' }}
 						>
 							<RightIconWrap>
 								<Icon name={Cog6ToothIcon} size={24} />
 							</RightIconWrap>
-						</Pressable>
+						</Pressable.Background>
 					</WrapWithCutOut>
 				</NavigationContainer>
 			</Shadow>

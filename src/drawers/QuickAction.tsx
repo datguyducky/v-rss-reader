@@ -7,6 +7,7 @@ import { FeedItem } from 'react-native-rss-parser';
 import { BasicButton } from '../components/BasicButton';
 import { Drawer } from '../components/Drawer';
 import { Icon } from '../components/Icon';
+import { Pressable } from '../components/Pressable';
 import { useReadLater } from '../hooks/useReadLater';
 
 type QuickActionProps = {
@@ -54,6 +55,7 @@ export const QuickAction = forwardRef(
 					textSize={12}
 					vertical
 					spacing={0}
+					pressableComponent={<Pressable.Background borderless />}
 				>
 					{isSavedInReadLater(selectedFeedData?.id || '') ? 'Unsave' : 'Save'}
 				</BasicButton>
@@ -64,6 +66,7 @@ export const QuickAction = forwardRef(
 					textSize={12}
 					vertical
 					spacing={0}
+					pressableComponent={<Pressable.Background borderless />}
 				>
 					Share
 				</BasicButton>

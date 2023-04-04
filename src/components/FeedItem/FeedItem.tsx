@@ -1,6 +1,8 @@
+import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 import { BasicButton } from '../BasicButton';
+import { Pressable } from '../Pressable';
 import { NoFeedImageFound } from './FeedItem.styles';
 
 type FeedItemProps = {
@@ -17,6 +19,7 @@ export const FeedItem = ({ item, handleItemNavigate, style, mb, icon }: FeedItem
 			icon={icon || <NoFeedImageFound />}
 			mb={mb}
 			style={style}
+			pressableComponent={<Pressable.Background />}
 		>
 			{item.name}
 		</BasicButton>

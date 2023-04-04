@@ -6,13 +6,13 @@ import { useReadingStats } from '../../hooks/useReadingStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
+import { Pressable } from '../Pressable';
 import { Text } from '../Text';
 import {
 	MagazineCardWrap,
 	MagazineTextWrap,
 	TitleWrap,
 	StyledImage,
-	StyledPressable,
 	DetailsWrap,
 	TitleText,
 } from './MagazineCard.styles';
@@ -40,7 +40,11 @@ export const MagazineCard = ({
 
 	return (
 		<MagazineCardWrap>
-			<StyledPressable onLongPress={() => onLongPress?.()} onPress={handlePress}>
+			<Pressable.Background
+				style={{ flexDirection: 'row' }}
+				onLongPress={() => onLongPress?.()}
+				onPress={handlePress}
+			>
 				<StyledImage
 					source={{
 						uri: thumbnailUrl,
@@ -71,7 +75,7 @@ export const MagazineCard = ({
 						</View>
 					)}
 				</MagazineTextWrap>
-			</StyledPressable>
+			</Pressable.Background>
 		</MagazineCardWrap>
 	);
 };

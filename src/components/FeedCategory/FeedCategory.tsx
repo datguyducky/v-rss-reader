@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
 
 import { FeedItem } from '../FeedItem';
 import { FeedItemIcon } from '../FeedItemIcon';
 import { Icon } from '../Icon';
+import { Pressable } from '../Pressable';
 import { Text } from '../Text';
 
 type FeedCategoryProps = {
@@ -20,6 +21,7 @@ export const FeedCategory = ({
 }: FeedCategoryProps) => {
 	const [isOpen, setIsOpen] = useState(initiallyOpen);
 
+	// TODO: Correctly handle Pressable.Background for this component
 	return (
 		<View>
 			<View

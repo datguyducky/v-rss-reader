@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { FlatList, Modal, View, Pressable } from 'react-native';
+import { FlatList, Modal, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 import { ChevronDownIcon } from 'react-native-heroicons/outline';
 
 import { Divider } from '../Divider';
 import { Icon } from '../Icon';
 import { InputWrapper } from '../InputWrapper';
+import { Pressable } from '../Pressable';
 import { RadioCircle } from '../Radio/Radio.styles';
 import { Text } from '../Text';
 import {
@@ -77,11 +79,17 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 						visible={isSelectModalVisible}
 						onRequestClose={() => setSelectModalVisibility(false)}
 					>
-						<View style={{ flex: 1 }}>
+						<GestureHandlerRootView style={{ flex: 1 }}>
 							<SelectModalHeading>
-								<Pressable onPress={() => setSelectModalVisibility(false)}>
+								<Pressable.Background
+									borderless
+									onPress={() => {
+										console.log('here?');
+										setSelectModalVisibility(false);
+									}}
+								>
 									<Icon name={ArrowLeftIconMini} size={24} />
-								</Pressable>
+								</Pressable.Background>
 
 								<SelectModalTitle weight={600}>{modalTitle}</SelectModalTitle>
 							</SelectModalHeading>
@@ -92,7 +100,7 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 								}}
 								data={data}
 								renderItem={({ item }) => (
-									<Pressable
+									<Pressable.Background
 										onPress={() => {
 											if (item.value === fieldValue) {
 												onChange(null);
@@ -126,12 +134,12 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 												style={{ marginLeft: 'auto' }}
 											/>
 										</SelectModalRow>
-									</Pressable>
+									</Pressable.Background>
 								)}
 								ItemSeparatorComponent={() => <Divider />}
 								keyExtractor={(item, index) => index.toString()}
 							/>
-						</View>
+						</GestureHandlerRootView>
 					</Modal>
 				</>
 			)}

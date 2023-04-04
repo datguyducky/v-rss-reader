@@ -5,6 +5,7 @@ import { PlusIcon, FolderPlusIcon } from 'react-native-heroicons/outline';
 import { BasicButton } from '../components/BasicButton';
 import { Drawer } from '../components/Drawer';
 import { Icon } from '../components/Icon';
+import { Pressable } from '../components/Pressable';
 
 export const CreateSelection = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -17,6 +18,7 @@ export const CreateSelection = forwardRef(
 					}}
 					icon={<Icon name={PlusIcon} size={20} />}
 					mb={16}
+					pressableComponent={<Pressable.Background />}
 				>
 					Add new RSS feed
 				</BasicButton>
@@ -27,6 +29,7 @@ export const CreateSelection = forwardRef(
 						navigation.navigate('Category', { mode: 'create' });
 					}}
 					icon={<Icon name={FolderPlusIcon} size={20} />}
+					pressableComponent={<Pressable.Background />}
 				>
 					Create new category
 				</BasicButton>

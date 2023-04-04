@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { openURL } from 'expo-linking';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 
 import { useReadingStats } from '../../hooks/useReadingStats';
@@ -14,6 +14,7 @@ import {
 	TitleWrap,
 	StyledImageBackground,
 } from './ThumbnailCard.styles';
+import { Pressable } from '../Pressable';
 
 interface ThumbnailCardProps extends FeedCardProps {}
 
@@ -38,7 +39,7 @@ export const ThumbnailCard = ({
 
 	return (
 		<ThumbnailCardWrap>
-			<Pressable onLongPress={() => onLongPress?.()} onPress={handlePress}>
+			<Pressable.Background onLongPress={() => onLongPress?.()} onPress={handlePress}>
 				<StyledImageBackground
 					density={density}
 					source={{
@@ -78,7 +79,7 @@ export const ThumbnailCard = ({
 						{`${domainName} / ${publishedAt}`}
 					</Text>
 				</ThumbnailTextWrap>
-			</Pressable>
+			</Pressable.Background>
 		</ThumbnailCardWrap>
 	);
 };
