@@ -21,13 +21,14 @@ interface MagazineCardProps extends FeedCardProps {}
 
 export const MagazineCard = ({
 	title,
-	onLongPress,
+	handleActionPress,
 	thumbnailUrl,
 	url,
 	domainName,
 	publishedAt,
 	density,
 	description,
+	actionPress,
 }: MagazineCardProps) => {
 	const { handleFeedPressStats } = useReadingStats();
 
@@ -42,7 +43,10 @@ export const MagazineCard = ({
 		<MagazineCardWrap>
 			<Pressable.Background
 				style={{ flexDirection: 'row' }}
-				onLongPress={() => onLongPress?.()}
+				onLongPress={actionPress === 'LONG_PRESS' ? () => handleActionPress?.() : undefined}
+				onDoublePress={
+					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
+				}
 				onPress={handlePress}
 			>
 				<StyledImage

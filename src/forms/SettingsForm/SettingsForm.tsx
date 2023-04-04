@@ -15,7 +15,7 @@ export type SettingsFormValues = {
 	readOnScroll: boolean;
 	scrollBehaviour: 'SMOOTH' | 'PAGED';
 	autoNextSection: boolean;
-	quickActionDrawerGesture: 'LONG_PRESS' | 'DOUBLE_TAP';
+	quickActionDrawerGesture: 'LONG_PRESS' | 'DOUBLE_PRESS';
 	invertSwipe: boolean;
 	disablePullRefresh: boolean;
 	sortAlphabetically: boolean;
@@ -95,7 +95,7 @@ export const SettingsForm = () => {
 					label="Quick Actions drawer gesture"
 					options={[
 						{ label: 'Long press', value: 'LONG_PRESS' },
-						{ label: 'Double tap', value: 'DOUBLE_TAP' },
+						{ label: 'Double tap', value: 'DOUBLE_PRESS' },
 					]}
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
 					mb={16}

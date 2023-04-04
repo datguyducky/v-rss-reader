@@ -164,7 +164,7 @@ export const Read = ({ scrollY, title }) => {
 						renderItem={p => (
 							<SwipeableFeedItem
 								item={p.item}
-								onLongPress={() => {
+								handleActionPress={() => {
 									setSelectedFeedData(p.item);
 									quickActionDrawerRef?.current?.present();
 								}}

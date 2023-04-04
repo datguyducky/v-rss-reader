@@ -1,10 +1,12 @@
 import styled from 'styled-components/native';
 
+import { Pressable } from '../Pressable';
+
 export const TextOnlyCardWrap = styled.View`
 	background-color: #fff;
 `;
 
-export const StyledPressable = styled.Pressable`
+export const StyledPressable = styled(Pressable.Background)`
 	flex-direction: row;
 `;
 

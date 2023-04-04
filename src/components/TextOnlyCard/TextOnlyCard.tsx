@@ -16,12 +16,13 @@ interface TextOnlyCardProps extends FeedCardProps {}
 
 export const TextOnlyCard = ({
 	title,
-	onLongPress,
+	handleActionPress,
 	url,
 	domainName,
 	publishedAt,
 	density,
 	description,
+	actionPress,
 }: TextOnlyCardProps) => {
 	const { handleFeedPressStats } = useReadingStats();
 
@@ -34,7 +35,13 @@ export const TextOnlyCard = ({
 
 	return (
 		<TextOnlyCardWrap>
-			<StyledPressable onLongPress={() => onLongPress?.()} onPress={handlePress}>
+			<StyledPressable
+				onLongPress={actionPress === 'LONG_PRESS' ? () => handleActionPress?.() : undefined}
+				onPress={handlePress}
+				onDoublePress={
+					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
+				}
+			>
 				<TextOnlyTextWrap>
 					<TitleWrap>
 						<Text fontSize={14} numberOfLines={3} weight={500}>

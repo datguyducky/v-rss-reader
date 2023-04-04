@@ -7,6 +7,7 @@ import { useReadingStats } from '../../hooks/useReadingStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
+import { Pressable } from '../Pressable';
 import { Text } from '../Text';
 import {
 	ThumbnailCardWrap,
@@ -14,19 +15,19 @@ import {
 	TitleWrap,
 	StyledImageBackground,
 } from './ThumbnailCard.styles';
-import { Pressable } from '../Pressable';
 
 interface ThumbnailCardProps extends FeedCardProps {}
 
 export const ThumbnailCard = ({
 	title,
-	onLongPress,
+	handleActionPress,
 	thumbnailUrl,
 	url,
 	domainName,
 	publishedAt,
 	density,
 	description,
+	actionPress,
 }: ThumbnailCardProps) => {
 	const { handleFeedPressStats } = useReadingStats();
 
@@ -39,7 +40,13 @@ export const ThumbnailCard = ({
 
 	return (
 		<ThumbnailCardWrap>
-			<Pressable.Background onLongPress={() => onLongPress?.()} onPress={handlePress}>
+			<Pressable.Background
+				onLongPress={actionPress === 'LONG_PRESS' ? () => handleActionPress?.() : undefined}
+				onDoublePress={
+					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
+				}
+				onPress={handlePress}
+			>
 				<StyledImageBackground
 					density={density}
 					source={{

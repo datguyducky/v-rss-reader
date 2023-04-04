@@ -17,10 +17,10 @@ import { ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 
 interface SwipeableFeedItemProps {
 	item: Record<string, unknown>; // TODO: Better type.
-	onLongPress: () => void;
+	handleActionPress: () => void;
 }
 
-export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps) => {
+export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItemProps) => {
 	const swipeRef = useRef<Swipeable>(null);
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
@@ -116,7 +116,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 				return (
 					<TextOnlyCard
 						title={item.title}
-						onLongPress={onLongPress}
+						handleActionPress={handleActionPress}
 						url={item.links[0].url}
 						domainName={`${domainName} ${
 							item?.feedAppCategory && item?.feedAppCategory?.length > 0
@@ -126,6 +126,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
 						description={item?.description || item?.content}
+						actionPress={appSettings.quickActionDrawerGesture}
 					/>
 				);
 
@@ -133,7 +134,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 				return (
 					<MagazineCard
 						title={item.title}
-						onLongPress={onLongPress}
+						handleActionPress={handleActionPress}
 						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
 						url={item.links[0].url}
 						domainName={`${domainName} ${
@@ -144,6 +145,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
 						description={item?.description || item?.content}
+						actionPress={appSettings.quickActionDrawerGesture}
 					/>
 				);
 
@@ -151,7 +153,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 				return (
 					<ThumbnailCard
 						title={item.title}
-						onLongPress={onLongPress}
+						handleActionPress={handleActionPress}
 						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
 						url={item.links[0].url}
 						domainName={`${domainName} ${
@@ -162,6 +164,7 @@ export const SwipeableFeedItem = ({ item, onLongPress }: SwipeableFeedItemProps)
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
 						description={item?.description || item?.content}
+						actionPress={appSettings.quickActionDrawerGesture}
 					/>
 				);
 		}
