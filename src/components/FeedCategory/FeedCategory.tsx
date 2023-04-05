@@ -7,6 +7,7 @@ import { FeedItemIcon } from '../FeedItemIcon';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
 import { Text } from '../Text';
+import { FeedCategoryWrap } from './FeedCategory.styles';
 
 type FeedCategoryProps = {
 	category: Record<string, unknown>;
@@ -23,19 +24,16 @@ export const FeedCategory = ({
 }: FeedCategoryProps) => {
 	const [isOpen, setIsOpen] = useState(initiallyOpen);
 
-	// TODO: Correctly handle Pressable.Background for this component
 	return (
 		<View>
-			<View
-				style={{
-					marginBottom: isOpen ? 16 : 0,
-					flexDirection: 'row',
-					alignItems: 'center',
-				}}
-			>
+			<FeedCategoryWrap>
 				<Pressable
 					onPress={() => setIsOpen(prevState => !prevState)}
-					style={{ marginRight: 12 }}
+					style={{
+						position: 'absolute',
+						left: 16,
+						zIndex: 10,
+					}}
 				>
 					{isOpen ? (
 						<Icon name={ChevronDownIcon} size={20} />
@@ -44,10 +42,20 @@ export const FeedCategory = ({
 					)}
 				</Pressable>
 
-				<Pressable onPress={() => handleItemNavigate(category)} style={{ flex: 1 }}>
-					<Text fontFamily="Montserrat">{category.name as string}</Text>
-				</Pressable>
-			</View>
+				<View
+					style={{
+						flex: 1,
+					}}
+				>
+					<Pressable.Background
+						onPress={() => handleItemNavigate(category)}
+						style={{ paddingLeft: 48, paddingRight: 16 }}
+						py={8}
+					>
+						<Text fontFamily="Montserrat">{category.name as string}</Text>
+					</Pressable.Background>
+				</View>
+			</FeedCategoryWrap>
 
 			{isOpen &&
 				(category?.feeds?.length > 0 ? (
@@ -56,19 +64,14 @@ export const FeedCategory = ({
 							item={feed}
 							icon={feed?.url ? <FeedItemIcon url={feed.url} /> : undefined}
 							handleItemNavigate={handleItemNavigate}
-							style={{ marginLeft: 32 }}
 							key={feed.id as string}
-							mb={
-								index === (category.feeds as Record<string, unknown>[]).length - 1
-									? 0
-									: 16
-							}
 							iconDisabled={feedIconDisabled}
+							pressableStyle={{ paddingLeft: 48 }}
 						/>
 					))
 				) : (
 					<Text
-						style={{ marginLeft: 32 }}
+						style={{ marginLeft: 48, marginBottom: 8, marginTop: 8 }}
 						fontSize={12}
 						weight={300}
 						fontFamily="Montserrat"
