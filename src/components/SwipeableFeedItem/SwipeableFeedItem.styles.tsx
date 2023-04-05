@@ -15,7 +15,7 @@ export const ReadLaterActionWrap = styled(Animated.View)<
 	align-items: ${({ isInverted }) => (isInverted ? 'flex-end' : 'stretch')};
 	flex: 1;
 	padding: 12px;
-	border-radius: ${({ viewType }) => (viewType === 'TEXT_ONLY' ? 0 : 6)}px;
+	border-radius: ${({ viewType }) => (viewType === 'THUMBNAIL' ? 6 : 0)}px;
 `;
 
 // By default used on the right
@@ -27,5 +27,5 @@ export const ReadStatusActionWrap = styled(Animated.View)<
 	align-items: ${({ isInverted }) => (isInverted ? 'stretch' : 'flex-end')};
 	flex: 1;
 	padding: 12px;
-	border-radius: ${({ viewType }) => (viewType === 'TEXT_ONLY' ? 0 : 6)}px;
+	border-radius: ${({ viewType }) => (viewType === 'THUMBNAIL' ? 6 : 0)}px;
 `;

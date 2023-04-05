@@ -1,13 +1,10 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { openURL } from 'expo-linking';
 import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 
-import { useReadingStats } from '../../hooks/useReadingStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
-import { Pressable } from '../Pressable';
 import { Text } from '../Text';
 import {
 	ThumbnailCardWrap,
@@ -16,37 +13,21 @@ import {
 	StyledImageBackground,
 } from './ThumbnailCard.styles';
 
-interface ThumbnailCardProps extends FeedCardProps {}
+interface ThumbnailCardProps extends Omit<FeedCardProps, 'handlePress' | 'actionPress'> {}
 
 export const ThumbnailCard = ({
 	title,
-	handleActionPress,
 	thumbnailUrl,
-	url,
 	domainName,
 	publishedAt,
 	density,
 	description,
-	actionPress,
 }: ThumbnailCardProps) => {
-	const { handleFeedPressStats } = useReadingStats();
-
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
-	const handlePress = () => {
-		handleFeedPressStats();
-		openURL(url);
-	};
-
 	return (
-		<ThumbnailCardWrap>
-			<Pressable.Background
-				onLongPress={actionPress === 'LONG_PRESS' ? () => handleActionPress?.() : undefined}
-				onDoublePress={
-					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
-				}
-				onPress={handlePress}
-			>
+		<View>
+			<ThumbnailCardWrap>
 				<StyledImageBackground
 					density={density}
 					source={{
@@ -86,7 +67,7 @@ export const ThumbnailCard = ({
 						{`${domainName} / ${publishedAt}`}
 					</Text>
 				</ThumbnailTextWrap>
-			</Pressable.Background>
-		</ThumbnailCardWrap>
+			</ThumbnailCardWrap>
+		</View>
 	);
 };

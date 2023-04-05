@@ -1,8 +1,6 @@
-import { openURL } from 'expo-linking';
 import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 
-import { useReadingStats } from '../../hooks/useReadingStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
@@ -22,22 +20,15 @@ interface MagazineCardProps extends FeedCardProps {}
 export const MagazineCard = ({
 	title,
 	handleActionPress,
+	handlePress,
 	thumbnailUrl,
-	url,
 	domainName,
 	publishedAt,
 	density,
 	description,
 	actionPress,
 }: MagazineCardProps) => {
-	const { handleFeedPressStats } = useReadingStats();
-
 	const parsedDescription = description ? parseHtmlString(description) : '';
-
-	const handlePress = () => {
-		handleFeedPressStats();
-		openURL(url);
-	};
 
 	return (
 		<MagazineCardWrap>
@@ -48,6 +39,8 @@ export const MagazineCard = ({
 					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
 				}
 				onPress={handlePress}
+				py={8}
+				px={12}
 			>
 				<StyledImage
 					source={{

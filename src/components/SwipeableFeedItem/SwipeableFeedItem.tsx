@@ -1,3 +1,4 @@
+import { openURL } from 'expo-linking';
 import React, { useRef } from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ArchiveBoxIcon } from 'react-native-heroicons/outline';
@@ -7,10 +8,12 @@ import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/co
 import { FilterFormValues } from '../../drawers/Filters';
 import { SettingsFormValues } from '../../forms/SettingsForm';
 import { useReadLater } from '../../hooks/useReadLater';
+import { useReadingStats } from '../../hooks/useReadingStats';
 import { calculateTimePassed } from '../../utils/calculateTimePassed';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
+import { Pressable } from '../Pressable';
 import { TextOnlyCard } from '../TextOnlyCard';
 import { ThumbnailCard } from '../ThumbnailCard';
 import { ReadLaterActionWrap } from './SwipeableFeedItem.styles';
@@ -27,6 +30,12 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
+	const { handleFeedPressStats } = useReadingStats();
+
+	const handlePress = () => {
+		handleFeedPressStats();
+		openURL(item?.links[0]?.url);
+	};
 
 	const renderReadLaterAction = () => {
 		return (
@@ -117,7 +126,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 					<TextOnlyCard
 						title={item.title}
 						handleActionPress={handleActionPress}
-						url={item.links[0].url}
+						handlePress={handlePress}
 						domainName={`${domainName} ${
 							item?.feedAppCategory && item?.feedAppCategory?.length > 0
 								? ' / ' + item.feedAppCategory
@@ -136,7 +145,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 						title={item.title}
 						handleActionPress={handleActionPress}
 						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
-						url={item.links[0].url}
+						handlePress={handlePress}
 						domainName={`${domainName} ${
 							item?.feedAppCategory && item?.feedAppCategory?.length > 0
 								? ' / ' + item.feedAppCategory
@@ -153,9 +162,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 				return (
 					<ThumbnailCard
 						title={item.title}
-						handleActionPress={handleActionPress}
 						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
-						url={item.links[0].url}
 						domainName={`${domainName} ${
 							item?.feedAppCategory && item?.feedAppCategory?.length > 0
 								? ' / ' + item.feedAppCategory
@@ -164,7 +171,6 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 						publishedAt={formattedPublishedAt}
 						density={feedFilters.FEED_DENSITY}
 						description={item?.description || item?.content}
-						actionPress={appSettings.quickActionDrawerGesture}
 					/>
 				);
 		}
@@ -198,6 +204,43 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 		swipeRef?.current?.closeFromEnd();
 	};
 
+	if (feedFilters.FEED_VIEW === 'THUMBNAIL') {
+		return (
+			<Pressable.Background
+				onLongPress={
+					appSettings.quickActionDrawerGesture === 'LONG_PRESS'
+						? () => handleActionPress?.()
+						: undefined
+				}
+				onDoublePress={
+					appSettings.quickActionDrawerGesture === 'DOUBLE_PRESS'
+						? () => handleActionPress?.()
+						: undefined
+				}
+				onPress={handlePress}
+				style={{
+					overflow: 'hidden',
+					borderRadius: 6,
+					marginVertical: 8,
+					marginHorizontal: 12,
+				}}
+			>
+				<Swipeable
+					renderLeftActions={appSettings.invertSwipe ? undefined : renderReadLaterAction}
+					renderRightActions={appSettings.invertSwipe ? renderReadLaterAction : undefined}
+					friction={1.1}
+					onSwipeableOpen={onOpen}
+					ref={swipeRef}
+					containerStyle={{ borderRadius: 0 }}
+					leftThreshold={75}
+					//rightThreshold={75}
+				>
+					{renderFeedCard()}
+				</Swipeable>
+			</Pressable.Background>
+		);
+	}
+
 	return (
 		<Swipeable
 			renderLeftActions={appSettings.invertSwipe ? undefined : renderReadLaterAction}
@@ -205,7 +248,6 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 			friction={1.1}
 			onSwipeableOpen={onOpen}
 			ref={swipeRef}
-			containerStyle={{ borderRadius: feedFilters.FEED_VIEW === 'TEXT_ONLY' ? 0 : 6 }}
 			leftThreshold={75}
 			//rightThreshold={75}
 		>

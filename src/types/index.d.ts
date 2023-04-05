@@ -2,7 +2,7 @@ import { SettingsFormValues } from '../forms/SettingsForm';
 
 export interface FeedCardProps {
 	title: string;
-	url: string;
+	handlePress: () => void;
 	domainName: string;
 	publishedAt: string;
 	density: 'COMPACT' | 'COMFORTABLE';

@@ -19,15 +19,26 @@ interface LayoutProps {
 	title?: string;
 	animatedTitle?: string;
 	style?: StyleProp<ViewStyle>;
+	horizontalPadding?: boolean;
+	headingSpacing?: number;
 }
 
-const StyledLayout = styled.View<{ withAnimatedTitle: boolean }>`
+const StyledLayout = styled.View<{ withAnimatedTitle: boolean; horizontalPadding: boolean }>`
 	flex: 1;
 	background-color: #fff;
-	padding: ${({ withAnimatedTitle }) => (withAnimatedTitle ? 8 : 16)}px 12px 16px;
+	padding: ${({ withAnimatedTitle, horizontalPadding }) => (withAnimatedTitle ? 8 : 16)}px
+		${({ horizontalPadding }) => (horizontalPadding ? 12 : 0)}px 16px;
 `;
 
-export const Layout = ({ children, scrollY, title, animatedTitle, style }: LayoutProps) => {
+export const Layout = ({
+	children,
+	scrollY,
+	title,
+	animatedTitle,
+	style,
+	horizontalPadding = true,
+	headingSpacing = 0,
+}: LayoutProps) => {
 	// TODO: Maybe it would be better to have this called for only the first child?
 	const addListHeaderComponent = (child: any) => {
 		if (isValidElement(child) && child.type === FlatList) {
@@ -39,6 +50,7 @@ export const Layout = ({ children, scrollY, title, animatedTitle, style }: Layou
 						action="hide"
 						tag="h4"
 						mb={16}
+						style={{ paddingLeft: headingSpacing }}
 					/>
 				),
 				onScroll: Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
@@ -59,6 +71,7 @@ export const Layout = ({ children, scrollY, title, animatedTitle, style }: Layou
 								tag="h4"
 								mb={16}
 								key="scroll-view-heading-animated"
+								style={{ paddingLeft: headingSpacing }}
 							/>,
 							...React.Children.toArray(child.props.children),
 						],
@@ -77,7 +90,11 @@ export const Layout = ({ children, scrollY, title, animatedTitle, style }: Layou
 	};
 
 	return (
-		<StyledLayout style={style} withAnimatedTitle={!!animatedTitle}>
+		<StyledLayout
+			style={style}
+			withAnimatedTitle={!!animatedTitle}
+			horizontalPadding={horizontalPadding}
+		>
 			{!animatedTitle && title && (
 				<Heading tag="h4" mb={16}>
 					{title}

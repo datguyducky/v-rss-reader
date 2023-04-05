@@ -4,7 +4,6 @@ import { Text } from '../Text';
 
 export const MagazineCardWrap = styled.View`
 	background-color: #fff;
-	border-radius: 6px;
 `;
 
 export const StyledImage = styled.ImageBackground<{ density: string }>`

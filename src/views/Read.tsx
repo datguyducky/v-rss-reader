@@ -154,7 +154,12 @@ export const Read = ({ scrollY, title }) => {
 
 	return (
 		<>
-			<Layout scrollY={scrollY} animatedTitle={activeItemDetails?.name || title}>
+			<Layout
+				scrollY={scrollY}
+				animatedTitle={activeItemDetails?.name || title}
+				horizontalPadding={false}
+				headingSpacing={12}
+			>
 				{loading ? (
 					<ActivityIndicator size="large" color="#228be6" />
 				) : (
@@ -171,7 +176,6 @@ export const Read = ({ scrollY, title }) => {
 							/>
 						)}
 						keyExtractor={item => item?.id || item.links?.[0]?.url}
-						ItemSeparatorComponent={() => <View style={{ marginBottom: 16 }} />}
 						contentContainerStyle={{ paddingVertical: 8 }}
 						ListEmptyComponent={() => (
 							<Text weight={300} fontSize={12}>

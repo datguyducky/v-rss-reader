@@ -1,7 +1,5 @@
-import { openURL } from 'expo-linking';
 import { View } from 'react-native';
 
-import { useReadingStats } from '../../hooks/useReadingStats';
 import { FeedCardProps } from '../../types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Text } from '../Text';
@@ -17,21 +15,14 @@ interface TextOnlyCardProps extends FeedCardProps {}
 export const TextOnlyCard = ({
 	title,
 	handleActionPress,
-	url,
 	domainName,
 	publishedAt,
 	density,
 	description,
 	actionPress,
+	handlePress,
 }: TextOnlyCardProps) => {
-	const { handleFeedPressStats } = useReadingStats();
-
 	const parsedDescription = description ? parseHtmlString(description) : '';
-
-	const handlePress = () => {
-		handleFeedPressStats();
-		openURL(url);
-	};
 
 	return (
 		<TextOnlyCardWrap>
@@ -41,6 +32,8 @@ export const TextOnlyCard = ({
 				onDoublePress={
 					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
 				}
+				py={8}
+				px={12}
 			>
 				<TextOnlyTextWrap>
 					<TitleWrap>

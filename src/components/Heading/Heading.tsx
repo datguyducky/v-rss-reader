@@ -9,6 +9,7 @@ export const Heading = ({
 	color,
 	tag,
 	mb,
+	style,
 }: StyledNativeHeadingTextProps) => {
 	return (
 		<StyledNativeHeadingText
@@ -17,6 +18,7 @@ export const Heading = ({
 			color={color}
 			tag={tag}
 			mb={mb}
+			style={style}
 		>
 			{children}
 		</StyledNativeHeadingText>
