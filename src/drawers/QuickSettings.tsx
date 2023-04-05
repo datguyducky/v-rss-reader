@@ -12,6 +12,7 @@ import { Pressable } from '../components/Pressable';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
+import { ThemeSectionContainer } from './QuickSettings.styles';
 import { ReadingStats } from './ReadingStats';
 
 export const QuickSettings = forwardRef(
@@ -59,8 +60,7 @@ export const QuickSettings = forwardRef(
 							navigation.navigate('Settings', { name: 'Settings' });
 						}}
 						icon={<Icon name={Cog6ToothIcon} size={20} />}
-						mb={16}
-						pressableComponent={<Pressable.Background />}
+						pressableComponent={<Pressable.Background py={8} px={16} />}
 					>
 						App settings
 					</BasicButton>
@@ -72,17 +72,21 @@ export const QuickSettings = forwardRef(
 							readingStatsRef?.current?.present();
 						}}
 						icon={<Icon name={ChartPieIcon} size={20} />}
-						pressableComponent={<Pressable.Background />}
+						pressableComponent={<Pressable.Background py={8} px={16} />}
 					>
 						Reading stats
 					</BasicButton>
 
 					{activeItemDetails?.id && (
 						<>
-							<Divider my={16} />
+							<Divider my={8} />
 
-							<View style={{ marginBottom: 16 }}>
-								<Pressable.Background onPress={handleEditCurrentView}>
+							<View style={{ marginBottom: 0 }}>
+								<Pressable.Background
+									onPress={handleEditCurrentView}
+									py={8}
+									px={16}
+								>
 									<Text fontFamily="Montserrat">{`Rename ${
 										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
 									}`}</Text>
@@ -100,6 +104,8 @@ export const QuickSettings = forwardRef(
 										ref?.current?.forceClose();
 										setDeleteCurrentView(true);
 									}}
+									py={8}
+									px={16}
 								>
 									<Text fontFamily="Montserrat">{`Delete ${
 										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
@@ -114,12 +120,14 @@ export const QuickSettings = forwardRef(
 						</>
 					)}
 
-					<Divider my={16} />
+					<Divider my={8} style={{ marginBottom: 16 }} />
 
-					<Text fontFamily="Montserrat" mb={16}>
-						Themes
-					</Text>
-					<ThemeSection />
+					<ThemeSectionContainer>
+						<Text fontFamily="Montserrat" mb={16}>
+							Themes
+						</Text>
+						<ThemeSection />
+					</ThemeSectionContainer>
 				</Drawer>
 
 				<ReadingStats navigation={navigation} ref={readingStatsRef} />

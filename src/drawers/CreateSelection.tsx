@@ -17,8 +17,7 @@ export const CreateSelection = forwardRef(
 						navigation.navigate('Feed', { mode: 'create' });
 					}}
 					icon={<Icon name={PlusIcon} size={20} />}
-					mb={16}
-					pressableComponent={<Pressable.Background />}
+					pressableComponent={<Pressable.Background px={16} py={8} />}
 				>
 					Add new RSS feed
 				</BasicButton>
@@ -29,7 +28,7 @@ export const CreateSelection = forwardRef(
 						navigation.navigate('Category', { mode: 'create' });
 					}}
 					icon={<Icon name={FolderPlusIcon} size={20} />}
-					pressableComponent={<Pressable.Background />}
+					pressableComponent={<Pressable.Background px={16} py={8} />}
 				>
 					Create new category
 				</BasicButton>

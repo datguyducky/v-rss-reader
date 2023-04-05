@@ -11,6 +11,7 @@ type FeedItemProps = {
 	item: Record<string, unknown>;
 	handleItemNavigate: (item: Record<string, unknown>) => void;
 	style?: StyleProp<ViewStyle>;
+	pressableStyle?: StyleProp<ViewStyle>;
 	mb?: number;
 	icon?: React.ReactElement;
 	iconDisabled?: boolean;
@@ -19,6 +20,7 @@ export const FeedItem = ({
 	item,
 	handleItemNavigate,
 	style,
+	pressableStyle,
 	mb,
 	icon,
 	iconDisabled,
@@ -35,7 +37,7 @@ export const FeedItem = ({
 			}
 			mb={mb}
 			style={style}
-			pressableComponent={<Pressable.Background />}
+			pressableComponent={<Pressable.Background py={8} px={16} style={pressableStyle} />}
 		>
 			{item.name}
 		</BasicButton>

@@ -4,10 +4,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useMMKVObject } from 'react-native-mmkv';
 
 import { DEFAULT_FILTERS_VALUES } from '../common/constants';
-import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
-import { Radio } from '../components/Radio';
-import { Text } from '../components/Text';
+import { Radio, SectionDivider, SectionTitle } from './Filters.styles';
 
 export type FilterFormValues = {
 	SORT_BY: 'LATEST' | 'OLDEST';
@@ -26,32 +24,38 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	const onSubmit = (values: FilterFormValues) => setFeedFilters(values);
 
 	return (
-		<Drawer ref={ref} snapPoints={[460]}>
+		<Drawer ref={ref} snapPoints={[460]} containerStyle={{ paddingTop: 24 }}>
 			<FormProvider {...filterForm}>
-				<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
+				<SectionTitle fontFamily="Montserrat" color="#228BE6" weight={600} mb={8}>
 					Sort by
-				</Text>
+				</SectionTitle>
 				<Radio.Group name="SORT_BY" onValueChange={filterForm.handleSubmit(onSubmit)}>
-					<Radio label="Latest" mb={16} value="LATEST" />
+					<Radio label="Latest" value="LATEST" />
 					<Radio label="Oldest" value="OLDEST" />
 				</Radio.Group>
 
-				<Divider my={16} />
+				<SectionDivider my={8} />
 
-				<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
+				<SectionTitle fontFamily="Montserrat" color="#228BE6" weight={600} mb={8}>
 					View
-				</Text>
+				</SectionTitle>
 				<Radio.Group name="FEED_VIEW" onValueChange={filterForm.handleSubmit(onSubmit)}>
-					<Radio label="Text-only" mb={16} value="TEXT_ONLY" />
-					<Radio label="Magazine" mb={16} value="MAGAZINE" />
-					<Radio label="Thumbnail" mb={16} value="THUMBNAIL" />
+					<Radio label="Text-only" value="TEXT_ONLY" />
+					<Radio label="Magazine" value="MAGAZINE" />
+					<Radio label="Thumbnail" value="THUMBNAIL" />
 				</Radio.Group>
 
-				<Text fontFamily="Montserrat" color="#228BE6" weight={600} mb={16}>
+				<SectionTitle
+					fontFamily="Montserrat"
+					color="#228BE6"
+					weight={600}
+					mb={8}
+					style={{ marginTop: 8 }}
+				>
 					Density
-				</Text>
+				</SectionTitle>
 				<Radio.Group name="FEED_DENSITY" onValueChange={filterForm.handleSubmit(onSubmit)}>
-					<Radio label="Compact" mb={16} value="COMPACT" />
+					<Radio label="Compact" value="COMPACT" />
 					<Radio label="Comfortable" value="COMFORTABLE" />
 				</Radio.Group>
 			</FormProvider>

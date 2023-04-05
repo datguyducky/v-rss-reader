@@ -1,6 +1,7 @@
 import { ReactNode, ReactElement, cloneElement } from 'react';
-import { Pressable, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
+import { Pressable } from '../Pressable';
 import { Text } from '../Text';
 import { StyledNativeTextProps } from '../Text/Text.styles';
 import {

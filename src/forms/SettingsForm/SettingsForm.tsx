@@ -78,6 +78,7 @@ export const SettingsForm = () => {
 						{ label: 'Paged', value: 'PAGED' },
 					]}
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
+					style={{ paddingHorizontal: 0 }}
 				/>
 				{/*<Switch*/}
 				{/*	name="autoNextSection"*/}

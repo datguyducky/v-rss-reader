@@ -1,7 +1,7 @@
 import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { setStatusBarStyle, setStatusBarBackgroundColor } from 'expo-status-bar';
 import { ForwardedRef, forwardRef, useCallback } from 'react';
-import { FlatListProps } from 'react-native';
+import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
 
 import { Text } from '../Text';
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
@@ -20,6 +20,7 @@ interface DrawerProps extends DrawerStylesProps {
 	ItemSeparatorComponent?: FlatListProps<any>['ItemSeparatorComponent'];
 	emptyListText?: string;
 	onChange?: (index: number) => void;
+	containerStyle?: StyleProp<ViewStyle>;
 }
 
 // TODO: There's a small flash on a statusBar when the `Drawer` is closed, maybe is not that noticeable but it still would be a good idea to fix it.
@@ -40,6 +41,7 @@ export const Drawer = forwardRef(
 			ItemSeparatorComponent,
 			emptyListText,
 			onChange,
+			containerStyle,
 		}: DrawerProps,
 		ref: ForwardedRef<BottomSheetModal>,
 	) => {
@@ -86,7 +88,10 @@ export const Drawer = forwardRef(
 					{() => {
 						if (useFlatList) {
 							return (
-								<DrawerContainer horizontalContent={horizontalContent}>
+								<DrawerContainer
+									horizontalContent={horizontalContent}
+									style={containerStyle}
+								>
 									{children}
 
 									<BottomSheetFlatList
@@ -105,7 +110,10 @@ export const Drawer = forwardRef(
 						}
 
 						return (
-							<DrawerContainer horizontalContent={horizontalContent}>
+							<DrawerContainer
+								horizontalContent={horizontalContent}
+								style={containerStyle}
+							>
 								{children}
 							</DrawerContainer>
 						);

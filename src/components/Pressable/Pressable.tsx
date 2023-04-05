@@ -1,10 +1,4 @@
-import { ReactElement } from 'react';
-import {
-	Pressable as NativePressable,
-	PressableProps as NativePressableProps,
-	StyleProp,
-	ViewStyle,
-} from 'react-native';
+import { PressableProps as NativePressableProps, StyleProp, ViewStyle } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import {
@@ -12,10 +6,11 @@ import {
 	createLongPressGesture,
 	createSinglePressGesture,
 } from '../../utils/pressGestureHandler';
+import { StyledNativePressable, StyledNativePressableStyles } from './Pressable.styles';
 import { PressableBackground } from './PressableBackground/PressableBackground';
 import { PressableOpacity } from './PressableOpacity/PressableOpacity';
 
-export interface PressableProps extends NativePressableProps {
+export interface PressableProps extends StyledNativePressableStyles, NativePressableProps {
 	onPress?: () => void;
 	onLongPress?: () => void;
 	onDoublePress?: () => void;
@@ -28,14 +23,18 @@ export const Pressable = ({
 	onLongPress,
 	children,
 	style,
-}: PressableProps): ReactElement => {
+	py = 0,
+	px = 0,
+}: PressableProps) => {
 	const singlePress = createSinglePressGesture(onPress);
 	const doublePress = createDoublePressGesture(onDoublePress);
 	const longPress = createLongPressGesture(onLongPress);
 
 	return (
 		<GestureDetector gesture={Gesture.Exclusive(longPress, doublePress, singlePress)}>
-			<NativePressable style={style}>{children}</NativePressable>
+			<StyledNativePressable py={py} px={px} style={style}>
+				{children}
+			</StyledNativePressable>
 		</GestureDetector>
 	);
 };

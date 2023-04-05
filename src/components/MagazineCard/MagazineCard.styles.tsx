@@ -7,10 +7,6 @@ export const MagazineCardWrap = styled.View`
 	border-radius: 6px;
 `;
 
-export const StyledPressable = styled.Pressable`
-	flex-direction: row;
-`;
-
 export const StyledImage = styled.ImageBackground<{ density: string }>`
 	width: ${({ density }) => (density === 'COMFORTABLE' ? 100 : 64)}px;
 	height: ${({ density }) => (density === 'COMFORTABLE' ? 100 : 64)}px;

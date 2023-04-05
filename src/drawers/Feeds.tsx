@@ -1,8 +1,7 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
 import { ForwardedRef, forwardRef } from 'react';
-import { View } from 'react-native';
-import { ArchiveBoxIcon, InboxStackIcon, MinusIcon } from 'react-native-heroicons/outline';
+import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
 
 import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
@@ -62,17 +61,15 @@ export const Feeds = forwardRef(
 							icon={item?.url ? <FeedItemIcon url={item.url} /> : undefined}
 							item={item}
 							handleItemNavigate={handleItemNavigate}
-						iconDisabled={appSettings.hideFeedIcons}
+							iconDisabled={appSettings.hideFeedIcons}
 						/>
 					)
 				}
 				keyExtractor={item => item.id}
-				ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
 			>
 				<FeedItem
 					item={{ name: 'All articles', id: 'ALL_ARTICLES_VIEW' }}
 					handleItemNavigate={handleItemNavigate}
-					mb={16}
 					icon={<Icon name={InboxStackIcon} size={20} />}
 				/>
 
@@ -82,7 +79,7 @@ export const Feeds = forwardRef(
 					icon={<Icon name={ArchiveBoxIcon} size={20} />}
 				/>
 
-				<Divider my={16} />
+				<Divider my={8} style={{ marginLeft: 16, marginRight: 16, width: 'auto' }} />
 			</Drawer>
 		);
 	},

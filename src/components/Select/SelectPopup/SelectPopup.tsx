@@ -12,15 +12,24 @@ import {
 	SelectPopupStylesProps,
 	StyledScrollView,
 } from './SelectPopup.styles';
+import { StyleProp, ViewStyle } from 'react-native';
 
 interface SelectPopupProps extends SelectPopupStylesProps {
 	label: string;
 	name: string;
 	options: { label: string; value: string }[];
 	onValueChange?: () => void;
+	style?: StyleProp<ViewStyle>;
 }
 
-export const SelectPopup = ({ label, name, options = [], onValueChange, mb }: SelectPopupProps) => {
+export const SelectPopup = ({
+	label,
+	name,
+	options = [],
+	onValueChange,
+	mb,
+	style,
+}: SelectPopupProps) => {
 	const { getValues } = useFormContext();
 
 	const [popupVisible, setPopupVisible] = useState(false);
@@ -41,7 +50,13 @@ export const SelectPopup = ({ label, name, options = [], onValueChange, mb }: Se
 				</Text>
 			</SelectPopupContainer>
 
-			<Popup isOpen={popupVisible} onClose={() => setPopupVisible(false)} title={label}>
+			<Popup
+				isOpen={popupVisible}
+				onClose={() => setPopupVisible(false)}
+				title={label}
+				titleStyle={{ paddingLeft: 16, marginBottom: 0 }}
+				style={style}
+			>
 				<GestureHandlerRootView>
 					<StyledScrollView>
 						<Radio.Group
@@ -56,14 +71,14 @@ export const SelectPopup = ({ label, name, options = [], onValueChange, mb }: Se
 									label={label}
 									value={value}
 									key={value}
-									mb={index === options.length - 1 ? 0 : 16}
+									pressableStyle={{ paddingLeft: 16, paddingVertical: 8 }}
 								/>
 							))}
 						</Radio.Group>
 					</StyledScrollView>
 
 					<BasicButton
-						style={{ marginLeft: 'auto' }}
+						style={{ marginLeft: 'auto', paddingRight: 16 }}
 						onPress={() => setPopupVisible(false)}
 						textWeight={600}
 						textColor="#228be6"

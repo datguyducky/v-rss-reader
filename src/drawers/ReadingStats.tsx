@@ -35,6 +35,7 @@ export const ReadingStats = forwardRef(
 				detached
 				bottomInset={24}
 				onChange={handleDrawerChange}
+				containerStyle={{ paddingTop: 24, paddingLeft: 16, paddingRight: 16 }}
 			>
 				<Text
 					fontFamily="Montserrat"

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { Modal } from 'react-native';
+import { Modal, StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 import { Text } from '../Text';
 import { HeaderWrap, PopupOverlay, PopupWrapper } from './Popup.styles';
@@ -9,9 +9,11 @@ type PopupProps = {
 	isOpen: boolean;
 	onClose: () => void;
 	title?: string;
+	style?: StyleProp<ViewStyle>;
+	titleStyle?: StyleProp<TextStyle>;
 };
 
-export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
+export const Popup = ({ isOpen, onClose, title, children, style, titleStyle }: PopupProps) => {
 	return (
 		<Modal
 			animationType="fade"
@@ -22,10 +24,16 @@ export const Popup = ({ isOpen, onClose, title, children }: PopupProps) => {
 			onRequestClose={onClose}
 		>
 			<PopupOverlay onPress={onClose}>
-				<PopupWrapper>
+				<PopupWrapper style={style}>
 					{title && (
 						<HeaderWrap>
-							<Text fontFamily="Montserrat" fontSize={16} weight={500} mb={4}>
+							<Text
+								fontFamily="Montserrat"
+								fontSize={16}
+								weight={500}
+								mb={4}
+								style={titleStyle}
+							>
 								{title}
 							</Text>
 						</HeaderWrap>
