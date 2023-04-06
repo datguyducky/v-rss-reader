@@ -7,7 +7,6 @@ import { useTheme } from 'styled-components/native';
 
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
-import { Text } from '../components/Text';
 import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
 import { SettingsFormValues } from '../forms/SettingsForm';
@@ -15,6 +14,7 @@ import { useFeedsCategories } from '../hooks/useFeedsCategories';
 import { useReadLater } from '../hooks/useReadLater';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
+import { EmptyCategoryText } from './Read.styles';
 
 export const Read = ({ scrollY, title }) => {
 	const theme = useTheme();
@@ -181,10 +181,10 @@ export const Read = ({ scrollY, title }) => {
 						keyExtractor={item => item?.id || item.links?.[0]?.url}
 						contentContainerStyle={{ paddingVertical: 8 }}
 						ListEmptyComponent={() => (
-							<Text weight={300} fontSize={12}>
+							<EmptyCategoryText weight={300} fontSize={12}>
 								Sorry, something went wrong and no articles were found for this
 								feed.
-							</Text>
+							</EmptyCategoryText>
 						)}
 						scrollEventThrottle={16}
 						refreshControl={
