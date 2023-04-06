@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+
 import { Text } from '../Text';
 
 export const ValueWithIconWrap = styled.View`
@@ -7,20 +8,18 @@ export const ValueWithIconWrap = styled.View`
 `;
 
 export const SelectModalHeading = styled.View`
-	padding-horizontal: 12px;
-	padding-top: 16px;
-	padding-bottom: 16px;
 	flex-direction: row;
 	align-items: center;
+	padding: ${({ theme }) => `${theme.spacing.size(2)}px ${theme.spacing.size(1.5)}px`};
 `;
 
 export const SelectModalTitle = styled(Text)`
-	margin-left: 24px;
-	line-height: 16px;
+	margin-left: ${({ theme }) => theme.spacing.size(3)}px;
+	line-height: ${({ theme }) => theme.spacing.size(2)}px;
 `;
 
 export const SelectModalRow = styled.View`
-	padding: 16px 12px;
 	flex-direction: row;
 	align-items: center;
+	padding: ${({ theme }) => `${theme.spacing.size(2)}px ${theme.spacing.size(1.5)}px`};
 `;

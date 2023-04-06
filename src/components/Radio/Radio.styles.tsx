@@ -18,10 +18,11 @@ export const StyledPressable = styled(Pressable.Background)`
 export const RadioCircle = styled.View<{ isChecked: boolean }>`
 	height: 20px;
 	width: 20px;
-	background-color: #fff;
-	border-radius: 20px;
-	margin-right: 12px;
 	border-style: solid;
-	border-color: ${({ isChecked }) => (isChecked ? '#228BE6' : '#101113')};
+	background-color: ${({ theme }) => theme.colors.base[0]};
+	border-radius: ${({ theme }) => theme.borderRadius.full}px;
+	margin-right: ${({ theme }) => theme.spacing.size(1.5)}px;
+	border-color: ${({ theme, isChecked }) =>
+		isChecked ? theme.colors.primary : theme.colors.base[9]};
 	border-width: ${({ isChecked }) => (isChecked ? 5 : 1)}px;
 `;

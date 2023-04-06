@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { Pressable } from '../Pressable';
 
 export const TextOnlyCardWrap = styled.View`
-	background-color: #fff;
+	background-color: ${({ theme }) => theme.colors.base[0]};
 `;
 
 export const StyledPressable = styled(Pressable.Background)`
@@ -16,5 +16,5 @@ export const TextOnlyTextWrap = styled.View`
 
 export const TitleWrap = styled.View`
 	max-height: 63px;
-	margin-bottom: 4px;
+	margin-bottom: ${({ theme }) => theme.spacing.size(0.5)}px;
 `;

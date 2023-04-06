@@ -15,38 +15,38 @@ export const ButtonContent = styled.View<
 	Pick<ButtonStylesProps, 'disabled' | 'backgroundColor' | 'size' | 'variant'>
 >`
 	align-items: center;
-	background-color: ${({ disabled, backgroundColor, variant }) => {
+	border-width: 1px;
+	background-color: ${({ theme, disabled, backgroundColor, variant }) => {
 		if (disabled) {
-			return '#e9ecef';
+			return theme.colors.base[2];
 		}
 
 		if (!disabled && variant !== 'outline') {
-			return backgroundColor;
+			return backgroundColor || theme.colors.primary;
 		}
 
 		if (variant === 'outline') {
 			return 'transparent';
 		}
 	}};
-	padding: ${({ size }) => {
+	padding: ${({ theme, size }) => {
 			switch (size) {
 				case 'small':
-					return 6;
+					return theme.spacing.size(1) - 2;
 
 				case 'regular':
-					return 12;
+					return theme.spacing.size(1.5);
 			}
 		}}px
-		16px;
-	border-radius: 4px;
-	border-width: 1px;
-	border-color: ${({ variant }) => {
+		${({ theme }) => theme.spacing.size(2)}px;
+	border-radius: ${({ theme }) => theme.borderRadius.small}px;
+	border-color: ${({ theme, variant }) => {
 		switch (variant) {
 			case 'filled':
 				return 'transparent';
 
 			case 'outline':
-				return '#101113';
+				return theme.colors.base[9];
 		}
 	}};
 `;

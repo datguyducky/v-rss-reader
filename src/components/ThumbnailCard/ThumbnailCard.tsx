@@ -1,8 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
+import { useTheme } from 'styled-components/native';
 
-import { FeedCardProps } from '../../types';
+import { FeedCardProps } from '../../@types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
 import { Text } from '../Text';
@@ -23,6 +24,7 @@ export const ThumbnailCard = ({
 	density,
 	description,
 }: ThumbnailCardProps) => {
+	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
 	return (
@@ -35,7 +37,7 @@ export const ThumbnailCard = ({
 					}}
 				>
 					<LinearGradient
-						colors={['#00000000', '#000000']}
+						colors={['#00000000', '#000000']} // TODO: Figure out if this needs to be inside the theme colors object.
 						start={{ x: 0.5, y: density === 'COMFORTABLE' ? 0.4 : 0.45 }}
 						style={{
 							height: '100%',
@@ -44,26 +46,38 @@ export const ThumbnailCard = ({
 							alignItems: 'center',
 						}}
 					>
-						{!thumbnailUrl && <Icon name={PhotoIcon} size={64} color="#909296" />}
+						{!thumbnailUrl && (
+							<Icon name={PhotoIcon} size={64} color={theme.colors.base[6]} />
+						)}
 					</LinearGradient>
 				</StyledImageBackground>
 
 				<ThumbnailTextWrap>
 					<TitleWrap>
-						<Text fontSize={14} numberOfLines={3} color="#fff" weight={500}>
+						<Text
+							fontSize={14}
+							numberOfLines={3}
+							color={theme.colors.base[0]}
+							weight={500}
+						>
 							{title}
 						</Text>
 					</TitleWrap>
 
 					{density === 'COMFORTABLE' && parsedDescription.length > 0 && (
 						<View>
-							<Text fontSize={12} numberOfLines={3} weight={300} color="#fff">
+							<Text
+								fontSize={12}
+								numberOfLines={3}
+								weight={300}
+								color={theme.colors.base[0]}
+							>
 								{parsedDescription}
 							</Text>
 						</View>
 					)}
 
-					<Text fontSize={10} weight={300} color="#fff">
+					<Text fontSize={10} weight={300} color={theme.colors.base[0]}>
 						{`${domainName} / ${publishedAt}`}
 					</Text>
 				</ThumbnailTextWrap>

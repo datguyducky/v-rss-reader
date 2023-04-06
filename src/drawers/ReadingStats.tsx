@@ -1,6 +1,7 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { ForwardedRef, forwardRef } from 'react';
 import { View } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
@@ -11,6 +12,8 @@ import { SectionCount, SectionTitle, SectionWrap } from './ReadingStats.styles';
 
 export const ReadingStats = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
+		const theme = useTheme();
+
 		const {
 			feedsOpened,
 			averageFeedsPerDay,
@@ -40,7 +43,7 @@ export const ReadingStats = forwardRef(
 				<Text
 					fontFamily="Montserrat"
 					fontSize={18}
-					color="#228BE6"
+					color={theme.colors.primary}
 					weight={600}
 					mb={16}
 					textAlign="center"

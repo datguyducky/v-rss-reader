@@ -7,13 +7,13 @@ export const ThemeSectionWrap = styled.View`
 `;
 
 export const LightThemeWrap = styled.View`
-	margin-right: 48px;
 	align-items: center;
+	margin-right: ${({ theme }) => theme.spacing.size(6)}px;
 `;
 
 export const DarkThemeWrap = styled.View`
 	align-items: center;
-	margin-right: 48px;
+	margin-right: ${({ theme }) => theme.spacing.size(6)}px;
 `;
 
 export const ThemePreview = styled.View<{
@@ -22,20 +22,21 @@ export const ThemePreview = styled.View<{
 }>`
 	width: 42px;
 	height: 42px;
-	border-radius: 42px;
-	background-color: ${({ color }) => {
-		switch (color) {
-			case 'light':
-				return '#fff';
-
-			case 'dark':
-				return '#101113';
-		}
-	}};
 	border-width: 1px;
 	border-style: solid;
-	border-color: ${({ isActive }) => (isActive ? '#228BE6' : '#CED4DA')};
-	margin-bottom: 6px;
+	border-radius: ${({ theme }) => theme.borderRadius.full}px;
+	background-color: ${({ theme, color }) => {
+		switch (color) {
+			case 'light':
+				return theme.colors.base[0];
+
+			case 'dark':
+				return theme.colors.base[9];
+		}
+	}};
+	border-color: ${({ theme, isActive }) =>
+		isActive ? theme.colors.primary : theme.colors.base[3]};
+	margin-bottom: ${({ theme }) => theme.spacing.size(1) - 2}px;
 `;
 
 export const AutoThemePreviewWrap = styled.View<{
@@ -43,21 +44,22 @@ export const AutoThemePreviewWrap = styled.View<{
 }>`
 	width: 42px;
 	height: 42px;
-	border-radius: 42px;
 	border-width: 1px;
 	border-style: solid;
-	border-color: ${({ isActive }) => (isActive ? '#228BE6' : '#CED4DA')};
 	overflow: hidden;
 	flex-direction: row;
-	margin-bottom: 6px;
+	border-radius: ${({ theme }) => theme.borderRadius.full}px;
+	margin-bottom: ${({ theme }) => theme.spacing.size(1) - 2}px;
+	border-color: ${({ theme, isActive }) =>
+		isActive ? theme.colors.primary : theme.colors.base[3]};
 `;
 
 export const AutoLightSection = styled.View`
-	background-color: #fff;
 	flex: 1;
+	background-color: ${({ theme }) => theme.colors.base[0]};
 `;
 
 export const AutoDarkSection = styled.View`
-	background-color: #101113;
 	flex: 1;
+	background-color: ${({ theme }) => theme.colors.base[9]};
 `;

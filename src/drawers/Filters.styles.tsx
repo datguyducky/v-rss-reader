@@ -5,16 +5,17 @@ import { Radio as RadioComponent } from '../components/Radio';
 import { Text } from '../components/Text';
 
 export const SectionTitle = styled(Text)`
-	padding-left: 16px;
+	padding-left: ${({ theme }) => theme.spacing.size(2)}px;
 `;
 
-export const Radio = styled(RadioComponent).attrs(() => ({
-	pressableStyle: { paddingVertical: 8, paddingHorizontal: 16 },
+export const Radio = styled(RadioComponent).attrs(({ theme }) => ({
+	pressableStyle: {
+		paddingVertical: theme.spacing.size(1),
+		paddingHorizontal: theme.spacing.size(2),
+	},
 }))``;
 
 export const SectionDivider = styled(Divider)`
-	margin-bottom: 16px;
-	margin-left: 16px;
-	margin-right: 16px;
 	width: auto;
+	margin: ${({ theme }) => `${theme.spacing.size(2)}px 0 ${theme.spacing.size(2)}px`};
 `;

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { StyleProp, ViewStyle } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useTheme } from 'styled-components/native';
 
 import { BasicButton } from '../../BasicButton';
 import { Popup } from '../../Popup';
@@ -12,7 +14,6 @@ import {
 	SelectPopupStylesProps,
 	StyledScrollView,
 } from './SelectPopup.styles';
-import { StyleProp, ViewStyle } from 'react-native';
 
 interface SelectPopupProps extends SelectPopupStylesProps {
 	label: string;
@@ -30,6 +31,7 @@ export const SelectPopup = ({
 	mb,
 	style,
 }: SelectPopupProps) => {
+	const theme = useTheme();
 	const { getValues } = useFormContext();
 
 	const [popupVisible, setPopupVisible] = useState(false);
@@ -44,7 +46,7 @@ export const SelectPopup = ({
 					fontSize={12}
 					weight={500}
 					style={{ marginLeft: 'auto' }}
-					color="#868E96"
+					color={theme.colors.base[6]}
 				>
 					{options.find(item => item.value === getValues(name))?.label || ''}
 				</Text>
@@ -81,7 +83,7 @@ export const SelectPopup = ({
 						style={{ marginLeft: 'auto', paddingRight: 16 }}
 						onPress={() => setPopupVisible(false)}
 						textWeight={600}
-						textColor="#228be6"
+						textColor={theme.colors.primary}
 						pressableComponent={<Pressable.Opacity />}
 					>
 						Cancel

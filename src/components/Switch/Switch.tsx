@@ -6,6 +6,7 @@ import {
 	useSharedValue,
 	withSpring,
 } from 'react-native-reanimated';
+import { useTheme } from 'styled-components/native';
 
 import { Pressable } from '../Pressable';
 import {
@@ -23,6 +24,7 @@ interface SwitchProps extends SwitchStylesProps {
 }
 
 export const Switch = ({ name, label, onValueChange, mb }: SwitchProps) => {
+	const theme = useTheme();
 	const { control, getValues } = useFormContext();
 
 	const [internalValue, setInternalValue] = useState(getValues(name) || false);
@@ -51,7 +53,11 @@ export const Switch = ({ name, label, onValueChange, mb }: SwitchProps) => {
 	}, [internalValue, switchAnimated]);
 
 	const backgroundColorStyles = useAnimatedStyle(() => ({
-		backgroundColor: interpolateColor(switchAnimated.value, [0, 21], ['#E9ECEF', '#228BE6']),
+		backgroundColor: interpolateColor(
+			switchAnimated.value,
+			[0, 21],
+			[theme.colors.base[2], theme.colors.primary],
+		),
 	}));
 
 	const translateStyles = useAnimatedStyle(() => ({

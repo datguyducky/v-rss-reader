@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 import { Pressable } from '../Pressable';
 import { Text } from '../Text';
@@ -23,26 +24,23 @@ export const Button = ({
 	textColor,
 	style,
 	disabled,
-	backgroundColor = '#228be6',
+	backgroundColor,
 	size = 'regular',
 	variant = 'filled',
 }: ButtonProps) => {
+	const theme = useTheme();
 	const selectTextColor = () => {
-		// TODO: Use switch here?
-		if (disabled) {
-			return '#adb5bd';
-		}
-
-		if (textColor) {
-			return textColor;
-		}
-
-		if (variant === 'outline') {
-			return '#101113';
-		}
-
-		if (variant === 'filled') {
-			return '#fff';
+		switch (true) {
+			case disabled:
+				return theme.colors.base[5];
+			case !!textColor:
+				return textColor;
+			case variant === 'outline':
+				return theme.colors.base[9];
+			case variant === 'filled':
+				return theme.colors.base[0];
+			default:
+				return undefined;
 		}
 	};
 

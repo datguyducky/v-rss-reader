@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+
 import { Pressable } from '../../Pressable';
 
 export interface SelectPopupStylesProps {
@@ -12,6 +13,6 @@ export const SelectPopupContainer = styled(Pressable)<Pick<SelectPopupStylesProp
 `;
 
 export const StyledScrollView = styled.ScrollView`
-	margin-top: 16px;
-	margin-bottom: 24px;
+	margin-top: ${({ theme }) => theme.spacing.size(2)}px;
+	margin-bottom: ${({ theme }) => theme.spacing.size(3)}px;
 `;

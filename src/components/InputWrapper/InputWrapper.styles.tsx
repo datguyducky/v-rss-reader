@@ -13,14 +13,14 @@ export const ContentWithLabelWrap = styled.View<
 	Required<Pick<InputWrapperStylesProps, 'isInvalid'>>
 >`
 	height: 56px;
-	background-color: #f1f3f5;
 	border-width: 1px;
 	border-style: solid;
-	border-color: ${({ isInvalid }) => (isInvalid ? '#fa5252' : 'transparent')};
-	border-radius: 4px;
-	color: #101113;
 	position: relative;
 	justify-content: center;
+	border-radius: ${({ theme }) => theme.borderRadius.small}px;
+	color: ${({ theme }) => theme.colors.base[9]};
+	background-color: ${({ theme }) => theme.colors.base[1]};
+	border-color: ${({ theme, isInvalid }) => (isInvalid ? theme.colors.error : 'transparent')};
 `;
 
 export const AbsoluteAnimatedView = styled.View`
@@ -28,11 +28,11 @@ export const AbsoluteAnimatedView = styled.View`
 	z-index: 10;
 	top: 0;
 	bottom: 0;
-	left: 12px;
+	left: ${({ theme }) => theme.spacing.size(1.5)}px;
 `;
 
 export const AnimatedLabel = styled(Animated.Text)`
 	font-size: 16px;
-	color: #adb5bd;
-	font-family: 'Montserrat-Medium';
+	font-family: ${({ theme }) => theme.font.retrieve('Montserrat', 500)};
+	color: ${({ theme }) => theme.colors.base[5]};
 `;

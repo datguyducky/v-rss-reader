@@ -9,6 +9,7 @@ import { CreateSelection } from '../../drawers/CreateSelection';
 import { Feeds } from '../../drawers/Feeds';
 import { QuickSettings } from '../../drawers/QuickSettings';
 import { Icon } from '../Icon';
+import { Pressable } from '../Pressable';
 import {
 	LeftIconWrap,
 	RightIconWrap,
@@ -18,7 +19,6 @@ import {
 	CutOutWrapper,
 	CutOut,
 } from './Navigation.styles';
-import { Pressable } from '../Pressable';
 
 export const Navigation = ({ navigation }: BottomTabBarProps) => {
 	const { width } = useWindowDimensions();
@@ -33,7 +33,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 				distance={6}
 				offset={[0, 0]}
 				sides={{ bottom: false, start: false, end: false, top: true }}
-				startColor="#00000015"
+				startColor="#00000015" // TODO: Figure out if this needs to be inside the theme colors object.
 			>
 				<NavigationContainer>
 					<WrapWithCutOut>

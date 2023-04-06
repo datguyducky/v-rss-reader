@@ -3,18 +3,18 @@ import styled from 'styled-components/native';
 import { Text } from '../Text';
 
 export const MagazineCardWrap = styled.View`
-	background-color: #fff;
+	background-color: ${({ theme }) => theme.colors.base[0]};
 `;
 
 export const StyledImage = styled.ImageBackground<{ density: string }>`
-	width: ${({ density }) => (density === 'COMFORTABLE' ? 100 : 64)}px;
-	height: ${({ density }) => (density === 'COMFORTABLE' ? 100 : 64)}px;
-	background-color: #d9d9d9;
-	margin-right: 8px;
-	border-radius: 6px;
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+	width: ${({ density }) => (density === 'COMFORTABLE' ? 100 : 64)}px;
+	height: ${({ density }) => (density === 'COMFORTABLE' ? 100 : 64)}px;
+	background-color: ${({ theme }) => theme.colors.base[4]};
+	margin-right: ${({ theme }) => theme.spacing.size(1)}px;
+	border-radius: ${({ theme }) => theme.borderRadius.regular}px;
 `;
 
 export const MagazineTextWrap = styled.View`

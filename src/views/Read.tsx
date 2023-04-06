@@ -1,8 +1,9 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, RefreshControl, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 import { useMMKVListener, useMMKVObject } from 'react-native-mmkv';
 import { Feed, FeedItem } from 'react-native-rss-parser';
+import { useTheme } from 'styled-components/native';
 
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
@@ -16,6 +17,8 @@ import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
 
 export const Read = ({ scrollY, title }) => {
+	const theme = useTheme();
+
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
@@ -161,7 +164,7 @@ export const Read = ({ scrollY, title }) => {
 				headingSpacing={12}
 			>
 				{loading ? (
-					<ActivityIndicator size="large" color="#228be6" />
+					<ActivityIndicator size="large" color={theme.colors.primary} />
 				) : (
 					<FlatList
 						key={reRender}

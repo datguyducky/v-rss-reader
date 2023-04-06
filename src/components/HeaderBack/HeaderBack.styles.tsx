@@ -4,19 +4,19 @@ export const HeaderBackWrap = styled.View<{ marginTop?: number; width?: number }
 	flex-direction: row;
 	height: 48px;
 	align-items: center;
-	padding: 16px 12px 0;
-	background-color: #fff;
+	padding: ${({ theme }) => `${theme.spacing.size(2)}px ${theme.spacing.size(1.5)}px 0`};
+	background-color: ${({ theme }) => theme.colors.base[0]};
 `;
 
 export const BackIconWrap = styled.View`
 	height: 32px;
 	width: 32px;
-	background-color: #f1f3f5;
 	align-items: center;
 	justify-content: center;
-	border-radius: 26px;
+	background-color: ${({ theme }) => theme.colors.base[1]};
+	border-radius: ${({ theme }) => theme.borderRadius.full}px;
 `;
 
 export const HeaderTextWrap = styled.View`
-	margin-left: 12px;
+	margin-left: ${({ theme }) => theme.spacing.size(1.5)}px;
 `;

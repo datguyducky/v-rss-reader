@@ -21,7 +21,7 @@ export const PressableBackground = ({
 	onLongPress,
 	children,
 	style,
-	underlayColor = '#00000aa',
+	underlayColor = '#00000aa', // TODO: Figure if this needs to be in theme colors object.
 	foreground = true,
 	borderless = false,
 	px = 0,

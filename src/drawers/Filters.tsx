@@ -2,6 +2,7 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { ForwardedRef, forwardRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMMKVObject } from 'react-native-mmkv';
+import { useTheme } from 'styled-components/native';
 
 import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { Drawer } from '../components/Drawer';
@@ -14,6 +15,8 @@ export type FilterFormValues = {
 };
 
 export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
+	const theme = useTheme();
+
 	const [feedFilters = DEFAULT_FILTERS_VALUES, setFeedFilters] =
 		useMMKVObject<FilterFormValues>('feedFilters');
 
@@ -26,7 +29,12 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	return (
 		<Drawer ref={ref} snapPoints={[460]} containerStyle={{ paddingTop: 24 }}>
 			<FormProvider {...filterForm}>
-				<SectionTitle fontFamily="Montserrat" color="#228BE6" weight={600} mb={8}>
+				<SectionTitle
+					fontFamily="Montserrat"
+					color={theme.colors.primary}
+					weight={600}
+					mb={8}
+				>
 					Sort by
 				</SectionTitle>
 				<Radio.Group name="SORT_BY" onValueChange={filterForm.handleSubmit(onSubmit)}>
@@ -36,7 +44,12 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 
 				<SectionDivider my={8} />
 
-				<SectionTitle fontFamily="Montserrat" color="#228BE6" weight={600} mb={8}>
+				<SectionTitle
+					fontFamily="Montserrat"
+					color={theme.colors.primary}
+					weight={600}
+					mb={8}
+				>
 					View
 				</SectionTitle>
 				<Radio.Group name="FEED_VIEW" onValueChange={filterForm.handleSubmit(onSubmit)}>
@@ -47,7 +60,7 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 
 				<SectionTitle
 					fontFamily="Montserrat"
-					color="#228BE6"
+					color={theme.colors.primary}
 					weight={600}
 					mb={8}
 					style={{ marginTop: 8 }}

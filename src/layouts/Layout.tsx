@@ -12,6 +12,7 @@ import styled from 'styled-components/native';
 
 import { Heading } from '../components/Heading';
 import { HeadingAnimated } from '../components/HeadingAnimated';
+import { theme } from '../theme';
 
 interface LayoutProps {
 	children: ReactNode;
@@ -25,9 +26,11 @@ interface LayoutProps {
 
 const StyledLayout = styled.View<{ withAnimatedTitle: boolean; horizontalPadding: boolean }>`
 	flex: 1;
-	background-color: #fff;
-	padding: ${({ withAnimatedTitle, horizontalPadding }) => (withAnimatedTitle ? 8 : 16)}px
-		${({ horizontalPadding }) => (horizontalPadding ? 12 : 0)}px 16px;
+	background-color: ${({ theme }) => theme.colors.base[0]};
+	padding: ${({ theme, withAnimatedTitle, horizontalPadding }) =>
+			withAnimatedTitle ? theme.spacing.size(1) : theme.spacing.size(2)}px
+		${({ horizontalPadding }) => (horizontalPadding ? theme.spacing.size(1.5) : 0)}px
+		${theme.spacing.size(2)}px;
 `;
 
 export const Layout = ({

@@ -24,12 +24,12 @@ export const AnimatedSwitch = styled(Animated.View)`
 	width: 42px;
 	padding-vertical: 3px;
 	padding-horizontal: 3px;
-	border-radius: 42px;
+	border-radius: ${({ theme }) => theme.borderRadius.full}px;
 `;
 
 export const AnimatedSwitchThumb = styled(Animated.View)`
 	width: 14px;
 	height: 14px;
-	border-radius: 16px;
-	background-color: #fff;
+	border-radius: ${({ theme }) => theme.borderRadius.full}px;
+	background-color: ${({ theme }) => theme.colors.base[0]};
 `;

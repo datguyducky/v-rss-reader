@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMMKVObject } from 'react-native-mmkv';
+import { useTheme } from 'styled-components/native';
 
 import { DEFAULT_SETTINGS_VALUES } from '../../common/constants';
 import { Button } from '../../components/Button';
@@ -29,6 +30,8 @@ export type SettingsFormValues = {
 };
 
 export const SettingsForm = () => {
+	const theme = useTheme();
+
 	const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const { reset } = useReadingStats();
@@ -61,7 +64,7 @@ export const SettingsForm = () => {
 	return (
 		<>
 			<FormProvider {...settingsForm}>
-				<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
+				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					App behaviour
 				</Heading>
 				{/*<Switch*/}
@@ -88,7 +91,7 @@ export const SettingsForm = () => {
 
 				<Divider my={16} />
 
-				<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
+				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Gestures
 				</Heading>
 				<Select.Popup
@@ -115,7 +118,7 @@ export const SettingsForm = () => {
 
 				<Divider my={16} />
 
-				<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
+				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Feeds list
 				</Heading>
 				<Switch
@@ -145,7 +148,7 @@ export const SettingsForm = () => {
 
 				<Divider my={16} />
 
-				<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
+				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Interface
 				</Heading>
 				<Select.Popup
@@ -174,7 +177,7 @@ export const SettingsForm = () => {
 
 				<Divider my={16} />
 
-				<Heading tag="h6" color="#5C5F66" weight={300} mb={0}>
+				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Data
 				</Heading>
 				<Switch

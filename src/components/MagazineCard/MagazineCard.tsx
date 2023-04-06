@@ -1,7 +1,8 @@
 import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
+import { useTheme } from 'styled-components/native';
 
-import { FeedCardProps } from '../../types';
+import { FeedCardProps } from '../../@types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
@@ -28,6 +29,7 @@ export const MagazineCard = ({
 	description,
 	actionPress,
 }: MagazineCardProps) => {
+	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
 	return (
@@ -48,7 +50,9 @@ export const MagazineCard = ({
 					}}
 					density={density}
 				>
-					{!thumbnailUrl && <Icon name={PhotoIcon} size={27} color="#909296" />}
+					{!thumbnailUrl && (
+						<Icon name={PhotoIcon} size={27} color={theme.colors.base[6]} />
+					)}
 				</StyledImage>
 
 				<MagazineTextWrap>
@@ -59,14 +63,14 @@ export const MagazineCard = ({
 					</TitleWrap>
 
 					<DetailsWrap density={density}>
-						<Text fontSize={10} weight={300} color="#5C5F66">
+						<Text fontSize={10} weight={300} color={theme.colors.base[7]}>
 							{`${domainName} / ${publishedAt}`}
 						</Text>
 					</DetailsWrap>
 
 					{density === 'COMFORTABLE' && parsedDescription.length > 0 && (
 						<View>
-							<Text fontSize={12} numberOfLines={3} color="#5C5F66">
+							<Text fontSize={12} numberOfLines={3} color={theme.colors.base[7]}>
 								{parsedDescription}
 							</Text>
 						</View>

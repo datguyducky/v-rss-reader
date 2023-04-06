@@ -9,6 +9,6 @@ export interface DividerStylesProps {
 export const StyledDivider = styled.View<DividerStylesProps>`
 	width: 100%;
 	height: ${({ size }) => size || 1}px;
-	background-color: ${({ color }) => color || '#CED4DA'};
+	background-color: ${({ theme, color }) => color || theme.colors.base[3]};
 	margin: ${({ my }) => my || 0}px 0;
 `;

@@ -6,7 +6,7 @@ export interface DrawerStylesProps {
 
 export const DrawerContainer = styled.View<Required<Pick<DrawerStylesProps, 'horizontalContent'>>>`
 	flex: 1;
-	padding: 16px 0 32px;
+	padding: ${({ theme }) => `${theme.spacing.size(2)}px 0 ${theme.spacing.size(4)}px`};
 	flex-direction: ${({ horizontalContent }) => (horizontalContent ? 'row' : 'column')};
 	justify-content: ${({ horizontalContent }) =>
 		horizontalContent ? 'space-around' : 'flex-start'};

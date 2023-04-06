@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ArchiveBoxIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
+import { useTheme } from 'styled-components/native';
 
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/constants';
 import { FilterFormValues } from '../../drawers/Filters';
@@ -13,10 +14,9 @@ import { calculateTimePassed } from '../../utils/calculateTimePassed';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
-import { Pressable } from '../Pressable';
 import { TextOnlyCard } from '../TextOnlyCard';
 import { ThumbnailCard } from '../ThumbnailCard';
-import { ReadLaterActionWrap } from './SwipeableFeedItem.styles';
+import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 
 interface SwipeableFeedItemProps {
 	item: Record<string, unknown>; // TODO: Better type.
@@ -24,6 +24,7 @@ interface SwipeableFeedItemProps {
 }
 
 export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItemProps) => {
+	const theme = useTheme();
 	const swipeRef = useRef<Swipeable>(null);
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
@@ -49,7 +50,12 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 					}}
 					icon={
 						appSettings.invertSwipe ? undefined : (
-							<Icon name={ArchiveBoxIcon} size={16} color="#fff" strokeWidth={2.5} />
+							<Icon
+								name={ArchiveBoxIcon}
+								size={16}
+								color={theme.colors.base[0]}
+								strokeWidth={2.5}
+							/>
 						)
 					}
 					rightInfo={
@@ -57,13 +63,13 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 							<Icon
 								name={ArchiveBoxIcon}
 								size={16}
-								color="#fff"
+								color={theme.colors.base[0]}
 								strokeWidth={2.5}
 								style={{ marginLeft: 8 }}
 							/>
 						) : undefined
 					}
-					textColor="#fff"
+					textColor={theme.colors.base[0]}
 					textSize={12}
 					spacing={8}
 					textWeight={600}
@@ -82,7 +88,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 	// 				onPress={() => {
 	// 					/* onPress handler is not needed here, as action for this component is completely handled by swipe */
 	// 				}}
-	// 				textColor="#101113"
+	// 				textColor={theme.colors.base[9]}
 	// 				textSize={12}
 	// 				spacing={8}
 	// 				rightInfo={
@@ -206,7 +212,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 
 	if (feedFilters.FEED_VIEW === 'THUMBNAIL') {
 		return (
-			<Pressable.Background
+			<PressableThumbnail
 				onLongPress={
 					appSettings.quickActionDrawerGesture === 'LONG_PRESS'
 						? () => handleActionPress?.()
@@ -218,12 +224,6 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 						: undefined
 				}
 				onPress={handlePress}
-				style={{
-					overflow: 'hidden',
-					borderRadius: 6,
-					marginVertical: 8,
-					marginHorizontal: 12,
-				}}
 			>
 				<Swipeable
 					renderLeftActions={appSettings.invertSwipe ? undefined : renderReadLaterAction}
@@ -237,7 +237,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 				>
 					{renderFeedCard()}
 				</Swipeable>
-			</Pressable.Background>
+			</PressableThumbnail>
 		);
 	}
 

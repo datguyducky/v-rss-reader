@@ -6,18 +6,18 @@ export const PopupOverlay = styled.Pressable`
 	flex: 1;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: ${({ theme }) => theme.colors.overlay};
 `;
 
 // We use Pressable component here to make sure that onPress from overlay is not called here
 export const PopupWrapper = styled.Pressable`
-	background-color: white;
-	padding-horizontal: 16px;
-	padding-vertical: 24px;
-	padding-bottom: 32px;
-	border-radius: 12px;
 	width: 80%;
 	min-width: 320px;
+	border-radius: 12px;
+	background-color: ${({ theme }) => theme.colors.base[0]};
+	padding-horizontal: ${({ theme }) => theme.spacing.size(2)}px;
+	padding-vertical: ${({ theme }) => theme.spacing.size(3)}px;
+	padding-bottom: ${({ theme }) => theme.spacing.size(4)}px;
 `;
 
 export const HeaderWrap = styled.View`

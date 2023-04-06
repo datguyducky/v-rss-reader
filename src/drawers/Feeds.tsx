@@ -3,6 +3,7 @@ import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 import { ForwardedRef, forwardRef } from 'react';
 import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
+import { useTheme } from 'styled-components/native';
 
 import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { Divider } from '../components/Divider';
@@ -16,6 +17,8 @@ import { useFeedsCategories } from '../hooks/useFeedsCategories';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
+		const theme = useTheme();
+
 		const { feedsCategories, setActiveItemDetails } = useFeedsCategories();
 		const [appSettings = DEFAULT_SETTINGS_VALUES] =
 			useMMKVObject<SettingsFormValues>('appSettings');
@@ -37,7 +40,7 @@ export const Feeds = forwardRef(
 				screen: 'Read',
 				params: { id: item.id },
 			});
-			setStatusBarBackgroundColor('#fff', false);
+			setStatusBarBackgroundColor(theme.colors.base[0], false);
 			setStatusBarStyle('dark');
 		};
 

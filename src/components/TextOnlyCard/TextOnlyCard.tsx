@@ -1,6 +1,7 @@
 import { View } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
-import { FeedCardProps } from '../../types';
+import { FeedCardProps } from '../../@types';
 import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Text } from '../Text';
 import {
@@ -22,6 +23,7 @@ export const TextOnlyCard = ({
 	actionPress,
 	handlePress,
 }: TextOnlyCardProps) => {
+	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
 	return (
@@ -44,13 +46,18 @@ export const TextOnlyCard = ({
 
 					{density === 'COMFORTABLE' && parsedDescription.length > 0 && (
 						<View>
-							<Text fontSize={12} numberOfLines={4} mb={8} color="#5C5F66">
+							<Text
+								fontSize={12}
+								numberOfLines={4}
+								mb={8}
+								color={theme.colors.base[7]}
+							>
 								{parsedDescription}
 							</Text>
 						</View>
 					)}
 
-					<Text fontSize={10} weight={300} color="#5C5F66">
+					<Text fontSize={10} weight={300} color={theme.colors.base[7]}>
 						{`${domainName} / ${publishedAt}`}
 					</Text>
 				</TextOnlyTextWrap>

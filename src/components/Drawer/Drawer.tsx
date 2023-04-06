@@ -2,6 +2,7 @@ import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from '@gor
 import { setStatusBarStyle, setStatusBarBackgroundColor } from 'expo-status-bar';
 import { ForwardedRef, forwardRef, useCallback } from 'react';
 import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 import { Text } from '../Text';
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
@@ -45,18 +46,20 @@ export const Drawer = forwardRef(
 		}: DrawerProps,
 		ref: ForwardedRef<BottomSheetModal>,
 	) => {
+		const theme = useTheme();
+
 		/**
 		 * `handleOnAnimate` makes sure that the status bar background and style are synced to the  rest of the app.
 		 * TODO: Probably color and style should be provided by a theme or something as right now this would only work for "light" themed app.
 		 */
 		const handleOnAnimate = useCallback((from: number, to: number) => {
 			if (to === -1) {
-				setStatusBarBackgroundColor('#fff', false);
+				setStatusBarBackgroundColor(theme.colors.base[0], false);
 				setStatusBarStyle('dark');
 			}
 
 			if (to === 0) {
-				setStatusBarBackgroundColor('rgba(0, 0, 0, 0.5)', false);
+				setStatusBarBackgroundColor(theme.colors.overlay, false);
 				setStatusBarStyle('light');
 			}
 		}, []);
@@ -83,7 +86,7 @@ export const Drawer = forwardRef(
 					onAnimate={handleOnAnimate}
 					detached={detached}
 					bottomInset={bottomInset}
-					containerStyle={{ marginHorizontal: detached ? 12 : 0 }}
+					containerStyle={{ marginHorizontal: theme.spacing.size(detached ? 1.5 : 0) }}
 				>
 					{() => {
 						if (useFlatList) {

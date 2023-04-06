@@ -9,8 +9,8 @@ export interface TextInputStylesProps {
 export const StyledNativeTextInput = styled(NativeTextInput)<
 	Pick<TextInputStylesProps, 'isInvalid'>
 >`
-	padding-left: 12px;
 	font-size: 16px;
-	font-family: 'Raleway-Regular';
-	color: ${({ isInvalid }) => (isInvalid ? '#fa5252' : '#101113')};
+	font-family: ${({ theme }) => theme.font.retrieve('Raleway', 400)};
+	padding-left: ${({ theme }) => theme.spacing.size(1.5)}px;
+	color: ${({ theme, isInvalid }) => (isInvalid ? theme.colors.error : theme.colors.base[9])};
 `;

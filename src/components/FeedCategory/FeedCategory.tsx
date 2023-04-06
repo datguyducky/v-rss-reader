@@ -5,9 +5,13 @@ import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outlin
 import { FeedItem } from '../FeedItem';
 import { FeedItemIcon } from '../FeedItemIcon';
 import { Icon } from '../Icon';
-import { Pressable } from '../Pressable';
 import { Text } from '../Text';
-import { FeedCategoryWrap } from './FeedCategory.styles';
+import {
+	EmptyCategoryText,
+	FeedCategoryWrap,
+	PressableOpenIcon,
+	PressableSelectCategory,
+} from './FeedCategory.styles';
 
 type FeedCategoryProps = {
 	category: Record<string, unknown>;
@@ -27,33 +31,22 @@ export const FeedCategory = ({
 	return (
 		<View>
 			<FeedCategoryWrap>
-				<Pressable
-					onPress={() => setIsOpen(prevState => !prevState)}
-					style={{
-						position: 'absolute',
-						left: 16,
-						zIndex: 10,
-					}}
-				>
+				<PressableOpenIcon onPress={() => setIsOpen(prevState => !prevState)}>
 					{isOpen ? (
 						<Icon name={ChevronDownIcon} size={20} />
 					) : (
 						<Icon name={ChevronRightIcon} size={20} />
 					)}
-				</Pressable>
+				</PressableOpenIcon>
 
 				<View
 					style={{
 						flex: 1,
 					}}
 				>
-					<Pressable.Background
-						onPress={() => handleItemNavigate(category)}
-						style={{ paddingLeft: 48, paddingRight: 16 }}
-						py={8}
-					>
+					<PressableSelectCategory onPress={() => handleItemNavigate(category)} py={8}>
 						<Text fontFamily="Montserrat">{category.name as string}</Text>
-					</Pressable.Background>
+					</PressableSelectCategory>
 				</View>
 			</FeedCategoryWrap>
 
@@ -70,14 +63,9 @@ export const FeedCategory = ({
 						/>
 					))
 				) : (
-					<Text
-						style={{ marginLeft: 48, marginBottom: 8, marginTop: 8 }}
-						fontSize={12}
-						weight={300}
-						fontFamily="Montserrat"
-					>
+					<EmptyCategoryText fontSize={12} weight={300} fontFamily="Montserrat">
 						No feeds exist in this category yet.
-					</Text>
+					</EmptyCategoryText>
 				))}
 		</View>
 	);

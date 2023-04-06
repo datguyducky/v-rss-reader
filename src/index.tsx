@@ -7,8 +7,11 @@ import React, { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { MMKV } from 'react-native-mmkv';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ThemeProvider } from 'styled-components/native';
 
 import { Routes } from './routing/Routes';
+import { theme } from './theme';
+import { lightTheme } from './theme/colors';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -40,13 +43,15 @@ const App = () => {
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<BottomSheetModalProvider>
-				<SafeAreaProvider>
-					<NavigationContainer onReady={onLayoutRootView}>
-						<Routes />
-					</NavigationContainer>
-				</SafeAreaProvider>
-			</BottomSheetModalProvider>
+			<ThemeProvider theme={{ ...theme, colors: { ...theme.colors, base: lightTheme } }}>
+				<BottomSheetModalProvider>
+					<SafeAreaProvider>
+						<NavigationContainer onReady={onLayoutRootView}>
+							<Routes />
+						</NavigationContainer>
+					</SafeAreaProvider>
+				</BottomSheetModalProvider>
+			</ThemeProvider>
 		</GestureHandlerRootView>
 	);
 };

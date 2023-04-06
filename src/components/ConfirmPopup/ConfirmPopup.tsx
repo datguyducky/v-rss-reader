@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useTheme } from 'styled-components/native';
 
 import { BasicButton } from '../BasicButton';
 import { Popup } from '../Popup';
@@ -27,6 +28,8 @@ export const ConfirmPopup = ({
 	confirmText = '',
 	handleConfirm,
 }: ConfirmPopupProps) => {
+	const theme = useTheme();
+
 	return (
 		<Popup isOpen={isOpen} onClose={onClose} title={title}>
 			<View>
@@ -36,7 +39,7 @@ export const ConfirmPopup = ({
 					<BasicButton
 						onPress={() => handleCancel?.() || onClose()}
 						textWeight={600}
-						textColor="#909296"
+						textColor={theme.colors.base[6]}
 						style={{ marginRight: 12 }}
 						pressableComponent={<Pressable.Opacity />}
 					>
@@ -45,7 +48,7 @@ export const ConfirmPopup = ({
 
 					<BasicButton
 						onPress={() => handleConfirm?.()}
-						textColor="#fa5252"
+						textColor={theme.colors.error}
 						textWeight={600}
 						pressableComponent={<Pressable.Opacity />}
 					>
