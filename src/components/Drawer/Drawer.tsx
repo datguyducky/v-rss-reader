@@ -94,7 +94,11 @@ export const Drawer = forwardRef(
 					onAnimate={handleOnAnimate}
 					detached={detached}
 					bottomInset={bottomInset}
-					containerStyle={{ marginHorizontal: theme.spacing.size(detached ? 1.5 : 0) }}
+					containerStyle={{
+						marginHorizontal: theme.spacing.size(detached ? 1.5 : 0),
+					}}
+					// This needs to be set here as having this on DrawerContainer styled component makes the border radius not visible
+					backgroundStyle={{ backgroundColor: theme.colors.base[0] }}
 				>
 					{() => {
 						if (useFlatList) {
