@@ -12,7 +12,7 @@ export interface StyledNativeHeadingTextProps extends NativeTextProps {
 }
 export const StyledNativeHeadingText = styled.Text<StyledNativeHeadingTextProps>`
 	font-size: ${({ fontSize, tag }) => fontSize || (tag ? theme.headings?.[tag] : 64)}px;
-	color: ${({ theme, color }) => color || theme.colors.base[9]};
+	color: ${({ theme, color }) => color || theme.colors.text};
 	font-family: ${({ weight }) => theme.font.retrieve('Montserrat', weight || 600)};
 	margin-bottom: ${({ mb }) => mb || 0}px;
 `;

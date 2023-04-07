@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { FlatList, Modal, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 import { ChevronDownIcon } from 'react-native-heroicons/outline';
 
@@ -15,6 +14,7 @@ import {
 	SelectModalHeading,
 	SelectModalRow,
 	SelectModalTitle,
+	StyledGestureHandlerRootView,
 	ValueWithIconWrap,
 } from './Select.styles';
 import { SelectPopup } from './SelectPopup/SelectPopup';
@@ -79,7 +79,7 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 						visible={isSelectModalVisible}
 						onRequestClose={() => setSelectModalVisibility(false)}
 					>
-						<GestureHandlerRootView style={{ flex: 1 }}>
+						<StyledGestureHandlerRootView>
 							<SelectModalHeading>
 								<Pressable.Background
 									borderless
@@ -139,7 +139,7 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 								ItemSeparatorComponent={() => <Divider />}
 								keyExtractor={(item, index) => index.toString()}
 							/>
-						</GestureHandlerRootView>
+						</StyledGestureHandlerRootView>
 					</Modal>
 				</>
 			)}

@@ -18,7 +18,7 @@ export const ContentWithLabelWrap = styled.View<
 	position: relative;
 	justify-content: center;
 	border-radius: ${({ theme }) => theme.borderRadius.small}px;
-	color: ${({ theme }) => theme.colors.base[9]};
+	color: ${({ theme }) => theme.colors.text};
 	background-color: ${({ theme }) => theme.colors.base[1]};
 	border-color: ${({ theme, isInvalid }) => (isInvalid ? theme.colors.error : 'transparent')};
 `;

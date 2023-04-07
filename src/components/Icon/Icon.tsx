@@ -11,5 +11,5 @@ interface IconProps extends SvgProps {
 export const Icon = ({ name: PassedIcon, size, color, ...props }: IconProps) => {
 	const theme = useTheme();
 
-	return cloneElement(<PassedIcon />, { ...props, size, color: color || theme.colors.base[9] });
+	return cloneElement(<PassedIcon />, { ...props, size, color: color || theme.colors.text });
 };

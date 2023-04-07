@@ -14,7 +14,7 @@ export const ReadLaterActionWrap = styled(Animated.View)<
 >`
 	justify-content: center;
 	flex: 1;
-	background-color: ${({ theme }) => theme.colors.base[9]};
+	background-color: ${({ theme }) => theme.colors.success};
 	align-items: ${({ isInverted }) => (isInverted ? 'flex-end' : 'stretch')};
 	padding: ${({ theme }) => theme.spacing.size(1.5)}px;
 	border-radius: ${({ theme, viewType }) =>

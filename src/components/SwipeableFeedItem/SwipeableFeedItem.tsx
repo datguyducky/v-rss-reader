@@ -53,7 +53,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 							<Icon
 								name={ArchiveBoxIcon}
 								size={16}
-								color={theme.colors.base[0]}
+								color={theme.colors.black}
 								strokeWidth={2.5}
 							/>
 						)
@@ -63,13 +63,13 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 							<Icon
 								name={ArchiveBoxIcon}
 								size={16}
-								color={theme.colors.base[0]}
+								color={theme.colors.black}
 								strokeWidth={2.5}
 								style={{ marginLeft: 8 }}
 							/>
 						) : undefined
 					}
-					textColor={theme.colors.base[0]}
+					textColor={theme.colors.black}
 					textSize={12}
 					spacing={8}
 					textWeight={600}
@@ -88,7 +88,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 	// 				onPress={() => {
 	// 					/* onPress handler is not needed here, as action for this component is completely handled by swipe */
 	// 				}}
-	// 				textColor={theme.colors.base[9]}
+	// 				textColor={theme.colors.text}
 	// 				textSize={12}
 	// 				spacing={8}
 	// 				rightInfo={

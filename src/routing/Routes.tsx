@@ -1,11 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
+import { useContext, useEffect } from 'react';
 import { Animated } from 'react-native';
+import { useTheme } from 'styled-components/native';
 
 import { Header } from '../components/Header';
 import { HeaderBack } from '../components/HeaderBack';
 import { Navigation } from '../components/Navigation';
+import { ThemeContext, THEMES } from '../context/ThemeContext';
 import { Category } from '../views/Category';
 import { Feed } from '../views/Feed';
 import { Read } from '../views/Read';
@@ -30,13 +33,22 @@ const TabScreen = ({ scrollY, title }) => {
 };
 
 export const Routes = () => {
+	const theme = useTheme();
+	const { getTheme } = useContext(ThemeContext);
 	const scrollY = new Animated.Value(0);
+
+	// Set status bar background to correct color on app launch
+	useEffect(() => {
+		setStatusBarBackgroundColor(theme.colors.base[0], false);
+		setStatusBarStyle(getTheme() === THEMES.light ? 'dark' : 'light');
+	}, []);
 
 	return (
 		<Stack.Navigator
 			screenOptions={{
 				headerShadowVisible: false,
 				header: ({ route }) => <Header title={route.params?.name} scrollY={scrollY} />,
+				contentStyle: { backgroundColor: theme.colors.base[0] },
 			}}
 		>
 			<Stack.Screen name="TabScreen">

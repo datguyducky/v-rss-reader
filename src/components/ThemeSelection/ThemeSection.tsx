@@ -26,6 +26,7 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 						borderless
 						style={{ flex: 1 }}
 						foreground={false}
+						underlayColor="#228be633"
 						onPress={() => setTheme(THEMES.light)}
 					/>
 				</ThemePreview>
@@ -41,7 +42,7 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 						borderless
 						style={{ flex: 1 }}
 						foreground={false}
-						underlayColor="rgba(255, 255, 255, 12)"
+						underlayColor="#228be633"
 						onPress={() => setTheme(THEMES.dark)}
 					/>
 				</ThemePreview>
@@ -55,6 +56,7 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 				<AutoThemePreviewWrap isActive={theme === THEMES.auto}>
 					<Pressable.Background
 						onPress={() => setTheme(THEMES.auto)}
+						underlayColor="#228be633"
 						style={{ flex: 1, flexDirection: 'row' }}
 					>
 						<AutoLightSection />

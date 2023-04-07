@@ -1,14 +1,15 @@
 import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
-import { setStatusBarStyle, setStatusBarBackgroundColor } from 'expo-status-bar';
-import { ForwardedRef, forwardRef, useCallback } from 'react';
+import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
+import { ForwardedRef, forwardRef, ReactNode, useCallback, useContext } from 'react';
 import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
+import { ThemeContext, THEMES } from '../../context/ThemeContext';
 import { Text } from '../Text';
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
 
 interface DrawerProps extends DrawerStylesProps {
-	children: React.ReactNode;
+	children: ReactNode;
 	snapPoints: (string | number)[];
 	initialSnapPoint?: number;
 	detached?: boolean;
@@ -47,22 +48,29 @@ export const Drawer = forwardRef(
 		ref: ForwardedRef<BottomSheetModal>,
 	) => {
 		const theme = useTheme();
+		const { getTheme } = useContext(ThemeContext);
 
 		/**
 		 * `handleOnAnimate` makes sure that the status bar background and style are synced to the  rest of the app.
-		 * TODO: Probably color and style should be provided by a theme or something as right now this would only work for "light" themed app.
 		 */
-		const handleOnAnimate = useCallback((from: number, to: number) => {
-			if (to === -1) {
-				setStatusBarBackgroundColor(theme.colors.base[0], false);
-				setStatusBarStyle('dark');
-			}
+		const handleOnAnimate = useCallback(
+			(from: number, to: number) => {
+				const currentTheme = getTheme();
 
-			if (to === 0) {
-				setStatusBarBackgroundColor(theme.colors.overlay, false);
-				setStatusBarStyle('light');
-			}
-		}, []);
+				// Closed drawer
+				if (to === -1) {
+					setStatusBarBackgroundColor(theme.colors.base[0], false);
+					setStatusBarStyle(currentTheme === THEMES.light ? 'dark' : 'light');
+				}
+
+				// Opened drawer
+				if (to === 0) {
+					setStatusBarBackgroundColor(theme.colors.statusBar, false);
+					setStatusBarStyle('light');
+				}
+			},
+			[theme],
+		);
 
 		return (
 			<>

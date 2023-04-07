@@ -22,6 +22,7 @@ const themes = {
 export const ThemeContext = createContext({
 	theme: THEMES.light,
 	setTheme: (newTheme: ThemeTypes) => {},
+	getTheme: (): ThemeTypes => THEMES.light,
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
@@ -47,13 +48,12 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	return (
-		<ThemeContext.Provider value={{ theme: localTheme, setTheme: handleThemeChange }}>
+		<ThemeContext.Provider value={{ theme: localTheme, setTheme: handleThemeChange, getTheme }}>
 			<StyledThemeProvider
 				theme={{
 					...createdTheme,
 					colors: {
-						...createdTheme.colors,
-						base: themes[getTheme()],
+						...themes[getTheme()],
 					},
 				}}
 			>

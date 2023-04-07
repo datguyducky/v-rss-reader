@@ -12,7 +12,7 @@ export interface StyledNativeTextProps extends NativeTextProps {
 
 export const StyledNativeText = styled.Text<StyledNativeTextProps>`
 	font-size: ${({ fontSize }) => fontSize || 16}px;
-	color: ${({ theme, color }) => color || theme.colors.base[9]};
+	color: ${({ theme, color }) => color || theme.colors.text};
 	margin-bottom: ${({ mb }) => mb || 0}px;
 	font-family: ${({ theme, weight, fontFamily }) =>
 		theme.font.retrieve(fontFamily as string, weight)};

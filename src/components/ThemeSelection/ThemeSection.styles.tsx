@@ -30,10 +30,10 @@ export const ThemePreview = styled.View<{
 	background-color: ${({ theme, color }) => {
 		switch (color) {
 			case 'light':
-				return lightTheme[0];
+				return lightTheme.base[0];
 
 			case 'dark':
-				return darkTheme[0];
+				return darkTheme.base[0];
 		}
 	}};
 	border-color: ${({ theme, isActive }) =>
@@ -58,10 +58,10 @@ export const AutoThemePreviewWrap = styled.View<{
 
 export const AutoLightSection = styled.View`
 	flex: 1;
-	background-color: ${lightTheme[0]};
+	background-color: ${lightTheme.base[0]};
 `;
 
 export const AutoDarkSection = styled.View`
 	flex: 1;
-	background-color: ${darkTheme[0]};
+	background-color: ${darkTheme.base[0]};
 `;

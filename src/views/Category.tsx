@@ -17,7 +17,10 @@ export const Category = ({ navigation, route }) => {
 	}, [route?.params?.categoryId]);
 
 	return (
-		<Layout title={route?.params?.mode === 'edit' ? 'Edit category' : 'Create new category'}>
+		<Layout
+			title={route?.params?.mode === 'edit' ? 'Edit category' : 'Create new category'}
+			bottomPadding={2}
+		>
 			<CategoryForm
 				onClose={() => {
 					navigation.navigate('Read');

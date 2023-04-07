@@ -1,5 +1,6 @@
 import { ColorValue } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { useTheme } from 'styled-components/native';
 
 import {
 	createDoublePressGesture,
@@ -21,12 +22,14 @@ export const PressableBackground = ({
 	onLongPress,
 	children,
 	style,
-	underlayColor = '#00000aa', // TODO: Figure if this needs to be in theme colors object.
+	underlayColor, // TODO: Figure if this needs to be in theme colors object.
 	foreground = true,
 	borderless = false,
 	px = 0,
 	py = 0,
 }: PressableBackgroundProps) => {
+	const theme = useTheme();
+
 	const singlePress = createSinglePressGesture(onPress);
 	const doublePress = createDoublePressGesture(onDoublePress);
 	const longPress = createLongPressGesture(onLongPress);
@@ -37,7 +40,11 @@ export const PressableBackground = ({
 				px={px}
 				py={py}
 				style={style}
-				android_ripple={{ color: underlayColor, foreground, borderless }}
+				android_ripple={{
+					color: underlayColor || theme.colors.pressableBackground,
+					foreground,
+					borderless,
+				}}
 			>
 				{children}
 			</StyledNativePressable>

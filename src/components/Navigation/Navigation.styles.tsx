@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 export const NavigationContainer = styled.View``;
 
 export const WrapWithCutOut = styled.View`
-	elevation: 40;
 	height: 64px;
 	width: 100%;
 	flex-direction: row;
@@ -24,7 +23,6 @@ export const CutOutContainer = styled.View<{ width: number }>`
 	bottom: 0;
 	height: 175px;
 	z-index: 10;
-	elevation: 40;
 	background-color: transparent;
 	width: ${({ width }) => width}px;
 `;
@@ -43,10 +41,10 @@ export const CutOutWrapper = styled.View`
 export const CutOut = styled.View`
 	width: 56px;
 	height: 56px;
-	elevation: 12;
+	elevation: 12; // This only visible when light theme is used
 	justify-content: center;
 	align-items: center;
-	background-color: ${({ theme }) => theme.colors.base[0]};
+	background-color: ${({ theme }) => theme.colors.white};
 	border-radius: ${({ theme }) => theme.borderRadius.full}px;
 `;
 

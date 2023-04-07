@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { Bars3BottomLeftIcon, Cog6ToothIcon, PlusIcon } from 'react-native-heroicons/outline';
 import { Shadow } from 'react-native-shadow-2';
+import { useTheme } from 'styled-components/native';
 
 import { CreateSelection } from '../../drawers/CreateSelection';
 import { Feeds } from '../../drawers/Feeds';
@@ -21,7 +22,9 @@ import {
 } from './Navigation.styles';
 
 export const Navigation = ({ navigation }: BottomTabBarProps) => {
+	const theme = useTheme();
 	const { width } = useWindowDimensions();
+
 	const createSelectionRef = useRef<BottomSheetModal>(null);
 	const feedsRef = useRef<BottomSheetModal>(null);
 	const quickSettingsRef = useRef<BottomSheetModal>(null);
@@ -33,7 +36,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 				distance={6}
 				offset={[0, 0]}
 				sides={{ bottom: false, start: false, end: false, top: true }}
-				startColor="#00000015" // TODO: Figure out if this needs to be inside the theme colors object.
+				startColor={theme.colors.navigationShadow}
 			>
 				<NavigationContainer>
 					<WrapWithCutOut>
@@ -48,21 +51,32 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 
 						<CutOutContainer width={width} pointerEvents="box-none">
 							<CutOutWrapper>
-								<CutOut>
-									<Pressable.Background
-										foreground={false}
-										borderless
-										onPress={() => createSelectionRef?.current?.present()}
-										style={{
-											width: '100%',
-											height: '100%',
-											justifyContent: 'center',
-											alignItems: 'center',
-										}}
-									>
-										<Icon name={PlusIcon} size={32} />
-									</Pressable.Background>
-								</CutOut>
+								<Shadow
+									paintInside
+									distance={6}
+									offset={[0, 38]}
+									startColor={theme.colors.navigationShadow}
+								>
+									<CutOut>
+										<Pressable.Background
+											foreground={false}
+											borderless
+											onPress={() => createSelectionRef?.current?.present()}
+											style={{
+												width: '100%',
+												height: '100%',
+												justifyContent: 'center',
+												alignItems: 'center',
+											}}
+										>
+											<Icon
+												name={PlusIcon}
+												size={32}
+												color={theme.colors.black}
+											/>
+										</Pressable.Background>
+									</CutOut>
+								</Shadow>
 							</CutOutWrapper>
 						</CutOutContainer>
 

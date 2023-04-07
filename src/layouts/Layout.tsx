@@ -22,15 +22,20 @@ interface LayoutProps {
 	style?: StyleProp<ViewStyle>;
 	horizontalPadding?: boolean;
 	headingSpacing?: number;
+	bottomPadding?: number;
 }
 
-const StyledLayout = styled.View<{ withAnimatedTitle: boolean; horizontalPadding: boolean }>`
+const StyledLayout = styled.View<{
+	withAnimatedTitle: boolean;
+	horizontalPadding: boolean;
+	bottomPadding: number;
+}>`
 	flex: 1;
 	background-color: ${({ theme }) => theme.colors.base[0]};
 	padding: ${({ theme, withAnimatedTitle, horizontalPadding }) =>
 			withAnimatedTitle ? theme.spacing.size(1) : theme.spacing.size(2)}px
 		${({ horizontalPadding }) => (horizontalPadding ? theme.spacing.size(1.5) : 0)}px
-		${theme.spacing.size(2)}px;
+		${({ theme, bottomPadding }) => theme.spacing.size(bottomPadding)}px;
 `;
 
 export const Layout = ({
@@ -41,6 +46,7 @@ export const Layout = ({
 	style,
 	horizontalPadding = true,
 	headingSpacing = 0,
+	bottomPadding = 0,
 }: LayoutProps) => {
 	// TODO: Maybe it would be better to have this called for only the first child?
 	const addListHeaderComponent = (child: any) => {
@@ -97,6 +103,7 @@ export const Layout = ({
 			style={style}
 			withAnimatedTitle={!!animatedTitle}
 			horizontalPadding={horizontalPadding}
+			bottomPadding={bottomPadding}
 		>
 			{!animatedTitle && title && (
 				<Heading tag="h4" mb={16}>

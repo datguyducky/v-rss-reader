@@ -57,7 +57,7 @@ export const ThumbnailCard = ({
 						<Text
 							fontSize={14}
 							numberOfLines={3}
-							color={theme.colors.base[0]}
+							color={theme.colors.white}
 							weight={500}
 						>
 							{title}
@@ -70,14 +70,14 @@ export const ThumbnailCard = ({
 								fontSize={12}
 								numberOfLines={3}
 								weight={300}
-								color={theme.colors.base[0]}
+								color={theme.colors.white}
 							>
 								{parsedDescription}
 							</Text>
 						</View>
 					)}
 
-					<Text fontSize={10} weight={300} color={theme.colors.base[0]}>
+					<Text fontSize={10} weight={300} color={theme.colors.white}>
 						{`${domainName} / ${publishedAt}`}
 					</Text>
 				</ThumbnailTextWrap>

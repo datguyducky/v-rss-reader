@@ -1,3 +1,4 @@
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 import { Text } from '../Text';
@@ -22,4 +23,9 @@ export const SelectModalRow = styled.View`
 	flex-direction: row;
 	align-items: center;
 	padding: ${({ theme }) => `${theme.spacing.size(2)}px ${theme.spacing.size(1.5)}px`};
+`;
+
+export const StyledGestureHandlerRootView = styled(GestureHandlerRootView)`
+	flex: 1;
+	background-color: ${({ theme }) => theme.colors.base[0]};
 `;

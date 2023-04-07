@@ -1,6 +1,6 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, useContext } from 'react';
 import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
@@ -12,12 +12,14 @@ import { FeedCategory } from '../components/FeedCategory';
 import { FeedItem } from '../components/FeedItem';
 import { FeedItemIcon } from '../components/FeedItemIcon';
 import { Icon } from '../components/Icon';
+import { ThemeContext, THEMES } from '../context/ThemeContext';
 import { SettingsFormValues } from '../forms/SettingsForm';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
 		const theme = useTheme();
+		const { getTheme } = useContext(ThemeContext);
 
 		const { feedsCategories, setActiveItemDetails } = useFeedsCategories();
 		const [appSettings = DEFAULT_SETTINGS_VALUES] =
@@ -40,8 +42,9 @@ export const Feeds = forwardRef(
 				screen: 'Read',
 				params: { id: item.id },
 			});
+
 			setStatusBarBackgroundColor(theme.colors.base[0], false);
-			setStatusBarStyle('dark');
+			setStatusBarStyle(getTheme() === THEMES.light ? 'dark' : 'light');
 		};
 
 		return (

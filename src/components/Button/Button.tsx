@@ -36,7 +36,7 @@ export const Button = ({
 			case !!textColor:
 				return textColor;
 			case variant === 'outline':
-				return theme.colors.base[9];
+				return theme.colors.text;
 			case variant === 'filled':
 				return theme.colors.base[0];
 			default:
