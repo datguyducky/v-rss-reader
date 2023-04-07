@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { darkTheme, lightTheme } from '../../theme/colors';
+
 export interface ThemeSectionStylesProps {}
 
 export const ThemeSectionWrap = styled.View`
@@ -28,10 +30,10 @@ export const ThemePreview = styled.View<{
 	background-color: ${({ theme, color }) => {
 		switch (color) {
 			case 'light':
-				return theme.colors.base[0];
+				return lightTheme[0];
 
 			case 'dark':
-				return theme.colors.base[9];
+				return darkTheme[0];
 		}
 	}};
 	border-color: ${({ theme, isActive }) =>
@@ -56,10 +58,10 @@ export const AutoThemePreviewWrap = styled.View<{
 
 export const AutoLightSection = styled.View`
 	flex: 1;
-	background-color: ${({ theme }) => theme.colors.base[0]};
+	background-color: ${lightTheme[0]};
 `;
 
 export const AutoDarkSection = styled.View`
 	flex: 1;
-	background-color: ${({ theme }) => theme.colors.base[9]};
+	background-color: ${darkTheme[0]};
 `;

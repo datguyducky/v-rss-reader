@@ -41,5 +41,5 @@ export const darkTheme = [
 	'#101113',
 	'#101113',
 	'#ff0d86',
-	'#101113',
+	'#ffffff',
 ];

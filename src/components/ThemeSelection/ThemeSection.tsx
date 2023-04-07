@@ -1,5 +1,8 @@
-import { Text } from '../Text';
+import { useContext } from 'react';
 
+import { ThemeContext, THEMES } from '../../context/ThemeContext';
+import { Pressable } from '../Pressable';
+import { Text } from '../Text';
 import {
 	AutoDarkSection,
 	AutoLightSection,
@@ -10,22 +13,20 @@ import {
 	ThemeSectionStylesProps,
 	ThemeSectionWrap,
 } from './ThemeSection.styles';
-import { Pressable } from '../Pressable';
-import { View } from 'react-native';
 
 interface ThemeSectionProps extends ThemeSectionStylesProps {}
 export const ThemeSection = ({}: ThemeSectionProps) => {
-	const currentlyActive = 'LIGHT';
+	const { theme, setTheme } = useContext(ThemeContext);
 
 	return (
 		<ThemeSectionWrap>
 			<LightThemeWrap>
-				<ThemePreview color="light" isActive={currentlyActive === 'LIGHT'}>
+				<ThemePreview color="light" isActive={theme === THEMES.light}>
 					<Pressable.Background
 						borderless
 						style={{ flex: 1 }}
 						foreground={false}
-						onPress={() => console.log('todo: set app theme to light')}
+						onPress={() => setTheme(THEMES.light)}
 					/>
 				</ThemePreview>
 
@@ -35,13 +36,13 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 			</LightThemeWrap>
 
 			<DarkThemeWrap>
-				<ThemePreview color="dark" isActive={currentlyActive === 'DARK'}>
+				<ThemePreview color="dark" isActive={theme === THEMES.dark}>
 					<Pressable.Background
 						borderless
 						style={{ flex: 1 }}
 						foreground={false}
 						underlayColor="rgba(255, 255, 255, 12)"
-						onPress={() => console.log('todo: set app theme to dark')}
+						onPress={() => setTheme(THEMES.dark)}
 					/>
 				</ThemePreview>
 
@@ -51,11 +52,9 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 			</DarkThemeWrap>
 
 			<DarkThemeWrap>
-				<AutoThemePreviewWrap isActive={currentlyActive === 'AUTO'}>
+				<AutoThemePreviewWrap isActive={theme === THEMES.auto}>
 					<Pressable.Background
-						onPress={() =>
-							console.log('todo: set app theme to follow users system settings')
-						}
+						onPress={() => setTheme(THEMES.auto)}
 						style={{ flex: 1, flexDirection: 'row' }}
 					>
 						<AutoLightSection />
