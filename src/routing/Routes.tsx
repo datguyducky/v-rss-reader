@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
 import { useContext, useEffect } from 'react';
 import { Animated } from 'react-native';
@@ -39,8 +40,16 @@ export const Routes = () => {
 
 	// Set status bar background to correct color on app launch
 	useEffect(() => {
-		setStatusBarBackgroundColor(theme.colors.base[0], false);
-		setStatusBarStyle(getTheme() === THEMES.light ? 'dark' : 'light');
+		const statusAndAnimationBars = async () => {
+			// Setting background color of bottom "gesture/navigation" android bar to match with the app background color
+			await setBackgroundColorAsync(theme.colors.base[0]);
+
+			// Same for status bar
+			setStatusBarBackgroundColor(theme.colors.base[0], false);
+			setStatusBarStyle(getTheme() === THEMES.light ? 'dark' : 'light');
+		};
+
+		statusAndAnimationBars();
 	}, []);
 
 	return (

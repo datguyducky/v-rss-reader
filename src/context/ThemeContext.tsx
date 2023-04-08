@@ -1,3 +1,4 @@
+import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { createContext, ReactNode, useCallback, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { useMMKVString } from 'react-native-mmkv';
@@ -34,9 +35,20 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 		(appTheme || THEMES.light) as ThemeTypes,
 	);
 
-	const handleThemeChange = useCallback((newTheme: ThemeTypes) => {
+	const handleThemeChange = useCallback(async (newTheme: ThemeTypes) => {
 		setAppTheme(newTheme);
 		setLocalTheme(newTheme);
+
+		// Changing the gesture/navigation bottom bar background color for Android to make sure it matches with the rest of the app
+		let newNavigationBarColor;
+		if (newTheme === THEMES.auto) {
+			newNavigationBarColor =
+				themes[colorScheme === 'light' ? THEMES.light : THEMES.dark].base[0];
+		} else {
+			newNavigationBarColor = themes[newTheme].base[0];
+		}
+
+		await setBackgroundColorAsync(newNavigationBarColor);
 	}, []);
 
 	const getTheme = () => {
