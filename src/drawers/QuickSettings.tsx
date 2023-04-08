@@ -126,7 +126,7 @@ export const QuickSettings = forwardRef(
 						<Text fontFamily="Montserrat" mb={16}>
 							Themes
 						</Text>
-						<ThemeSection />
+						<ThemeSection onClose={() => ref?.current?.forceClose()} />
 					</ThemeSectionContainer>
 				</Drawer>
 

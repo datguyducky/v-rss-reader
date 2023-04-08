@@ -14,9 +14,20 @@ import {
 	ThemeSectionWrap,
 } from './ThemeSection.styles';
 
-interface ThemeSectionProps extends ThemeSectionStylesProps {}
-export const ThemeSection = ({}: ThemeSectionProps) => {
+interface ThemeSectionProps extends ThemeSectionStylesProps {
+	onClose: () => void;
+}
+export const ThemeSection = ({ onClose }: ThemeSectionProps) => {
 	const { theme, setTheme } = useContext(ThemeContext);
+
+	const handleThemeChange = (theme: THEMES) => {
+		setTheme(theme);
+
+		// This timeout here is needed as without it the drawer closes and then just reopens itself again
+		setTimeout(function () {
+			onClose?.();
+		}, 300);
+	};
 
 	return (
 		<ThemeSectionWrap>
@@ -27,7 +38,7 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 						style={{ flex: 1 }}
 						foreground={false}
 						underlayColor="#228be633"
-						onPress={() => setTheme(THEMES.light)}
+						onPress={() => handleThemeChange(THEMES.light)}
 					/>
 				</ThemePreview>
 
@@ -43,7 +54,7 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 						style={{ flex: 1 }}
 						foreground={false}
 						underlayColor="#228be633"
-						onPress={() => setTheme(THEMES.dark)}
+						onPress={() => handleThemeChange(THEMES.dark)}
 					/>
 				</ThemePreview>
 
@@ -55,7 +66,7 @@ export const ThemeSection = ({}: ThemeSectionProps) => {
 			<DarkThemeWrap>
 				<AutoThemePreviewWrap isActive={theme === THEMES.auto}>
 					<Pressable.Background
-						onPress={() => setTheme(THEMES.auto)}
+						onPress={() => handleThemeChange(THEMES.auto)}
 						underlayColor="#228be633"
 						style={{ flex: 1, flexDirection: 'row' }}
 					>
