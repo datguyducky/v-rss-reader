@@ -1,7 +1,6 @@
 {
   "expo": {
     "name": "V - RSS Reader",
-    "facebookDisplayName": "V - RSS Reader",
     "slug": "v-rss-reader",
     "version": "3.0.0",
     "orientation": "portrait",
