@@ -29,6 +29,7 @@ export const Read = ({ scrollY, title }) => {
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
 	const [refreshing, setRefreshing] = useState(false);
 	const [reRender, setReRender] = useState(new Date().getTime());
+	const [isScrolling, setIsScrolling] = useState(false);
 
 	// TODO: I wonder is there a better way to handle this than this state? Maybe context could work here...
 	const [selectedFeedData, setSelectedFeedData] = useState<FeedItem | undefined>();
@@ -155,6 +156,14 @@ export const Read = ({ scrollY, title }) => {
 		}
 	});
 
+	const handleScroll = () => {
+		setIsScrolling(true);
+	};
+
+	const handleScrollEnd = () => {
+		setIsScrolling(false);
+	};
+
 	return (
 		<>
 			<Layout
@@ -169,6 +178,8 @@ export const Read = ({ scrollY, title }) => {
 					<FlatList
 						key={reRender}
 						data={rssItems}
+						onScroll={handleScroll}
+						onScrollEndDrag={handleScrollEnd}
 						renderItem={p => (
 							<SwipeableFeedItem
 								item={p.item}
@@ -176,6 +187,7 @@ export const Read = ({ scrollY, title }) => {
 									setSelectedFeedData(p.item);
 									quickActionDrawerRef?.current?.present();
 								}}
+								enabled={!isScrolling}
 							/>
 						)}
 						keyExtractor={item => item?.id || item.links?.[0]?.url}

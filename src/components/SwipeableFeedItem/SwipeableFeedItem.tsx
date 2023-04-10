@@ -22,11 +22,13 @@ import { ThumbnailCard } from '../ThumbnailCard';
 interface SwipeableFeedItemProps extends SharedStylesProps {
 	item: Record<string, unknown>; // TODO: Better type.
 	handleActionPress: () => void;
+	enabled?: boolean;
 }
 
 export const SwipeableFeedItem = ({
 	item,
 	handleActionPress,
+	enabled = true,
 	...otherProps
 }: SwipeableFeedItemProps) => {
 	const theme = useTheme();
@@ -257,6 +259,7 @@ export const SwipeableFeedItem = ({
 			onSwipeableOpen={onOpen}
 			ref={swipeRef}
 			leftThreshold={75}
+			enabled={enabled}
 			//rightThreshold={75}
 		>
 			{renderFeedCard()}
