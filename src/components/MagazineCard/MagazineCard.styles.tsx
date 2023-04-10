@@ -1,9 +1,12 @@
 import styled from 'styled-components/native';
 
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';
 
-export const MagazineCardWrap = styled.View`
+export const MagazineCardWrap = styled.View<SharedStylesProps>`
 	background-color: ${({ theme }) => theme.colors.base[0]};
+
+	${SharedStyles};
 `;
 
 export const StyledImage = styled.ImageBackground<{ density: string }>`

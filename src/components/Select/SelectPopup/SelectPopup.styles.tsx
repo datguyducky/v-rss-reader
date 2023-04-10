@@ -1,15 +1,13 @@
 import styled from 'styled-components/native';
 
 import { Pressable } from '../../Pressable';
+import { SharedStyles, SharedStylesProps } from '../../Shared.styles';
 
-export interface SelectPopupStylesProps {
-	mb?: number;
-}
-
-export const SelectPopupContainer = styled(Pressable)<Pick<SelectPopupStylesProps, 'mb'>>`
+export const SelectPopupContainer = styled(Pressable)<SharedStylesProps>`
 	flex-direction: row;
 	align-items: center;
-	margin-bottom: ${({ mb }) => mb || 0}px;
+
+	${SharedStyles};
 `;
 
 export const StyledScrollView = styled.ScrollView`

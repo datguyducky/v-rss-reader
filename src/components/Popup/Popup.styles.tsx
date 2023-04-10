@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
+
 // We are using Pressable from react-native, and not our custom component, here to make sure that the onPress is correctly called and that the popup is correctly rendered, because
 // when using our custom component it would be require to use GestureHandlerRootView which then breaks the whole popup
 export const PopupOverlay = styled.Pressable`
@@ -10,7 +12,7 @@ export const PopupOverlay = styled.Pressable`
 `;
 
 // We use Pressable component here to make sure that onPress from overlay is not called here
-export const PopupWrapper = styled.Pressable`
+export const PopupWrapper = styled.Pressable<SharedStylesProps>`
 	width: 80%;
 	min-width: 320px;
 	border-radius: 12px;
@@ -18,6 +20,8 @@ export const PopupWrapper = styled.Pressable`
 	padding-horizontal: ${({ theme }) => theme.spacing.size(2)}px;
 	padding-vertical: ${({ theme }) => theme.spacing.size(3)}px;
 	padding-bottom: ${({ theme }) => theme.spacing.size(4)}px;
+
+	${SharedStyles};
 `;
 
 export const HeaderWrap = styled.View`

@@ -6,9 +6,9 @@ import { Image, View, Keyboard } from 'react-native';
 import { Button } from '../../components/Button';
 import { Select } from '../../components/Select';
 import { TextInput } from '../../components/TextInput';
-import { feedSchema } from '../../validation/feedSchema';
 import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 import { formatItemCount } from '../../utils/formatItemCount';
+import { feedSchema } from '../../validation/feedSchema';
 
 type FeedFormValues = {
 	name: string;
@@ -70,11 +70,11 @@ export const FeedForm = ({ goBack, mode, data }: FeedFormProps) => {
 	return (
 		<>
 			<FormProvider {...feedForm}>
-				<TextInput label="Feed name" name="name" mb={16} onFocus={handleKeyboardOnFocus} />
+				<TextInput label="Feed name" name="name" mb={2} onFocus={handleKeyboardOnFocus} />
 				<TextInput
 					label="Feed url"
 					name="url"
-					mb={16}
+					mb={2}
 					onFocus={handleKeyboardOnFocus}
 					autoCapitalize="none"
 				/>
@@ -109,7 +109,7 @@ export const FeedForm = ({ goBack, mode, data }: FeedFormProps) => {
 				)}
 
 				<Button
-					style={{ marginTop: isKeyboardVisible ? 16 : 0 }}
+					mt={isKeyboardVisible ? 2 : 0}
 					onPress={feedForm.handleSubmit(onSubmit)}
 					disabled={!feedForm.formState.isValid || !feedForm.formState.isDirty}
 				>

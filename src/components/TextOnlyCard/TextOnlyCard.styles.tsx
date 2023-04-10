@@ -1,9 +1,12 @@
 import styled from 'styled-components/native';
 
 import { Pressable } from '../Pressable';
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 
-export const TextOnlyCardWrap = styled.View`
+export const TextOnlyCardWrap = styled.View<SharedStylesProps>`
 	background-color: ${({ theme }) => theme.colors.base[0]};
+
+	${SharedStyles};
 `;
 
 export const StyledPressable = styled(Pressable.Background)`

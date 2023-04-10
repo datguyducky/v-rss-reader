@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { StyledNativeHeadingText, StyledNativeHeadingTextProps } from './Heading.styles';
+import { SharedStylesProps } from '../Shared.styles';
 
 export const Heading = ({
 	children,
@@ -8,16 +9,16 @@ export const Heading = ({
 	fontSize,
 	color,
 	tag,
-	mb,
 	style,
-}: StyledNativeHeadingTextProps) => {
+	...otherProps
+}: SharedStylesProps & StyledNativeHeadingTextProps) => {
 	return (
 		<StyledNativeHeadingText
+			{...otherProps}
 			weight={weight}
 			fontSize={fontSize}
 			color={color}
 			tag={tag}
-			mb={mb}
 			style={style}
 		>
 			{children}

@@ -3,12 +3,12 @@ import React, { ForwardedRef, forwardRef } from 'react';
 import { View } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
+import { SectionCount, SectionTitle, SectionWrap } from './ReadingStats.styles';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { Text } from '../components/Text';
 import { useReadingStats } from '../hooks/useReadingStats';
 import { formatMinutes } from '../utils/formatMinutes';
-import { SectionCount, SectionTitle, SectionWrap } from './ReadingStats.styles';
 
 export const ReadingStats = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -38,20 +38,21 @@ export const ReadingStats = forwardRef(
 				detached
 				bottomInset={24}
 				onChange={handleDrawerChange}
-				containerStyle={{ paddingTop: 24, paddingLeft: 16, paddingRight: 16 }}
+				pt={3}
+				px={2}
 			>
 				<Text
 					fontFamily="Montserrat"
 					fontSize={18}
 					color={theme.colors.primary}
 					weight={600}
-					mb={16}
+					mb={2}
 					textAlign="center"
 				>
 					Reading Stats
 				</Text>
 
-				<SectionWrap mb={16}>
+				<SectionWrap mb={2}>
 					<SectionTitle>Total articles read</SectionTitle>
 					<SectionCount>{feedsOpened}</SectionCount>
 				</SectionWrap>
@@ -61,9 +62,9 @@ export const ReadingStats = forwardRef(
 					<SectionCount>{averageFeedsPerDay}</SectionCount>
 				</SectionWrap>
 
-				<Divider my={16} />
+				<Divider my={2} />
 
-				<SectionWrap mb={16}>
+				<SectionWrap mb={2}>
 					<View style={{ width: '80%' }}>
 						<SectionTitle style={{ width: '100%' }}>
 							Current reading streak
@@ -93,7 +94,7 @@ export const ReadingStats = forwardRef(
 					<SectionCount>{longestStreak}</SectionCount>
 				</SectionWrap>
 
-				<Divider my={16} />
+				<Divider my={2} />
 
 				<SectionWrap>
 					<SectionTitle>Total time spent reading</SectionTitle>

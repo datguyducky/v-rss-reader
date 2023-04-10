@@ -1,15 +1,16 @@
 import styled from 'styled-components/native';
 
-// TODO: Not sure if this one is required
-export const NavigationContainer = styled.View``;
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 
-export const WrapWithCutOut = styled.View`
+export const WrapWithCutOut = styled.View<SharedStylesProps>`
 	height: 64px;
 	width: 100%;
 	flex-direction: row;
 	align-items: center;
 	padding: ${({ theme }) => `${theme.spacing.size(2)}px ${theme.spacing.size(1.5)}px`};
 	background-color: ${({ theme }) => theme.colors.base[0]};
+
+	${SharedStyles};
 `;
 
 export const LeftIconWrap = styled.View`

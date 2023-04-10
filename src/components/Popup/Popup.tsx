@@ -1,19 +1,28 @@
 import { ReactElement } from 'react';
 import { Modal, StyleProp, TextStyle, ViewStyle } from 'react-native';
 
-import { Text } from '../Text';
 import { HeaderWrap, PopupOverlay, PopupWrapper } from './Popup.styles';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-type PopupProps = {
+interface PopupProps extends SharedStylesProps {
 	children: ReactElement;
 	isOpen: boolean;
 	onClose: () => void;
 	title?: string;
 	style?: StyleProp<ViewStyle>;
 	titleStyle?: StyleProp<TextStyle>;
-};
+}
 
-export const Popup = ({ isOpen, onClose, title, children, style, titleStyle }: PopupProps) => {
+export const Popup = ({
+	isOpen,
+	onClose,
+	title,
+	children,
+	style,
+	titleStyle,
+	...otherProps
+}: PopupProps) => {
 	return (
 		<Modal
 			animationType="fade"
@@ -24,14 +33,14 @@ export const Popup = ({ isOpen, onClose, title, children, style, titleStyle }: P
 			onRequestClose={onClose}
 		>
 			<PopupOverlay onPress={onClose}>
-				<PopupWrapper style={style}>
+				<PopupWrapper {...otherProps} style={style}>
 					{title && (
 						<HeaderWrap>
 							<Text
 								fontFamily="Montserrat"
 								fontSize={16}
 								weight={500}
-								mb={4}
+								mb={0.5}
 								style={titleStyle}
 							>
 								{title}

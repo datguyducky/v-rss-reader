@@ -81,7 +81,7 @@ export const SettingsForm = () => {
 						{ label: 'Paged', value: 'PAGED' },
 					]}
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					style={{ paddingHorizontal: 0 }}
+					px={0}
 				/>
 				{/*<Switch*/}
 				{/*	name="autoNextSection"*/}
@@ -89,7 +89,7 @@ export const SettingsForm = () => {
 				{/*	onValueChange={settingsForm.handleSubmit(onSubmit)}*/}
 				{/*/>*/}
 
-				<Divider my={16} />
+				<Divider my={2} />
 
 				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Gestures
@@ -102,13 +102,13 @@ export const SettingsForm = () => {
 						{ label: 'Double tap', value: 'DOUBLE_PRESS' },
 					]}
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={16}
+					mb={2}
 				/>
 				<Switch
 					name="invertSwipe"
 					label="Invert swipe gestures"
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={16}
+					mb={2}
 				/>
 				<Switch
 					name="disablePullRefresh"
@@ -116,7 +116,7 @@ export const SettingsForm = () => {
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
 				/>
 
-				<Divider my={16} />
+				<Divider my={2} />
 
 				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Feeds list
@@ -125,28 +125,28 @@ export const SettingsForm = () => {
 					name="sortAlphabetically"
 					label="Sort alphabetically"
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={16}
+					mb={2}
 				/>
 				{/*<Switch*/}
 				{/*	name="hideFeedUnreadCount"*/}
 				{/*	label="Hide unread count"*/}
 				{/*	onValueChange={settingsForm.handleSubmit(onSubmit)}*/}
-				{/*	mb={16}*/}
+				{/*	mb={2}*/}
 				{/*/>*/}
 				<Switch
 					name="hideFeedIcons"
 					label="Hide feed icons"
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={16}
+					mb={2}
 				/>
 				<Switch
 					name="startWithCategoriesOpen"
 					label="Start with categories open"
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={16}
+					mb={2}
 				/>
 
-				<Divider my={16} />
+				<Divider my={2} />
 
 				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Interface
@@ -162,7 +162,7 @@ export const SettingsForm = () => {
 						{ label: 'Huge', value: 'HUGE' },
 					]}
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={16}
+					mb={2}
 				/>
 				<Switch
 					name="disableArticleImages"
@@ -175,7 +175,7 @@ export const SettingsForm = () => {
 				{/*	onValueChange={settingsForm.handleSubmit(onSubmit)}*/}
 				{/*/>*/}
 
-				<Divider my={16} />
+				<Divider my={2} />
 
 				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Data
@@ -184,10 +184,10 @@ export const SettingsForm = () => {
 					name="disableReadingStatistics"
 					label="Stop collecting reading statistics"
 					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={32}
+					mb={4}
 				/>
 
-				<Button onPress={() => setResetAppPopup(true)} mb={16} size="small">
+				<Button onPress={() => setResetAppPopup(true)} mb={2} size="small">
 					RESET APP DATA
 				</Button>
 				<Button onPress={() => setResetReadingStatsPopup(true)} size="small">

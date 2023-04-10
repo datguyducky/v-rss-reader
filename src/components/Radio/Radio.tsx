@@ -2,11 +2,12 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
 
-import { Text } from '../Text';
-import { RadioCircle, RadioStylesProps, RadioWrap, StyledPressable } from './Radio.styles';
+import { RadioCircle, RadioWrap, StyledPressable } from './Radio.styles';
 import { RadioGroup } from './RadioGroup/RadioGroup';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface RadioProps extends RadioStylesProps {
+interface RadioProps extends SharedStylesProps {
 	label: string;
 	value: string;
 	name?: string;
@@ -14,14 +15,21 @@ interface RadioProps extends RadioStylesProps {
 	pressableStyle?: StyleProp<ViewStyle>;
 }
 
-export const Radio = ({ label, mb, name, value, onValueChange, pressableStyle }: RadioProps) => {
+export const Radio = ({
+	label,
+	name,
+	value,
+	onValueChange,
+	pressableStyle,
+	...otherProps
+}: RadioProps) => {
 	const { control } = useFormContext();
 
 	return (
 		<Controller
 			control={control}
 			render={({ field: { onChange, value: fieldValue } }) => (
-				<RadioWrap mb={mb || 0}>
+				<RadioWrap {...otherProps}>
 					<StyledPressable
 						onPress={() => {
 							onChange(value);

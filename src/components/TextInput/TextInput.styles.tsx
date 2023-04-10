@@ -2,7 +2,6 @@ import { TextInput as NativeTextInput } from 'react-native';
 import styled from 'styled-components/native';
 
 export interface TextInputStylesProps {
-	mb?: number;
 	isInvalid?: boolean;
 }
 

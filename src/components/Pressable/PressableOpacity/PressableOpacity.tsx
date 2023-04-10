@@ -19,8 +19,7 @@ export const PressableOpacity = ({
 	children,
 	style,
 	activeOpacity = 0.5,
-	px = 0,
-	py = 0,
+	...otherProps
 }: PressableOpacityProps) => {
 	const singlePress = createSinglePressGesture(onPress);
 	const doublePress = createDoublePressGesture(onDoublePress);
@@ -29,8 +28,7 @@ export const PressableOpacity = ({
 	return (
 		<GestureDetector gesture={Gesture.Exclusive(longPress, doublePress, singlePress)}>
 			<StyledNativePressable
-				px={px}
-				py={py}
+				{...otherProps}
 				style={({ pressed }) => [style || {}, { opacity: pressed ? activeOpacity : 1 }]}
 			>
 				{children}

@@ -2,26 +2,27 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useRef } from 'react';
 import { EyeIcon } from 'react-native-heroicons/outline';
 
+import { HeaderTextWrap, HeaderWrap } from './Header.styles';
 import { Filters } from '../../drawers/Filters';
 import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 import { HeadingAnimated } from '../HeadingAnimated';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
-import { HeaderTextWrap, HeaderWrap } from './Header.styles';
+import { SharedStylesProps } from '../Shared.styles';
 
-type HeaderProps = {
+interface HeaderProps extends SharedStylesProps {
 	title?: string;
 	scrollY: any;
-};
+}
 
-export const Header = ({ title, scrollY }: HeaderProps) => {
+export const Header = ({ title, scrollY, ...otherProps }: HeaderProps) => {
 	const { activeItemDetails } = useFeedsCategories();
 
 	const filtersDrawerRef = useRef<BottomSheetModal>(null);
 
 	return (
 		<>
-			<HeaderWrap>
+			<HeaderWrap {...otherProps}>
 				<HeaderTextWrap>
 					<HeadingAnimated
 						scrollY={scrollY}

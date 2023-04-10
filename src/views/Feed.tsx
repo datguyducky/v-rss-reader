@@ -16,10 +16,7 @@ export const Feed = ({ navigation, route }) => {
 	}, [route?.params?.categoryId]);
 
 	return (
-		<Layout
-			title={route?.params?.mode === 'edit' ? 'Edit feed' : 'Add new feed'}
-			bottomPadding={2}
-		>
+		<Layout title={route?.params?.mode === 'edit' ? 'Edit feed' : 'Add new feed'} pb={2}>
 			<FeedForm goBack={navigation.goBack} mode={route?.params?.mode} data={currentFeed} />
 		</Layout>
 	);

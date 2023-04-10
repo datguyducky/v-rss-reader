@@ -1,17 +1,18 @@
 import { View } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
-import { FeedCardProps } from '../../@types';
-import { parseHtmlString } from '../../utils/parseHtmlString';
-import { Text } from '../Text';
 import {
 	TextOnlyCardWrap,
 	TextOnlyTextWrap,
 	TitleWrap,
 	StyledPressable,
 } from './TextOnlyCard.styles';
+import { FeedCardProps } from '../../@types';
+import { parseHtmlString } from '../../utils/parseHtmlString';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface TextOnlyCardProps extends FeedCardProps {}
+interface TextOnlyCardProps extends SharedStylesProps, FeedCardProps {}
 
 export const TextOnlyCard = ({
 	title,
@@ -22,20 +23,21 @@ export const TextOnlyCard = ({
 	description,
 	actionPress,
 	handlePress,
+	...otherProps
 }: TextOnlyCardProps) => {
 	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
 	return (
-		<TextOnlyCardWrap>
+		<TextOnlyCardWrap {...otherProps}>
 			<StyledPressable
 				onLongPress={actionPress === 'LONG_PRESS' ? () => handleActionPress?.() : undefined}
 				onPress={handlePress}
 				onDoublePress={
 					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
 				}
-				py={8}
-				px={12}
+				py={1}
+				px={1.5}
 			>
 				<TextOnlyTextWrap>
 					<TitleWrap>

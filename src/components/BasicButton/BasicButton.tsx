@@ -1,9 +1,6 @@
 import { ReactNode, ReactElement, cloneElement } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
-import { Pressable } from '../Pressable';
-import { Text } from '../Text';
-import { StyledNativeTextProps } from '../Text/Text.styles';
 import {
 	BasicButtonContent,
 	BasicButtonStylesProps,
@@ -11,8 +8,12 @@ import {
 	IconWrap,
 	RightInfoWrap,
 } from './BasicButton.styles';
+import { Pressable } from '../Pressable';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
+import { StyledNativeTextProps } from '../Text/Text.styles';
 
-interface BasicButtonProps extends BasicButtonStylesProps {
+interface BasicButtonProps extends SharedStylesProps, BasicButtonStylesProps {
 	children: ReactNode;
 	onPress: () => void;
 	icon?: ReactNode;
@@ -29,7 +30,6 @@ export const BasicButton = ({
 	onPress,
 	icon,
 	spacing = 12,
-	mb = 0,
 	rightInfo,
 	textSize,
 	vertical = false,
@@ -37,9 +37,10 @@ export const BasicButton = ({
 	textWeight,
 	style,
 	pressableComponent = <Pressable />,
+	...otherProps
 }: BasicButtonProps) => {
 	return (
-		<BasicButtonWrap mb={mb} style={style}>
+		<BasicButtonWrap {...otherProps} style={style}>
 			{cloneElement(pressableComponent, {
 				onPress,
 				children: (

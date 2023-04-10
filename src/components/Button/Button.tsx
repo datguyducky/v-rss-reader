@@ -2,11 +2,12 @@ import React, { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
-import { Pressable } from '../Pressable';
-import { Text } from '../Text';
 import { ButtonContent, ButtonStylesProps, ButtonWrap } from './Button.styles';
+import { Pressable } from '../Pressable';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface ButtonProps extends ButtonStylesProps {
+interface ButtonProps extends SharedStylesProps, ButtonStylesProps {
 	children: ReactNode;
 	onPress: () => void;
 	icon?: ReactNode;
@@ -19,7 +20,6 @@ interface ButtonProps extends ButtonStylesProps {
 export const Button = ({
 	children,
 	onPress,
-	mb = 0,
 	textSize,
 	textColor,
 	style,
@@ -27,6 +27,7 @@ export const Button = ({
 	backgroundColor,
 	size = 'regular',
 	variant = 'filled',
+	...otherProps
 }: ButtonProps) => {
 	const theme = useTheme();
 	const selectTextColor = () => {
@@ -45,7 +46,7 @@ export const Button = ({
 	};
 
 	return (
-		<ButtonWrap mb={mb} style={style}>
+		<ButtonWrap {...otherProps} style={style}>
 			<Pressable.Background onPress={() => !disabled && onPress()}>
 				<ButtonContent
 					disabled={disabled}

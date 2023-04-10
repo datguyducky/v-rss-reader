@@ -4,9 +4,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
+import { Radio, SectionDivider, SectionTitle } from './Filters.styles';
 import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { Drawer } from '../components/Drawer';
-import { Radio, SectionDivider, SectionTitle } from './Filters.styles';
 
 export type FilterFormValues = {
 	SORT_BY: 'LATEST' | 'OLDEST';
@@ -27,13 +27,13 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	const onSubmit = (values: FilterFormValues) => setFeedFilters(values);
 
 	return (
-		<Drawer ref={ref} snapPoints={[460]} containerStyle={{ paddingTop: 24 }}>
+		<Drawer ref={ref} snapPoints={[460]} pt={3}>
 			<FormProvider {...filterForm}>
 				<SectionTitle
 					fontFamily="Montserrat"
 					color={theme.colors.primary}
 					weight={600}
-					mb={8}
+					mb={1}
 				>
 					Sort by
 				</SectionTitle>
@@ -42,13 +42,13 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 					<Radio label="Oldest" value="OLDEST" />
 				</Radio.Group>
 
-				<SectionDivider my={8} />
+				<SectionDivider my={1} />
 
 				<SectionTitle
 					fontFamily="Montserrat"
 					color={theme.colors.primary}
 					weight={600}
-					mb={8}
+					mb={1}
 				>
 					View
 				</SectionTitle>
@@ -62,8 +62,7 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 					fontFamily="Montserrat"
 					color={theme.colors.primary}
 					weight={600}
-					mb={8}
-					style={{ marginTop: 8 }}
+					my={1}
 				>
 					Density
 				</SectionTitle>

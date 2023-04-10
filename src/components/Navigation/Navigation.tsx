@@ -1,27 +1,30 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useRef } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { Bars3BottomLeftIcon, Cog6ToothIcon, PlusIcon } from 'react-native-heroicons/outline';
 import { Shadow } from 'react-native-shadow-2';
 import { useTheme } from 'styled-components/native';
 
-import { CreateSelection } from '../../drawers/CreateSelection';
-import { Feeds } from '../../drawers/Feeds';
-import { QuickSettings } from '../../drawers/QuickSettings';
-import { Icon } from '../Icon';
-import { Pressable } from '../Pressable';
 import {
 	LeftIconWrap,
 	RightIconWrap,
-	NavigationContainer,
 	WrapWithCutOut,
 	CutOutContainer,
 	CutOutWrapper,
 	CutOut,
 } from './Navigation.styles';
+import { CreateSelection } from '../../drawers/CreateSelection';
+import { Feeds } from '../../drawers/Feeds';
+import { QuickSettings } from '../../drawers/QuickSettings';
+import { Icon } from '../Icon';
+import { Pressable } from '../Pressable';
+import { SharedStylesProps } from '../Shared.styles';
 
-export const Navigation = ({ navigation }: BottomTabBarProps) => {
+export const Navigation = ({
+	navigation,
+	...otherProps
+}: BottomTabBarProps & SharedStylesProps) => {
 	const theme = useTheme();
 	const { width } = useWindowDimensions();
 
@@ -38,8 +41,8 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 				sides={{ bottom: false, start: false, end: false, top: true }}
 				startColor={theme.colors.navigationShadow}
 			>
-				<NavigationContainer>
-					<WrapWithCutOut>
+				<View>
+					<WrapWithCutOut {...otherProps}>
 						<Pressable.Background
 							onPress={() => feedsRef?.current?.present()}
 							borderless
@@ -90,7 +93,7 @@ export const Navigation = ({ navigation }: BottomTabBarProps) => {
 							</RightIconWrap>
 						</Pressable.Background>
 					</WrapWithCutOut>
-				</NavigationContainer>
+				</View>
 			</Shadow>
 
 			<CreateSelection navigation={navigation} ref={createSelectionRef} />

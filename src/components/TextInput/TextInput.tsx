@@ -1,10 +1,11 @@
-import React, { ForwardedRef, forwardRef, useRef } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import { TextInput as NativeTextInput, TextInputProps as NativeTextInputProps } from 'react-native';
 
-import { InputWrapper } from '../InputWrapper';
 import { TextInputStylesProps, StyledNativeTextInput } from './TextInput.styles';
+import { InputWrapper } from '../InputWrapper';
+import { SharedStylesProps } from '../Shared.styles';
 
-interface TextInputProps extends TextInputStylesProps {
+interface TextInputProps extends SharedStylesProps, TextInputStylesProps {
 	label: string;
 	name: string;
 	onFocus?: () => void;
@@ -14,11 +15,17 @@ interface TextInputProps extends TextInputStylesProps {
 
 export const TextInput = forwardRef(
 	(
-		{ label, mb, name, onFocus, onBlur, autoCapitalize }: TextInputProps,
+		{ label, name, onFocus, onBlur, autoCapitalize, ...otherProps }: TextInputProps,
 		ref: ForwardedRef<NativeTextInput>,
 	) => {
 		return (
-			<InputWrapper label={label} name={name} mb={mb} onBlur={onBlur} onFocus={onFocus}>
+			<InputWrapper
+				{...otherProps}
+				label={label}
+				name={name}
+				onBlur={onBlur}
+				onFocus={onFocus}
+			>
 				<StyledNativeTextInput blurOnSubmit autoCapitalize={autoCapitalize} ref={ref} />
 			</InputWrapper>
 		);

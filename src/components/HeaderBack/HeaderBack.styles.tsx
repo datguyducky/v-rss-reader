@@ -1,11 +1,15 @@
 import styled from 'styled-components/native';
 
-export const HeaderBackWrap = styled.View<{ marginTop?: number; width?: number }>`
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
+
+export const HeaderBackWrap = styled.View<SharedStylesProps>`
 	flex-direction: row;
 	height: 48px;
 	align-items: center;
 	padding: ${({ theme }) => `${theme.spacing.size(2)}px ${theme.spacing.size(1.5)}px 0`};
 	background-color: ${({ theme }) => theme.colors.base[0]};
+
+	${SharedStyles};
 `;
 
 export const BackIconWrap = styled.View`

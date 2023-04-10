@@ -1,8 +1,5 @@
 import { useContext } from 'react';
 
-import { ThemeContext, THEMES } from '../../context/ThemeContext';
-import { Pressable } from '../Pressable';
-import { Text } from '../Text';
 import {
 	AutoDarkSection,
 	AutoLightSection,
@@ -10,14 +7,17 @@ import {
 	DarkThemeWrap,
 	LightThemeWrap,
 	ThemePreview,
-	ThemeSectionStylesProps,
 	ThemeSectionWrap,
 } from './ThemeSection.styles';
+import { ThemeContext, THEMES } from '../../context/ThemeContext';
+import { Pressable } from '../Pressable';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface ThemeSectionProps extends ThemeSectionStylesProps {
+interface ThemeSectionProps extends SharedStylesProps {
 	onClose: () => void;
 }
-export const ThemeSection = ({ onClose }: ThemeSectionProps) => {
+export const ThemeSection = ({ onClose, ...otherProps }: ThemeSectionProps) => {
 	const { theme, setTheme } = useContext(ThemeContext);
 
 	const handleThemeChange = (theme: THEMES) => {
@@ -30,7 +30,7 @@ export const ThemeSection = ({ onClose }: ThemeSectionProps) => {
 	};
 
 	return (
-		<ThemeSectionWrap>
+		<ThemeSectionWrap {...otherProps}>
 			<LightThemeWrap>
 				<ThemePreview color="light" isActive={theme === THEMES.light}>
 					<Pressable.Background

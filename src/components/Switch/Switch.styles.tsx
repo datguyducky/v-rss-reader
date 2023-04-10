@@ -1,16 +1,14 @@
 import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';
 
-export interface SwitchStylesProps {
-	mb?: number;
-}
-
-export const SwitchWrap = styled.View<Pick<SwitchStylesProps, 'mb'>>`
+export const SwitchWrap = styled.View<SharedStylesProps>`
 	flex-direction: row;
 	align-items: center;
-	margin-bottom: ${({ mb }) => mb || 0}px;
+
+	${SharedStyles};
 `;
 
 export const SwitchLabel = styled(Text).attrs(() => ({

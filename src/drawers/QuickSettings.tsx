@@ -3,6 +3,8 @@ import React, { ForwardedRef, forwardRef, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { Cog6ToothIcon, ChartPieIcon } from 'react-native-heroicons/outline';
 
+import { ThemeSectionContainer } from './QuickSettings.styles';
+import { ReadingStats } from './ReadingStats';
 import { BasicButton } from '../components/BasicButton';
 import { ConfirmPopup } from '../components/ConfirmPopup';
 import { Divider } from '../components/Divider';
@@ -12,8 +14,6 @@ import { Pressable } from '../components/Pressable';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
 import { useFeedsCategories } from '../hooks/useFeedsCategories';
-import { ThemeSectionContainer } from './QuickSettings.styles';
-import { ReadingStats } from './ReadingStats';
 
 export const QuickSettings = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -60,11 +60,10 @@ export const QuickSettings = forwardRef(
 							navigation.navigate('Settings', { name: 'Settings' });
 						}}
 						icon={<Icon name={Cog6ToothIcon} size={20} />}
-						pressableComponent={<Pressable.Background py={8} px={16} />}
+						pressableComponent={<Pressable.Background py={1} px={2} />}
 					>
 						App settings
 					</BasicButton>
-
 					<BasicButton
 						onPress={() => {
 							dismiss('quickSettingsDrawer');
@@ -72,21 +71,16 @@ export const QuickSettings = forwardRef(
 							readingStatsRef?.current?.present();
 						}}
 						icon={<Icon name={ChartPieIcon} size={20} />}
-						pressableComponent={<Pressable.Background py={8} px={16} />}
+						pressableComponent={<Pressable.Background py={1} px={2} />}
 					>
 						Reading stats
 					</BasicButton>
-
 					{activeItemDetails?.id && (
 						<>
-							<Divider my={8} />
+							<Divider my={1} />
 
-							<View style={{ marginBottom: 0 }}>
-								<Pressable.Background
-									onPress={handleEditCurrentView}
-									py={8}
-									px={16}
-								>
+							<View>
+								<Pressable.Background onPress={handleEditCurrentView} py={1} px={2}>
 									<Text fontFamily="Montserrat">{`Rename ${
 										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
 									}`}</Text>
@@ -104,8 +98,8 @@ export const QuickSettings = forwardRef(
 										ref?.current?.forceClose();
 										setDeleteCurrentView(true);
 									}}
-									py={8}
-									px={16}
+									py={1}
+									px={2}
 								>
 									<Text fontFamily="Montserrat">{`Delete ${
 										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
@@ -119,11 +113,9 @@ export const QuickSettings = forwardRef(
 							</View>
 						</>
 					)}
-
-					<Divider my={8} style={{ marginBottom: 16 }} />
-
+					<Divider mt={1} mb={2} />
 					<ThemeSectionContainer>
-						<Text fontFamily="Montserrat" mb={16}>
+						<Text fontFamily="Montserrat" mb={2}>
 							Themes
 						</Text>
 						<ThemeSection onClose={() => ref?.current?.forceClose()} />

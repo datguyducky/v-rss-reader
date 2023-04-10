@@ -1,11 +1,14 @@
 import styled from 'styled-components/native';
 
 import { Pressable } from '../Pressable';
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';
 
-export const FeedCategoryWrap = styled.View`
+export const FeedCategoryWrap = styled.View<SharedStylesProps>`
 	flex-direction: row;
 	align-items: center;
+
+	${SharedStyles};
 `;
 
 export const PressableOpenIcon = styled(Pressable)`

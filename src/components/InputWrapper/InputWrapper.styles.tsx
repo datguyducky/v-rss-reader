@@ -1,12 +1,13 @@
 import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
+
 export interface InputWrapperStylesProps {
-	mb?: number;
 	isInvalid?: boolean;
 }
-export const InputWrapperContainer = styled.View<Required<Pick<InputWrapperStylesProps, 'mb'>>>`
-	margin-bottom: ${({ mb }) => mb}px;
+export const InputWrapperContainer = styled.View<SharedStylesProps>`
+	${SharedStyles};
 `;
 
 export const ContentWithLabelWrap = styled.View<

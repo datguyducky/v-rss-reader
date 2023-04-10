@@ -4,18 +4,15 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components/native';
 
+import { SelectPopupContainer, StyledScrollView } from './SelectPopup.styles';
 import { BasicButton } from '../../BasicButton';
 import { Popup } from '../../Popup';
 import { Pressable } from '../../Pressable';
 import { Radio } from '../../Radio';
+import { SharedStylesProps } from '../../Shared.styles';
 import { Text } from '../../Text';
-import {
-	SelectPopupContainer,
-	SelectPopupStylesProps,
-	StyledScrollView,
-} from './SelectPopup.styles';
 
-interface SelectPopupProps extends SelectPopupStylesProps {
+interface SelectPopupProps extends SharedStylesProps {
 	label: string;
 	name: string;
 	options: { label: string; value: string }[];
@@ -28,8 +25,8 @@ export const SelectPopup = ({
 	name,
 	options = [],
 	onValueChange,
-	mb,
 	style,
+	...otherProps
 }: SelectPopupProps) => {
 	const theme = useTheme();
 	const { getValues } = useFormContext();
@@ -38,7 +35,7 @@ export const SelectPopup = ({
 
 	return (
 		<>
-			<SelectPopupContainer onPress={() => setPopupVisible(true)} mb={mb}>
+			<SelectPopupContainer onPress={() => setPopupVisible(true)} {...otherProps}>
 				<Text fontFamily="Montserrat">{label}</Text>
 
 				<Text
@@ -68,7 +65,7 @@ export const SelectPopup = ({
 								onValueChange?.();
 							}}
 						>
-							{options.map(({ label, value }, index) => (
+							{options.map(({ label, value }) => (
 								<Radio
 									label={label}
 									value={value}
@@ -80,7 +77,8 @@ export const SelectPopup = ({
 					</StyledScrollView>
 
 					<BasicButton
-						style={{ marginLeft: 'auto', paddingRight: 16 }}
+						style={{ marginLeft: 'auto' }}
+						pr={2}
 						onPress={() => setPopupVisible(false)}
 						textWeight={600}
 						textColor={theme.colors.primary}

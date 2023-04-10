@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
-import { Pressable } from '../Pressable';
-import { Text } from '../Text';
 import {
 	ContentWithLabelWrap,
 	InputWrapperContainer,
@@ -11,8 +9,11 @@ import {
 	AbsoluteAnimatedView,
 	AnimatedLabel,
 } from './InputWrapper.styles';
+import { Pressable } from '../Pressable';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface TextInputProps extends InputWrapperStylesProps {
+interface TextInputProps extends SharedStylesProps, InputWrapperStylesProps {
 	label: string;
 	name: string;
 	children: React.ReactElement;
@@ -24,13 +25,13 @@ interface TextInputProps extends InputWrapperStylesProps {
 
 export const InputWrapper = ({
 	label,
-	mb,
 	name,
 	onFocus,
 	onBlur,
 	children,
 	onPress,
 	forceUnfocus,
+	...otherProps
 }: TextInputProps) => {
 	const inputRef = useRef(null);
 
@@ -110,7 +111,7 @@ export const InputWrapper = ({
 			name={name}
 			render={({ field: { onChange, value: fieldValue }, fieldState: { error } }) => (
 				<Pressable onPress={() => onPress?.()}>
-					<InputWrapperContainer mb={mb || 0}>
+					<InputWrapperContainer {...otherProps}>
 						<ContentWithLabelWrap isInvalid={!!error?.message}>
 							<AbsoluteAnimatedView>
 								<Animated.View
@@ -147,7 +148,7 @@ export const InputWrapper = ({
 								color="#fa5252"
 								fontSize={12}
 								weight={300}
-								style={{ marginTop: 4 }}
+								mt={0.5}
 								fontFamily="Montserrat"
 							>
 								{error.message}

@@ -1,11 +1,12 @@
 import styled from 'styled-components/native';
 
 import { darkTheme, lightTheme } from '../../theme/colors';
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 
-export interface ThemeSectionStylesProps {}
-
-export const ThemeSectionWrap = styled.View`
+export const ThemeSectionWrap = styled.View<SharedStylesProps>`
 	flex-direction: row;
+
+	${SharedStyles};
 `;
 
 export const LightThemeWrap = styled.View`

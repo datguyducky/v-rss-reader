@@ -1,16 +1,18 @@
 import styled from 'styled-components/native';
 
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
+
 export interface ButtonStylesProps {
-	mb?: number;
 	disabled?: boolean;
 	backgroundColor?: string;
 	size?: 'small' | 'regular';
 	variant?: 'filled' | 'outline';
 }
 
-export const ButtonWrap = styled.View<Required<Pick<ButtonStylesProps, 'mb'>>>`
-	margin-bottom: ${({ mb }) => mb}px;
+export const ButtonWrap = styled.View<SharedStylesProps>`
+	${SharedStyles};
 `;
+
 export const ButtonContent = styled.View<
 	Pick<ButtonStylesProps, 'disabled' | 'backgroundColor' | 'size' | 'variant'>
 >`

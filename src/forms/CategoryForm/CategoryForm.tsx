@@ -66,7 +66,7 @@ export const CategoryForm = ({ onClose, mode, data }: CategoryFormProps) => {
 				<TextInput
 					label="Category name"
 					name="name"
-					mb={16}
+					mb={2}
 					onFocus={handleKeyboardOnFocus}
 				/>
 
@@ -89,7 +89,7 @@ export const CategoryForm = ({ onClose, mode, data }: CategoryFormProps) => {
 				)}
 
 				<Button
-					style={{ marginTop: isKeyboardVisible ? 16 : 0 }}
+					mt={isKeyboardVisible ? 2 : 0}
 					onPress={categoryForm.handleSubmit(onSubmit)}
 					disabled={!categoryForm.formState.isValid || !categoryForm.formState.isDirty}
 				>

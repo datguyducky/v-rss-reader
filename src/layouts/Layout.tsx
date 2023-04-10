@@ -12,9 +12,10 @@ import styled from 'styled-components/native';
 
 import { Heading } from '../components/Heading';
 import { HeadingAnimated } from '../components/HeadingAnimated';
+import { SharedStyles, SharedStylesProps } from '../components/Shared.styles';
 import { theme } from '../theme';
 
-interface LayoutProps {
+interface LayoutProps extends SharedStylesProps {
 	children: ReactNode;
 	scrollY?: any;
 	title?: string;
@@ -22,20 +23,22 @@ interface LayoutProps {
 	style?: StyleProp<ViewStyle>;
 	horizontalPadding?: boolean;
 	headingSpacing?: number;
-	bottomPadding?: number;
 }
 
-const StyledLayout = styled.View<{
-	withAnimatedTitle: boolean;
-	horizontalPadding: boolean;
-	bottomPadding: number;
-}>`
+const StyledLayout = styled.View<
+	{
+		withAnimatedTitle: boolean;
+		horizontalPadding: boolean;
+	} & SharedStylesProps
+>`
 	flex: 1;
 	background-color: ${({ theme }) => theme.colors.base[0]};
 	padding: ${({ theme, withAnimatedTitle, horizontalPadding }) =>
 			withAnimatedTitle ? theme.spacing.size(1) : theme.spacing.size(2)}px
 		${({ horizontalPadding }) => (horizontalPadding ? theme.spacing.size(1.5) : 0)}px
-		${({ theme, bottomPadding }) => theme.spacing.size(bottomPadding)}px;
+		${({ theme, pb }) => theme.spacing.size(pb || 0)}px;
+
+	${SharedStyles};
 `;
 
 export const Layout = ({
@@ -46,7 +49,7 @@ export const Layout = ({
 	style,
 	horizontalPadding = true,
 	headingSpacing = 0,
-	bottomPadding = 0,
+	...otherProps
 }: LayoutProps) => {
 	// TODO: Maybe it would be better to have this called for only the first child?
 	const addListHeaderComponent = (child: any) => {
@@ -58,7 +61,7 @@ export const Layout = ({
 						title={animatedTitle as string}
 						action="hide"
 						tag="h4"
-						mb={16}
+						mb={2}
 						style={{ paddingLeft: headingSpacing }}
 					/>
 				),
@@ -78,7 +81,7 @@ export const Layout = ({
 								title={animatedTitle as string}
 								action="hide"
 								tag="h4"
-								mb={16}
+								mb={2}
 								key="scroll-view-heading-animated"
 								style={{ paddingLeft: headingSpacing }}
 							/>,
@@ -103,10 +106,10 @@ export const Layout = ({
 			style={style}
 			withAnimatedTitle={!!animatedTitle}
 			horizontalPadding={horizontalPadding}
-			bottomPadding={bottomPadding}
+			{...otherProps}
 		>
 			{!animatedTitle && title && (
-				<Heading tag="h4" mb={16}>
+				<Heading tag="h4" mb={2}>
 					{title}
 				</Heading>
 			)}

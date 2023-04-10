@@ -25,8 +25,7 @@ export const PressableBackground = ({
 	underlayColor, // TODO: Figure if this needs to be in theme colors object.
 	foreground = true,
 	borderless = false,
-	px = 0,
-	py = 0,
+	...otherProps
 }: PressableBackgroundProps) => {
 	const theme = useTheme();
 
@@ -37,8 +36,7 @@ export const PressableBackground = ({
 	return (
 		<GestureDetector gesture={Gesture.Exclusive(longPress, doublePress, singlePress)}>
 			<StyledNativePressable
-				px={px}
-				py={py}
+				{...otherProps}
 				style={style}
 				android_ripple={{
 					color: underlayColor || theme.colors.pressableBackground,

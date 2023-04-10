@@ -2,35 +2,37 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
 
-import { FeedItem } from '../FeedItem';
-import { FeedItemIcon } from '../FeedItemIcon';
-import { Icon } from '../Icon';
-import { Text } from '../Text';
 import {
 	EmptyCategoryText,
 	FeedCategoryWrap,
 	PressableOpenIcon,
 	PressableSelectCategory,
 } from './FeedCategory.styles';
+import { FeedItem } from '../FeedItem';
+import { FeedItemIcon } from '../FeedItemIcon';
+import { Icon } from '../Icon';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-type FeedCategoryProps = {
+interface FeedCategoryProps extends SharedStylesProps {
 	category: Record<string, unknown>;
 	handleItemNavigate: (item: Record<string, unknown>) => void;
 	initiallyOpen?: boolean;
 	feedIconDisabled?: boolean;
-};
+}
 
 export const FeedCategory = ({
 	category,
 	handleItemNavigate,
 	initiallyOpen = false,
 	feedIconDisabled,
+	...otherProps
 }: FeedCategoryProps) => {
 	const [isOpen, setIsOpen] = useState(initiallyOpen);
 
 	return (
 		<View>
-			<FeedCategoryWrap>
+			<FeedCategoryWrap {...otherProps}>
 				<PressableOpenIcon onPress={() => setIsOpen(prevState => !prevState)}>
 					{isOpen ? (
 						<Icon name={ChevronDownIcon} size={20} />
@@ -44,7 +46,7 @@ export const FeedCategory = ({
 						flex: 1,
 					}}
 				>
-					<PressableSelectCategory onPress={() => handleItemNavigate(category)} py={8}>
+					<PressableSelectCategory onPress={() => handleItemNavigate(category)} py={1}>
 						<Text fontFamily="Montserrat">{category.name as string}</Text>
 					</PressableSelectCategory>
 				</View>

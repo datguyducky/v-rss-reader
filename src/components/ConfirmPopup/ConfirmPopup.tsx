@@ -1,13 +1,13 @@
-import { View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components/native';
 
+import { ConfirmPopupWrapper, StyledGestureHandlerRootView } from './ConfirmPopup.styles';
 import { BasicButton } from '../BasicButton';
 import { Popup } from '../Popup';
 import { Pressable } from '../Pressable';
+import { SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';
 
-type ConfirmPopupProps = {
+interface ConfirmPopupProps extends SharedStylesProps {
 	isOpen: boolean;
 	onClose: () => void;
 	confirmText: string;
@@ -16,7 +16,7 @@ type ConfirmPopupProps = {
 	cancelText?: string;
 	handleConfirm?: () => void;
 	handleCancel?: () => void;
-};
+}
 
 export const ConfirmPopup = ({
 	isOpen,
@@ -27,20 +27,21 @@ export const ConfirmPopup = ({
 	handleCancel,
 	confirmText = '',
 	handleConfirm,
+	...otherProps
 }: ConfirmPopupProps) => {
 	const theme = useTheme();
 
 	return (
 		<Popup isOpen={isOpen} onClose={onClose} title={title}>
-			<View>
-				<Text mb={subTitle ? 24 : 0}>{subTitle}</Text>
+			<ConfirmPopupWrapper {...otherProps}>
+				<Text mb={subTitle ? 3 : 0}>{subTitle}</Text>
 
-				<GestureHandlerRootView style={{ flexDirection: 'row', marginLeft: 'auto' }}>
+				<StyledGestureHandlerRootView>
 					<BasicButton
 						onPress={() => handleCancel?.() || onClose()}
 						textWeight={600}
 						textColor={theme.colors.base[6]}
-						style={{ marginRight: 12 }}
+						mr={1.5}
 						pressableComponent={<Pressable.Opacity />}
 					>
 						{cancelText}
@@ -54,8 +55,8 @@ export const ConfirmPopup = ({
 					>
 						{confirmText}
 					</BasicButton>
-				</GestureHandlerRootView>
-			</View>
+				</StyledGestureHandlerRootView>
+			</ConfirmPopupWrapper>
 		</Popup>
 	);
 };

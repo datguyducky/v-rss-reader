@@ -8,22 +8,17 @@ import {
 } from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
 
+import { AnimatedSwitch, AnimatedSwitchThumb, SwitchLabel, SwitchWrap } from './Switch.styles';
 import { Pressable } from '../Pressable';
-import {
-	AnimatedSwitch,
-	AnimatedSwitchThumb,
-	SwitchLabel,
-	SwitchStylesProps,
-	SwitchWrap,
-} from './Switch.styles';
+import { SharedStylesProps } from '../Shared.styles';
 
-interface SwitchProps extends SwitchStylesProps {
+interface SwitchProps extends SharedStylesProps {
 	name: string;
 	label?: string;
 	onValueChange?: () => void;
 }
 
-export const Switch = ({ name, label, onValueChange, mb }: SwitchProps) => {
+export const Switch = ({ name, label, onValueChange, ...otherProps }: SwitchProps) => {
 	const theme = useTheme();
 	const { control, getValues } = useFormContext();
 
@@ -77,7 +72,7 @@ export const Switch = ({ name, label, onValueChange, mb }: SwitchProps) => {
 						onValueChange?.();
 					}}
 				>
-					<SwitchWrap mb={mb}>
+					<SwitchWrap {...otherProps}>
 						{label && <SwitchLabel fontFamily="Montserrat">{label}</SwitchLabel>}
 
 						<AnimatedSwitch style={backgroundColorStyles}>

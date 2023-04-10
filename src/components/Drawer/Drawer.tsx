@@ -4,11 +4,12 @@ import { ForwardedRef, forwardRef, ReactNode, useCallback, useContext } from 're
 import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
-import { ThemeContext, THEMES } from '../../context/ThemeContext';
-import { Text } from '../Text';
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
+import { ThemeContext, THEMES } from '../../context/ThemeContext';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface DrawerProps extends DrawerStylesProps {
+interface DrawerProps extends SharedStylesProps, DrawerStylesProps {
 	children: ReactNode;
 	snapPoints: (string | number)[];
 	initialSnapPoint?: number;
@@ -44,6 +45,7 @@ export const Drawer = forwardRef(
 			emptyListText,
 			onChange,
 			containerStyle,
+			...otherProps
 		}: DrawerProps,
 		ref: ForwardedRef<BottomSheetModal>,
 	) => {
@@ -104,6 +106,7 @@ export const Drawer = forwardRef(
 						if (useFlatList) {
 							return (
 								<DrawerContainer
+									{...otherProps}
 									horizontalContent={horizontalContent}
 									style={containerStyle}
 								>
@@ -126,6 +129,7 @@ export const Drawer = forwardRef(
 
 						return (
 							<DrawerContainer
+								{...otherProps}
 								horizontalContent={horizontalContent}
 								style={containerStyle}
 							>

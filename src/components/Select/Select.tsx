@@ -4,12 +4,6 @@ import { FlatList, Modal, View } from 'react-native';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 import { ChevronDownIcon } from 'react-native-heroicons/outline';
 
-import { Divider } from '../Divider';
-import { Icon } from '../Icon';
-import { InputWrapper } from '../InputWrapper';
-import { Pressable } from '../Pressable';
-import { RadioCircle } from '../Radio/Radio.styles';
-import { Text } from '../Text';
 import {
 	SelectModalHeading,
 	SelectModalRow,
@@ -18,8 +12,15 @@ import {
 	ValueWithIconWrap,
 } from './Select.styles';
 import { SelectPopup } from './SelectPopup/SelectPopup';
+import { Divider } from '../Divider';
+import { Icon } from '../Icon';
+import { InputWrapper } from '../InputWrapper';
+import { Pressable } from '../Pressable';
+import { RadioCircle } from '../Radio/Radio.styles';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface SelectPageProps {
+interface SelectPageProps extends SharedStylesProps {
 	label: string;
 	name: string;
 	data: { label: string; value: string; extraInfo?: string }[];
@@ -27,7 +28,7 @@ interface SelectPageProps {
 }
 
 export const Select = () => {};
-const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
+const SelectPage = ({ label, data, name, modalTitle, ...otherProps }: SelectPageProps) => {
 	const { control } = useFormContext();
 
 	const [isSelectModalVisible, setSelectModalVisibility] = useState(false);
@@ -58,7 +59,7 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 							{fieldValue !== null &&
 							fieldValue !== undefined &&
 							fieldValue !== '' ? (
-								<Text style={{ paddingLeft: 12 }}>
+								<Text pl={1.5}>
 									{data.find(item => item.value === fieldValue)?.label}
 								</Text>
 							) : (
@@ -79,7 +80,7 @@ const SelectPage = ({ label, data, name, modalTitle }: SelectPageProps) => {
 						visible={isSelectModalVisible}
 						onRequestClose={() => setSelectModalVisibility(false)}
 					>
-						<StyledGestureHandlerRootView>
+						<StyledGestureHandlerRootView {...otherProps}>
 							<SelectModalHeading>
 								<Pressable.Background
 									borderless

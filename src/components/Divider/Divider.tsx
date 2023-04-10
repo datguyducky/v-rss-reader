@@ -1,11 +1,12 @@
 import { StyleProp, ViewStyle } from 'react-native';
 
 import { DividerStylesProps, StyledDivider } from './Divider.styles';
+import { SharedStylesProps } from '../Shared.styles';
 
-interface DividerProps extends DividerStylesProps {
+interface DividerProps extends SharedStylesProps, DividerStylesProps {
 	style?: StyleProp<ViewStyle>;
 }
 
-export const Divider = ({ color, size, my, style }: DividerProps) => {
-	return <StyledDivider color={color} size={size} my={my} style={style} />;
+export const Divider = ({ color, size, style, ...otherProps }: DividerProps) => {
+	return <StyledDivider {...otherProps} color={color} size={size} style={style} />;
 };

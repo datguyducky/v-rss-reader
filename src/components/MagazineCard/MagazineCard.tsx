@@ -2,11 +2,6 @@ import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 import { useTheme } from 'styled-components/native';
 
-import { FeedCardProps } from '../../@types';
-import { parseHtmlString } from '../../utils/parseHtmlString';
-import { Icon } from '../Icon';
-import { Pressable } from '../Pressable';
-import { Text } from '../Text';
 import {
 	MagazineCardWrap,
 	MagazineTextWrap,
@@ -15,8 +10,14 @@ import {
 	DetailsWrap,
 	TitleText,
 } from './MagazineCard.styles';
+import { FeedCardProps } from '../../@types';
+import { parseHtmlString } from '../../utils/parseHtmlString';
+import { Icon } from '../Icon';
+import { Pressable } from '../Pressable';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface MagazineCardProps extends FeedCardProps {}
+interface MagazineCardProps extends SharedStylesProps, FeedCardProps {}
 
 export const MagazineCard = ({
 	title,
@@ -28,12 +29,13 @@ export const MagazineCard = ({
 	density,
 	description,
 	actionPress,
+	...otherProps
 }: MagazineCardProps) => {
 	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
 	return (
-		<MagazineCardWrap>
+		<MagazineCardWrap {...otherProps}>
 			<Pressable.Background
 				style={{ flexDirection: 'row' }}
 				onLongPress={actionPress === 'LONG_PRESS' ? () => handleActionPress?.() : undefined}
@@ -41,8 +43,8 @@ export const MagazineCard = ({
 					actionPress === 'DOUBLE_PRESS' ? () => handleActionPress?.() : undefined
 				}
 				onPress={handlePress}
-				py={8}
-				px={12}
+				py={1}
+				px={1.5}
 			>
 				<StyledImage
 					source={{

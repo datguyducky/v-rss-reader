@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 
-export const ThumbnailCardWrap = styled.View``;
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
+
+export const ThumbnailCardWrap = styled.View<SharedStylesProps>`
+	${SharedStyles};
+`;
 
 export const StyledImageBackground = styled.ImageBackground<{ density: string }>`
 	overflow: hidden;

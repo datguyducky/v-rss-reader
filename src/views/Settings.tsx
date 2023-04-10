@@ -5,7 +5,7 @@ import { Layout } from '../layouts/Layout';
 
 export const Settings = ({ scrollY }) => {
 	return (
-		<Layout animatedTitle="Settings" scrollY={scrollY} style={{ paddingTop: 24 }}>
+		<Layout animatedTitle="Settings" scrollY={scrollY} pt={3}>
 			<ScrollView>
 				<SettingsForm />
 			</ScrollView>

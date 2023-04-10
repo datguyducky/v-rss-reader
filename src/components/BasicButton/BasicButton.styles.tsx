@@ -1,13 +1,14 @@
 import styled from 'styled-components/native';
 
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
+
 export interface BasicButtonStylesProps {
 	spacing?: number;
-	mb?: number;
 	vertical?: boolean;
 }
 
-export const BasicButtonWrap = styled.View<Required<Pick<BasicButtonStylesProps, 'mb'>>>`
-	margin-bottom: ${({ mb }) => mb}px;
+export const BasicButtonWrap = styled.View<SharedStylesProps>`
+	${SharedStyles};
 `;
 export const BasicButtonContent = styled.View<Required<Pick<BasicButtonStylesProps, 'vertical'>>>`
 	flex-direction: ${({ vertical }) => (vertical ? 'column' : 'row')};

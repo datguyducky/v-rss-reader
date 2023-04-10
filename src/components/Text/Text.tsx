@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { StyledNativeText, StyledNativeTextProps } from './Text.styles';
+import { SharedStylesProps } from '../Shared.styles';
 
 export const Text = ({
 	children,
@@ -8,18 +9,18 @@ export const Text = ({
 	fontSize,
 	color,
 	fontFamily = 'Raleway',
-	mb,
 	numberOfLines,
 	style,
 	textAlign = 'auto',
-}: StyledNativeTextProps) => {
+	...otherProps
+}: StyledNativeTextProps & SharedStylesProps) => {
 	return (
 		<StyledNativeText
+			{...otherProps}
 			weight={weight}
 			fontSize={fontSize}
 			color={color}
 			fontFamily={fontFamily}
-			mb={mb}
 			numberOfLines={numberOfLines}
 			style={style}
 			textAlign={textAlign}

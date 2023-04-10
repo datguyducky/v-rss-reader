@@ -3,18 +3,21 @@ import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 import { useTheme } from 'styled-components/native';
 
-import { FeedCardProps } from '../../@types';
-import { parseHtmlString } from '../../utils/parseHtmlString';
-import { Icon } from '../Icon';
-import { Text } from '../Text';
 import {
 	ThumbnailCardWrap,
 	ThumbnailTextWrap,
 	TitleWrap,
 	StyledImageBackground,
 } from './ThumbnailCard.styles';
+import { FeedCardProps } from '../../@types';
+import { parseHtmlString } from '../../utils/parseHtmlString';
+import { Icon } from '../Icon';
+import { SharedStylesProps } from '../Shared.styles';
+import { Text } from '../Text';
 
-interface ThumbnailCardProps extends Omit<FeedCardProps, 'handlePress' | 'actionPress'> {}
+interface ThumbnailCardProps
+	extends SharedStylesProps,
+		Omit<FeedCardProps, 'handlePress' | 'actionPress'> {}
 
 export const ThumbnailCard = ({
 	title,
@@ -23,13 +26,14 @@ export const ThumbnailCard = ({
 	publishedAt,
 	density,
 	description,
+	...otherProps
 }: ThumbnailCardProps) => {
 	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
 	return (
 		<View>
-			<ThumbnailCardWrap>
+			<ThumbnailCardWrap {...otherProps}>
 				<StyledImageBackground
 					density={density}
 					source={{

@@ -1,13 +1,10 @@
 import styled from 'styled-components/native';
 
 import { Pressable } from '../Pressable';
+import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 
-export interface RadioStylesProps {
-	mb?: number;
-}
-
-export const RadioWrap = styled.View<Required<Pick<RadioStylesProps, 'mb'>>>`
-	margin-bottom: ${({ mb }) => mb}px;
+export const RadioWrap = styled.View<SharedStylesProps>`
+	${SharedStyles};
 `;
 
 export const StyledPressable = styled(Pressable.Background)`

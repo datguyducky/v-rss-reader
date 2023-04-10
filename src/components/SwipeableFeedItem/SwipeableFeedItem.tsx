@@ -5,6 +5,7 @@ import { ArchiveBoxIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
+import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/constants';
 import { FilterFormValues } from '../../drawers/Filters';
 import { SettingsFormValues } from '../../forms/SettingsForm';
@@ -14,16 +15,20 @@ import { calculateTimePassed } from '../../utils/calculateTimePassed';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
+import { SharedStylesProps } from '../Shared.styles';
 import { TextOnlyCard } from '../TextOnlyCard';
 import { ThumbnailCard } from '../ThumbnailCard';
-import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 
-interface SwipeableFeedItemProps {
+interface SwipeableFeedItemProps extends SharedStylesProps {
 	item: Record<string, unknown>; // TODO: Better type.
 	handleActionPress: () => void;
 }
 
-export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItemProps) => {
+export const SwipeableFeedItem = ({
+	item,
+	handleActionPress,
+	...otherProps
+}: SwipeableFeedItemProps) => {
 	const theme = useTheme();
 	const swipeRef = useRef<Swipeable>(null);
 
@@ -130,6 +135,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 			case 'TEXT_ONLY':
 				return (
 					<TextOnlyCard
+						{...otherProps}
 						title={item.title}
 						handleActionPress={handleActionPress}
 						handlePress={handlePress}
@@ -148,6 +154,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 			case 'MAGAZINE':
 				return (
 					<MagazineCard
+						{...otherProps}
 						title={item.title}
 						handleActionPress={handleActionPress}
 						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
@@ -167,6 +174,7 @@ export const SwipeableFeedItem = ({ item, handleActionPress }: SwipeableFeedItem
 			case 'THUMBNAIL':
 				return (
 					<ThumbnailCard
+						{...otherProps}
 						title={item.title}
 						thumbnailUrl={appSettings.disableArticleImages ? undefined : item?.imageUrl}
 						domainName={`${domainName} ${

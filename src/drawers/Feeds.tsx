@@ -85,7 +85,7 @@ export const Feeds = forwardRef(
 					icon={<Icon name={ArchiveBoxIcon} size={20} />}
 				/>
 
-				<Divider my={8} style={{ marginLeft: 16, marginRight: 16, width: 'auto' }} />
+				<Divider my={1} mx={2} style={{ width: 'auto' }} />
 			</Drawer>
 		);
 	},

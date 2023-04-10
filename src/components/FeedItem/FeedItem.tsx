@@ -2,31 +2,32 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { MinusSmallIcon } from 'react-native-heroicons/outline';
 
+import { NoFeedImageFound } from './FeedItem.styles';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
-import { NoFeedImageFound } from './FeedItem.styles';
+import { SharedStylesProps } from '../Shared.styles';
 
-type FeedItemProps = {
+interface FeedItemProps extends SharedStylesProps {
 	item: Record<string, unknown>;
 	handleItemNavigate: (item: Record<string, unknown>) => void;
 	style?: StyleProp<ViewStyle>;
 	pressableStyle?: StyleProp<ViewStyle>;
-	mb?: number;
 	icon?: React.ReactElement;
 	iconDisabled?: boolean;
-};
+}
 export const FeedItem = ({
 	item,
 	handleItemNavigate,
 	style,
 	pressableStyle,
-	mb,
 	icon,
 	iconDisabled,
+	...otherProps
 }: FeedItemProps) => {
 	return (
 		<BasicButton
+			{...otherProps}
 			onPress={() => handleItemNavigate(item)}
 			icon={
 				iconDisabled ? (
@@ -35,9 +36,8 @@ export const FeedItem = ({
 					icon || <NoFeedImageFound />
 				)
 			}
-			mb={mb}
 			style={style}
-			pressableComponent={<Pressable.Background py={8} px={16} style={pressableStyle} />}
+			pressableComponent={<Pressable.Background py={1} px={2} style={pressableStyle} />}
 		>
 			{item.name}
 		</BasicButton>

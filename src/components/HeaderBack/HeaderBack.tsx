@@ -1,19 +1,20 @@
 import { NativeStackHeaderProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 
+import { BackIconWrap, HeaderBackWrap, HeaderTextWrap } from './HeaderBack.styles';
 import { HeadingAnimated } from '../HeadingAnimated';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
-import { BackIconWrap, HeaderBackWrap, HeaderTextWrap } from './HeaderBack.styles';
+import { SharedStylesProps } from '../Shared.styles';
 
-interface HeaderBackProps extends NativeStackHeaderProps {
+interface HeaderBackProps extends SharedStylesProps, NativeStackHeaderProps {
 	scrollY: any; //TODO: correct type here
 	title: string;
 }
 
-export const HeaderBack = ({ navigation, scrollY, title }: HeaderBackProps) => {
+export const HeaderBack = ({ navigation, scrollY, title, ...otherProps }: HeaderBackProps) => {
 	return (
-		<HeaderBackWrap>
+		<HeaderBackWrap {...otherProps}>
 			<BackIconWrap>
 				<Pressable.Background onPress={navigation.goBack} borderless>
 					<Icon name={ArrowLeftIconMini} size={24} />
