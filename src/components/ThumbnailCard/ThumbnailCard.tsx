@@ -36,9 +36,8 @@ export const ThumbnailCard = ({
 			<ThumbnailCardWrap {...otherProps}>
 				<StyledImageBackground
 					density={density}
-					source={{
-						uri: thumbnailUrl,
-					}}
+					as={thumbnailUrl ? undefined : View}
+					{...(thumbnailUrl ? { source: { uri: thumbnailUrl } } : {})}
 				>
 					<LinearGradient
 						colors={['#00000000', '#000000']} // TODO: Figure out if this needs to be inside the theme colors object.

@@ -34,6 +34,7 @@ export const MagazineCard = ({
 	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
+	console.log(thumbnailUrl);
 	return (
 		<MagazineCardWrap {...otherProps}>
 			<Pressable.Background
@@ -47,10 +48,9 @@ export const MagazineCard = ({
 				px={1.5}
 			>
 				<StyledImage
-					source={{
-						uri: thumbnailUrl,
-					}}
 					density={density}
+					as={thumbnailUrl ? undefined : View}
+					{...(thumbnailUrl ? { source: { uri: thumbnailUrl } } : {})}
 				>
 					{!thumbnailUrl && (
 						<Icon name={PhotoIcon} size={27} color={theme.colors.base[6]} />
