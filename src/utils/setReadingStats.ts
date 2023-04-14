@@ -6,7 +6,7 @@ export const resetReadingStats = async () => {
 	try {
 		await AsyncStorage.multiRemove(STATS_STORAGE_KEYS);
 	} catch (error) {
-		console.error('Something went wrong when resetting reading statistics');
+		console.error('Something went wrong when resetting reading statistics', error);
 	}
 };
 
