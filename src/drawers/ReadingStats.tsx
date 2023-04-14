@@ -1,5 +1,5 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { ForwardedRef, forwardRef } from 'react';
+import React, { ForwardedRef, forwardRef, useState } from 'react';
 import { View } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
@@ -7,27 +7,34 @@ import { SectionCount, SectionTitle, SectionWrap } from './ReadingStats.styles';
 import { Divider } from '../components/Divider';
 import { Drawer } from '../components/Drawer';
 import { Text } from '../components/Text';
-import { useReadingStats } from '../hooks/useReadingStats';
+import { useAppUsageTime } from '../hooks/useAppUsageTime';
 import { formatMinutes } from '../utils/formatMinutes';
+import { getReadingStats } from '../utils/getReadingStats';
+
+const DEFAULT_READING_STATS = {
+	feedsOpened: '00',
+	averageFeedsPerDay: '00',
+	currentStreak: '00',
+	longestStreak: '00',
+	currentStreakAverageFeedsPerDay: '00',
+	longestStreakAverageFeedsPerDay: '00',
+};
 
 export const ReadingStats = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
 		const theme = useTheme();
 
-		const {
-			feedsOpened,
-			averageFeedsPerDay,
-			currentStreak,
-			currentStreakAverageFeedsPerDay,
-			longestStreak,
-			longestStreakAverageFeedsPerDay,
-			retrieveElapsedTime,
-			appUsageTime,
-		} = useReadingStats();
+		const [appStats, setAppStats] = useState(DEFAULT_READING_STATS);
 
-		const handleDrawerChange = (index: number) => {
+		const { appUsageTime, retrieveAppUsageTime } = useAppUsageTime();
+
+		const handleDrawerChange = async (index: number) => {
 			if (index === 0) {
-				retrieveElapsedTime();
+				const storageStats = await getReadingStats();
+				setAppStats(storageStats);
+				retrieveAppUsageTime();
+			} else if (index === -1) {
+				setAppStats(DEFAULT_READING_STATS);
 			}
 		};
 
@@ -54,12 +61,12 @@ export const ReadingStats = forwardRef(
 
 				<SectionWrap mb={2}>
 					<SectionTitle>Total articles read</SectionTitle>
-					<SectionCount>{feedsOpened}</SectionCount>
+					<SectionCount>{appStats.feedsOpened}</SectionCount>
 				</SectionWrap>
 
 				<SectionWrap>
 					<SectionTitle>Average number of articles read per day:</SectionTitle>
-					<SectionCount>{averageFeedsPerDay}</SectionCount>
+					<SectionCount>{appStats.averageFeedsPerDay}</SectionCount>
 				</SectionWrap>
 
 				<Divider my={2} />
@@ -73,10 +80,10 @@ export const ReadingStats = forwardRef(
 							weight={300}
 							fontSize={12}
 							style={{ width: '100%' }}
-						>{`With average of ${currentStreakAverageFeedsPerDay} articles/day`}</SectionTitle>
+						>{`With average of ${appStats.currentStreakAverageFeedsPerDay} articles/day`}</SectionTitle>
 					</View>
 
-					<SectionCount>{currentStreak}</SectionCount>
+					<SectionCount>{appStats.currentStreak}</SectionCount>
 				</SectionWrap>
 
 				<SectionWrap>
@@ -88,10 +95,10 @@ export const ReadingStats = forwardRef(
 							weight={300}
 							fontSize={12}
 							style={{ width: '100%' }}
-						>{`With average of ${longestStreakAverageFeedsPerDay} articles/day`}</SectionTitle>
+						>{`With average of ${appStats.longestStreakAverageFeedsPerDay} articles/day`}</SectionTitle>
 					</View>
 
-					<SectionCount>{longestStreak}</SectionCount>
+					<SectionCount>{appStats.longestStreak}</SectionCount>
 				</SectionWrap>
 
 				<Divider my={2} />

@@ -10,7 +10,8 @@ import { Divider } from '../../components/Divider';
 import { Heading } from '../../components/Heading';
 import { Select } from '../../components/Select';
 import { Switch } from '../../components/Switch';
-import { useReadingStats } from '../../hooks/useReadingStats';
+import { useAppUsageTime } from '../../hooks/useAppUsageTime';
+import { resetReadingStats } from '../../utils/setReadingStats';
 
 export type SettingsFormValues = {
 	readOnScroll: boolean;
@@ -34,7 +35,7 @@ export const SettingsForm = () => {
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
 		useMMKVObject<SettingsFormValues>('appSettings');
-	const { reset } = useReadingStats();
+	const { resetAppUsageTime } = useAppUsageTime();
 
 	const [resetAppPopup, setResetAppPopup] = useState(false);
 	const [resetReadingStatsPopup, setResetReadingStatsPopup] = useState(false);
@@ -55,8 +56,9 @@ export const SettingsForm = () => {
 		setResetAppPopup(false);
 	};
 
-	const handleResetReadingStats = () => {
-		reset();
+	const handleResetReadingStats = async () => {
+		resetAppUsageTime(); // resetting app usage stats
+		await resetReadingStats(); // resetting app reading stats
 
 		setResetReadingStatsPopup(false);
 	};

@@ -10,8 +10,8 @@ import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/co
 import { FilterFormValues } from '../../drawers/Filters';
 import { SettingsFormValues } from '../../forms/SettingsForm';
 import { useReadLater } from '../../hooks/useReadLater';
-import { useReadingStats } from '../../hooks/useReadingStats';
 import { calculateTimePassed } from '../../utils/calculateTimePassed';
+import { setReadingStats } from '../../utils/setReadingStats';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
@@ -38,10 +38,12 @@ export const SwipeableFeedItem = ({
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
-	const { handleFeedPressStats } = useReadingStats();
 
-	const handlePress = () => {
-		handleFeedPressStats();
+	const handlePress = async () => {
+		if (!appSettings.disableReadingStatistics) {
+			await setReadingStats();
+		}
+
 		openURL(item?.links[0]?.url);
 	};
 
