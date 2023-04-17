@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
 
+import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
 import { FeedForm } from '../forms/FeedForm';
-import { useFeedsCategories } from '../hooks/useFeedsCategories';
 import { Layout } from '../layouts/Layout';
 
 export const Feed = ({ navigation, route }) => {
-	const { findFeedCategory } = useFeedsCategories();
+	const { findFeedCategory } = useFeedsCategoriesContext();
 	const [currentFeed, setCurrentFeed] = useState();
 
 	useEffect(() => {
-		if (route?.params?.feedId) {
-			const feed = findFeedCategory(route.params.feedId);
+		const loadFeedDetails = async () => {
+			const feed = await findFeedCategory(route.params.feedId);
 			setCurrentFeed({ ...feed?.item, categoryId: feed?.parent?.id });
+		};
+
+		if (route?.params?.feedId) {
+			loadFeedDetails();
 		}
 	}, [route?.params?.categoryId]);
 

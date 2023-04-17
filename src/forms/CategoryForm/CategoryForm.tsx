@@ -5,7 +5,7 @@ import { Image, View, Keyboard } from 'react-native';
 
 import { Button } from '../../components/Button';
 import { TextInput } from '../../components/TextInput';
-import { useFeedsCategories } from '../../hooks/useFeedsCategories';
+import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
 import { categorySchema } from '../../validation/categorySchema';
 
 type CategoryFormProps = {
@@ -15,7 +15,7 @@ type CategoryFormProps = {
 };
 
 export const CategoryForm = ({ onClose, mode, data }: CategoryFormProps) => {
-	const { createCategory, editCategory } = useFeedsCategories();
+	const { editCategory, createCategory } = useFeedsCategoriesContext();
 
 	const categoryForm = useForm({
 		resolver: zodResolver(categorySchema),
@@ -46,11 +46,11 @@ export const CategoryForm = ({ onClose, mode, data }: CategoryFormProps) => {
 		}
 	}, [data]);
 
-	const onSubmit = submitData => {
+	const onSubmit = async submitData => {
 		if (mode === 'edit' && data?.id) {
-			editCategory(data.id as string, submitData);
+			await editCategory(data.id as string, submitData);
 		} else {
-			createCategory(submitData);
+			await createCategory(submitData);
 		}
 
 		onClose();

@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { MMKV } from 'react-native-mmkv';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { FeedsCategoriesProvider } from './context/FeedsCategoriesContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Routes } from './routing/Routes';
 
@@ -42,13 +43,15 @@ const App = () => {
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<ThemeProvider>
-				<BottomSheetModalProvider>
-					<SafeAreaProvider>
-						<NavigationContainer onReady={onLayoutRootView}>
-							<Routes />
-						</NavigationContainer>
-					</SafeAreaProvider>
-				</BottomSheetModalProvider>
+				<FeedsCategoriesProvider>
+					<BottomSheetModalProvider>
+						<SafeAreaProvider>
+							<NavigationContainer onReady={onLayoutRootView}>
+								<Routes />
+							</NavigationContainer>
+						</SafeAreaProvider>
+					</BottomSheetModalProvider>
+				</FeedsCategoriesProvider>
 			</ThemeProvider>
 		</GestureHandlerRootView>
 	);

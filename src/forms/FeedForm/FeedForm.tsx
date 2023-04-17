@@ -6,7 +6,7 @@ import { Image, View, Keyboard } from 'react-native';
 import { Button } from '../../components/Button';
 import { Select } from '../../components/Select';
 import { TextInput } from '../../components/TextInput';
-import { useFeedsCategories } from '../../hooks/useFeedsCategories';
+import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
 import { formatItemCount } from '../../utils/formatItemCount';
 import { feedSchema } from '../../validation/feedSchema';
 
@@ -23,13 +23,14 @@ type FeedFormProps = {
 };
 
 export const FeedForm = ({ goBack, mode, data }: FeedFormProps) => {
-	const { createFeed, onlyCategories, editFeed } = useFeedsCategories();
+	const { createFeed, onlyCategories, editFeed } = useFeedsCategoriesContext();
+
+	const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
 	const feedForm = useForm<FeedFormValues>({
 		resolver: zodResolver(feedSchema),
 		mode: 'onChange',
 	});
-	const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
 	useEffect(() => {
 		const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
@@ -53,11 +54,11 @@ export const FeedForm = ({ goBack, mode, data }: FeedFormProps) => {
 		}
 	}, [data]);
 
-	const onSubmit = (values: FeedFormValues) => {
+	const onSubmit = async (values: FeedFormValues) => {
 		if (mode === 'edit' && data?.id) {
-			editFeed(data.id as string, values);
+			await editFeed(data.id as string, values);
 		} else {
-			createFeed(values);
+			await createFeed(values);
 		}
 
 		goBack();

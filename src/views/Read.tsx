@@ -5,24 +5,26 @@ import { useMMKVListener, useMMKVObject } from 'react-native-mmkv';
 import { Feed, FeedItem } from 'react-native-rss-parser';
 import { useTheme } from 'styled-components/native';
 
+import { EmptyCategoryText } from './Read.styles';
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
+import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
 import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
 import { SettingsFormValues } from '../forms/SettingsForm';
-import { useFeedsCategories } from '../hooks/useFeedsCategories';
 import { useReadLater } from '../hooks/useReadLater';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
-import { EmptyCategoryText } from './Read.styles';
 
 export const Read = ({ scrollY, title }) => {
 	const theme = useTheme();
 
+	const { activeItem, feedsCategories } = useFeedsCategoriesContext();
+	const [loadingTest, setLoadingTest] = useState(false);
+
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
-	const { activeItemDetails, feedsCategories } = useFeedsCategories();
 	const { readLaterFeedsCategories } = useReadLater();
 
 	const [fetchRss, { loading }] = useRssFetch();
@@ -37,8 +39,8 @@ export const Read = ({ scrollY, title }) => {
 	const quickActionDrawerRef = useRef<BottomSheetModal>(null);
 
 	const retrieveRssFeeds = async () => {
-		if (activeItemDetails.type === 'CATEGORY') {
-			const { data } = await fetchRss(activeItemDetails.feeds);
+		if (activeItem.type === 'CATEGORY') {
+			const { data } = await fetchRss(activeItem.feeds);
 
 			if (data) {
 				const items: FeedItem[] = data
@@ -64,7 +66,7 @@ export const Read = ({ scrollY, title }) => {
 				setRssItems(items);
 			}
 		} else {
-			const { data } = await fetchRss(activeItemDetails.url);
+			const { data } = await fetchRss(activeItem.url);
 
 			if (data) {
 				const sortedItems = data[0].items.sort((a, b) => {
@@ -80,6 +82,8 @@ export const Read = ({ scrollY, title }) => {
 				setRssItems(sortedItems);
 			}
 		}
+
+		setLoadingTest(false);
 	};
 
 	const retrieveAllRssFeeds = async () => {
@@ -124,10 +128,14 @@ export const Read = ({ scrollY, title }) => {
 
 			setRssItems(items);
 		}
+
+		setLoadingTest(false);
 	};
 
 	useEffect(() => {
-		if (activeItemDetails?.id) {
+		setLoadingTest(true);
+
+		if (activeItem?.id) {
 			retrieveRssFeeds();
 		}
 		// Here we handle if the current view is the build-in "Read later" or "All articles" view
@@ -136,11 +144,12 @@ export const Read = ({ scrollY, title }) => {
 				retrieveAllRssFeeds();
 			} else if (title === 'Read later') {
 				setRssItems(readLaterFeedsCategories);
+				setLoadingTest(false);
 			}
 		}
 
-		//return () => abortController.abort(); TODO: re-add this?
-	}, [activeItemDetails, feedFilters?.SORT_BY, title, readLaterFeedsCategories]);
+		return () => setLoadingTest(false);
+	}, [activeItem, feedFilters?.SORT_BY, title, readLaterFeedsCategories]);
 
 	const handleRefresh = async () => {
 		setRefreshing(true);
@@ -168,11 +177,11 @@ export const Read = ({ scrollY, title }) => {
 		<>
 			<Layout
 				scrollY={scrollY}
-				animatedTitle={activeItemDetails?.name || title}
+				animatedTitle={activeItem?.name || title}
 				horizontalPadding={false}
 				headingSpacing={12}
 			>
-				{loading ? (
+				{loading || loadingTest ? (
 					<ActivityIndicator size="large" color={theme.colors.primary} />
 				) : (
 					<FlatList

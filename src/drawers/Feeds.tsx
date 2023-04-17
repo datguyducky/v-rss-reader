@@ -12,29 +12,29 @@ import { FeedCategory } from '../components/FeedCategory';
 import { FeedItem } from '../components/FeedItem';
 import { FeedItemIcon } from '../components/FeedItemIcon';
 import { Icon } from '../components/Icon';
+import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
 import { ThemeContext, THEMES } from '../context/ThemeContext';
 import { SettingsFormValues } from '../forms/SettingsForm';
-import { useFeedsCategories } from '../hooks/useFeedsCategories';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
 		const theme = useTheme();
 		const { getTheme } = useContext(ThemeContext);
+		const { setActiveItem, feedsCategories } = useFeedsCategoriesContext();
 
-		const { feedsCategories, setActiveItemDetails } = useFeedsCategories();
 		const [appSettings = DEFAULT_SETTINGS_VALUES] =
 			useMMKVObject<SettingsFormValues>('appSettings');
 
-		const handleItemNavigate = item => {
+		const handleItemNavigate = async item => {
 			ref?.current?.forceClose();
 
 			/**
-			 * Saving selected feed or category details to MMKV storage for later use.
+			 * Saving selected feed or category details to storage for later use.
 			 */
 			if (item.id === 'ALL_ARTICLES_VIEW' || item.id === 'READ_LATER_VIEW') {
-				setActiveItemDetails();
+				await setActiveItem();
 			} else {
-				setActiveItemDetails(item.id);
+				await setActiveItem(item.id);
 			}
 
 			navigation.navigate('TabScreen', {

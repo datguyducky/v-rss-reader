@@ -118,7 +118,13 @@ export const Drawer = forwardRef(
 										keyExtractor={keyExtractor}
 										ItemSeparatorComponent={ItemSeparatorComponent}
 										ListEmptyComponent={() => (
-											<Text weight={300} fontSize={12} textAlign="center">
+											<Text
+												weight={300}
+												fontSize={12}
+												textAlign="center"
+												ml={1.5}
+												mr={1.5}
+											>
 												{emptyListText}
 											</Text>
 										)}

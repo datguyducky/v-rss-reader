@@ -1,4 +1,4 @@
-interface SearchResult {
+export interface SearchResult {
 	item?: Record<string, unknown>;
 	parent?: Record<string, unknown>;
 }

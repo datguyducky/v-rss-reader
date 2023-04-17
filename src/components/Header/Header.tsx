@@ -3,8 +3,8 @@ import { useRef } from 'react';
 import { EyeIcon } from 'react-native-heroicons/outline';
 
 import { HeaderTextWrap, HeaderWrap } from './Header.styles';
+import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
 import { Filters } from '../../drawers/Filters';
-import { useFeedsCategories } from '../../hooks/useFeedsCategories';
 import { HeadingAnimated } from '../HeadingAnimated';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
@@ -16,7 +16,7 @@ interface HeaderProps extends SharedStylesProps {
 }
 
 export const Header = ({ title, scrollY, ...otherProps }: HeaderProps) => {
-	const { activeItemDetails } = useFeedsCategories();
+	const { activeItem } = useFeedsCategoriesContext();
 
 	const filtersDrawerRef = useRef<BottomSheetModal>(null);
 
@@ -26,7 +26,7 @@ export const Header = ({ title, scrollY, ...otherProps }: HeaderProps) => {
 				<HeaderTextWrap>
 					<HeadingAnimated
 						scrollY={scrollY}
-						title={activeItemDetails?.name || title}
+						title={activeItem?.name || title}
 						action="unhide"
 						tag="h5"
 					/>

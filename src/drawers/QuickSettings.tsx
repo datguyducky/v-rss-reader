@@ -13,11 +13,11 @@ import { Icon } from '../components/Icon';
 import { Pressable } from '../components/Pressable';
 import { Text } from '../components/Text';
 import { ThemeSection } from '../components/ThemeSelection';
-import { useFeedsCategories } from '../hooks/useFeedsCategories';
+import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
 
 export const QuickSettings = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
-		const { activeItemDetails, deleteItem, setActiveItemDetails } = useFeedsCategories();
+		const { activeItem, deleteItem, setActiveItem } = useFeedsCategoriesContext();
 
 		const { dismiss } = useBottomSheetModal();
 
@@ -26,17 +26,17 @@ export const QuickSettings = forwardRef(
 		const handleEditCurrentView = () => {
 			ref?.current?.forceClose();
 
-			if (activeItemDetails?.type === 'FEED') {
-				navigation.navigate('Feed', { feedId: activeItemDetails.id, mode: 'edit' });
-			} else if (activeItemDetails?.type === 'CATEGORY') {
-				navigation.navigate('Category', { categoryId: activeItemDetails.id, mode: 'edit' });
+			if (activeItem?.type === 'FEED') {
+				navigation.navigate('Feed', { feedId: activeItem.id, mode: 'edit' });
+			} else if (activeItem?.type === 'CATEGORY') {
+				navigation.navigate('Category', { categoryId: activeItem.id, mode: 'edit' });
 			}
 		};
 
 		const handleRemoveItem = () => {
 			setDeleteCurrentView(false);
 
-			setActiveItemDetails();
+			setActiveItem();
 
 			navigation.navigate('TabScreen', {
 				name: 'All articles',
@@ -44,14 +44,14 @@ export const QuickSettings = forwardRef(
 				params: { id: 'ALL_ARTICLES_VIEW' },
 			});
 
-			deleteItem(activeItemDetails.id);
+			deleteItem(activeItem.id);
 		};
 
 		return (
 			<>
 				<Drawer
 					ref={ref}
-					snapPoints={activeItemDetails?.id ? [387] : [256]}
+					snapPoints={activeItem?.id ? [387] : [256]}
 					name="quickSettingsDrawer"
 				>
 					<BasicButton
@@ -75,18 +75,18 @@ export const QuickSettings = forwardRef(
 					>
 						Reading stats
 					</BasicButton>
-					{activeItemDetails?.id && (
+					{activeItem?.id && (
 						<>
 							<Divider my={1} />
 
 							<View>
 								<Pressable.Background onPress={handleEditCurrentView} py={1} px={2}>
 									<Text fontFamily="Montserrat">{`Rename ${
-										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
+										activeItem.type === 'FEED' ? 'feed' : 'category'
 									}`}</Text>
 									<Text fontFamily="Montserrat" weight={300} fontSize={12}>
-										{`Change name of ${activeItemDetails.name} ${
-											activeItemDetails.type === 'FEED' ? 'feed' : 'category'
+										{`Change name of ${activeItem.name} ${
+											activeItem.type === 'FEED' ? 'feed' : 'category'
 										}`}
 									</Text>
 								</Pressable.Background>
@@ -102,12 +102,12 @@ export const QuickSettings = forwardRef(
 									px={2}
 								>
 									<Text fontFamily="Montserrat">{`Delete ${
-										activeItemDetails.type === 'FEED' ? 'feed' : 'category'
+										activeItem.type === 'FEED' ? 'feed' : 'category'
 									}`}</Text>
 									<Text fontFamily="Montserrat" weight={300} fontSize={12}>
 										{`Delete currently selected ${
-											activeItemDetails.type === 'FEED' ? 'feed' : 'category'
-										}: ${activeItemDetails.name}`}
+											activeItem.type === 'FEED' ? 'feed' : 'category'
+										}: ${activeItem.name}`}
 									</Text>
 								</Pressable.Background>
 							</View>
@@ -127,8 +127,8 @@ export const QuickSettings = forwardRef(
 				<ConfirmPopup
 					isOpen={deleteCurrentView}
 					onClose={() => setDeleteCurrentView(false)}
-					title={`Remove the ${activeItemDetails?.name} ${
-						activeItemDetails?.type === 'FEED' ? 'feed' : 'category'
+					title={`Remove the ${activeItem?.name} ${
+						activeItem?.type === 'FEED' ? 'feed' : 'category'
 					}?`}
 					subTitle="Remember, this action cannot be undone!"
 					handleConfirm={handleRemoveItem}
