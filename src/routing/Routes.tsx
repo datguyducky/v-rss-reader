@@ -62,7 +62,11 @@ export const Routes = () => {
 		>
 			<Stack.Screen name="TabScreen">
 				{props => (
-					<TabScreen {...props} scrollY={scrollY} title={props.route.params?.name} />
+					<TabScreen
+						{...props}
+						scrollY={scrollY}
+						title={props.route.params?.name || 'All articles'}
+					/>
 				)}
 			</Stack.Screen>
 
