@@ -17,7 +17,6 @@ export const DEFAULT_SETTINGS_VALUES: SettingsFormValues = {
 	sortAlphabetically: true,
 	hideFeedUnreadCount: false,
 	hideFeedIcons: false,
-	textSize: 'NORMAL',
 	disableArticleImages: false,
 	trackOnHeader: true,
 	disableReadingStatistics: false,

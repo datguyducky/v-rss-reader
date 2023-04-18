@@ -16,6 +16,8 @@ interface FeedsCategoriesContextValue {
 	activeItem: Record<string, unknown> | null;
 	setStorageActiveItem: (value: unknown) => void;
 	setActiveItem: () => void;
+	resetFeedsCategories: () => Promise<void>;
+	resetActiveItem: () => Promise<void>;
 }
 
 const FeedsCategoriesContext = createContext<FeedsCategoriesContextValue>({
@@ -31,6 +33,8 @@ const FeedsCategoriesContext = createContext<FeedsCategoriesContextValue>({
 	activeItem: null,
 	setStorageActiveItem: (value: unknown) => {},
 	setActiveItem: async () => {},
+	resetFeedsCategories: async () => {},
+	resetActiveItem: async () => {},
 });
 
 export const FeedsCategoriesProvider = ({ children }: { children: ReactElement }) => {
@@ -47,6 +51,8 @@ export const FeedsCategoriesProvider = ({ children }: { children: ReactElement }
 		activeItem,
 		setStorageActiveItem,
 		setActiveItem,
+		resetFeedsCategories,
+		resetActiveItem,
 	} = useFeedsCategories();
 
 	return (
@@ -64,6 +70,8 @@ export const FeedsCategoriesProvider = ({ children }: { children: ReactElement }
 				activeItem,
 				setStorageActiveItem,
 				setActiveItem,
+				resetFeedsCategories,
+				resetActiveItem,
 			}}
 		>
 			{children}

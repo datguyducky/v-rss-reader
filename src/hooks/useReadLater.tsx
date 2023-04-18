@@ -92,10 +92,16 @@ export const useReadLater = () => {
 		}
 	};
 
+	const resetReadLater = async () => {
+		await AsyncStorage.removeItem(READ_LATER_FEEDS_CATEGORIES_KEY);
+		setStateReadLaterFeedsCategories([]);
+	};
+
 	return {
 		addToReadLater,
 		removeFromReadLater,
 		isSavedInReadLater,
 		readLaterFeedsCategories: sortedReadLaterFeedsCategories,
+		resetReadLater,
 	};
 };

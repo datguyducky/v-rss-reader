@@ -149,11 +149,8 @@ function useFeedsCategories() {
 			createdAt: new Date().toISOString(),
 		};
 
-		await setStorageFeedsCategories([...feedsCategories, ...newCategoryObject]);
-		setStateFeedsCategories(prevFeedsCategories => [
-			...prevFeedsCategories,
-			...newCategoryObject,
-		]);
+		await setStorageFeedsCategories([...feedsCategories, newCategoryObject]);
+		setStateFeedsCategories(prevFeedsCategories => [...prevFeedsCategories, newCategoryObject]);
 	}
 
 	async function editFeed(id: string, newValues: Record<string, unknown>) {
@@ -345,6 +342,15 @@ function useFeedsCategories() {
 		}
 	};
 
+	const resetFeedsCategories = async () => {
+		await AsyncStorage.removeItem(FEEDS_CATEGORIES_STORAGE_KEY);
+		setStateFeedsCategories([]);
+	};
+	const resetActiveItem = async () => {
+		await AsyncStorage.removeItem(ACTIVE_ITEM_STORAGE_KEY);
+		setStateActiveItem(null);
+	};
+
 	return {
 		feedsCategories: stateFeedsCategories,
 		onlyFeeds,
@@ -358,6 +364,8 @@ function useFeedsCategories() {
 		activeItem: stateActiveItem,
 		setStorageActiveItem,
 		setActiveItem,
+		resetFeedsCategories,
+		resetActiveItem,
 	};
 }
 

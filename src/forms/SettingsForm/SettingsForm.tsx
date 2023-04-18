@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMMKVObject } from 'react-native-mmkv';
@@ -10,6 +11,8 @@ import { Divider } from '../../components/Divider';
 import { Heading } from '../../components/Heading';
 import { Select } from '../../components/Select';
 import { Switch } from '../../components/Switch';
+import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
+import { useReadLaterContext } from '../../context/ReadLaterContext';
 import { useReadingStatsContext } from '../../context/ReadingStatsContext';
 import { useAppUsageTime } from '../../hooks/useAppUsageTime';
 
@@ -23,7 +26,6 @@ export type SettingsFormValues = {
 	sortAlphabetically: boolean;
 	hideFeedUnreadCount: boolean;
 	hideFeedIcons: boolean;
-	textSize: 'TINY' | 'SMALL' | 'NORMAL' | 'BIG' | 'HUGE';
 	disableArticleImages: boolean;
 	trackOnHeader: boolean;
 	disableReadingStatistics: boolean;
@@ -33,6 +35,9 @@ export type SettingsFormValues = {
 export const SettingsForm = () => {
 	const theme = useTheme();
 	const { resetReadingStats } = useReadingStatsContext();
+	const { resetFeedsCategories, resetActiveItem } = useFeedsCategoriesContext();
+	const { resetReadLater } = useReadLaterContext();
+	const navigation = useNavigation();
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
 		useMMKVObject<SettingsFormValues>('appSettings');
@@ -47,14 +52,17 @@ export const SettingsForm = () => {
 
 	const onSubmit = (values: SettingsFormValues) => setAppSettings(values);
 
-	/**
-	 * This probably should clear everything from the app, so feeds, categories, settings, reading stats and etc.
-	 */
-	const handleResetApp = () => {
-		setAppSettings(undefined);
-		// TODO: Also reset this form to default values.
+	const handleResetApp = async () => {
+		setAppSettings(undefined); // set app settings to default values
+		resetAppUsageTime(); // resetting app usage stats
+
+		await resetReadingStats(); // resetting app reading stats
+		await resetFeedsCategories(); // fully clearing all saved feeds and categories by a user
+		await resetActiveItem(); // just to make sure the active item is also fully cleared
+		await resetReadLater(); // removing all "read later" feeds from storage
 
 		setResetAppPopup(false);
+		navigation.goBack(); // Going back to "Read" view as resetting form values to default ones doesn't work here
 	};
 
 	const handleResetReadingStats = async () => {
@@ -154,19 +162,6 @@ export const SettingsForm = () => {
 				<Heading tag="h6" color={theme.colors.base[7]} weight={300} mb={0}>
 					Interface
 				</Heading>
-				<Select.Popup
-					name="textSize"
-					label="Text size"
-					options={[
-						{ label: 'Tiny', value: 'TINY' },
-						{ label: 'Small', value: 'SMALL' },
-						{ label: 'Normal', value: 'NORMAL' },
-						{ label: 'Big', value: 'BIG' },
-						{ label: 'Huge', value: 'HUGE' },
-					]}
-					onValueChange={settingsForm.handleSubmit(onSubmit)}
-					mb={2}
-				/>
 				<Switch
 					name="disableArticleImages"
 					label="Disable articles images"

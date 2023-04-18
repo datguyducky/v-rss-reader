@@ -8,6 +8,7 @@ interface ReadLaterContextValue {
 	addToReadLater: (feed: FeedItem) => Promise<void>;
 	removeFromReadLater: (id: string) => Promise<void>;
 	isSavedInReadLater: (id: string) => boolean;
+	resetReadLater: () => Promise<void>;
 }
 
 const ReadLaterContext = createContext<ReadLaterContextValue>({
@@ -15,11 +16,17 @@ const ReadLaterContext = createContext<ReadLaterContextValue>({
 	addToReadLater: async () => {},
 	removeFromReadLater: async () => {},
 	isSavedInReadLater: () => false,
+	resetReadLater: async () => {},
 });
 
 export const ReadLaterProvider = ({ children }: { children: ReactElement }) => {
-	const { readLaterFeedsCategories, addToReadLater, removeFromReadLater, isSavedInReadLater } =
-		useReadLater();
+	const {
+		readLaterFeedsCategories,
+		addToReadLater,
+		removeFromReadLater,
+		isSavedInReadLater,
+		resetReadLater,
+	} = useReadLater();
 
 	return (
 		<ReadLaterContext.Provider
@@ -28,6 +35,7 @@ export const ReadLaterProvider = ({ children }: { children: ReactElement }) => {
 				addToReadLater,
 				removeFromReadLater,
 				isSavedInReadLater,
+				resetReadLater,
 			}}
 		>
 			{children}
