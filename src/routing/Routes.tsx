@@ -36,7 +36,8 @@ const TabScreen = ({ scrollY, title }) => {
 export const Routes = () => {
 	const theme = useTheme();
 	const { getTheme } = useContext(ThemeContext);
-	const scrollY = new Animated.Value(0);
+	const scrollYRead = new Animated.Value(0);
+	const scrollYSettings = new Animated.Value(0);
 
 	// Set status bar background to correct color on app launch
 	useEffect(() => {
@@ -57,7 +58,7 @@ export const Routes = () => {
 			screenOptions={{
 				headerShadowVisible: false,
 				header: ({ route }) => (
-					<Header title={route.params?.name || 'All articles'} scrollY={scrollY} />
+					<Header title={route.params?.name || 'All articles'} scrollY={scrollYRead} />
 				),
 				contentStyle: { backgroundColor: theme.colors.base[0] },
 			}}
@@ -66,7 +67,7 @@ export const Routes = () => {
 				{props => (
 					<TabScreen
 						{...props}
-						scrollY={scrollY}
+						scrollY={scrollYRead}
 						title={props.route.params?.name || 'All articles'}
 					/>
 				)}
@@ -75,7 +76,11 @@ export const Routes = () => {
 			<Stack.Group
 				screenOptions={{
 					header: props => (
-						<HeaderBack {...props} scrollY={scrollY} title={props.route.params?.name} />
+						<HeaderBack
+							{...props}
+							scrollY={scrollYSettings}
+							title={props.route.params?.name}
+						/>
 					),
 					animation: 'fade_from_bottom',
 				}}
@@ -83,7 +88,7 @@ export const Routes = () => {
 				<Stack.Screen name="Category" component={Category} />
 				<Stack.Screen name="Feed" component={Feed} />
 				<Stack.Screen name="Settings">
-					{props => <Settings {...props} scrollY={scrollY} />}
+					{props => <Settings {...props} scrollY={scrollYSettings} />}
 				</Stack.Screen>
 			</Stack.Group>
 		</Stack.Navigator>
