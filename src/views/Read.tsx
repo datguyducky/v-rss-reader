@@ -132,9 +132,7 @@ export const Read = ({ scrollY, title }) => {
 		setLoadingTest(false);
 	};
 
-	useEffect(() => {
-		setLoadingTest(true);
-
+	const getFeeds = () => {
 		if (activeItem?.id) {
 			retrieveRssFeeds();
 		}
@@ -149,15 +147,26 @@ export const Read = ({ scrollY, title }) => {
 				setLoadingTest(false);
 			}
 		}
+	};
+
+	useEffect(() => {
+		setLoadingTest(true);
+
+		getFeeds();
 
 		return () => setLoadingTest(false);
 	}, [activeItem, feedFilters?.SORT_BY, title, readLaterFeedsCategories]);
 
 	const handleRefresh = async () => {
 		setRefreshing(true);
-		await retrieveRssFeeds();
+
+		getFeeds();
 
 		setRefreshing(false);
+
+		return () => {
+			setRefreshing(false);
+		};
 	};
 
 	// Updating local state when app settings are changed to make sure that the FlatList is rendered again, with new props based on the new app settings values
