@@ -9,10 +9,10 @@ import { EmptyCategoryText } from './Read.styles';
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
 import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
+import { useReadLaterContext } from '../context/ReadLaterContext';
 import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
 import { SettingsFormValues } from '../forms/SettingsForm';
-import { useReadLater } from '../hooks/useReadLater';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
 
@@ -25,7 +25,7 @@ export const Read = ({ scrollY, title }) => {
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
-	const { readLaterFeedsCategories } = useReadLater();
+	const { readLaterFeedsCategories } = useReadLaterContext();
 
 	const [fetchRss, { loading }] = useRssFetch();
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
@@ -144,6 +144,8 @@ export const Read = ({ scrollY, title }) => {
 				retrieveAllRssFeeds();
 			} else if (title === 'Read later') {
 				setRssItems(readLaterFeedsCategories);
+				setLoadingTest(false);
+			} else {
 				setLoadingTest(false);
 			}
 		}

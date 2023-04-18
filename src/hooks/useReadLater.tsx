@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from 'react';
 import { useMMKVObject } from 'react-native-mmkv';
 import { FeedItem } from 'react-native-rss-parser';
 
@@ -14,14 +16,49 @@ import { FilterFormValues } from '../drawers/Filters';
  * 							we use this method as a validation method before removing or adding an item to a storage, and also as way to decide what to render;
  * - "addToReadLater" - here just save passed item to the storage (we also make sure that it doesn't exist in it before adding it there);
  * - "removeFromReadLater" - as name implies, we remove item from the storage;
+ * - and of course we also have extra "helper" functions to retrieve and save data in AsyncStorage
  */
+
+const READ_LATER_FEEDS_CATEGORIES_KEY = '@storage_readLaterFeedsCategories';
+
 export const useReadLater = () => {
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
-	const [readLaterFeedsCategories = [], setReadLaterFeedsCategories] = useMMKVObject<FeedItem[]>(
-		'readLaterFeedsCategories',
+	const [stateReadLaterFeedsCategories, setStateReadLaterFeedsCategories] = useState<FeedItem[]>(
+		[],
 	);
 
-	const sortedReadLaterFeedsCategories = readLaterFeedsCategories.sort((a, b) => {
+	useEffect(() => {
+		async function getReadLaterFeedsCategories() {
+			let readLaterFeedsCategories = [];
+
+			try {
+				const readLaterFeedsCategoriesValue = await AsyncStorage.getItem(
+					READ_LATER_FEEDS_CATEGORIES_KEY,
+				);
+				readLaterFeedsCategories =
+					readLaterFeedsCategoriesValue !== null
+						? JSON.parse(readLaterFeedsCategoriesValue)
+						: [];
+			} catch (error) {
+				console.error('Error loading feeds and categories', error);
+			}
+
+			setStateReadLaterFeedsCategories(readLaterFeedsCategories);
+		}
+
+		getReadLaterFeedsCategories();
+	}, []);
+
+	const setStorageReadLaterFeedsCategories = async (value: FeedItem[]) => {
+		try {
+			const jsonValue = JSON.stringify(value);
+			await AsyncStorage.setItem(READ_LATER_FEEDS_CATEGORIES_KEY, jsonValue);
+		} catch (error) {
+			console.log('Something went wrong when trying to save feed to read later', error);
+		}
+	};
+
+	const sortedReadLaterFeedsCategories = stateReadLaterFeedsCategories.sort((a, b) => {
 		const dateA = new Date(a.published);
 		const dateB = new Date(b.published);
 		if (feedFilters.SORT_BY === 'OLDEST') {
@@ -32,21 +69,26 @@ export const useReadLater = () => {
 	});
 
 	const isSavedInReadLater = (id: string) =>
-		readLaterFeedsCategories.some(item => item.id === id);
+		stateReadLaterFeedsCategories.some(item => item.id === id);
 
-	const addToReadLater = (feed: FeedItem) => {
+	const addToReadLater = async (feed: FeedItem) => {
 		if (!isSavedInReadLater(feed.id)) {
-			setReadLaterFeedsCategories([...readLaterFeedsCategories, feed]);
+			await setStorageReadLaterFeedsCategories([...stateReadLaterFeedsCategories, feed]);
+			setStateReadLaterFeedsCategories(prevReadLaterFeedsCategories => [
+				...prevReadLaterFeedsCategories,
+				feed,
+			]);
 		}
 	};
 
-	const removeFromReadLater = (id: string) => {
+	const removeFromReadLater = async (id: string) => {
 		if (isSavedInReadLater(id)) {
-			const clearedReadLaterFeedsCategories = readLaterFeedsCategories.filter(
+			const clearedReadLaterFeedsCategories = stateReadLaterFeedsCategories.filter(
 				item => item.id !== id,
 			);
 
-			setReadLaterFeedsCategories(clearedReadLaterFeedsCategories);
+			await setStorageReadLaterFeedsCategories(clearedReadLaterFeedsCategories);
+			setStateReadLaterFeedsCategories(clearedReadLaterFeedsCategories);
 		}
 	};
 

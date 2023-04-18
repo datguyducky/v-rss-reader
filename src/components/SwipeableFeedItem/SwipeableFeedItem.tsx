@@ -7,10 +7,10 @@ import { useTheme } from 'styled-components/native';
 
 import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/constants';
+import { useReadLaterContext } from '../../context/ReadLaterContext';
 import { useReadingStatsContext } from '../../context/ReadingStatsContext';
 import { FilterFormValues } from '../../drawers/Filters';
 import { SettingsFormValues } from '../../forms/SettingsForm';
-import { useReadLater } from '../../hooks/useReadLater';
 import { calculateTimePassed } from '../../utils/calculateTimePassed';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
@@ -38,7 +38,7 @@ export const SwipeableFeedItem = ({
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
-	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
+	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLaterContext();
 
 	const handlePress = async () => {
 		openURL(item?.links[0]?.url);
@@ -195,11 +195,11 @@ export const SwipeableFeedItem = ({
 		}
 	};
 
-	const handleReadLaterAction = () => {
+	const handleReadLaterAction = async () => {
 		if (isSavedInReadLater(item.id)) {
-			removeFromReadLater(item.id);
+			await removeFromReadLater(item.id);
 		} else {
-			addToReadLater(item);
+			await addToReadLater(item);
 		}
 	};
 

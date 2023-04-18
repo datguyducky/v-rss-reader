@@ -8,7 +8,7 @@ import { BasicButton } from '../components/BasicButton';
 import { Drawer } from '../components/Drawer';
 import { Icon } from '../components/Icon';
 import { Pressable } from '../components/Pressable';
-import { useReadLater } from '../hooks/useReadLater';
+import { useReadLaterContext } from '../context/ReadLaterContext';
 
 type QuickActionProps = {
 	selectedFeedData?: FeedItem;
@@ -16,7 +16,7 @@ type QuickActionProps = {
 
 export const QuickAction = forwardRef(
 	({ selectedFeedData }: QuickActionProps, ref: ForwardedRef<BottomSheetModal>) => {
-		const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
+		const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLaterContext();
 
 		const handleShare = async () => {
 			try {
@@ -29,11 +29,11 @@ export const QuickAction = forwardRef(
 			}
 		};
 
-		const handleReadLater = () => {
+		const handleReadLater = async () => {
 			if (isSavedInReadLater(selectedFeedData.id)) {
-				removeFromReadLater(selectedFeedData.id);
+				await removeFromReadLater(selectedFeedData.id);
 			} else {
-				addToReadLater(selectedFeedData);
+				await addToReadLater(selectedFeedData);
 			}
 		};
 

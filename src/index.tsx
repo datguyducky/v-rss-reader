@@ -9,6 +9,7 @@ import { MMKV } from 'react-native-mmkv';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { FeedsCategoriesProvider } from './context/FeedsCategoriesContext';
+import { ReadLaterProvider } from './context/ReadLaterContext';
 import { ReadingStatsProvider } from './context/ReadingStatsContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Routes } from './routing/Routes';
@@ -46,13 +47,15 @@ const App = () => {
 			<ThemeProvider>
 				<FeedsCategoriesProvider>
 					<ReadingStatsProvider>
-						<BottomSheetModalProvider>
-							<SafeAreaProvider>
-								<NavigationContainer onReady={onLayoutRootView}>
-									<Routes />
-								</NavigationContainer>
-							</SafeAreaProvider>
-						</BottomSheetModalProvider>
+						<ReadLaterProvider>
+							<BottomSheetModalProvider>
+								<SafeAreaProvider>
+									<NavigationContainer onReady={onLayoutRootView}>
+										<Routes />
+									</NavigationContainer>
+								</SafeAreaProvider>
+							</BottomSheetModalProvider>
+						</ReadLaterProvider>
 					</ReadingStatsProvider>
 				</FeedsCategoriesProvider>
 			</ThemeProvider>
