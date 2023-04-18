@@ -85,7 +85,6 @@ const SelectPage = ({ label, data, name, modalTitle, ...otherProps }: SelectPage
 								<Pressable.Background
 									borderless
 									onPress={() => {
-										console.log('here?');
 										setSelectModalVisibility(false);
 									}}
 								>

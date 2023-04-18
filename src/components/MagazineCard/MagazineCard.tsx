@@ -34,7 +34,6 @@ export const MagazineCard = ({
 	const theme = useTheme();
 	const parsedDescription = description ? parseHtmlString(description) : '';
 
-	console.log(thumbnailUrl);
 	return (
 		<MagazineCardWrap {...otherProps}>
 			<Pressable.Background
