@@ -7,11 +7,11 @@ import { useTheme } from 'styled-components/native';
 
 import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/constants';
+import { useReadingStatsContext } from '../../context/ReadingStatsContext';
 import { FilterFormValues } from '../../drawers/Filters';
 import { SettingsFormValues } from '../../forms/SettingsForm';
 import { useReadLater } from '../../hooks/useReadLater';
 import { calculateTimePassed } from '../../utils/calculateTimePassed';
-import { setReadingStats } from '../../utils/setReadingStats';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
@@ -33,6 +33,7 @@ export const SwipeableFeedItem = ({
 }: SwipeableFeedItemProps) => {
 	const theme = useTheme();
 	const swipeRef = useRef<Swipeable>(null);
+	const { handleReadingStats } = useReadingStatsContext();
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
@@ -40,11 +41,11 @@ export const SwipeableFeedItem = ({
 	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLater();
 
 	const handlePress = async () => {
-		if (!appSettings.disableReadingStatistics) {
-			await setReadingStats();
-		}
-
 		openURL(item?.links[0]?.url);
+
+		if (!appSettings.disableReadingStatistics) {
+			await handleReadingStats();
+		}
 	};
 
 	const renderReadLaterAction = () => {

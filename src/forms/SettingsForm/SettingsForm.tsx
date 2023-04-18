@@ -10,8 +10,8 @@ import { Divider } from '../../components/Divider';
 import { Heading } from '../../components/Heading';
 import { Select } from '../../components/Select';
 import { Switch } from '../../components/Switch';
+import { useReadingStatsContext } from '../../context/ReadingStatsContext';
 import { useAppUsageTime } from '../../hooks/useAppUsageTime';
-import { resetReadingStats } from '../../utils/setReadingStats';
 
 export type SettingsFormValues = {
 	readOnScroll: boolean;
@@ -32,6 +32,7 @@ export type SettingsFormValues = {
 
 export const SettingsForm = () => {
 	const theme = useTheme();
+	const { resetReadingStats } = useReadingStatsContext();
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES, setAppSettings] =
 		useMMKVObject<SettingsFormValues>('appSettings');

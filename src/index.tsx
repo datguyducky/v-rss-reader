@@ -9,6 +9,7 @@ import { MMKV } from 'react-native-mmkv';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { FeedsCategoriesProvider } from './context/FeedsCategoriesContext';
+import { ReadingStatsProvider } from './context/ReadingStatsContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Routes } from './routing/Routes';
 
@@ -44,13 +45,15 @@ const App = () => {
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<ThemeProvider>
 				<FeedsCategoriesProvider>
-					<BottomSheetModalProvider>
-						<SafeAreaProvider>
-							<NavigationContainer onReady={onLayoutRootView}>
-								<Routes />
-							</NavigationContainer>
-						</SafeAreaProvider>
-					</BottomSheetModalProvider>
+					<ReadingStatsProvider>
+						<BottomSheetModalProvider>
+							<SafeAreaProvider>
+								<NavigationContainer onReady={onLayoutRootView}>
+									<Routes />
+								</NavigationContainer>
+							</SafeAreaProvider>
+						</BottomSheetModalProvider>
+					</ReadingStatsProvider>
 				</FeedsCategoriesProvider>
 			</ThemeProvider>
 		</GestureHandlerRootView>
