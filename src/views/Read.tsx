@@ -58,7 +58,7 @@ export const Read = ({ scrollY, title }) => {
 					.sort((a, b) => {
 						const dateA = new Date(a.published);
 						const dateB = new Date(b.published);
-						if (feedFilters.SORT_BY === 'OLDEST') {
+						if (feedFilters.sortBy === 'OLDEST') {
 							return dateA.getTime() - dateB.getTime();
 						} else {
 							return dateB.getTime() - dateA.getTime();
@@ -74,7 +74,7 @@ export const Read = ({ scrollY, title }) => {
 				const sortedItems = data[0].items.sort((a, b) => {
 					const dateA = new Date(a.published);
 					const dateB = new Date(b.published);
-					if (feedFilters.SORT_BY === 'OLDEST') {
+					if (feedFilters.sortBy === 'OLDEST') {
 						return dateA.getTime() - dateB.getTime();
 					} else {
 						return dateB.getTime() - dateA.getTime();
@@ -123,7 +123,7 @@ export const Read = ({ scrollY, title }) => {
 				.sort((a, b) => {
 					const dateA = new Date(a.published);
 					const dateB = new Date(b.published);
-					if (feedFilters.SORT_BY === 'OLDEST') {
+					if (feedFilters.sortBy === 'OLDEST') {
 						return dateA.getTime() - dateB.getTime();
 					} else {
 						return dateB.getTime() - dateA.getTime();
@@ -156,7 +156,7 @@ export const Read = ({ scrollY, title }) => {
 			setLoadingFeeds(false);
 			setRssItems([]);
 		};
-	}, [activeItem, feedFilters?.SORT_BY, title]);
+	}, [activeItem, feedFilters?.sortBy, title]);
 
 	// Loading only "read later" items
 	useEffect(() => {
@@ -169,7 +169,7 @@ export const Read = ({ scrollY, title }) => {
 				setRssItems([]);
 			}
 		};
-	}, [readLaterFeedsCategories, title, feedFilters?.SORT_BY]);
+	}, [readLaterFeedsCategories, title, feedFilters?.sortBy]);
 
 	const handleRefresh = async () => {
 		setRefreshing(true);
@@ -200,13 +200,13 @@ export const Read = ({ scrollY, title }) => {
 
 	const getItemLayout = (index: number) => {
 		let itemHeight;
-		switch (feedFilters.FEED_VIEW) {
+		switch (feedFilters.feedView) {
 			case 'MAGAZINE':
-				itemHeight = feedFilters?.FEED_DENSITY === 'COMPACT' ? 80 : 116;
+				itemHeight = feedFilters?.feedDensity === 'COMPACT' ? 80 : 116;
 				break;
 
 			case 'THUMBNAIL':
-				itemHeight = feedFilters?.FEED_DENSITY === 'COMPACT' ? 192 : 210;
+				itemHeight = feedFilters?.feedDensity === 'COMPACT' ? 192 : 210;
 				break;
 		}
 
@@ -268,7 +268,7 @@ export const Read = ({ scrollY, title }) => {
 					}
 					snapToAlignment={appSettings?.scrollBehaviour === 'PAGED' ? 'start' : undefined}
 					getItemLayout={
-						feedFilters.FEED_VIEW !== 'TEXT_ONLY'
+						feedFilters.feedView !== 'TEXT_ONLY'
 							? (_, index) => getItemLayout(index)
 							: undefined
 					}

@@ -2,9 +2,9 @@ import { FilterFormValues } from '../drawers/Filters';
 import { SettingsFormValues } from '../forms/SettingsForm';
 
 export const DEFAULT_FILTERS_VALUES: FilterFormValues = {
-	SORT_BY: 'LATEST',
-	FEED_VIEW: 'MAGAZINE',
-	FEED_DENSITY: 'COMFORTABLE',
+	sortBy: 'LATEST',
+	feedView: 'MAGAZINE',
+	feedDensity: 'COMFORTABLE',
 };
 
 export const DEFAULT_SETTINGS_VALUES: SettingsFormValues = {

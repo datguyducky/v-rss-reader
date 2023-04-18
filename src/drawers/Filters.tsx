@@ -9,9 +9,9 @@ import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { Drawer } from '../components/Drawer';
 
 export type FilterFormValues = {
-	SORT_BY: 'LATEST' | 'OLDEST';
-	FEED_VIEW: 'TEXT_ONLY' | 'MAGAZINE' | 'THUMBNAIL';
-	FEED_DENSITY: 'COMPACT' | 'COMFORTABLE';
+	sortBy: 'LATEST' | 'OLDEST';
+	feedView: 'TEXT_ONLY' | 'MAGAZINE' | 'THUMBNAIL';
+	feedDensity: 'COMPACT' | 'COMFORTABLE';
 };
 
 export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
@@ -37,7 +37,7 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 				>
 					Sort by
 				</SectionTitle>
-				<Radio.Group name="SORT_BY" onValueChange={filterForm.handleSubmit(onSubmit)}>
+				<Radio.Group name="sortBy" onValueChange={filterForm.handleSubmit(onSubmit)}>
 					<Radio label="Latest" value="LATEST" />
 					<Radio label="Oldest" value="OLDEST" />
 				</Radio.Group>
@@ -52,7 +52,7 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 				>
 					View
 				</SectionTitle>
-				<Radio.Group name="FEED_VIEW" onValueChange={filterForm.handleSubmit(onSubmit)}>
+				<Radio.Group name="feedView" onValueChange={filterForm.handleSubmit(onSubmit)}>
 					<Radio label="Text-only" value="TEXT_ONLY" />
 					<Radio label="Magazine" value="MAGAZINE" />
 					<Radio label="Thumbnail" value="THUMBNAIL" />
@@ -66,7 +66,7 @@ export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 				>
 					Density
 				</SectionTitle>
-				<Radio.Group name="FEED_DENSITY" onValueChange={filterForm.handleSubmit(onSubmit)}>
+				<Radio.Group name="feedDensity" onValueChange={filterForm.handleSubmit(onSubmit)}>
 					<Radio label="Compact" value="COMPACT" />
 					<Radio label="Comfortable" value="COMFORTABLE" />
 				</Radio.Group>

@@ -61,7 +61,7 @@ export const useReadLater = () => {
 	const sortedReadLaterFeedsCategories = stateReadLaterFeedsCategories.sort((a, b) => {
 		const dateA = new Date(a.published);
 		const dateB = new Date(b.published);
-		if (feedFilters.SORT_BY === 'OLDEST') {
+		if (feedFilters.sortBy === 'OLDEST') {
 			return dateA.getTime() - dateB.getTime();
 		} else {
 			return dateB.getTime() - dateA.getTime();

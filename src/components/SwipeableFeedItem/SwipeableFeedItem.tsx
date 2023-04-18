@@ -51,7 +51,7 @@ export const SwipeableFeedItem = ({
 	const renderReadLaterAction = () => {
 		return (
 			<ReadLaterActionWrap
-				viewType={feedFilters.FEED_VIEW}
+				viewType={feedFilters.feedView}
 				isInverted={appSettings.invertSwipe}
 			>
 				<BasicButton
@@ -93,7 +93,7 @@ export const SwipeableFeedItem = ({
 	// TODO: Some day this will be implemented...
 	// const renderReadStatusAction = () => {
 	// 	return (
-	// 		<ReadStatusActionWrap viewType={feedFilters.FEED_VIEW} inverted={appSettings.invertSwipe}>
+	// 		<ReadStatusActionWrap viewType={feedFilters.feedView} inverted={appSettings.invertSwipe}>
 	// 			<BasicButton
 	// 				onPress={() => {
 	// 					/* onPress handler is not needed here, as action for this component is completely handled by swipe */
@@ -136,7 +136,7 @@ export const SwipeableFeedItem = ({
 
 		const formattedPublishedAt = calculateTimePassed(item.published);
 
-		switch (feedFilters.FEED_VIEW) {
+		switch (feedFilters.feedView) {
 			case 'TEXT_ONLY':
 				return (
 					<TextOnlyCard
@@ -150,7 +150,7 @@ export const SwipeableFeedItem = ({
 								: ''
 						}`}
 						publishedAt={formattedPublishedAt}
-						density={feedFilters.FEED_DENSITY}
+						density={feedFilters.feedDensity}
 						description={item?.description || item?.content}
 						actionPress={appSettings.quickActionDrawerGesture}
 					/>
@@ -170,7 +170,7 @@ export const SwipeableFeedItem = ({
 								: ''
 						}`}
 						publishedAt={formattedPublishedAt}
-						density={feedFilters.FEED_DENSITY}
+						density={feedFilters.feedDensity}
 						description={item?.description || item?.content}
 						actionPress={appSettings.quickActionDrawerGesture}
 					/>
@@ -188,7 +188,7 @@ export const SwipeableFeedItem = ({
 								: ''
 						}`}
 						publishedAt={formattedPublishedAt}
-						density={feedFilters.FEED_DENSITY}
+						density={feedFilters.feedDensity}
 						description={item?.description || item?.content}
 					/>
 				);
@@ -223,7 +223,7 @@ export const SwipeableFeedItem = ({
 		swipeRef?.current?.closeFromEnd();
 	};
 
-	if (feedFilters.FEED_VIEW === 'THUMBNAIL') {
+	if (feedFilters.feedView === 'THUMBNAIL') {
 		return (
 			<PressableThumbnail
 				onLongPress={
