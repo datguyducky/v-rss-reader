@@ -8,7 +8,7 @@ type RssFetchResult = {
 	data?: Feed[];
 };
 export const useRssFetch = (): [
-	(url: string) => Promise<{ data?: Feed[]; error?: string }>,
+	(url: string | Record<string, unknown>[]) => Promise<{ data?: Feed[]; error?: string }>,
 	RssFetchResult,
 ] => {
 	const [rssFetchResult, setRssFetchResult] = useState<RssFetchResult>({
@@ -20,7 +20,12 @@ export const useRssFetch = (): [
 	const fetchRss = async (
 		sources: string | Record<string, unknown>[],
 	): Promise<{ data?: Feed[]; error?: string }> => {
-		setRssFetchResult(prevResults => ({ ...prevResults, isLoading: true }));
+		setRssFetchResult(prevResults => ({ ...prevResults, loading: true }));
+
+		setRssFetchResult(prevResults => ({
+			...prevResults,
+			loading: true,
+		}));
 
 		try {
 			if (Array.isArray(sources)) {
@@ -44,7 +49,7 @@ export const useRssFetch = (): [
 					} else {
 						setRssFetchResult(prevResults => ({
 							...prevResults,
-							isLoading: false,
+							loading: false,
 							error: responseText,
 						}));
 
@@ -54,7 +59,7 @@ export const useRssFetch = (): [
 
 				setRssFetchResult(prevResults => ({
 					...prevResults,
-					isLoading: false,
+					loading: false,
 					data,
 				}));
 
@@ -68,7 +73,7 @@ export const useRssFetch = (): [
 
 					setRssFetchResult(prevResults => ({
 						...prevResults,
-						isLoading: false,
+						loading: false,
 						data: [parsedRss],
 					}));
 
@@ -76,7 +81,7 @@ export const useRssFetch = (): [
 				} else {
 					setRssFetchResult(prevResults => ({
 						...prevResults,
-						isLoading: false,
+						loading: false,
 						error: responseText,
 					}));
 
@@ -88,7 +93,7 @@ export const useRssFetch = (): [
 
 			setRssFetchResult(prevResults => ({
 				...prevResults,
-				isLoading: false,
+				loading: false,
 				error,
 			}));
 		}

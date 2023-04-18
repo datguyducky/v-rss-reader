@@ -19,15 +19,15 @@ import { Layout } from '../layouts/Layout';
 export const Read = ({ scrollY, title }) => {
 	const theme = useTheme();
 
-	const { activeItem, feedsCategories } = useFeedsCategoriesContext();
-	const [loadingTest, setLoadingTest] = useState(false);
+	const [fetchRss, { loading }] = useRssFetch();
 
+	const { activeItem, feedsCategories } = useFeedsCategoriesContext();
+	const { readLaterFeedsCategories } = useReadLaterContext();
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
-	const { readLaterFeedsCategories } = useReadLaterContext();
 
-	const [fetchRss, { loading }] = useRssFetch();
+	const [loadingFeeds, setLoadingFeeds] = useState(false);
 	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
 	const [refreshing, setRefreshing] = useState(false);
 	const [reRender, setReRender] = useState(new Date().getTime());
@@ -39,6 +39,8 @@ export const Read = ({ scrollY, title }) => {
 	const quickActionDrawerRef = useRef<BottomSheetModal>(null);
 
 	const retrieveRssFeeds = async () => {
+		setLoadingFeeds(true);
+
 		if (activeItem.type === 'CATEGORY') {
 			const { data } = await fetchRss(activeItem.feeds);
 
@@ -83,10 +85,12 @@ export const Read = ({ scrollY, title }) => {
 			}
 		}
 
-		setLoadingTest(false);
+		setLoadingFeeds(false);
 	};
 
 	const retrieveAllRssFeeds = async () => {
+		setLoadingFeeds(true);
+
 		const urlArray = feedsCategories.reduce((urls: string[], item) => {
 			if (item.url) {
 				urls.push(item);
@@ -129,7 +133,7 @@ export const Read = ({ scrollY, title }) => {
 			setRssItems(items);
 		}
 
-		setLoadingTest(false);
+		setLoadingFeeds(false);
 	};
 
 	const getFeeds = () => {
@@ -140,22 +144,32 @@ export const Read = ({ scrollY, title }) => {
 		else {
 			if (title === 'All articles') {
 				retrieveAllRssFeeds();
-			} else if (title === 'Read later') {
-				setRssItems(readLaterFeedsCategories);
-				setLoadingTest(false);
-			} else {
-				setLoadingTest(false);
 			}
 		}
 	};
 
+	// Loading category/feed items or all articles if that view is active
 	useEffect(() => {
-		setLoadingTest(true);
-
 		getFeeds();
 
-		return () => setLoadingTest(false);
-	}, [activeItem, feedFilters?.SORT_BY, title, readLaterFeedsCategories]);
+		return () => {
+			setLoadingFeeds(false);
+			setRssItems([]);
+		};
+	}, [activeItem, feedFilters?.SORT_BY, title]);
+
+	// Loading only "read later" items
+	useEffect(() => {
+		if (title === 'Read later') {
+			setRssItems(readLaterFeedsCategories);
+		}
+
+		return () => {
+			if (title === 'Read later') {
+				setRssItems([]);
+			}
+		};
+	}, [readLaterFeedsCategories, title, feedFilters?.SORT_BY]);
 
 	const handleRefresh = async () => {
 		setRefreshing(true);
@@ -211,56 +225,54 @@ export const Read = ({ scrollY, title }) => {
 				horizontalPadding={false}
 				headingSpacing={12}
 			>
-				{loading || loadingTest ? (
-					<ActivityIndicator size="large" color={theme.colors.primary} />
-				) : (
-					<FlatList
-						key={reRender}
-						data={rssItems}
-						onScroll={handleScroll}
-						onScrollEndDrag={handleScrollEnd}
-						renderItem={p => (
-							<SwipeableFeedItem
-								item={p.item}
-								handleActionPress={() => {
-									setSelectedFeedData(p.item);
-									quickActionDrawerRef?.current?.present();
-								}}
-								enabled={!isScrolling}
-							/>
-						)}
-						keyExtractor={item => item?.id || item.links?.[0]?.url}
-						contentContainerStyle={{ paddingVertical: 8 }}
-						ListEmptyComponent={() => (
+				<FlatList
+					key={reRender}
+					data={rssItems}
+					onScroll={handleScroll}
+					onScrollEndDrag={handleScrollEnd}
+					renderItem={p => (
+						<SwipeableFeedItem
+							item={p.item}
+							handleActionPress={() => {
+								setSelectedFeedData(p.item);
+								quickActionDrawerRef?.current?.present();
+							}}
+							enabled={!isScrolling}
+						/>
+					)}
+					keyExtractor={item => item?.id || item.links?.[0]?.url}
+					contentContainerStyle={{ paddingVertical: 8 }}
+					ListEmptyComponent={() =>
+						loadingFeeds || loading ? (
+							<ActivityIndicator size="large" color={theme.colors.primary} />
+						) : (
 							<EmptyCategoryText weight={300} fontSize={12}>
 								Sorry, something went wrong and no articles were found for this
 								feed.
 							</EmptyCategoryText>
-						)}
-						scrollEventThrottle={16}
-						refreshControl={
-							!appSettings.disablePullRefresh ? (
-								<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-							) : undefined
-						}
-						// I would watch out with using the 'pagingEnabled' prop, as per the React Native (v0.71) docs it's not supported for vertical lists,
-						// but as shown in our app - it works, but it's possible that it's buggy in some untested ways or devices, so if there's ever an issue reported about this functionality then
-						// it would be smart to start here.
-						pagingEnabled={appSettings?.scrollBehaviour === 'PAGED' ? true : undefined}
-						decelerationRate={appSettings?.scrollBehaviour === 'PAGED' ? 0 : undefined}
-						disableIntervalMomentum={
-							appSettings?.scrollBehaviour === 'PAGED' ? true : undefined
-						}
-						snapToAlignment={
-							appSettings?.scrollBehaviour === 'PAGED' ? 'start' : undefined
-						}
-						getItemLayout={
-							feedFilters.FEED_VIEW !== 'TEXT_ONLY'
-								? (_, index) => getItemLayout(index)
-								: undefined
-						}
-					/>
-				)}
+						)
+					}
+					scrollEventThrottle={16}
+					refreshControl={
+						!appSettings.disablePullRefresh ? (
+							<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+						) : undefined
+					}
+					// I would watch out with using the 'pagingEnabled' prop, as per the React Native (v0.71) docs it's not supported for vertical lists,
+					// but as shown in our app - it works, but it's possible that it's buggy in some untested ways or devices, so if there's ever an issue reported about this functionality then
+					// it would be smart to start here.
+					pagingEnabled={appSettings?.scrollBehaviour === 'PAGED' ? true : undefined}
+					decelerationRate={appSettings?.scrollBehaviour === 'PAGED' ? 0 : undefined}
+					disableIntervalMomentum={
+						appSettings?.scrollBehaviour === 'PAGED' ? true : undefined
+					}
+					snapToAlignment={appSettings?.scrollBehaviour === 'PAGED' ? 'start' : undefined}
+					getItemLayout={
+						feedFilters.FEED_VIEW !== 'TEXT_ONLY'
+							? (_, index) => getItemLayout(index)
+							: undefined
+					}
+				/>
 			</Layout>
 
 			<QuickAction ref={quickActionDrawerRef} selectedFeedData={selectedFeedData} />
