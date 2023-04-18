@@ -56,7 +56,9 @@ export const Routes = () => {
 		<Stack.Navigator
 			screenOptions={{
 				headerShadowVisible: false,
-				header: ({ route }) => <Header title={route.params?.name} scrollY={scrollY} />,
+				header: ({ route }) => (
+					<Header title={route.params?.name || 'All articles'} scrollY={scrollY} />
+				),
 				contentStyle: { backgroundColor: theme.colors.base[0] },
 			}}
 		>
