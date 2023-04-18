@@ -51,7 +51,7 @@ export const TextOnlyCard = ({
 							<Text
 								fontSize={12}
 								numberOfLines={4}
-								mb={8}
+								mb={1}
 								color={theme.colors.base[7]}
 							>
 								{parsedDescription}

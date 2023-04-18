@@ -175,6 +175,25 @@ export const Read = ({ scrollY, title }) => {
 		setIsScrolling(false);
 	};
 
+	const getItemLayout = (index: number) => {
+		let itemHeight;
+		switch (feedFilters.FEED_VIEW) {
+			case 'MAGAZINE':
+				itemHeight = feedFilters?.FEED_DENSITY === 'COMPACT' ? 80 : 116;
+				break;
+
+			case 'THUMBNAIL':
+				itemHeight = feedFilters?.FEED_DENSITY === 'COMPACT' ? 192 : 210;
+				break;
+		}
+
+		return {
+			length: itemHeight as number,
+			offset: (itemHeight as number) * index,
+			index,
+		};
+	};
+
 	return (
 		<>
 			<Layout
@@ -225,6 +244,11 @@ export const Read = ({ scrollY, title }) => {
 						}
 						snapToAlignment={
 							appSettings?.scrollBehaviour === 'PAGED' ? 'start' : undefined
+						}
+						getItemLayout={
+							feedFilters.FEED_VIEW !== 'TEXT_ONLY'
+								? (_, index) => getItemLayout(index)
+								: undefined
 						}
 					/>
 				)}
