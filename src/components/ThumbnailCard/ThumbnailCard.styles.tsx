@@ -1,3 +1,4 @@
+import FastImage from 'react-native-fast-image';
 import styled from 'styled-components/native';
 
 import { SharedStyles, SharedStylesProps } from '../Shared.styles';
@@ -6,7 +7,7 @@ export const ThumbnailCardWrap = styled.View<SharedStylesProps>`
 	${SharedStyles};
 `;
 
-export const StyledImageBackground = styled.ImageBackground<{ density: string }>`
+export const StyledImageBackground = styled(FastImage)<{ density: string }>`
 	overflow: hidden;
 	align-items: center;
 	justify-content: center;
