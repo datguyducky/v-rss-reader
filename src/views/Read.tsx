@@ -6,6 +6,7 @@ import { useMMKVListener, useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
 import { EmptyCategoryText } from './Read.styles';
+import { RssFeed, RssFeedItem } from '../@types';
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
 import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
 import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
@@ -17,7 +18,6 @@ import { Feed } from '../hooks/useFeedsCategories';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
 import { StackParamList } from '../routing/Routes';
-import { RssFeed, RssFeedItem } from '../@types';
 
 export const Read = ({
 	scrollY,
@@ -147,14 +147,14 @@ export const Read = ({
 		setLoadingFeeds(false);
 	};
 
-	const getFeeds = () => {
+	const getFeeds = async () => {
 		if (activeItem?.id) {
-			retrieveRssFeeds();
+			await retrieveRssFeeds();
 		}
 		// Here we handle if the current view is the build-in "Read later" or "All articles" view
 		else {
 			if (title === 'All articles') {
-				retrieveAllRssFeeds();
+				await retrieveAllRssFeeds();
 			}
 		}
 	};

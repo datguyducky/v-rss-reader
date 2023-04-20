@@ -1,8 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-	createNativeStackNavigator,
-	NativeStackNavigationOptions,
-} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
 import { useContext, useEffect } from 'react';

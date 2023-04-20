@@ -45,7 +45,7 @@ const SelectPage = ({ label, data, name, modalTitle, ...otherProps }: SelectPage
 		<Controller
 			control={control}
 			name={name}
-			render={({ field: { onChange, value: fieldValue }, fieldState: { error } }) => (
+			render={({ field: { onChange, value: fieldValue } }) => (
 				<>
 					<InputWrapper
 						label={label}

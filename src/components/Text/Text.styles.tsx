@@ -1,5 +1,6 @@
 import { TextProps as NativeTextProps } from 'react-native';
 import styled from 'styled-components/native';
+
 import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 
 export interface StyledNativeTextProps extends NativeTextProps {

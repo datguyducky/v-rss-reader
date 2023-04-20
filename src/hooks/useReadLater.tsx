@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { useMMKVObject } from 'react-native-mmkv';
 
+import { RssFeedItem } from '../@types';
 import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { FilterFormValues } from '../drawers/Filters';
-import { RssFeedItem } from '../@types';
 
 /**
  * As this is quite a simple hook I feel like there is no need to describe methods used here separately, so I will describe all of them in this one comment.

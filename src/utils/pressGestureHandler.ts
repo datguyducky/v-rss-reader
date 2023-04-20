@@ -4,7 +4,7 @@ export function createSinglePressGesture(onPress?: () => void) {
 	return Gesture.Tap()
 		.runOnJS(true)
 		.maxDuration(250)
-		.onStart(event => {
+		.onStart(() => {
 			onPress?.();
 		});
 }

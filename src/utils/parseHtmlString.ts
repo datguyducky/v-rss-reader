@@ -8,7 +8,7 @@ export function parseHtmlString(str: string) {
 		return String.fromCharCode(dec);
 	});
 
-	// Remove CSS and JavaScript"
+	// Remove CSS and JavaScript
 	str = str.replace(/<style([\s\S]*?)<\/style>|<script([\s\S]*?)<\/script>/gi, '');
 
 	// Remove HTML tags
@@ -26,8 +26,8 @@ export function parseHtmlString(str: string) {
 	str = str.replace(/&amp;/g, '&');
 
 	// Remove '[link]' and '[comments]' from description
-	const linkRegex = /\[link\]/g;
-	const commentsRegex = /\[comments\]/g;
+	const linkRegex = /\[link]/g;
+	const commentsRegex = /\[comments]/g;
 	const emptyCommentsRegex = /Comments/g;
 	str = str.replace(linkRegex, '').replace(commentsRegex, '').replace(emptyCommentsRegex, '');
 

@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 
 import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
 import { FeedForm } from '../forms/FeedForm';
+import { Feed as FeedType } from '../hooks/useFeedsCategories';
 import { Layout } from '../layouts/Layout';
 import { StackParamList } from '../routing/Routes';
-import { Feed as FeedType } from '../hooks/useFeedsCategories';
 
 export const Feed = ({ navigation, route }: NativeStackScreenProps<StackParamList, 'Feed'>) => {
 	const { findFeedCategory } = useFeedsCategoriesContext();

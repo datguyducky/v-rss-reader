@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 
 // We are using Pressable from react-native, and not our custom component, here to make sure that the onPress is correctly called and that the popup is correctly rendered, because
-// when using our custom component it would be require to use GestureHandlerRootView which then breaks the whole popup
+// when using our custom component it would require to use GestureHandlerRootView which then breaks the whole popup
 export const PopupOverlay = styled.Pressable`
 	flex: 1;
 	align-items: center;

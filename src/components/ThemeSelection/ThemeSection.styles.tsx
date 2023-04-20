@@ -28,7 +28,7 @@ export const ThemePreview = styled.View<{
 	border-width: 1px;
 	border-style: solid;
 	border-radius: ${({ theme }) => theme.borderRadius.full}px;
-	background-color: ${({ theme, color }) => {
+	background-color: ${({ color }) => {
 		switch (color) {
 			case 'light':
 				return lightTheme.base[0];

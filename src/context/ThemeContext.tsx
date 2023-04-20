@@ -22,7 +22,7 @@ const themes = {
 
 export const ThemeContext = createContext({
 	theme: THEMES.light,
-	setTheme: (newTheme: ThemeTypes) => {},
+	setTheme: () => {},
 	getTheme: (): ThemeTypes => THEMES.light,
 });
 

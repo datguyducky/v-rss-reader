@@ -55,7 +55,7 @@ export const FeedCategory = ({
 
 			{isOpen &&
 				(category?.feeds?.length > 0 ? (
-					category.feeds.map((feed, index) => (
+					category.feeds.map(feed => (
 						<FeedItem
 							item={feed}
 							icon={feed?.url ? <FeedItemIcon url={feed.url} /> : undefined}

@@ -33,7 +33,7 @@ const StyledLayout = styled.View<
 >`
 	flex: 1;
 	background-color: ${({ theme }) => theme.colors.base[0]};
-	padding: ${({ theme, withAnimatedTitle, horizontalPadding }) =>
+	padding: ${({ theme, withAnimatedTitle }) =>
 			withAnimatedTitle ? theme.spacing.size(1) : theme.spacing.size(2)}px
 		${({ horizontalPadding }) => (horizontalPadding ? theme.spacing.size(1.5) : 0)}px
 		${({ theme, pb }) => theme.spacing.size(pb || 0)}px;

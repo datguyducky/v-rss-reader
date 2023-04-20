@@ -33,8 +33,8 @@ const FeedsCategoriesContext = createContext<FeedsCategoriesContextValue>({
 	editCategory: async () => undefined,
 	deleteItem: async () => undefined,
 	activeItem: null,
-	setStorageActiveItem: (value: unknown) => {},
-	setActiveItem: async (id?: string) => {},
+	setStorageActiveItem: () => {},
+	setActiveItem: async () => {},
 	resetFeedsCategories: async () => {},
 	resetActiveItem: async () => {},
 });

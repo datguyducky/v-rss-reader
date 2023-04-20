@@ -5,7 +5,7 @@ type RadioGroupProps = { children: React.ReactNode; name: string; onValueChange?
 export const RadioGroup = ({ children, name, onValueChange }: RadioGroupProps) => {
 	return (
 		<>
-			{(Array.isArray(children) ? [...children] : [children]).map((child, i) => {
+			{(Array.isArray(children) ? [...children] : [children]).map(child => {
 				return !child.props?.name
 					? React.createElement(child.type, {
 							...{

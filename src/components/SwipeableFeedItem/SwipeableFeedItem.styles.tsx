@@ -8,7 +8,7 @@ interface SwipeableFeedItemStylesProps {
 	isInverted?: boolean;
 }
 
-// By default used on the right
+// By default, used on the left
 export const ReadLaterActionWrap = styled(Animated.View)<
 	Required<Pick<SwipeableFeedItemStylesProps, 'viewType' | 'isInverted'>>
 >`
@@ -21,7 +21,7 @@ export const ReadLaterActionWrap = styled(Animated.View)<
 		viewType === 'THUMBNAIL' ? theme.borderRadius.regular : 0}px;
 `;
 
-// By default used on the right
+// By default, used on the right
 export const ReadStatusActionWrap = styled(Animated.View)<
 	Required<Pick<SwipeableFeedItemStylesProps, 'viewType' | 'isInverted'>>
 >`
