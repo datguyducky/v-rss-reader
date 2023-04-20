@@ -1,5 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+	createNativeStackNavigator,
+	NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
 import { useContext, useEffect } from 'react';
@@ -21,9 +24,10 @@ export type StackParamList = {
 	Category: { categoryId?: string; mode: 'edit' | 'create' };
 	Feed: { feedId?: string; mode: 'edit' | 'create' };
 	Settings: undefined;
-	Read: { scrollY: Animated.Value; title: string };
-	TabScreen: { scrollY: Animated.Value; title: string };
+	Read: { scrollY: Animated.Value; title: string; name?: string };
+	TabScreen: { scrollY: Animated.Value; title: string; name?: string };
 };
+
 const Stack = createNativeStackNavigator<StackParamList>();
 
 const TabScreen = ({ scrollY, title }: StackParamList['Read']) => {

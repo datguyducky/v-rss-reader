@@ -6,6 +6,7 @@ import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
 import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
+import { RssFeedItem } from '../../@types';
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/constants';
 import { useReadLaterContext } from '../../context/ReadLaterContext';
 import { useReadingStatsContext } from '../../context/ReadingStatsContext';
@@ -18,12 +19,15 @@ import { MagazineCard } from '../MagazineCard';
 import { SharedStylesProps } from '../Shared.styles';
 import { TextOnlyCard } from '../TextOnlyCard';
 import { ThumbnailCard } from '../ThumbnailCard';
-import { RssFeedItem } from '../../@types';
 
 interface SwipeableFeedItemProps extends SharedStylesProps {
 	item: RssFeedItem;
 	handleActionPress: () => void;
 	enabled?: boolean;
+}
+
+interface SwipeableRef extends Swipeable {
+	closeFromEnd: () => void;
 }
 
 export const SwipeableFeedItem = ({
@@ -33,7 +37,7 @@ export const SwipeableFeedItem = ({
 	...otherProps
 }: SwipeableFeedItemProps) => {
 	const theme = useTheme();
-	const swipeRef = useRef<Swipeable>(null);
+	const swipeRef = useRef<SwipeableRef>(null);
 	const { handleReadingStats } = useReadingStatsContext();
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
