@@ -11,7 +11,7 @@ import { Pressable } from '../Pressable';
 import { SharedStylesProps } from '../Shared.styles';
 
 interface HeaderProps extends SharedStylesProps {
-	title?: string;
+	title: string;
 	scrollY: any;
 }
 

@@ -33,7 +33,7 @@ export const QuickSettings = forwardRef(
 			}
 		};
 
-		const handleRemoveItem = () => {
+		const handleRemoveItem = async () => {
 			setDeleteCurrentView(false);
 
 			setActiveItem();
@@ -44,7 +44,9 @@ export const QuickSettings = forwardRef(
 				params: { id: 'ALL_ARTICLES_VIEW' },
 			});
 
-			deleteItem(activeItem.id);
+			if (activeItem) {
+				await deleteItem(activeItem.id);
+			}
 		};
 
 		return (

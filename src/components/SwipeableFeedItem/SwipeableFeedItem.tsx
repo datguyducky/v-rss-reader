@@ -18,9 +18,10 @@ import { MagazineCard } from '../MagazineCard';
 import { SharedStylesProps } from '../Shared.styles';
 import { TextOnlyCard } from '../TextOnlyCard';
 import { ThumbnailCard } from '../ThumbnailCard';
+import { RssFeedItem } from '../../@types';
 
 interface SwipeableFeedItemProps extends SharedStylesProps {
-	item: Record<string, unknown>; // TODO: Better type.
+	item: RssFeedItem;
 	handleActionPress: () => void;
 	enabled?: boolean;
 }
@@ -127,12 +128,13 @@ export const SwipeableFeedItem = ({
 	// };
 
 	const renderFeedCard = () => {
-		const domainName = item.links[0].url
-			.match(/^(?:https?:\/\/)?([^/]+)/)[1]
-			.split('.')
-			.slice(-2)
-			.join('.')
-			.replace(/^\w/, c => c.toUpperCase());
+		const domainName =
+			item?.links?.[0]?.url
+				?.match(/^(?:https?:\/\/)?([^/]+)/)?.[1]
+				?.split('.')
+				.slice(-2)
+				.join('.')
+				.replace(/^\w/, c => c.toUpperCase()) ?? '';
 
 		const formattedPublishedAt = calculateTimePassed(item.published);
 

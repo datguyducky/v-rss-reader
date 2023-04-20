@@ -7,19 +7,20 @@ import { Button } from '../../components/Button';
 import { Select } from '../../components/Select';
 import { TextInput } from '../../components/TextInput';
 import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
+import { Feed } from '../../hooks/useFeedsCategories';
 import { formatItemCount } from '../../utils/formatItemCount';
 import { feedSchema } from '../../validation/feedSchema';
 
-type FeedFormValues = {
+export interface FeedFormValues {
 	name: string;
 	url: string;
 	category?: string;
-};
+}
 
 type FeedFormProps = {
 	goBack: () => void;
 	mode: 'edit' | 'create';
-	data?: Record<string, unknown>;
+	data?: Feed & { categoryId?: string };
 };
 
 export const FeedForm = ({ goBack, mode, data }: FeedFormProps) => {

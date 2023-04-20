@@ -15,6 +15,7 @@ import { Icon } from '../components/Icon';
 import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
 import { ThemeContext, THEMES } from '../context/ThemeContext';
 import { SettingsFormValues } from '../forms/SettingsForm';
+import { Category, Feed } from '../hooks/useFeedsCategories';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {
@@ -25,7 +26,7 @@ export const Feeds = forwardRef(
 		const [appSettings = DEFAULT_SETTINGS_VALUES] =
 			useMMKVObject<SettingsFormValues>('appSettings');
 
-		const handleItemNavigate = async item => {
+		const handleItemNavigate = async (item: Feed | Category) => {
 			ref?.current?.forceClose();
 
 			/**
@@ -74,13 +75,25 @@ export const Feeds = forwardRef(
 				keyExtractor={item => item.id}
 			>
 				<FeedItem
-					item={{ name: 'All articles', id: 'ALL_ARTICLES_VIEW' }}
+					item={{
+						name: 'All articles',
+						id: 'ALL_ARTICLES_VIEW',
+						type: 'CATEGORY',
+						createdAt: '',
+						feeds: [],
+					}}
 					handleItemNavigate={handleItemNavigate}
 					icon={<Icon name={InboxStackIcon} size={20} />}
 				/>
 
 				<FeedItem
-					item={{ name: 'Read later', id: 'READ_LATER_VIEW' }}
+					item={{
+						name: 'Read later',
+						id: 'READ_LATER_VIEW',
+						type: 'CATEGORY',
+						createdAt: '',
+						feeds: [],
+					}}
 					handleItemNavigate={handleItemNavigate}
 					icon={<Icon name={ArchiveBoxIcon} size={20} />}
 				/>

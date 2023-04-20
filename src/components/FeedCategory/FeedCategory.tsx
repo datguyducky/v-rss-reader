@@ -8,6 +8,7 @@ import {
 	PressableOpenIcon,
 	PressableSelectCategory,
 } from './FeedCategory.styles';
+import { Category, Feed } from '../../hooks/useFeedsCategories';
 import { FeedItem } from '../FeedItem';
 import { FeedItemIcon } from '../FeedItemIcon';
 import { Icon } from '../Icon';
@@ -15,8 +16,8 @@ import { SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';
 
 interface FeedCategoryProps extends SharedStylesProps {
-	category: Record<string, unknown>;
-	handleItemNavigate: (item: Record<string, unknown>) => void;
+	category: Category;
+	handleItemNavigate: (item: Feed | Category) => void;
 	initiallyOpen?: boolean;
 	feedIconDisabled?: boolean;
 }
@@ -54,7 +55,7 @@ export const FeedCategory = ({
 
 			{isOpen &&
 				(category?.feeds?.length > 0 ? (
-					(category.feeds as Record<string, unknown>[]).map((feed, index) => (
+					category.feeds.map((feed, index) => (
 						<FeedItem
 							item={feed}
 							icon={feed?.url ? <FeedItemIcon url={feed.url} /> : undefined}

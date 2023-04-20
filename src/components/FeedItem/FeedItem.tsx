@@ -3,14 +3,15 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { MinusSmallIcon } from 'react-native-heroicons/outline';
 
 import { NoFeedImageFound } from './FeedItem.styles';
+import { Category, Feed } from '../../hooks/useFeedsCategories';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
 import { SharedStylesProps } from '../Shared.styles';
 
 interface FeedItemProps extends SharedStylesProps {
-	item: Record<string, unknown>;
-	handleItemNavigate: (item: Record<string, unknown>) => void;
+	item: Feed | Category;
+	handleItemNavigate: (item: Feed | Category) => void;
 	style?: StyleProp<ViewStyle>;
 	pressableStyle?: StyleProp<ViewStyle>;
 	icon?: React.ReactElement;

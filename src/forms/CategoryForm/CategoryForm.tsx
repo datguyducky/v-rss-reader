@@ -6,18 +6,23 @@ import { Image, View, Keyboard } from 'react-native';
 import { Button } from '../../components/Button';
 import { TextInput } from '../../components/TextInput';
 import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
+import { Category } from '../../hooks/useFeedsCategories';
 import { categorySchema } from '../../validation/categorySchema';
 
 type CategoryFormProps = {
 	onClose: () => void;
 	mode: 'edit' | 'create';
-	data?: Record<string, unknown>;
+	data?: Category;
 };
+
+export interface CategoryFormValues {
+	name: string;
+}
 
 export const CategoryForm = ({ onClose, mode, data }: CategoryFormProps) => {
 	const { editCategory, createCategory } = useFeedsCategoriesContext();
 
-	const categoryForm = useForm({
+	const categoryForm = useForm<CategoryFormValues>({
 		resolver: zodResolver(categorySchema),
 		mode: 'onChange',
 	});
@@ -42,11 +47,11 @@ export const CategoryForm = ({ onClose, mode, data }: CategoryFormProps) => {
 	useEffect(() => {
 		if (data) {
 			const { name } = data;
-			categoryForm.reset({ name });
+			categoryForm.reset({ name: name as string });
 		}
 	}, [data]);
 
-	const onSubmit = async submitData => {
+	const onSubmit = async (submitData: CategoryFormValues) => {
 		if (mode === 'edit' && data?.id) {
 			await editCategory(data.id as string, submitData);
 		} else {

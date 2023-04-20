@@ -1,8 +1,8 @@
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+import { ActivityIndicator, Animated, FlatList, RefreshControl } from 'react-native';
 import { useMMKVListener, useMMKVObject } from 'react-native-mmkv';
-import { Feed, FeedItem } from 'react-native-rss-parser';
 import { useTheme } from 'styled-components/native';
 
 import { EmptyCategoryText } from './Read.styles';
@@ -13,10 +13,16 @@ import { useReadLaterContext } from '../context/ReadLaterContext';
 import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
 import { SettingsFormValues } from '../forms/SettingsForm';
+import { Feed } from '../hooks/useFeedsCategories';
 import { useRssFetch } from '../hooks/useRssFetch';
 import { Layout } from '../layouts/Layout';
+import { StackParamList } from '../routing/Routes';
+import { RssFeed, RssFeedItem } from '../@types';
 
-export const Read = ({ scrollY, title }) => {
+export const Read = ({
+	scrollY,
+	title,
+}: { scrollY: Animated.Value; title: string } & NativeStackScreenProps<StackParamList, 'Read'>) => {
 	const theme = useTheme();
 
 	const [fetchRss, { loading }] = useRssFetch();
@@ -28,30 +34,34 @@ export const Read = ({ scrollY, title }) => {
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
 
 	const [loadingFeeds, setLoadingFeeds] = useState(false);
-	const [rssItems, setRssItems] = useState<FeedItem[]>([]);
+	const [rssItems, setRssItems] = useState<RssFeedItem[]>([]);
 	const [refreshing, setRefreshing] = useState(false);
 	const [reRender, setReRender] = useState(new Date().getTime());
 	const [isScrolling, setIsScrolling] = useState(false);
 
 	// TODO: I wonder is there a better way to handle this than this state? Maybe context could work here...
-	const [selectedFeedData, setSelectedFeedData] = useState<FeedItem | undefined>();
+	const [selectedFeedData, setSelectedFeedData] = useState<RssFeedItem | undefined>();
 
 	const quickActionDrawerRef = useRef<BottomSheetModal>(null);
 
 	const retrieveRssFeeds = async () => {
 		setLoadingFeeds(true);
 
+		if (!activeItem) {
+			setLoadingFeeds(false);
+			return;
+		}
+
 		if (activeItem.type === 'CATEGORY') {
 			const { data } = await fetchRss(activeItem.feeds);
 
 			if (data) {
-				const items: FeedItem[] = data
-					.reduce((acc: FeedItem[], feed: Feed) => {
+				const items: RssFeedItem[] = data
+					.reduce((acc: RssFeedItem[], feed: RssFeed) => {
 						return [
 							...acc,
 							...feed.items.map(item => ({
 								...item,
-								feedAppCategory: feed.feedAppCategory,
 							})),
 						];
 					}, [])
@@ -91,12 +101,13 @@ export const Read = ({ scrollY, title }) => {
 	const retrieveAllRssFeeds = async () => {
 		setLoadingFeeds(true);
 
-		const urlArray = feedsCategories.reduce((urls: string[], item) => {
-			if (item.url) {
+		const urlArray = feedsCategories.reduce((urls: Feed[], item) => {
+			if (item.type === 'FEED' && item.url) {
 				urls.push(item);
 			}
-			if (item.feeds && item.feeds.length) {
-				const nestedUrls = item.feeds.reduce((nestedUrls, nestedItem) => {
+
+			if (item.type === 'CATEGORY' && item.feeds && item.feeds.length) {
+				const nestedUrls = item.feeds.reduce((nestedUrls: Feed[], nestedItem) => {
 					if (nestedItem.url) {
 						nestedUrls.push(nestedItem);
 					}
@@ -104,19 +115,19 @@ export const Read = ({ scrollY, title }) => {
 				}, []);
 				urls = urls.concat(nestedUrls);
 			}
+
 			return urls;
 		}, []);
 
 		const { data } = await fetchRss(urlArray);
 
 		if (data) {
-			const items: FeedItem[] = data
-				.reduce((acc: FeedItem[], feed: Feed) => {
+			const items: RssFeedItem[] = data
+				.reduce((acc: RssFeedItem[], feed) => {
 					return [
 						...acc,
 						...feed.items.map(item => ({
 							...item,
-							feedAppCategory: feed.feedAppCategory,
 						})),
 					];
 				}, [])

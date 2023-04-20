@@ -1,11 +1,11 @@
 import React, { createContext, ReactElement, useContext } from 'react';
-import { FeedItem } from 'react-native-rss-parser';
 
+import { RssFeedItem } from '../@types';
 import { useReadLater } from '../hooks/useReadLater';
 
 interface ReadLaterContextValue {
-	readLaterFeedsCategories: FeedItem[];
-	addToReadLater: (feed: FeedItem) => Promise<void>;
+	readLaterFeedsCategories: RssFeedItem[];
+	addToReadLater: (feed: RssFeedItem) => Promise<void>;
 	removeFromReadLater: (id: string) => Promise<void>;
 	isSavedInReadLater: (id: string) => boolean;
 	resetReadLater: () => Promise<void>;

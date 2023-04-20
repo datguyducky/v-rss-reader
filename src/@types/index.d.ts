@@ -1,4 +1,5 @@
 import { SettingsFormValues } from '../forms/SettingsForm';
+import { Feed, FeedItem } from 'react-native-rss-parser';
 
 export interface FeedCardProps {
 	title: string;
@@ -10,4 +11,13 @@ export interface FeedCardProps {
 	thumbnailUrl?: string;
 	handleActionPress?: () => void;
 	description?: string;
+}
+
+export interface RssFeed extends Feed {
+	items: RssFeedItem[];
+}
+
+export interface RssFeedItem extends FeedItem {
+	feedAppCategory?: string;
+	imageUrl?: string;
 }

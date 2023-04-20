@@ -1,10 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import { useMMKVObject } from 'react-native-mmkv';
-import { FeedItem } from 'react-native-rss-parser';
 
 import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { FilterFormValues } from '../drawers/Filters';
+import { RssFeedItem } from '../@types';
 
 /**
  * As this is quite a simple hook I feel like there is no need to describe methods used here separately, so I will describe all of them in this one comment.
@@ -23,9 +23,9 @@ const READ_LATER_FEEDS_CATEGORIES_KEY = '@storage_readLaterFeedsCategories';
 
 export const useReadLater = () => {
 	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
-	const [stateReadLaterFeedsCategories, setStateReadLaterFeedsCategories] = useState<FeedItem[]>(
-		[],
-	);
+	const [stateReadLaterFeedsCategories, setStateReadLaterFeedsCategories] = useState<
+		RssFeedItem[]
+	>([]);
 
 	useEffect(() => {
 		async function getReadLaterFeedsCategories() {
@@ -49,7 +49,7 @@ export const useReadLater = () => {
 		getReadLaterFeedsCategories();
 	}, []);
 
-	const setStorageReadLaterFeedsCategories = async (value: FeedItem[]) => {
+	const setStorageReadLaterFeedsCategories = async (value: RssFeedItem[]) => {
 		try {
 			const jsonValue = JSON.stringify(value);
 			await AsyncStorage.setItem(READ_LATER_FEEDS_CATEGORIES_KEY, jsonValue);
@@ -71,7 +71,7 @@ export const useReadLater = () => {
 	const isSavedInReadLater = (id: string) =>
 		stateReadLaterFeedsCategories.some(item => item.id === id);
 
-	const addToReadLater = async (feed: FeedItem) => {
+	const addToReadLater = async (feed: RssFeedItem) => {
 		if (!isSavedInReadLater(feed.id)) {
 			await setStorageReadLaterFeedsCategories([...stateReadLaterFeedsCategories, feed]);
 			setStateReadLaterFeedsCategories(prevReadLaterFeedsCategories => [

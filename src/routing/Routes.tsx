@@ -16,9 +16,17 @@ import { Read } from '../views/Read';
 import { Settings } from '../views/Settings';
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
 
-const TabScreen = ({ scrollY, title }) => {
+export type StackParamList = {
+	Category: { categoryId?: string; mode: 'edit' | 'create' };
+	Feed: { feedId?: string; mode: 'edit' | 'create' };
+	Settings: undefined;
+	Read: { scrollY: Animated.Value; title: string };
+	TabScreen: { scrollY: Animated.Value; title: string };
+};
+const Stack = createNativeStackNavigator<StackParamList>();
+
+const TabScreen = ({ scrollY, title }: StackParamList['Read']) => {
 	return (
 		<Tab.Navigator
 			screenOptions={{

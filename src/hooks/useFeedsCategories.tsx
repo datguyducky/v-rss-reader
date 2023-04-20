@@ -4,25 +4,43 @@ import { useMMKVObject } from 'react-native-mmkv';
 import uuid from 'react-native-uuid';
 
 import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
+import { CategoryFormValues } from '../forms/CategoryForm/CategoryForm';
+import { FeedFormValues } from '../forms/FeedForm/FeedForm';
 import { SettingsFormValues } from '../forms/SettingsForm';
 import { findItemAndParentById } from '../utils/findItemAndParentById';
 
 export const FEEDS_CATEGORIES_STORAGE_KEY = '@storage_feedsCategories';
 export const ACTIVE_ITEM_STORAGE_KEY = '@storage_activeItem';
 
+export interface Feed {
+	id: string;
+	type: 'FEED';
+	createdAt: string;
+	name: string;
+	url: string;
+}
+
+export interface Category {
+	id: string;
+	type: 'CATEGORY';
+	createdAt: string;
+	name: string;
+	feeds: Feed[];
+}
+
 function useFeedsCategories() {
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
 
-	const [stateFeedsCategories, setStateFeedsCategories] = useState<Record<string, unknown>[]>([]);
-	const [onlyFeeds, setOnlyFeeds] = useState([]);
-	const [onlyCategories, setOnlyCategories] = useState([]);
+	const [stateFeedsCategories, setStateFeedsCategories] = useState<(Feed | Category)[]>([]);
+	const [onlyFeeds, setOnlyFeeds] = useState<Feed[]>([]);
+	const [onlyCategories, setOnlyCategories] = useState<Category[]>([]);
 
-	const [stateActiveItem, setStateActiveItem] = useState<Record<string, unknown> | null>(null);
+	const [stateActiveItem, setStateActiveItem] = useState<Feed | Category | null>(null);
 
 	useEffect(() => {
 		async function getFeedsCategories() {
-			let feedsCategories = [];
+			let feedsCategories: (Feed | Category)[] = [];
 
 			try {
 				const feedsCategoriesValue = await AsyncStorage.getItem(
@@ -35,21 +53,23 @@ function useFeedsCategories() {
 			}
 
 			const sortedFeedsCategories = feedsCategories
-				.map(item => ({
-					...item,
-					feeds: item?.feeds
-						? item.feeds.sort((a, b) =>
-								(appSettings.sortAlphabetically ? a : b).name.localeCompare(
-									(appSettings.sortAlphabetically ? b : a).name,
-									undefined,
-									{
-										ignorePunctuation: true,
-										sensitivity: 'base',
-									},
-								),
-						  )
-						: undefined,
-				}))
+				.map(item => {
+					const objectToSort = { ...item };
+					if (objectToSort.type === 'CATEGORY') {
+						objectToSort.feeds = objectToSort.feeds.sort((a, b) =>
+							(appSettings.sortAlphabetically ? a : b).name.localeCompare(
+								(appSettings.sortAlphabetically ? b : a).name,
+								undefined,
+								{
+									ignorePunctuation: true,
+									sensitivity: 'base',
+								},
+							),
+						);
+					}
+
+					return objectToSort;
+				})
 				.sort((a, b) =>
 					(appSettings.sortAlphabetically ? a : b).name.localeCompare(
 						(appSettings.sortAlphabetically ? b : a).name,
@@ -61,8 +81,12 @@ function useFeedsCategories() {
 					),
 				);
 
-			const onlyFeeds = sortedFeedsCategories.filter(o => o.type === 'FEED');
-			const onlyCategories = sortedFeedsCategories.filter(o => o.type === 'CATEGORY');
+			const onlyFeeds = sortedFeedsCategories.flatMap(item =>
+				item.type === 'FEED' ? item : [],
+			);
+			const onlyCategories = sortedFeedsCategories.flatMap(item =>
+				item.type === 'CATEGORY' ? item : [],
+			);
 
 			await setStorageFeedsCategories(sortedFeedsCategories);
 			setStateFeedsCategories(sortedFeedsCategories);
@@ -80,7 +104,7 @@ function useFeedsCategories() {
 	}
 
 	async function getStorageFeedsCategories() {
-		let feedsCategories = [];
+		let feedsCategories: (Feed | Category)[] = [];
 
 		try {
 			const feedsCategoriesValue = await AsyncStorage.getItem(FEEDS_CATEGORIES_STORAGE_KEY);
@@ -92,7 +116,7 @@ function useFeedsCategories() {
 		return feedsCategories;
 	}
 
-	async function setStorageFeedsCategories(value) {
+	async function setStorageFeedsCategories(value: (Feed | Category)[]) {
 		try {
 			const jsonValue = JSON.stringify(value);
 			await AsyncStorage.setItem(FEEDS_CATEGORIES_STORAGE_KEY, jsonValue);
@@ -105,13 +129,13 @@ function useFeedsCategories() {
 	}
 
 	// TODO: Define type for the 'newFeed' argument
-	async function createFeed(newFeed) {
+	async function createFeed(newFeed: FeedFormValues) {
 		const feedsCategories = await getStorageFeedsCategories();
 		const { category, ...newFeedData } = newFeed;
 
-		const newFeedObject = {
+		const newFeedObject: Feed = {
 			...newFeedData,
-			id: uuid.v4(),
+			id: uuid.v4() as string,
 			type: 'FEED',
 			createdAt: new Date().toISOString(),
 		};
@@ -119,11 +143,11 @@ function useFeedsCategories() {
 		if (category) {
 			/**
 			 * Here we find the category that was selected by user, by using `id` field.
-			 * Then we add this new category under the "feeds" field on that category
-			 * and the we save all of that back to MMKV storage.
+			 * Then we add this new category under the "feeds" field on that category,
+			 * and we save all of that back to MMKV storage.
 			 */
 			const itemsWithNewItem = feedsCategories.map(item => {
-				if (item.id === category) {
+				if (item.id === category && item.type === 'CATEGORY') {
 					return { ...item, feeds: [...item.feeds, newFeedObject] };
 				} else {
 					return item;
@@ -138,12 +162,12 @@ function useFeedsCategories() {
 		setStateFeedsCategories(prevFeedsCategories => [...prevFeedsCategories, newFeedObject]);
 	}
 
-	async function createCategory(newCategory) {
+	async function createCategory(newCategory: CategoryFormValues) {
 		const feedsCategories = await getStorageFeedsCategories();
 
-		const newCategoryObject = {
+		const newCategoryObject: Category = {
 			...newCategory,
-			id: uuid.v4(),
+			id: uuid.v4() as string,
 			type: 'CATEGORY',
 			feeds: [],
 			createdAt: new Date().toISOString(),
@@ -153,7 +177,7 @@ function useFeedsCategories() {
 		setStateFeedsCategories(prevFeedsCategories => [...prevFeedsCategories, newCategoryObject]);
 	}
 
-	async function editFeed(id: string, newValues: Record<string, unknown>) {
+	async function editFeed(id: string, newValues: FeedFormValues) {
 		const { category, ...values } = newValues;
 		const feedsCategories = await getStorageFeedsCategories();
 
@@ -172,7 +196,12 @@ function useFeedsCategories() {
 		// Removing it from one category and putting it under another one
 		if (feedToEdit?.parent?.id && category !== feedToEdit?.parent?.id) {
 			const afterRemoveData = feedsCategories.map(obj => {
-				if (obj.id === feedToEdit?.parent?.id && obj.feeds && obj.feeds.length > 0) {
+				if (
+					obj.id === feedToEdit?.parent?.id &&
+					'feeds' in obj &&
+					obj.feeds &&
+					obj.feeds.length > 0
+				) {
 					obj.feeds = obj.feeds.filter(feed => feed.id !== id);
 					return obj;
 				}
@@ -182,11 +211,19 @@ function useFeedsCategories() {
 
 			// Putting it under different category
 			if (category) {
-				const editedFeedsCategories = afterRemoveData.map(item =>
-					item.id === category
-						? { ...item, feeds: [...item.feeds, { ...feedToEdit?.item, ...values }] }
-						: { ...item },
-				);
+				const editedFeedsCategories = afterRemoveData.map(item => {
+					const newItem = { ...item };
+
+					if (newItem.id === category && newItem.type === 'CATEGORY') {
+						if (feedToEdit?.item) {
+							const newValues = { ...feedToEdit.item } as Feed;
+
+							newItem.feeds = [...newItem.feeds, { ...newValues, ...values }];
+						}
+					}
+
+					return newItem;
+				});
 
 				await setStorageFeedsCategories(editedFeedsCategories);
 				setStateFeedsCategories(editedFeedsCategories);
@@ -206,18 +243,17 @@ function useFeedsCategories() {
 		else if (category === feedToEdit?.parent?.id) {
 			// When feed is under category
 			if (feedToEdit?.parent?.id) {
-				const editedFeedsCategories = feedsCategories.map(item =>
-					item.id === category
-						? {
-								...item,
-								feeds: item.feeds.map(feedItem =>
-									feedItem.id === id
-										? { ...feedItem, ...values }
-										: { ...feedItem },
-								),
-						  }
-						: { ...item },
-				);
+				const editedFeedsCategories = feedsCategories.map(item => {
+					const newItem = { ...item };
+
+					if (newItem.id === category && newItem.type === 'CATEGORY') {
+						newItem.feeds = newItem.feeds.map(feedItem =>
+							feedItem.id === id ? { ...feedItem, ...values } : { ...feedItem },
+						);
+					}
+
+					return newItem;
+				});
 
 				await setStorageFeedsCategories(editedFeedsCategories);
 				setStateFeedsCategories(editedFeedsCategories);
@@ -232,25 +268,30 @@ function useFeedsCategories() {
 				setStateFeedsCategories(editedFeedsCategories);
 			}
 		}
-		// When feed is under the root array and we try to move it under a category
+		// When feed is under the root array, and we try to move it under a category
 		else if (category && !feedToEdit?.parent?.id) {
 			const afterRemoveData = feedsCategories.filter(obj => obj.id !== id);
 
-			const editedFeedsCategories = afterRemoveData.map(item =>
-				item.id === category
-					? {
-							...item,
-							feeds: [...item.feeds, { ...feedToEdit?.item, ...values }],
-					  }
-					: { ...item },
-			);
+			const editedFeedsCategories = afterRemoveData.map(item => {
+				const newItem = { ...item };
+
+				if (newItem.id === category && newItem.type === 'CATEGORY') {
+					if (feedToEdit?.item) {
+						const newValues = { ...feedToEdit.item } as Feed;
+
+						newItem.feeds = [...newItem.feeds, { ...newValues, ...values }];
+					}
+				}
+
+				return newItem;
+			});
 
 			await setStorageFeedsCategories(editedFeedsCategories);
 			setStateFeedsCategories(editedFeedsCategories);
 		}
 	}
 
-	async function editCategory(id: string, newValues: Record<string, unknown>) {
+	async function editCategory(id: string, newValues: CategoryFormValues) {
 		const categoryToEdit = (await findFeedCategory(id))?.item;
 		const feedsCategories = await getStorageFeedsCategories();
 
@@ -279,27 +320,21 @@ function useFeedsCategories() {
 	async function deleteItem(id: string) {
 		const feedsCategories = await getStorageFeedsCategories();
 
-		const clearedFeedsCategories = feedsCategories
-			.map(obj => {
-				if (obj.id === id) {
-					return null;
-				}
+		const clearedFeedsCategories = feedsCategories.map(obj => {
+			if (obj.id === id) {
+				return obj;
+			}
 
-				const newObj = { ...obj };
+			const newObj = { ...obj };
 
-				if (newObj.feeds) {
-					newObj.feeds = newObj.feeds.filter(feed => {
-						if (feed.id === id) {
-							return false;
-						}
+			if (newObj.type === 'CATEGORY' && newObj?.feeds) {
+				newObj.feeds = newObj.feeds.filter(feed => {
+					return feed.id !== id;
+				});
+			}
 
-						return true;
-					});
-				}
-
-				return newObj;
-			})
-			.filter(Boolean);
+			return newObj;
+		});
 
 		await setStorageFeedsCategories(clearedFeedsCategories);
 		setStateFeedsCategories(clearedFeedsCategories);
@@ -319,7 +354,7 @@ function useFeedsCategories() {
 	}, []);
 
 	// TODO: Correct type here
-	const setStorageActiveItem = async value => {
+	const setStorageActiveItem = async (value: Feed | Category) => {
 		try {
 			const jsonValue = JSON.stringify(value);
 			await AsyncStorage.setItem(ACTIVE_ITEM_STORAGE_KEY, jsonValue);

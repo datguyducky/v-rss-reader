@@ -2,8 +2,8 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { ForwardedRef, forwardRef } from 'react';
 import { Share } from 'react-native';
 import { ArchiveBoxIcon, ShareIcon } from 'react-native-heroicons/outline';
-import { FeedItem } from 'react-native-rss-parser';
 
+import { RssFeedItem } from '../@types';
 import { BasicButton } from '../components/BasicButton';
 import { Drawer } from '../components/Drawer';
 import { Icon } from '../components/Icon';
@@ -11,7 +11,7 @@ import { Pressable } from '../components/Pressable';
 import { useReadLaterContext } from '../context/ReadLaterContext';
 
 type QuickActionProps = {
-	selectedFeedData?: FeedItem;
+	selectedFeedData?: RssFeedItem;
 };
 
 export const QuickAction = forwardRef(
@@ -30,10 +30,12 @@ export const QuickAction = forwardRef(
 		};
 
 		const handleReadLater = async () => {
-			if (isSavedInReadLater(selectedFeedData.id)) {
-				await removeFromReadLater(selectedFeedData.id);
-			} else {
-				await addToReadLater(selectedFeedData);
+			if (selectedFeedData) {
+				if (isSavedInReadLater(selectedFeedData.id)) {
+					await removeFromReadLater(selectedFeedData.id);
+				} else {
+					await addToReadLater(selectedFeedData);
+				}
 			}
 		};
 

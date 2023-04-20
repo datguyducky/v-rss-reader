@@ -1,21 +1,23 @@
 import React, { createContext, ReactElement, useContext } from 'react';
 
-import useFeedsCategories from '../hooks/useFeedsCategories';
+import { CategoryFormValues } from '../forms/CategoryForm/CategoryForm';
+import { FeedFormValues } from '../forms/FeedForm/FeedForm';
+import useFeedsCategories, { Category, Feed } from '../hooks/useFeedsCategories';
 import { SearchResult } from '../utils/findItemAndParentById';
 
 interface FeedsCategoriesContextValue {
-	feedsCategories: Record<string, unknown>[];
-	onlyFeeds: Record<string, unknown>[];
-	onlyCategories: Record<string, unknown>[];
+	feedsCategories: (Feed | Category)[];
+	onlyFeeds: Feed[];
+	onlyCategories: Category[];
 	findFeedCategory: (id: string) => Promise<SearchResult | undefined>;
-	createFeed: (newFeed: unknown) => Promise<void>;
-	createCategory: (newCategory: unknown) => Promise<void>;
-	editFeed: (id: string, newValues: Record<string, unknown>) => Promise<void>;
-	editCategory: (id: string, newValues: Record<string, unknown>) => Promise<void>;
+	createFeed: (newFeed: FeedFormValues) => Promise<void>;
+	createCategory: (newCategory: CategoryFormValues) => Promise<void>;
+	editFeed: (id: string, newValues: FeedFormValues) => Promise<void>;
+	editCategory: (id: string, newValues: CategoryFormValues) => Promise<void>;
 	deleteItem: (id: string) => Promise<void>;
-	activeItem: Record<string, unknown> | null;
-	setStorageActiveItem: (value: unknown) => void;
-	setActiveItem: () => void;
+	activeItem: Feed | Category | null;
+	setStorageActiveItem: (value: Feed | Category) => void;
+	setActiveItem: (id?: string) => void;
 	resetFeedsCategories: () => Promise<void>;
 	resetActiveItem: () => Promise<void>;
 }
@@ -32,7 +34,7 @@ const FeedsCategoriesContext = createContext<FeedsCategoriesContextValue>({
 	deleteItem: async () => undefined,
 	activeItem: null,
 	setStorageActiveItem: (value: unknown) => {},
-	setActiveItem: async () => {},
+	setActiveItem: async (id?: string) => {},
 	resetFeedsCategories: async () => {},
 	resetActiveItem: async () => {},
 });
