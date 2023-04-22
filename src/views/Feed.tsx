@@ -1,10 +1,11 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
-import { FeedForm } from '../forms/FeedForm';
-import { Feed as FeedType } from '../hooks/useFeedsCategories';
-import { Layout } from '../layouts/Layout';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+import { FeedForm } from '@forms/FeedForm';
+import { Feed as FeedType } from '@hooks/useFeedsCategories';
+import { Layout } from '@layouts/Layout';
+
 import { StackParamList } from '../routing/Routes';
 
 export const Feed = ({ navigation, route }: NativeStackScreenProps<StackParamList, 'Feed'>) => {

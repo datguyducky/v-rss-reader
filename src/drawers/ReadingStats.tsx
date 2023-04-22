@@ -1,15 +1,16 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { ForwardedRef, forwardRef } from 'react';
 import { View } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useTheme } from 'styled-components/native';
 
+import { Divider } from '@components/Divider';
+import { Drawer } from '@components/Drawer';
+import { Text } from '@components/Text';
+import { useReadingStatsContext } from '@context/ReadingStatsContext';
+import { useAppUsageTime } from '@hooks/useAppUsageTime';
+import { formatMinutes } from '@utils/formatMinutes';
+
 import { SectionCount, SectionTitle, SectionWrap } from './ReadingStats.styles';
-import { Divider } from '../components/Divider';
-import { Drawer } from '../components/Drawer';
-import { Text } from '../components/Text';
-import { useReadingStatsContext } from '../context/ReadingStatsContext';
-import { useAppUsageTime } from '../hooks/useAppUsageTime';
-import { formatMinutes } from '../utils/formatMinutes';
 
 export const ReadingStats = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {

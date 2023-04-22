@@ -1,5 +1,6 @@
+import { SettingsFormValues } from '@forms/SettingsForm';
+
 import { FilterFormValues } from '../drawers/Filters';
-import { SettingsFormValues } from '../forms/SettingsForm';
 
 export const DEFAULT_FILTERS_VALUES: FilterFormValues = {
 	sortBy: 'LATEST',

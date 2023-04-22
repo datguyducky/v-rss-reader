@@ -1,9 +1,9 @@
 import React, { createContext, ReactElement, useContext } from 'react';
 
-import { CategoryFormValues } from '../forms/CategoryForm/CategoryForm';
-import { FeedFormValues } from '../forms/FeedForm/FeedForm';
-import useFeedsCategories, { Category, Feed } from '../hooks/useFeedsCategories';
-import { SearchResult } from '../utils/findItemAndParentById';
+import { CategoryFormValues } from '@forms/CategoryForm/CategoryForm';
+import { FeedFormValues } from '@forms/FeedForm/FeedForm';
+import useFeedsCategories, { Category, Feed } from '@hooks/useFeedsCategories';
+import { SearchResult } from '@utils/findItemAndParentById';
 
 interface FeedsCategoriesContextValue {
 	feedsCategories: (Feed | Category)[];

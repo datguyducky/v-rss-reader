@@ -1,18 +1,18 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useRef } from 'react';
 import { useWindowDimensions, View } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Bars3BottomLeftIcon, Cog6ToothIcon, PlusIcon } from 'react-native-heroicons/outline';
 import { Shadow } from 'react-native-shadow-2';
 import { useTheme } from 'styled-components/native';
 
 import {
+	CutOut,
+	CutOutContainer,
+	CutOutWrapper,
 	LeftIconWrap,
 	RightIconWrap,
 	WrapWithCutOut,
-	CutOutContainer,
-	CutOutWrapper,
-	CutOut,
 } from './Navigation.styles';
 import { CreateSelection } from '../../drawers/CreateSelection';
 import { Feeds } from '../../drawers/Feeds';

@@ -1,20 +1,20 @@
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
-import { DEFAULT_SETTINGS_VALUES } from '../../common/constants';
-import { Button } from '../../components/Button';
-import { ConfirmPopup } from '../../components/ConfirmPopup';
-import { Divider } from '../../components/Divider';
-import { Heading } from '../../components/Heading';
-import { Select } from '../../components/Select';
-import { Switch } from '../../components/Switch';
-import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
-import { useReadLaterContext } from '../../context/ReadLaterContext';
-import { useReadingStatsContext } from '../../context/ReadingStatsContext';
-import { useAppUsageTime } from '../../hooks/useAppUsageTime';
+import { DEFAULT_SETTINGS_VALUES } from '@common/constants';
+import { Button } from '@components/Button';
+import { ConfirmPopup } from '@components/ConfirmPopup';
+import { Divider } from '@components/Divider';
+import { Heading } from '@components/Heading';
+import { Select } from '@components/Select';
+import { Switch } from '@components/Switch';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+import { useReadingStatsContext } from '@context/ReadingStatsContext';
+import { useReadLaterContext } from '@context/ReadLaterContext';
+import { useAppUsageTime } from '@hooks/useAppUsageTime';
 
 export type SettingsFormValues = {
 	readOnScroll: boolean;

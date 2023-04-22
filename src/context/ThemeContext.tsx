@@ -1,11 +1,12 @@
-import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { createContext, ReactNode, useCallback, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { useMMKVString } from 'react-native-mmkv';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 
+import { darkTheme, lightTheme } from '@theme/colors';
+
 import { theme as createdTheme } from '../theme';
-import { darkTheme, lightTheme } from '../theme/colors';
 
 export enum THEMES {
 	light = 'light',
@@ -22,7 +23,7 @@ const themes = {
 
 export const ThemeContext = createContext({
 	theme: THEMES.light,
-	setTheme: () => {},
+	setTheme: (newTheme: ThemeTypes) => {},
 	getTheme: (): ThemeTypes => THEMES.light,
 });
 

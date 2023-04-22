@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import { ThemeContext, THEMES } from '@context/ThemeContext';
+
 import {
 	AutoDarkSection,
 	AutoLightSection,
@@ -9,7 +11,6 @@ import {
 	ThemePreview,
 	ThemeSectionWrap,
 } from './ThemeSection.styles';
-import { ThemeContext, THEMES } from '../../context/ThemeContext';
 import { Pressable } from '../Pressable';
 import { SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';

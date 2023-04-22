@@ -1,8 +1,9 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Animated, ScrollView } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { SettingsForm } from '../forms/SettingsForm';
-import { Layout } from '../layouts/Layout';
+import { SettingsForm } from '@forms/SettingsForm';
+import { Layout } from '@layouts/Layout';
+
 import { StackParamList } from '../routing/Routes';
 
 export const Settings = ({

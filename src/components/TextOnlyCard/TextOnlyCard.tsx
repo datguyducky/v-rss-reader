@@ -1,14 +1,15 @@
 import { View } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
+import { parseHtmlString } from '@utils/parseHtmlString';
+
 import {
+	StyledPressable,
 	TextOnlyCardWrap,
 	TextOnlyTextWrap,
 	TitleWrap,
-	StyledPressable,
 } from './TextOnlyCard.styles';
 import { FeedCardProps } from '../../@types';
-import { parseHtmlString } from '../../utils/parseHtmlString';
 import { SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';
 

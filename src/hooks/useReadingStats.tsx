@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState, useEffect } from 'react';
 
 const STATS_STORAGE_KEYS = [
 	'@statistics_feedsOpened',

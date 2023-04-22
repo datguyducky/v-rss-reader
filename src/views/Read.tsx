@@ -1,22 +1,23 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, FlatList, RefreshControl } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useMMKVListener, useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
+import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '@common/constants';
+import { SwipeableFeedItem } from '@components/SwipeableFeedItem';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+import { useReadLaterContext } from '@context/ReadLaterContext';
+import { SettingsFormValues } from '@forms/SettingsForm';
+import { Feed } from '@hooks/useFeedsCategories';
+import { useRssFetch } from '@hooks/useRssFetch';
+import { Layout } from '@layouts/Layout';
+
 import { EmptyCategoryText } from './Read.styles';
 import { RssFeed, RssFeedItem } from '../@types';
-import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../common/constants';
-import { SwipeableFeedItem } from '../components/SwipeableFeedItem';
-import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
-import { useReadLaterContext } from '../context/ReadLaterContext';
 import { FilterFormValues } from '../drawers/Filters';
 import { QuickAction } from '../drawers/QuickAction';
-import { SettingsFormValues } from '../forms/SettingsForm';
-import { Feed } from '../hooks/useFeedsCategories';
-import { useRssFetch } from '../hooks/useRssFetch';
-import { Layout } from '../layouts/Layout';
 import { StackParamList } from '../routing/Routes';
 
 export const Read = ({

@@ -1,18 +1,19 @@
-import React, { ReactNode, Children, isValidElement } from 'react';
+import React, { Children, isValidElement, ReactNode } from 'react';
 import {
 	Animated,
 	FlatList,
-	StyleProp,
-	ViewStyle,
+	FlatListProps,
 	ScrollView,
 	ScrollViewProps,
-	FlatListProps,
+	StyleProp,
+	ViewStyle,
 } from 'react-native';
 import styled from 'styled-components/native';
 
-import { Heading } from '../components/Heading';
-import { HeadingAnimated } from '../components/HeadingAnimated';
-import { SharedStyles, SharedStylesProps } from '../components/Shared.styles';
+import { Heading } from '@components/Heading';
+import { HeadingAnimated } from '@components/HeadingAnimated';
+import { SharedStyles, SharedStylesProps } from '@components/Shared.styles';
+
 import { theme } from '../theme';
 
 interface LayoutProps extends SharedStylesProps {

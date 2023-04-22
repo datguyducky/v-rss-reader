@@ -1,11 +1,11 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { ForwardedRef, forwardRef } from 'react';
-import { PlusIcon, FolderPlusIcon } from 'react-native-heroicons/outline';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { FolderPlusIcon, PlusIcon } from 'react-native-heroicons/outline';
 
-import { BasicButton } from '../components/BasicButton';
-import { Drawer } from '../components/Drawer';
-import { Icon } from '../components/Icon';
-import { Pressable } from '../components/Pressable';
+import { BasicButton } from '@components/BasicButton';
+import { Drawer } from '@components/Drawer';
+import { Icon } from '@components/Icon';
+import { Pressable } from '@components/Pressable';
 
 export const CreateSelection = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {

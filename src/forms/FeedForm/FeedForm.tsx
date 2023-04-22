@@ -1,15 +1,15 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useEffect, useState } from 'react';
+import { Image, Keyboard, View } from 'react-native';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Image, View, Keyboard } from 'react-native';
 
-import { Button } from '../../components/Button';
-import { Select } from '../../components/Select';
-import { TextInput } from '../../components/TextInput';
-import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
-import { Feed } from '../../hooks/useFeedsCategories';
-import { formatItemCount } from '../../utils/formatItemCount';
-import { feedSchema } from '../../validation/feedSchema';
+import { Button } from '@components/Button';
+import { Select } from '@components/Select';
+import { TextInput } from '@components/TextInput';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+import { Feed } from '@hooks/useFeedsCategories';
+import { formatItemCount } from '@utils/formatItemCount';
+import { feedSchema } from '@validation/feedSchema';
 
 export interface FeedFormValues {
 	name: string;

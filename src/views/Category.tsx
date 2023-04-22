@@ -1,11 +1,12 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 import { Animated } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
-import { CategoryForm } from '../forms/CategoryForm';
-import { Category as CategoryType } from '../hooks/useFeedsCategories';
-import { Layout } from '../layouts/Layout';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+import { CategoryForm } from '@forms/CategoryForm';
+import { Category as CategoryType } from '@hooks/useFeedsCategories';
+import { Layout } from '@layouts/Layout';
+
 import { StackParamList } from '../routing/Routes';
 
 export const Category = ({

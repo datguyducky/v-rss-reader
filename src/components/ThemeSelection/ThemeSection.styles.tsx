@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
-import { darkTheme, lightTheme } from '../../theme/colors';
+import { darkTheme, lightTheme } from '@theme/colors';
+
 import { SharedStyles, SharedStylesProps } from '../Shared.styles';
 
 export const ThemeSectionWrap = styled.View<SharedStylesProps>`

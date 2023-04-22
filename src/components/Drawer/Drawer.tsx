@@ -1,11 +1,12 @@
-import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
-import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
 import { ForwardedRef, forwardRef, ReactNode, useCallback, useContext } from 'react';
 import { FlatListProps, StyleProp, ViewStyle } from 'react-native';
+import { BottomSheetBackdrop, BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
 import { useTheme } from 'styled-components/native';
 
+import { ThemeContext, THEMES } from '@context/ThemeContext';
+
 import { DrawerContainer, DrawerStylesProps } from './Drawer.styles';
-import { ThemeContext, THEMES } from '../../context/ThemeContext';
 import { SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';
 

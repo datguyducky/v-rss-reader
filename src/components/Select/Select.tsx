@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
 import { FlatList, Modal, View } from 'react-native';
+import { Controller, useFormContext } from 'react-hook-form';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 import { ChevronDownIcon } from 'react-native-heroicons/outline';
 

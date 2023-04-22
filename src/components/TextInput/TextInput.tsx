@@ -1,7 +1,7 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 import { TextInput as NativeTextInput, TextInputProps as NativeTextInputProps } from 'react-native';
 
-import { TextInputStylesProps, StyledNativeTextInput } from './TextInput.styles';
+import { StyledNativeTextInput, TextInputStylesProps } from './TextInput.styles';
 import { InputWrapper } from '../InputWrapper';
 import { SharedStylesProps } from '../Shared.styles';
 

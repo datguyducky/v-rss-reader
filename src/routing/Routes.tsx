@@ -1,15 +1,16 @@
+import { useContext, useEffect } from 'react';
+import { Animated } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
-import { useContext, useEffect } from 'react';
-import { Animated } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
-import { Header } from '../components/Header';
-import { HeaderBack } from '../components/HeaderBack';
-import { Navigation } from '../components/Navigation';
-import { ThemeContext, THEMES } from '../context/ThemeContext';
+import { Header } from '@components/Header';
+import { HeaderBack } from '@components/HeaderBack';
+import { Navigation } from '@components/Navigation';
+import { ThemeContext, THEMES } from '@context/ThemeContext';
+
 import { Category } from '../views/Category';
 import { Feed } from '../views/Feed';
 import { Read } from '../views/Read';

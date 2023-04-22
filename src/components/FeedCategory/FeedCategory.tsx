@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { ChevronDownIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
 
+import { Category, Feed } from '@hooks/useFeedsCategories';
+
 import {
 	EmptyCategoryText,
 	FeedCategoryWrap,
 	PressableOpenIcon,
 	PressableSelectCategory,
 } from './FeedCategory.styles';
-import { Category, Feed } from '../../hooks/useFeedsCategories';
 import { FeedItem } from '../FeedItem';
 import { FeedItemIcon } from '../FeedItemIcon';
 import { Icon } from '../Icon';

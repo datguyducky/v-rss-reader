@@ -1,9 +1,10 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useRef } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { EyeIcon } from 'react-native-heroicons/outline';
 
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+
 import { HeaderTextWrap, HeaderWrap } from './Header.styles';
-import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
 import { Filters } from '../../drawers/Filters';
 import { HeadingAnimated } from '../HeadingAnimated';
 import { Icon } from '../Icon';

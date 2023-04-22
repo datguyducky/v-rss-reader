@@ -3,11 +3,11 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 import {
+	AbsoluteAnimatedView,
+	AnimatedLabel,
 	ContentWithLabelWrap,
 	InputWrapperContainer,
 	InputWrapperStylesProps,
-	AbsoluteAnimatedView,
-	AnimatedLabel,
 } from './InputWrapper.styles';
 import { Pressable } from '../Pressable';
 import { SharedStylesProps } from '../Shared.styles';

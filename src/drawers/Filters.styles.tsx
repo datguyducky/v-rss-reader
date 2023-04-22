@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
 
-import { Divider } from '../components/Divider';
+import { Divider } from '@components/Divider';
+import { Text } from '@components/Text';
+
 import { Radio as RadioComponent } from '../components/Radio';
-import { Text } from '../components/Text';
 
 export const SectionTitle = styled(Text)`
 	padding-left: ${({ theme }) => theme.spacing.size(2)}px;

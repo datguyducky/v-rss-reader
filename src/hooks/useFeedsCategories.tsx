@@ -1,13 +1,13 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMMKVObject } from 'react-native-mmkv';
 import uuid from 'react-native-uuid';
 
-import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
-import { CategoryFormValues } from '../forms/CategoryForm/CategoryForm';
-import { FeedFormValues } from '../forms/FeedForm/FeedForm';
-import { SettingsFormValues } from '../forms/SettingsForm';
-import { findItemAndParentById } from '../utils/findItemAndParentById';
+import { DEFAULT_SETTINGS_VALUES } from '@common/constants';
+import { CategoryFormValues } from '@forms/CategoryForm/CategoryForm';
+import { FeedFormValues } from '@forms/FeedForm/FeedForm';
+import { SettingsFormValues } from '@forms/SettingsForm';
+import { findItemAndParentById } from '@utils/findItemAndParentById';
 
 export const FEEDS_CATEGORIES_STORAGE_KEY = '@storage_feedsCategories';
 export const ACTIVE_ITEM_STORAGE_KEY = '@storage_activeItem';

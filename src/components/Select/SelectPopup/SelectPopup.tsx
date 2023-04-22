@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
+import { useFormContext } from 'react-hook-form';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useTheme } from 'styled-components/native';
 

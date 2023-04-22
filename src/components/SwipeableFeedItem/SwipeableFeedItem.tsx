@@ -1,18 +1,19 @@
-import { openURL } from 'expo-linking';
 import React, { useRef } from 'react';
+import { openURL } from 'expo-linking';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { ArchiveBoxIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
+import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '@common/constants';
+import { useReadingStatsContext } from '@context/ReadingStatsContext';
+import { useReadLaterContext } from '@context/ReadLaterContext';
+import { SettingsFormValues } from '@forms/SettingsForm';
+import { calculateTimePassed } from '@utils/calculateTimePassed';
+
 import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 import { RssFeedItem } from '../../@types';
-import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '../../common/constants';
-import { useReadLaterContext } from '../../context/ReadLaterContext';
-import { useReadingStatsContext } from '../../context/ReadingStatsContext';
 import { FilterFormValues } from '../../drawers/Filters';
-import { SettingsFormValues } from '../../forms/SettingsForm';
-import { calculateTimePassed } from '../../utils/calculateTimePassed';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';

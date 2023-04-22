@@ -1,14 +1,15 @@
 import { PressableProps as NativePressableProps, StyleProp, ViewStyle } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
-import { StyledNativePressable } from './Pressable.styles';
-import { PressableBackground } from './PressableBackground/PressableBackground';
-import { PressableOpacity } from './PressableOpacity/PressableOpacity';
 import {
 	createDoublePressGesture,
 	createLongPressGesture,
 	createSinglePressGesture,
-} from '../../utils/pressGestureHandler';
+} from '@utils/pressGestureHandler';
+
+import { StyledNativePressable } from './Pressable.styles';
+import { PressableBackground } from './PressableBackground/PressableBackground';
+import { PressableOpacity } from './PressableOpacity/PressableOpacity';
 import { SharedStylesProps } from '../Shared.styles';
 
 export interface PressableProps extends SharedStylesProps, NativePressableProps {

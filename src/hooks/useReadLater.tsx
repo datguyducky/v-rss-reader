@@ -1,9 +1,10 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMMKVObject } from 'react-native-mmkv';
 
+import { DEFAULT_FILTERS_VALUES } from '@common/constants';
+
 import { RssFeedItem } from '../@types';
-import { DEFAULT_FILTERS_VALUES } from '../common/constants';
 import { FilterFormValues } from '../drawers/Filters';
 
 /**

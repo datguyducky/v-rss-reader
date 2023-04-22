@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 import { useMMKVNumber, useMMKVObject } from 'react-native-mmkv';
 
-import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
-import { SettingsFormValues } from '../forms/SettingsForm';
+import { DEFAULT_SETTINGS_VALUES } from '@common/constants';
+import { SettingsFormValues } from '@forms/SettingsForm';
 
 // While this uses MMKV storage for storing related data I'm not sure if this is a good idea, as it is not recommended to use that library as a "database" - not sure if this case
 // counts as this, but if there would be reports of slow performance then it's possible that this part of the app causes it.

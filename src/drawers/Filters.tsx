@@ -1,12 +1,13 @@
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { ForwardedRef, forwardRef } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
+import { DEFAULT_FILTERS_VALUES } from '@common/constants';
+import { Drawer } from '@components/Drawer';
+
 import { Radio, SectionDivider, SectionTitle } from './Filters.styles';
-import { DEFAULT_FILTERS_VALUES } from '../common/constants';
-import { Drawer } from '../components/Drawer';
 
 export type FilterFormValues = {
 	sortBy: 'LATEST' | 'OLDEST';

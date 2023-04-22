@@ -1,5 +1,6 @@
-import { SettingsFormValues } from '../forms/SettingsForm';
 import { Feed, FeedItem } from 'react-native-rss-parser';
+
+import { SettingsFormValues } from '@forms/SettingsForm';
 
 export interface FeedCardProps {
 	title: string;

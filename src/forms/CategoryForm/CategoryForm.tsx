@@ -1,13 +1,13 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
+import { Image, Keyboard, View } from 'react-native';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Image, View, Keyboard } from 'react-native';
 
-import { Button } from '../../components/Button';
-import { TextInput } from '../../components/TextInput';
-import { useFeedsCategoriesContext } from '../../context/FeedsCategoriesContext';
-import { Category } from '../../hooks/useFeedsCategories';
-import { categorySchema } from '../../validation/categorySchema';
+import { Button } from '@components/Button';
+import { TextInput } from '@components/TextInput';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+import { Category } from '@hooks/useFeedsCategories';
+import { categorySchema } from '@validation/categorySchema';
 
 type CategoryFormProps = {
 	onClose: () => void;

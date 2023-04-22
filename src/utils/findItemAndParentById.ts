@@ -1,4 +1,4 @@
-import { Feed, Category } from '../hooks/useFeedsCategories';
+import { Category, Feed } from '@hooks/useFeedsCategories';
 
 export interface SearchResult {
 	item?: Feed | Category;

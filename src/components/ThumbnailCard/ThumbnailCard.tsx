@@ -1,16 +1,17 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 import { useTheme } from 'styled-components/native';
 
+import { parseHtmlString } from '@utils/parseHtmlString';
+
 import {
+	StyledImageBackground,
 	ThumbnailCardWrap,
 	ThumbnailTextWrap,
 	TitleWrap,
-	StyledImageBackground,
 } from './ThumbnailCard.styles';
 import { FeedCardProps } from '../../@types';
-import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
 import { SharedStylesProps } from '../Shared.styles';
 import { Text } from '../Text';

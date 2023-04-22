@@ -1,6 +1,6 @@
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { RadioCircle, RadioWrap, StyledPressable } from './Radio.styles';
 import { RadioGroup } from './RadioGroup/RadioGroup';

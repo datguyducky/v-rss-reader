@@ -2,16 +2,17 @@ import { View } from 'react-native';
 import { PhotoIcon } from 'react-native-heroicons/outline';
 import { useTheme } from 'styled-components/native';
 
+import { parseHtmlString } from '@utils/parseHtmlString';
+
 import {
+	DetailsWrap,
 	MagazineCardWrap,
 	MagazineTextWrap,
-	TitleWrap,
 	StyledImage,
-	DetailsWrap,
 	TitleText,
+	TitleWrap,
 } from './MagazineCard.styles';
 import { FeedCardProps } from '../../@types';
-import { parseHtmlString } from '../../utils/parseHtmlString';
 import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
 import { SharedStylesProps } from '../Shared.styles';

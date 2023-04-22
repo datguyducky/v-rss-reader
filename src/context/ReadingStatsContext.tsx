@@ -1,6 +1,6 @@
 import React, { createContext, ReactElement, useContext } from 'react';
 
-import { useReadingStats } from '../hooks/useReadingStats';
+import { useReadingStats } from '@hooks/useReadingStats';
 
 interface ReadingStatsContextValue {
 	feedsOpened: string;

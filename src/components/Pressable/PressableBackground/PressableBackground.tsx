@@ -6,7 +6,8 @@ import {
 	createDoublePressGesture,
 	createLongPressGesture,
 	createSinglePressGesture,
-} from '../../../utils/pressGestureHandler';
+} from '@utils/pressGestureHandler';
+
 import { PressableProps } from '../Pressable';
 import { StyledNativePressable } from '../Pressable.styles';
 

@@ -1,21 +1,21 @@
+import { ForwardedRef, forwardRef, useContext } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
-import { ForwardedRef, forwardRef, useContext } from 'react';
 import { ArchiveBoxIcon, InboxStackIcon } from 'react-native-heroicons/outline';
 import { useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
-import { DEFAULT_SETTINGS_VALUES } from '../common/constants';
-import { Divider } from '../components/Divider';
-import { Drawer } from '../components/Drawer';
-import { FeedCategory } from '../components/FeedCategory';
-import { FeedItem } from '../components/FeedItem';
-import { FeedItemIcon } from '../components/FeedItemIcon';
-import { Icon } from '../components/Icon';
-import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
-import { ThemeContext, THEMES } from '../context/ThemeContext';
-import { SettingsFormValues } from '../forms/SettingsForm';
-import { Category, Feed } from '../hooks/useFeedsCategories';
+import { DEFAULT_SETTINGS_VALUES } from '@common/constants';
+import { Divider } from '@components/Divider';
+import { Drawer } from '@components/Drawer';
+import { FeedCategory } from '@components/FeedCategory';
+import { FeedItem } from '@components/FeedItem';
+import { FeedItemIcon } from '@components/FeedItemIcon';
+import { Icon } from '@components/Icon';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
+import { ThemeContext, THEMES } from '@context/ThemeContext';
+import { SettingsFormValues } from '@forms/SettingsForm';
+import { Category, Feed } from '@hooks/useFeedsCategories';
 
 export const Feeds = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {

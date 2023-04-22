@@ -1,4 +1,4 @@
-import { ReactNode, ReactElement, cloneElement } from 'react';
+import { cloneElement, ReactElement, ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 import {

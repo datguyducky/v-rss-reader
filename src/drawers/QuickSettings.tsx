@@ -1,19 +1,20 @@
-import { BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
 import React, { ForwardedRef, forwardRef, useRef, useState } from 'react';
 import { View } from 'react-native';
-import { Cog6ToothIcon, ChartPieIcon } from 'react-native-heroicons/outline';
+import { BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
+import { ChartPieIcon, Cog6ToothIcon } from 'react-native-heroicons/outline';
+
+import { BasicButton } from '@components/BasicButton';
+import { ConfirmPopup } from '@components/ConfirmPopup';
+import { Divider } from '@components/Divider';
+import { Drawer } from '@components/Drawer';
+import { Icon } from '@components/Icon';
+import { Pressable } from '@components/Pressable';
+import { Text } from '@components/Text';
+import { ThemeSection } from '@components/ThemeSelection';
+import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
 
 import { ThemeSectionContainer } from './QuickSettings.styles';
 import { ReadingStats } from './ReadingStats';
-import { BasicButton } from '../components/BasicButton';
-import { ConfirmPopup } from '../components/ConfirmPopup';
-import { Divider } from '../components/Divider';
-import { Drawer } from '../components/Drawer';
-import { Icon } from '../components/Icon';
-import { Pressable } from '../components/Pressable';
-import { Text } from '../components/Text';
-import { ThemeSection } from '../components/ThemeSelection';
-import { useFeedsCategoriesContext } from '../context/FeedsCategoriesContext';
 
 export const QuickSettings = forwardRef(
 	({ navigation }: { navigation: any }, ref: ForwardedRef<BottomSheetModal>) => {

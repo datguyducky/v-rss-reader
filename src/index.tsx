@@ -1,17 +1,18 @@
+import React, { useCallback } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { registerRootComponent } from 'expo';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { MMKV } from 'react-native-mmkv';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { FeedsCategoriesProvider } from './context/FeedsCategoriesContext';
-import { ReadLaterProvider } from './context/ReadLaterContext';
-import { ReadingStatsProvider } from './context/ReadingStatsContext';
-import { ThemeProvider } from './context/ThemeContext';
+import { FeedsCategoriesProvider } from '@context/FeedsCategoriesContext';
+import { ReadingStatsProvider } from '@context/ReadingStatsContext';
+import { ReadLaterProvider } from '@context/ReadLaterContext';
+import { ThemeProvider } from '@context/ThemeContext';
+
 import { Routes } from './routing/Routes';
 
 SplashScreen.preventAutoHideAsync();
