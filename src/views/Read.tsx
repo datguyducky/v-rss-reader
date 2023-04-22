@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, FlatList, RefreshControl } from 'react-native';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { useMMKVListener, useMMKVObject } from 'react-native-mmkv';
 import { useTheme } from 'styled-components/native';
 
@@ -17,12 +17,12 @@ import { Layout } from '@layouts/Layout';
 import { EmptyCategoryText } from './Read.styles';
 import { FeedsFilters, RssFeed, RssFeedItem } from '../@types';
 import { QuickAction } from '../drawers/QuickAction';
-import { StackParamList } from '../routing/Routes';
+import { TabParamList } from '../routing/Routes';
 
 export const Read = ({
 	scrollY,
 	title,
-}: { scrollY: Animated.Value; title: string } & NativeStackScreenProps<StackParamList, 'Read'>) => {
+}: { scrollY: Animated.Value; title: string } & BottomTabScreenProps<TabParamList, 'Read'>) => {
 	const theme = useTheme();
 
 	const [fetchRss, { loading }] = useRssFetch();

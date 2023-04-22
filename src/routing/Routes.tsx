@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Animated } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { setBackgroundColorAsync } from 'expo-navigation-bar';
 import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar';
@@ -16,19 +17,26 @@ import { Feed } from '../views/Feed';
 import { Read } from '../views/Read';
 import { Settings } from '../views/Settings';
 
-const Tab = createBottomTabNavigator();
-
 export type StackParamList = {
 	Category: { categoryId?: string; mode: 'edit' | 'create' };
 	Feed: { feedId?: string; mode: 'edit' | 'create' };
-	Settings: undefined;
-	Read: { scrollY: Animated.Value; title: string; name?: string };
-	TabScreen: { scrollY: Animated.Value; title: string; name?: string };
+	Settings: { name: string };
+	TabScreen: NavigatorScreenParams<TabParamList>;
+};
+
+export type TabParamList = {
+	Read: { name: string };
+};
+
+type TabScreenProps = {
+	scrollY: Animated.Value;
+	title: string;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
+const Tab = createBottomTabNavigator<TabParamList>();
 
-const TabScreen = ({ scrollY, title }: StackParamList['Read']) => {
+const TabScreen = ({ scrollY, title }: TabScreenProps) => {
 	return (
 		<Tab.Navigator
 			screenOptions={{
@@ -36,9 +44,11 @@ const TabScreen = ({ scrollY, title }: StackParamList['Read']) => {
 			}}
 			tabBar={props => <Navigation {...props} />}
 		>
-			<Stack.Screen name="Read">
-				{props => <Read {...props} title={title} scrollY={scrollY} />}
-			</Stack.Screen>
+			<Tab.Screen name="Read">
+				{props => {
+					return <Read {...props} title={title} scrollY={scrollY} />;
+				}}
+			</Tab.Screen>
 		</Tab.Navigator>
 	);
 };
@@ -74,13 +84,15 @@ export const Routes = () => {
 			}}
 		>
 			<Stack.Screen name="TabScreen">
-				{props => (
-					<TabScreen
-						{...props}
-						scrollY={scrollYRead}
-						title={props.route.params?.name || 'All articles'}
-					/>
-				)}
+				{props => {
+					return (
+						<TabScreen
+							{...props}
+							scrollY={scrollYRead}
+							title={props.route.params?.params?.name || 'All articles'}
+						/>
+					);
+				}}
 			</Stack.Screen>
 
 			<Stack.Group

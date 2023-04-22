@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Animated } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
@@ -36,7 +35,10 @@ export const Category = ({
 		>
 			<CategoryForm
 				onClose={() => {
-					navigation.navigate('Read', { title: '', scrollY: new Animated.Value(0) });
+					navigation.navigate('TabScreen', {
+						screen: 'Read',
+						params: { name: '' },
+					});
 				}}
 				mode={route?.params?.mode}
 				data={currentCategory}

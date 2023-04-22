@@ -21,10 +21,7 @@ import { Icon } from '../Icon';
 import { Pressable } from '../Pressable';
 import { SharedStylesProps } from '../Shared.styles';
 
-export const Navigation = ({
-	navigation,
-	...otherProps
-}: BottomTabBarProps & SharedStylesProps) => {
+export const Navigation = ({ ...otherProps }: BottomTabBarProps & SharedStylesProps) => {
 	const theme = useTheme();
 	const { width } = useWindowDimensions();
 
@@ -96,9 +93,9 @@ export const Navigation = ({
 				</View>
 			</Shadow>
 
-			<CreateSelection navigation={navigation} ref={createSelectionRef} />
-			<Feeds navigation={navigation} ref={feedsRef} />
-			<QuickSettings ref={quickSettingsRef} navigation={navigation} />
+			<CreateSelection ref={createSelectionRef} />
+			<Feeds ref={feedsRef} />
+			<QuickSettings ref={quickSettingsRef} />
 		</>
 	);
 };

@@ -18,7 +18,7 @@ import { theme } from '../theme';
 
 interface LayoutProps extends SharedStylesProps {
 	children: ReactNode;
-	scrollY?: any;
+	scrollY?: Animated.Value;
 	title?: string;
 	animatedTitle?: string;
 	style?: StyleProp<ViewStyle>;
@@ -58,7 +58,7 @@ export const Layout = ({
 			return React.cloneElement<FlatListProps<any>>(child, {
 				ListHeaderComponent: () => (
 					<HeadingAnimated
-						scrollY={scrollY}
+						scrollY={scrollY || new Animated.Value(0)}
 						title={animatedTitle as string}
 						action="hide"
 						tag="h4"
@@ -66,9 +66,12 @@ export const Layout = ({
 						style={{ paddingLeft: headingSpacing }}
 					/>
 				),
-				onScroll: Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-					useNativeDriver: false,
-				}),
+				onScroll: Animated.event(
+					[{ nativeEvent: { contentOffset: { y: scrollY || new Animated.Value(0) } } }],
+					{
+						useNativeDriver: false,
+					},
+				),
 			});
 		}
 
@@ -78,7 +81,7 @@ export const Layout = ({
 					{React.cloneElement<ScrollViewProps>(child, {
 						children: [
 							<HeadingAnimated
-								scrollY={scrollY}
+								scrollY={scrollY || new Animated.Value(0)}
 								title={animatedTitle as string}
 								action="hide"
 								tag="h4"
@@ -89,7 +92,13 @@ export const Layout = ({
 							...React.Children.toArray(child.props.children),
 						],
 						onScroll: Animated.event(
-							[{ nativeEvent: { contentOffset: { y: scrollY } } }],
+							[
+								{
+									nativeEvent: {
+										contentOffset: { y: scrollY || new Animated.Value(0) },
+									},
+								},
+							],
 							{
 								useNativeDriver: false,
 							},

@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Animated } from 'react-native';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { EyeIcon } from 'react-native-heroicons/outline';
 
@@ -13,7 +14,7 @@ import { SharedStylesProps } from '../Shared.styles';
 
 interface HeaderProps extends SharedStylesProps {
 	title: string;
-	scrollY: any;
+	scrollY: Animated.Value;
 }
 
 export const Header = ({ title, scrollY, ...otherProps }: HeaderProps) => {

@@ -5,7 +5,7 @@ import { StyledNativeHeadingTextProps } from '../Heading/Heading.styles';
 import { SharedStylesProps } from '../Shared.styles';
 
 interface HeadingAnimatedProps extends SharedStylesProps {
-	scrollY: any;
+	scrollY: Animated.Value;
 	title: string;
 	action: 'hide' | 'unhide';
 	tag: StyledNativeHeadingTextProps['tag'];
