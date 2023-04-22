@@ -1,8 +1,8 @@
 import { SettingsFormValues } from '@forms/SettingsForm';
 
-import { FilterFormValues } from '../drawers/Filters';
+import { FeedsFilters } from '../@types';
 
-export const DEFAULT_FILTERS_VALUES: FilterFormValues = {
+export const DEFAULT_FILTERS_VALUES: FeedsFilters = {
 	sortBy: 'LATEST',
 	feedView: 'MAGAZINE',
 	feedDensity: 'COMFORTABLE',

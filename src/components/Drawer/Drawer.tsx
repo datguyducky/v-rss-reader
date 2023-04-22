@@ -27,7 +27,6 @@ interface DrawerProps extends SharedStylesProps, DrawerStylesProps {
 	containerStyle?: StyleProp<ViewStyle>;
 }
 
-// TODO: There's a small flash on a statusBar when the `Drawer` is closed, maybe is not that noticeable but it still would be a good idea to fix it.
 export const Drawer = forwardRef(
 	(
 		{

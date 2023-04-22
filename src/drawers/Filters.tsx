@@ -8,24 +8,19 @@ import { DEFAULT_FILTERS_VALUES } from '@common/constants';
 import { Drawer } from '@components/Drawer';
 
 import { Radio, SectionDivider, SectionTitle } from './Filters.styles';
-
-export type FilterFormValues = {
-	sortBy: 'LATEST' | 'OLDEST';
-	feedView: 'TEXT_ONLY' | 'MAGAZINE' | 'THUMBNAIL';
-	feedDensity: 'COMPACT' | 'COMFORTABLE';
-};
+import { FeedsFilters } from '../@types';
 
 export const Filters = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
 	const theme = useTheme();
 
 	const [feedFilters = DEFAULT_FILTERS_VALUES, setFeedFilters] =
-		useMMKVObject<FilterFormValues>('feedFilters');
+		useMMKVObject<FeedsFilters>('feedFilters');
 
-	const filterForm = useForm<FilterFormValues>({
+	const filterForm = useForm<FeedsFilters>({
 		defaultValues: feedFilters,
 	});
 
-	const onSubmit = (values: FilterFormValues) => setFeedFilters(values);
+	const onSubmit = (values: FeedsFilters) => setFeedFilters(values);
 
 	return (
 		<Drawer ref={ref} snapPoints={[460]} pt={3}>

@@ -23,9 +23,9 @@ module.exports = {
 	extends: 'universe/native',
 	plugins: ['import'],
 	rules: {
-		'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }],
+		'sort-imports': ['warn', { ignoreCase: true, ignoreDeclarationSort: true }],
 		'import/order': [
-			'error',
+			'warn',
 			{
 				groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
 				pathGroups: generatePathGroups(internalImportPaths).concat([

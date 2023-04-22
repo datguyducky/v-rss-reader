@@ -12,8 +12,7 @@ import { SettingsFormValues } from '@forms/SettingsForm';
 import { calculateTimePassed } from '@utils/calculateTimePassed';
 
 import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
-import { RssFeedItem } from '../../@types';
-import { FilterFormValues } from '../../drawers/Filters';
+import { FeedsFilters, RssFeedItem } from '../../@types';
 import { BasicButton } from '../BasicButton';
 import { Icon } from '../Icon';
 import { MagazineCard } from '../MagazineCard';
@@ -43,7 +42,7 @@ export const SwipeableFeedItem = ({
 
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
-	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
+	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FeedsFilters>('feedFilters');
 	const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLaterContext();
 
 	const handlePress = async () => {

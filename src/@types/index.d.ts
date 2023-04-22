@@ -7,7 +7,7 @@ export interface FeedCardProps {
 	handlePress: () => void;
 	domainName: string;
 	publishedAt: string;
-	density: 'COMPACT' | 'COMFORTABLE';
+	density: FeedsFilters['feedDensity'];
 	actionPress: SettingsFormValues['quickActionDrawerGesture'];
 	thumbnailUrl?: string;
 	handleActionPress?: () => void;
@@ -21,4 +21,10 @@ export interface RssFeed extends Feed {
 export interface RssFeedItem extends FeedItem {
 	feedAppCategory?: string;
 	imageUrl?: string;
+}
+
+export interface FeedsFilters {
+	sortBy: 'LATEST' | 'OLDEST';
+	feedView: 'TEXT_ONLY' | 'MAGAZINE' | 'THUMBNAIL';
+	feedDensity: 'COMPACT' | 'COMFORTABLE';
 }

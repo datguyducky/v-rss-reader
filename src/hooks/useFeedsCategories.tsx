@@ -128,7 +128,6 @@ function useFeedsCategories() {
 		}
 	}
 
-	// TODO: Define type for the 'newFeed' argument
 	async function createFeed(newFeed: FeedFormValues) {
 		const feedsCategories = await getStorageFeedsCategories();
 		const { category, ...newFeedData } = newFeed;
@@ -353,7 +352,6 @@ function useFeedsCategories() {
 		fetchActiveItem();
 	}, []);
 
-	// TODO: Correct type here
 	const setStorageActiveItem = async (value: Feed | Category) => {
 		try {
 			const jsonValue = JSON.stringify(value);

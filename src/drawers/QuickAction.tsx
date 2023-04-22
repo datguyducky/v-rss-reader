@@ -43,7 +43,7 @@ export const QuickAction = forwardRef(
 		return (
 			<Drawer ref={ref} snapPoints={[98]} horizontalContent pt={3}>
 				{/*<BasicButton*/}
-				{/*	onPress={() => console.log('TODO: handle `mark as read` action')}*/}
+				{/*	onPress={() => {}}*/}
 				{/*	icon={<Icon name={CheckCircleIcon} size={24} />}*/}
 				{/*	textSize={12}*/}
 				{/*	vertical*/}

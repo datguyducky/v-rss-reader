@@ -41,7 +41,7 @@ export const ThumbnailCard = ({
 					{...(thumbnailUrl ? { source: { uri: thumbnailUrl } } : {})}
 				>
 					<LinearGradient
-						colors={['#00000000', '#000000']} // TODO: Figure out if this needs to be inside the theme colors object.
+						colors={['#00000000', '#000000']}
 						start={{ x: 0.5, y: density === 'COMFORTABLE' ? 0.4 : 0.45 }}
 						style={{
 							height: '100%',

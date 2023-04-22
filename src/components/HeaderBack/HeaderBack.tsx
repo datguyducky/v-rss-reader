@@ -1,3 +1,4 @@
+import { Animated } from 'react-native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
 
@@ -8,7 +9,7 @@ import { Pressable } from '../Pressable';
 import { SharedStylesProps } from '../Shared.styles';
 
 interface HeaderBackProps extends SharedStylesProps, NativeStackHeaderProps {
-	scrollY: any; //TODO: correct type here
+	scrollY: Animated.Value;
 	title: string;
 }
 

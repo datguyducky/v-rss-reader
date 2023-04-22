@@ -1,10 +1,11 @@
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 
+import { FeedsFilters } from '../../@types';
 import { Pressable } from '../Pressable';
 
 interface SwipeableFeedItemStylesProps {
-	viewType?: 'MAGAZINE' | 'TEXT_ONLY' | 'THUMBNAIL'; // TODO: This type should be defined in one place rather than re-typing it everywhere where it's needed
+	viewType?: FeedsFilters['feedView'];
 	isInverted?: boolean;
 }
 

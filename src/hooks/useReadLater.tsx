@@ -4,8 +4,7 @@ import { useMMKVObject } from 'react-native-mmkv';
 
 import { DEFAULT_FILTERS_VALUES } from '@common/constants';
 
-import { RssFeedItem } from '../@types';
-import { FilterFormValues } from '../drawers/Filters';
+import { FeedsFilters, RssFeedItem } from '../@types';
 
 /**
  * As this is quite a simple hook I feel like there is no need to describe methods used here separately, so I will describe all of them in this one comment.
@@ -23,7 +22,7 @@ import { FilterFormValues } from '../drawers/Filters';
 const READ_LATER_FEEDS_CATEGORIES_KEY = '@storage_readLaterFeedsCategories';
 
 export const useReadLater = () => {
-	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
+	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FeedsFilters>('feedFilters');
 	const [stateReadLaterFeedsCategories, setStateReadLaterFeedsCategories] = useState<
 		RssFeedItem[]
 	>([]);

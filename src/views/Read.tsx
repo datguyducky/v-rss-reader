@@ -15,8 +15,7 @@ import { useRssFetch } from '@hooks/useRssFetch';
 import { Layout } from '@layouts/Layout';
 
 import { EmptyCategoryText } from './Read.styles';
-import { RssFeed, RssFeedItem } from '../@types';
-import { FilterFormValues } from '../drawers/Filters';
+import { FeedsFilters, RssFeed, RssFeedItem } from '../@types';
 import { QuickAction } from '../drawers/QuickAction';
 import { StackParamList } from '../routing/Routes';
 
@@ -32,7 +31,7 @@ export const Read = ({
 	const { readLaterFeedsCategories } = useReadLaterContext();
 	const [appSettings = DEFAULT_SETTINGS_VALUES] =
 		useMMKVObject<SettingsFormValues>('appSettings');
-	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FilterFormValues>('feedFilters');
+	const [feedFilters = DEFAULT_FILTERS_VALUES] = useMMKVObject<FeedsFilters>('feedFilters');
 
 	const [loadingFeeds, setLoadingFeeds] = useState(false);
 	const [rssItems, setRssItems] = useState<RssFeedItem[]>([]);
