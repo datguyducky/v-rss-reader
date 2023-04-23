@@ -26,7 +26,7 @@ export const HeadingAnimated = ({
 				style || {},
 				{
 					opacity: scrollY.interpolate({
-						inputRange: [0, 28],
+						inputRange: [0, 18],
 						outputRange: action === 'unhide' ? [0, 1] : [1, 0],
 						extrapolate: 'clamp',
 					}),
