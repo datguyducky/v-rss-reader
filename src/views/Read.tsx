@@ -7,6 +7,7 @@ import { useTheme } from 'styled-components/native';
 
 import { DEFAULT_FILTERS_VALUES, DEFAULT_SETTINGS_VALUES } from '@common/constants';
 import { SwipeableFeedItem } from '@components/SwipeableFeedItem';
+import { Text } from '@components/Text';
 import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
 import { useReadLaterContext } from '@context/ReadLaterContext';
 import { SettingsFormValues } from '@forms/SettingsForm';
@@ -14,7 +15,6 @@ import { Feed } from '@hooks/useFeedsCategories';
 import { useRssFetch } from '@hooks/useRssFetch';
 import { Layout } from '@layouts/Layout';
 
-import { EmptyCategoryText } from './Read.styles';
 import { FeedsFilters, RssFeed, RssFeedItem } from '../@types';
 import { QuickAction } from '../drawers/QuickAction';
 import { TabParamList } from '../routing/Routes';
@@ -257,10 +257,11 @@ export const Read = ({
 						loadingFeeds || loading ? (
 							<ActivityIndicator size="large" color={theme.colors.primary} />
 						) : (
-							<EmptyCategoryText weight={300} fontSize={12}>
-								Sorry, something went wrong and no articles were found for this
-								feed.
-							</EmptyCategoryText>
+							<Text weight={300} fontSize={12} textAlign="center" mx={1.5}>
+								{title === 'Read later'
+									? 'Looks like there are no articles currently saved for reading later. To add articles, simply swipe any article you want to revisit in the future.'
+									: 'We apologize, but there are no articles available for this feed at the moment. If you suspect a bug, please report it to us.'}
+							</Text>
 						)
 					}
 					scrollEventThrottle={16}

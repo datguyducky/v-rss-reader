@@ -10,6 +10,7 @@ import { useFeedsCategoriesContext } from '@context/FeedsCategoriesContext';
 import { Feed } from '@hooks/useFeedsCategories';
 import { formatItemCount } from '@utils/formatItemCount';
 import { feedSchema } from '@validation/feedSchema';
+import { Text } from '@components/Text';
 
 export interface FeedFormValues {
 	name: string;
@@ -90,6 +91,12 @@ export const FeedForm = ({ goBack, mode, data }: FeedFormProps) => {
 					}))}
 					name="category"
 					modalTitle="Select category"
+					ListEmptyComponent={
+						<Text textAlign="center" px={1.5} weight={300} fontSize={12}>
+							Currently, no categories have been created. To get started, simply click
+							the '+' button on the 'Read' view.
+						</Text>
+					}
 				/>
 
 				{!isKeyboardVisible && (

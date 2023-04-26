@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { FlatList, Modal, View } from 'react-native';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ArrowLeftIcon as ArrowLeftIconMini } from 'react-native-heroicons/mini';
@@ -25,10 +25,18 @@ interface SelectPageProps extends SharedStylesProps {
 	name: string;
 	data: { label: string; value: string; extraInfo?: string }[];
 	modalTitle: string;
+	ListEmptyComponent?: ReactElement;
 }
 
 export const Select = () => {};
-const SelectPage = ({ label, data, name, modalTitle, ...otherProps }: SelectPageProps) => {
+const SelectPage = ({
+	label,
+	data,
+	name,
+	modalTitle,
+	ListEmptyComponent,
+	...otherProps
+}: SelectPageProps) => {
 	const { control } = useFormContext();
 
 	const [isSelectModalVisible, setSelectModalVisibility] = useState(false);
@@ -98,6 +106,7 @@ const SelectPage = ({ label, data, name, modalTitle, ...otherProps }: SelectPage
 									paddingBottom: 24,
 								}}
 								data={data}
+								ListEmptyComponent={ListEmptyComponent}
 								renderItem={({ item }) => (
 									<Pressable.Background
 										onPress={() => {
