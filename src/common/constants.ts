@@ -5,7 +5,7 @@ import { FeedsFilters } from '../@types';
 export const DEFAULT_FILTERS_VALUES: FeedsFilters = {
 	sortBy: 'LATEST',
 	feedView: 'MAGAZINE',
-	feedDensity: 'COMFORTABLE',
+	feedDensity: 'COMPACT',
 };
 
 export const DEFAULT_SETTINGS_VALUES: SettingsFormValues = {
