@@ -2,11 +2,11 @@ import { Animated, ScrollView } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { openURL } from 'expo-linking';
 
+import { Pressable } from '@components/Pressable';
 import { Text } from '@components/Text';
 import { SettingsForm } from '@forms/SettingsForm';
 import { Layout } from '@layouts/Layout';
 
-import { PressableAppDetails } from './Settings.styles';
 import { StackParamList } from '../routing/Routes';
 
 export const Settings = ({
@@ -17,8 +17,8 @@ export const Settings = ({
 			<ScrollView>
 				<SettingsForm />
 
-				<PressableAppDetails
-					style={{ marginTop: 24, marginBottom: 24 }}
+				<Pressable.Opacity
+					my={3}
 					onPress={() =>
 						openURL(
 							'https://github.com/datguysheepy/v-rss-reader/blob/master/README.md',
@@ -32,7 +32,7 @@ export const Settings = ({
 					<Text fontSize={12} weight={300} fontFamily="Montserrat" textAlign="center">
 						Click here to learn more about this app
 					</Text>
-				</PressableAppDetails>
+				</Pressable.Opacity>
 			</ScrollView>
 		</Layout>
 	);
