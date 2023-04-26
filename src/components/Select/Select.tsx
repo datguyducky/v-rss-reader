@@ -51,7 +51,6 @@ const SelectPage = ({ label, data, name, modalTitle, ...otherProps }: SelectPage
 						label={label}
 						name={name}
 						onBlur={toggleDropdown}
-						onFocus={toggleDropdown}
 						onPress={toggleDropdown}
 						forceUnfocus={isSelectModalVisible}
 					>
