@@ -8,6 +8,7 @@ import { Drawer } from '@components/Drawer';
 import { Icon } from '@components/Icon';
 import { Pressable } from '@components/Pressable';
 import { useReadLaterContext } from '@context/ReadLaterContext';
+import { clearArticleId } from '@utils/clearArticleId';
 
 import { RssFeedItem } from '../@types';
 
@@ -32,10 +33,12 @@ export const QuickAction = forwardRef(
 
 		const handleReadLater = async () => {
 			if (selectedFeedData) {
-				if (isSavedInReadLater(selectedFeedData.id)) {
-					await removeFromReadLater(selectedFeedData.id);
+				const clearedId = clearArticleId(selectedFeedData.id);
+
+				if (isSavedInReadLater(clearedId)) {
+					await removeFromReadLater(clearedId);
 				} else {
-					await addToReadLater(selectedFeedData);
+					await addToReadLater({ ...selectedFeedData, id: clearedId });
 				}
 			}
 		};
@@ -60,7 +63,9 @@ export const QuickAction = forwardRef(
 					spacing={0}
 					pressableComponent={<Pressable.Background borderless />}
 				>
-					{isSavedInReadLater(selectedFeedData?.id || '') ? 'Unsave' : 'Save'}
+					{isSavedInReadLater(clearArticleId(selectedFeedData?.id || ''))
+						? 'Unsave'
+						: 'Save'}
 				</BasicButton>
 
 				<BasicButton

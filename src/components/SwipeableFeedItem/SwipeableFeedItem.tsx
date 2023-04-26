@@ -10,6 +10,7 @@ import { useReadingStatsContext } from '@context/ReadingStatsContext';
 import { useReadLaterContext } from '@context/ReadLaterContext';
 import { SettingsFormValues } from '@forms/SettingsForm';
 import { calculateTimePassed } from '@utils/calculateTimePassed';
+import { clearArticleId } from '@utils/clearArticleId';
 
 import { PressableThumbnail, ReadLaterActionWrap } from './SwipeableFeedItem.styles';
 import { FeedsFilters, RssFeedItem } from '../../@types';
@@ -89,7 +90,9 @@ export const SwipeableFeedItem = ({
 					spacing={8}
 					textWeight={600}
 				>
-					{isSavedInReadLater(item.id as string) ? 'UNDO SAVE' : 'READ LATER'}
+					{isSavedInReadLater(clearArticleId(item.id as string))
+						? 'UNDO SAVE'
+						: 'READ LATER'}
 				</BasicButton>
 			</ReadLaterActionWrap>
 		);
@@ -202,10 +205,12 @@ export const SwipeableFeedItem = ({
 	};
 
 	const handleReadLaterAction = async () => {
-		if (isSavedInReadLater(item.id)) {
-			await removeFromReadLater(item.id);
+		const clearedId = clearArticleId(item.id);
+
+		if (isSavedInReadLater(clearedId)) {
+			await removeFromReadLater(clearedId);
 		} else {
-			await addToReadLater(item);
+			await addToReadLater({ ...item, id: clearedId });
 		}
 	};
 

@@ -46,7 +46,9 @@ export const useRssFetch = (): [
 							items: parsedRss.items.map(item => ({
 								...item,
 								feedAppCategory: feed?.name || '',
-								id: `${item.id}_${uuid.v4()}${feed?.name ? '_' + feed.name : ''}`, // we are not only using the feed id, but we also generate one ourselves to make sure that there won't be any id duplicates anywhere in the app
+								id: `${item.id}_CATEGORY_${uuid.v4()}${
+									feed?.name ? '_' + feed.name : ''
+								}`, // we are not only using the feed id, but we also generate one ourselves to make sure that there won't be any id duplicates anywhere in the app
 							})),
 						});
 					} catch (e) {
