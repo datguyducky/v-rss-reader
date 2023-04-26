@@ -39,7 +39,7 @@ function useFeedsCategories() {
 	const [stateActiveItem, setStateActiveItem] = useState<Feed | Category | null>(null);
 
 	useEffect(() => {
-		async function getFeedsCategories() {
+		const getFeedsCategories = async () => {
 			let feedsCategories: (Feed | Category)[] = [];
 
 			try {
@@ -52,58 +52,81 @@ function useFeedsCategories() {
 				console.error('Error loading feeds and categories', error);
 			}
 
-			const sortedFeedsCategories = feedsCategories
-				.map(item => {
-					const objectToSort = { ...item };
-					if (objectToSort.type === 'CATEGORY') {
-						objectToSort.feeds = objectToSort.feeds.sort((a, b) =>
-							(appSettings.sortAlphabetically ? a : b).name.localeCompare(
-								(appSettings.sortAlphabetically ? b : a).name,
-								undefined,
-								{
-									ignorePunctuation: true,
-									sensitivity: 'base',
-								},
-							),
-						);
-					}
-
-					return objectToSort;
-				})
-				.sort((a, b) =>
-					(appSettings.sortAlphabetically ? a : b).name.localeCompare(
-						(appSettings.sortAlphabetically ? b : a).name,
-						undefined,
-						{
-							ignorePunctuation: true,
-							sensitivity: 'base',
-						},
-					),
-				);
-
-			const onlyFeeds = sortedFeedsCategories.flatMap(item =>
-				item.type === 'FEED' ? item : [],
-			);
-			const onlyCategories = sortedFeedsCategories.flatMap(item =>
-				item.type === 'CATEGORY' ? item : [],
-			);
-
-			await setStorageFeedsCategories(sortedFeedsCategories);
-			setStateFeedsCategories(sortedFeedsCategories);
-
-			setOnlyFeeds(onlyFeeds);
-			setOnlyCategories(onlyCategories);
-		}
+			await syncFeedsCategories(feedsCategories);
+		};
 
 		getFeedsCategories();
 	}, [appSettings.sortAlphabetically]);
 
-	async function findFeedCategory(id: string) {
+	const sortFeedsCategories = (feedsCategories: (Feed | Category)[]) => {
+		return feedsCategories
+			.map(item => {
+				const objectToSort = { ...item };
+				if (objectToSort.type === 'CATEGORY') {
+					objectToSort.feeds = objectToSort.feeds.sort((a, b) =>
+						(appSettings.sortAlphabetically ? a : b).name.localeCompare(
+							(appSettings.sortAlphabetically ? b : a).name,
+							undefined,
+							{
+								ignorePunctuation: true,
+								sensitivity: 'base',
+							},
+						),
+					);
+				}
+
+				return objectToSort;
+			})
+			.sort((a, b) =>
+				(appSettings.sortAlphabetically ? a : b).name.localeCompare(
+					(appSettings.sortAlphabetically ? b : a).name,
+					undefined,
+					{
+						ignorePunctuation: true,
+						sensitivity: 'base',
+					},
+				),
+			);
+	};
+
+	const sortOnlyFeeds = (feedsCategories: (Feed | Category)[], sortFirst = false) => {
+		let sortedFeedsCategories = feedsCategories;
+
+		if (sortFirst) {
+			sortedFeedsCategories = sortFeedsCategories(feedsCategories);
+		}
+
+		return sortedFeedsCategories.flatMap(item => (item.type === 'FEED' ? item : []));
+	};
+
+	const sortOnlyCategories = (feedsCategories: (Feed | Category)[], sortFirst = false) => {
+		let sortedFeedsCategories = feedsCategories;
+
+		if (sortFirst) {
+			sortedFeedsCategories = sortFeedsCategories(feedsCategories);
+		}
+
+		return sortedFeedsCategories.flatMap(item => (item.type === 'CATEGORY' ? item : []));
+	};
+
+	const syncFeedsCategories = async (feedsCategories: (Feed | Category)[]) => {
+		const sortedFeedsCategories = sortFeedsCategories(feedsCategories);
+		const onlyFeeds = sortOnlyFeeds(sortedFeedsCategories);
+		const onlyCategories = sortOnlyCategories(sortedFeedsCategories);
+
+		await setStorageFeedsCategories(sortedFeedsCategories);
+		setStateFeedsCategories(sortedFeedsCategories);
+
+		setOnlyFeeds(onlyFeeds);
+		setOnlyCategories(onlyCategories);
+	};
+
+	const findFeedCategory = async (id: string) => {
 		const feedsCategories = await getStorageFeedsCategories();
 		return findItemAndParentById(id, feedsCategories);
-	}
+	};
 
-	async function getStorageFeedsCategories() {
+	const getStorageFeedsCategories = async () => {
 		let feedsCategories: (Feed | Category)[] = [];
 
 		try {
@@ -114,9 +137,9 @@ function useFeedsCategories() {
 		}
 
 		return feedsCategories;
-	}
+	};
 
-	async function setStorageFeedsCategories(value: (Feed | Category)[]) {
+	const setStorageFeedsCategories = async (value: (Feed | Category)[]) => {
 		try {
 			const jsonValue = JSON.stringify(value);
 			await AsyncStorage.setItem(FEEDS_CATEGORIES_STORAGE_KEY, jsonValue);
@@ -126,9 +149,9 @@ function useFeedsCategories() {
 				error,
 			);
 		}
-	}
+	};
 
-	async function createFeed(newFeed: FeedFormValues) {
+	const createFeed = async (newFeed: FeedFormValues) => {
 		const feedsCategories = await getStorageFeedsCategories();
 		const { category, ...newFeedData } = newFeed;
 
@@ -153,15 +176,13 @@ function useFeedsCategories() {
 				}
 			});
 
-			await setStorageFeedsCategories(itemsWithNewItem);
-			setStateFeedsCategories(itemsWithNewItem);
+			await syncFeedsCategories(itemsWithNewItem);
 		}
 
-		await setStorageFeedsCategories([...feedsCategories, newFeedObject]);
-		setStateFeedsCategories(prevFeedsCategories => [...prevFeedsCategories, newFeedObject]);
-	}
+		await syncFeedsCategories([...feedsCategories, newFeedObject]);
+	};
 
-	async function createCategory(newCategory: CategoryFormValues) {
+	const createCategory = async (newCategory: CategoryFormValues) => {
 		const feedsCategories = await getStorageFeedsCategories();
 
 		const newCategoryObject: Category = {
@@ -172,11 +193,10 @@ function useFeedsCategories() {
 			createdAt: new Date().toISOString(),
 		};
 
-		await setStorageFeedsCategories([...feedsCategories, newCategoryObject]);
-		setStateFeedsCategories(prevFeedsCategories => [...prevFeedsCategories, newCategoryObject]);
-	}
+		await syncFeedsCategories([...feedsCategories, newCategoryObject]);
+	};
 
-	async function editFeed(id: string, newValues: FeedFormValues) {
+	const editFeed = async (id: string, newValues: FeedFormValues) => {
 		const { category, ...values } = newValues;
 		const feedsCategories = await getStorageFeedsCategories();
 
@@ -224,8 +244,7 @@ function useFeedsCategories() {
 					return newItem;
 				});
 
-				await setStorageFeedsCategories(editedFeedsCategories);
-				setStateFeedsCategories(editedFeedsCategories);
+				await syncFeedsCategories(editedFeedsCategories);
 			}
 			// Putting it under the root array
 			else {
@@ -234,8 +253,7 @@ function useFeedsCategories() {
 					{ ...feedToEdit?.item, ...values },
 				];
 
-				await setStorageFeedsCategories(editedFeedsCategories);
-				setStateFeedsCategories(editedFeedsCategories);
+				await syncFeedsCategories(editedFeedsCategories);
 			}
 		}
 		// Editing it when category was not changed
@@ -254,8 +272,7 @@ function useFeedsCategories() {
 					return newItem;
 				});
 
-				await setStorageFeedsCategories(editedFeedsCategories);
-				setStateFeedsCategories(editedFeedsCategories);
+				await syncFeedsCategories(editedFeedsCategories);
 			}
 			// When feed is under the root category
 			else {
@@ -263,8 +280,7 @@ function useFeedsCategories() {
 					item.id === id ? { ...item, ...values } : { ...item },
 				);
 
-				await setStorageFeedsCategories(editedFeedsCategories);
-				setStateFeedsCategories(editedFeedsCategories);
+				await syncFeedsCategories(editedFeedsCategories);
 			}
 		}
 		// When feed is under the root array, and we try to move it under a category
@@ -285,12 +301,11 @@ function useFeedsCategories() {
 				return newItem;
 			});
 
-			await setStorageFeedsCategories(editedFeedsCategories);
-			setStateFeedsCategories(editedFeedsCategories);
+			await syncFeedsCategories(editedFeedsCategories);
 		}
-	}
+	};
 
-	async function editCategory(id: string, newValues: CategoryFormValues) {
+	const editCategory = async (id: string, newValues: CategoryFormValues) => {
 		const categoryToEdit = (await findFeedCategory(id))?.item;
 		const feedsCategories = await getStorageFeedsCategories();
 
@@ -312,11 +327,10 @@ function useFeedsCategories() {
 			}
 		});
 
-		await setStorageFeedsCategories(updatedList);
-		setStateFeedsCategories(updatedList);
-	}
+		await syncFeedsCategories(updatedList);
+	};
 
-	async function deleteItem(id: string) {
+	const deleteItem = async (id: string) => {
 		const feedsCategories = await getStorageFeedsCategories();
 
 		const clearedFeedsCategories = feedsCategories.map(obj => {
@@ -335,19 +349,18 @@ function useFeedsCategories() {
 			return newObj;
 		});
 
-		await setStorageFeedsCategories(clearedFeedsCategories);
-		setStateFeedsCategories(clearedFeedsCategories);
-	}
+		await syncFeedsCategories(clearedFeedsCategories);
+	};
 
 	useEffect(() => {
-		async function fetchActiveItem() {
+		const fetchActiveItem = async () => {
 			try {
 				const activeItemValue = await AsyncStorage.getItem(ACTIVE_ITEM_STORAGE_KEY);
 				setStateActiveItem(activeItemValue !== null ? JSON.parse(activeItemValue) : null);
 			} catch (error) {
 				console.error('Error loading active item', error);
 			}
-		}
+		};
 
 		fetchActiveItem();
 	}, []);
@@ -378,6 +391,8 @@ function useFeedsCategories() {
 	const resetFeedsCategories = async () => {
 		await AsyncStorage.removeItem(FEEDS_CATEGORIES_STORAGE_KEY);
 		setStateFeedsCategories([]);
+		setOnlyFeeds([]);
+		setOnlyCategories([]);
 	};
 	const resetActiveItem = async () => {
 		await AsyncStorage.removeItem(ACTIVE_ITEM_STORAGE_KEY);
