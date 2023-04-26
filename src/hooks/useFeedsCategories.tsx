@@ -52,7 +52,13 @@ function useFeedsCategories() {
 				console.error('Error loading feeds and categories', error);
 			}
 
-			await syncFeedsCategories(feedsCategories);
+			const sortedFeedsCategories = sortFeedsCategories(feedsCategories);
+			const sortedOnlyFeeds = sortOnlyFeeds(sortedFeedsCategories);
+			const sortedOnlyCategories = sortOnlyCategories(sortedFeedsCategories);
+
+			setStateFeedsCategories(sortedFeedsCategories);
+			setOnlyFeeds(sortedOnlyFeeds);
+			setOnlyCategories(sortedOnlyCategories);
 		};
 
 		getFeedsCategories();
@@ -177,9 +183,9 @@ function useFeedsCategories() {
 			});
 
 			await syncFeedsCategories(itemsWithNewItem);
+		} else {
+			await syncFeedsCategories([...feedsCategories, newFeedObject]);
 		}
-
-		await syncFeedsCategories([...feedsCategories, newFeedObject]);
 	};
 
 	const createCategory = async (newCategory: CategoryFormValues) => {
@@ -333,23 +339,27 @@ function useFeedsCategories() {
 	const deleteItem = async (id: string) => {
 		const feedsCategories = await getStorageFeedsCategories();
 
-		const clearedFeedsCategories = feedsCategories.map(obj => {
-			if (obj.id === id) {
-				return obj;
-			}
+		// I feel like this should be done using .filter() method (or maybe something else) but for some reason with code similar to this one, feeds of category never got updated correctly so for now I'm using simple map
+		const clearedFeedsCategories = feedsCategories
+			.map(item => {
+				if (item.type === 'CATEGORY') {
+					if (item.id === id) {
+						return false; // Remove category
+					} else {
+						const updatedFeeds = item.feeds.filter(feed => feed.id !== id); // When needed remove feed from a category
+						return { ...item, feeds: updatedFeeds }; // Return updated category
+					}
+				} else {
+					if (item.id === id) {
+						return false; // Remove feed
+					} else {
+						return item; // Return feed without updating it
+					}
+				}
+			})
+			.filter(Boolean); // Filter our boolean values - items that got removed
 
-			const newObj = { ...obj };
-
-			if (newObj.type === 'CATEGORY' && newObj?.feeds) {
-				newObj.feeds = newObj.feeds.filter(feed => {
-					return feed.id !== id;
-				});
-			}
-
-			return newObj;
-		});
-
-		await syncFeedsCategories(clearedFeedsCategories);
+		await syncFeedsCategories(clearedFeedsCategories as (Feed | Category)[]);
 	};
 
 	useEffect(() => {
