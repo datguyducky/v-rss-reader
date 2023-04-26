@@ -35,10 +35,10 @@ export const useRssFetch = (): [
 				const data: RssFeed[] = [];
 
 				for (const feed of sources) {
-					const response = await fetch(feed.url as string);
-					const responseText = await response.text();
+					try {
+						const response = await fetch(feed.url as string);
+						const responseText = await response.text();
 
-					if (response.ok) {
 						const parsedRss = await parse(responseText);
 
 						data.push({
@@ -49,14 +49,9 @@ export const useRssFetch = (): [
 								id: `${item.id}_${uuid.v4()}${feed?.name ? '_' + feed.name : ''}`, // we are not only using the feed id, but we also generate one ourselves to make sure that there won't be any id duplicates anywhere in the app
 							})),
 						});
-					} else {
-						setRssFetchResult(prevResults => ({
-							...prevResults,
-							loading: false,
-							error: responseText,
-						}));
-
-						return { data: undefined, error: responseText };
+					} catch (e) {
+						// Do nothing when it was not possible to fetch a feed.
+						// TODO: Maybe I could add some sort of a notification to display how many, or which feeds couldn't be fetched
 					}
 				}
 
