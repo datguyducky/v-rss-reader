@@ -30,7 +30,7 @@ export const ThemeContext = createContext({
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 	const colorScheme = useColorScheme();
 
-	const [appTheme = THEMES.dark, setAppTheme] = useMMKVString('appTheme');
+	const [appTheme = THEMES.light, setAppTheme] = useMMKVString('appTheme');
 
 	const [localTheme, setLocalTheme] = useState<ThemeTypes>(
 		(appTheme || THEMES.light) as ThemeTypes,
