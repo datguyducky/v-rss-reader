@@ -30,6 +30,7 @@ export const AbsoluteAnimatedView = styled.View`
 	top: 0;
 	bottom: 0;
 	left: ${({ theme }) => theme.spacing.size(1.5)}px;
+	pointer-events: none;
 `;
 
 export const AnimatedLabel = styled(Animated.Text)`
