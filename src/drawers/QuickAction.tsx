@@ -21,10 +21,14 @@ export const QuickAction = forwardRef(
 		const { addToReadLater, removeFromReadLater, isSavedInReadLater } = useReadLaterContext();
 
 		const handleShare = async () => {
+			const itemTitle = selectedFeedData?.title || 'Sent from V - RSS Reader';
+
 			try {
 				await Share.share({
-					title: selectedFeedData?.title || 'Sent from V - RSS Reader',
-					message: selectedFeedData?.links?.[0]?.url || selectedFeedData?.title || '',
+					title: itemTitle,
+					message: `${itemTitle}\n${
+						selectedFeedData?.links?.[0]?.url || selectedFeedData?.title || ''
+					}`,
 				});
 			} catch (error: any) {
 				console.log(error.message);
