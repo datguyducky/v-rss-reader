@@ -1,73 +1,78 @@
 # V - RSS Reader
-Are you in need to read world news from around the globe, news from your industry or maybe you're just interested in finding how your favourite sport team is doing? With **V** you don't need to follow multiple websites to be up date with every topic that you try to follow - you can have all of them in one place, in **V**.
+**V - RSS Reader** is a mobile app for Android that functions as an RSS reader, allowing you to access all your favorite articles in one place. With a simple and minimalistic design, you can keep up with the latest news on politics, business, sports, entertainment, and more - completely free.
 
+### Features
+* Access all your articles in one place.
+* Completely free to use and download.
+* No ads.
+* Easily add and manage RSS feeds.
+* Track your reading stats.
+* Streaks - keep track of how many days in a row you have read an article.
+* Customizable
+* Minimalistic
+
+### Screenshots
 <table align="center">
 	<tr>
-		<td><img src="./v_blue.png" width="240" /></td>
-		<td><img src="./new_v-home.png" width="240" /></td>
+		<td><img src="./v_blue.png" alt="" width="240" /></td>
+		<td><img src="./new_v-home.png" alt="" width="240" /></td>
+		<td><img src="./v3.jpg" alt="" width="240" /></td>
 	</tr>
 	<tr align="center">
-		<td>before redesign</td>
-		<td>after redesign</td>
+		<td>First version</td>
+		<td>After first redesign</td>
+		<td>Latest redesign</td>
 	</tr>
 </table>
-  
 
 ## 📰 What is RSS?
-RSS allows apps (which are called RSS Readers) like **V**, to receive recently added articles, blog posts or podcast episodes from page and then show titles of them (and sometimes other informations too) inside of one single app - without need to visit every website by yourself.
-This allows you to be up to date with every thing that you're interested in via only one app.
+RSS (Rich Site Summary) is a web feed that allows users and applications to access updates to websites in a standardized, computer-readable format. Subscribing to RSS feeds can allow a user to keep track of many different websites in a single news aggregator, which constantly monitors sites for new content, removing the need for the user to manually check them.
 
-You need to check by yourself if your news website supports it - search for RSS icon
-![RSS icon](./feed.png "RSS icon") on website or google "[name of website] RSS".
+If you're interested in using RSS feeds to stay up-to-date on your favorite websites, **V - RSS Reader** is the perfect solution. You can download it for free from the Google Play store [here](https://play.google.com/store/apps/details?id=).
 
 ## 🙋 FAQ:
-**Q:** What data is stored and send by V - RSS Reader?\
-**A:** You don't to worry about your privacy because settings, stats, themes and feeds you added to **V** is only stored on your device - to test it: reinstall app and you can see that everything looks like when you just first installed **V**.
+**Q:** What data is stored and sent by **V - RSS Reader**?\
+**A:** All settings, reading stats, feeds, and categories are stored completely on your device and never shared outside of it.
 
-**Q:** Does my data is encrypted?\
-**A:** No, is not. And there's no need for it, because every data that's stored on your device (by **V**) is not a sensitive one.
+**Q:** Is my data encrypted?\
+**A:** No, it is not. Since everything is stored on your device, there's no need to encrypt anything. However, if encryption is heavily requested, it may be added in a future update.
 
-**Q:** Is this free app?\
-**A:** Yes, **V** is completely free.
+**Q:** Is this app free to use and download? Are there any ads?\
+**A:** Yes, **V** is completely free to use and download, and there are no ads.
 
-**Q:** Where I can download it?\
-**A:** If you want to use Google Play, [go here](https://play.google.com/store/apps/details?id=com.v) and if you don't need automatic updates you can download app from Github, [here](https://github.com/datguysheepy/v-rss-reader/releases) - *choose v.apk*.
+**Q:** Where can I download it?\
+**A:** If you use an Android phone, you can download it from the Google Play store [here](https://play.google.com/store/apps/details?id=). If you don't need automatic updates, you can download the "apk" file straight from the Github releases page [here](https://github.com/).
 
-**Q:** How to add RSS feed to app?\
-**A:** Click on RSS icon on header, while being on home screen. And then on **+** icon on header.
-Remember to create category first, if you didn't do it yet. Choose title of your choice and below paste link of RSS feed.
+**Q:** Is **V** available on iOS?\
+**A:** No, currently the app is available only on Android devices. If this is something that would be really heavily requested then I may consider supporting it in the future
 
-**Q:** From where can I get RSS link, how does it look like?\
-**A:** As said before - search for RSS icon ![RSS icon](./feed.png "RSS icon") on website, or search for RSS feed link with help of Google.
+**Q:** How do I add an RSS feed to the app?\
+**A:** Click on the "+" button at the bottom of the app and select the "Add new RSS feed" option. From there, it should be straightforward for you to create one.
 
-**Couple RSS feeds links examples, so you know what to search for:**
-* *Frontpage of Reddit -* https://www.reddit.com/.rss
-* *International news from The Guardian -* https://www.theguardian.com/international/rss
-* *World news from BBC -* http://feeds.bbci.co.uk/news/video_and_audio/world/rss.xml
+**Q:** Where can I find an RSS link, and what does it look like?\
+**A:** Unfortunately, not all websites/services support RSS feeds. But if they do, you can search for an [RSS icon](https://en.wikipedia.org/wiki/File:Feed-icon.svg) or a link that has "rss" in it. You can also use a search engine to check if a specific website supports RSS feeds. Here are a few examples of RSS feed links:
 
-**Q:** How to delete RSS category?\
-**A:** Long press of category name should bring pop-up to delete it.
+* Frontpage of Reddit - https://www.reddit.com/.rss
+* International news from The Guardian - https://www.theguardian.com/international/rss
+* World news from BBC - http://feeds.bbci.co.uk/news/video_and_audio/world/rss.xml
 
-**Q:** How to delete RSS feed?\
-**A:** There's small bin icon on the right of the name of RSS feed - click it and it should bring pop-up to delete it.
+**Q:** How do I delete a category/feed?\
+**A:** To delete a category/feed, select the category/feed that you wish to delete from the "Feeds" view. When it's active, click on the "Settings" icon at the bottom right of the screen, and you should find a "Delete category/feed" option there.
 
-**Q:** How to rename RSS feed?\
-**A:** There's small rename icon on the right of the name of RSS feed - click it and it should bring pop-up to rename it.
+**Q:** How do I rename an RSS feed?\
+**A:** To rename an RSS feed, follow the same instructions as when you want to delete one but choose the "Edit category/feed" option.
 
-**Q:** RSS feed changed to grayish color when I clicked on it, why?\
-**A:** You can enable/disable specific RSS feeds from displaying news on home screen by clicking on name of it or by clicking on tick/box icon on the right of it.
+**Q:** How does streaks work?\
+**A:** If you open at least one article every day, your current streak should increase by 1.
 
-**Q:** How does streaks works?\
-**A:** If you open at least one news everyday your current streak should increase by 1. 
+**Q:** I don't want **V** to collect my reading stats. Can I disable it?\
+**A:** Yes, you can go to the Settings page and disable the collection of reading stats. On that view, you can also adjust more settings according to your liking.
 
-**Q:** Can I: rename category, change RSS feed link or disable/enable all feeds from one category by one click?\
-**A:** No, at this moment **V** don't support this functionalities, but be sure to frequently update app, because at some point this functionalities probably will be added to app.
+## 🤝 Contribution
+Contribution to the development of **V - RSS Reader** is always welcomed and desired. You can contribute by choosing one of the open issues and working on them, or by creating new functionality that you think will greatly increase the appeal of **V** and then creating a pull request.
 
-## 🤝 Contribution:
-Contribution to development of **V - RSS Reader** is always welcomed and desired - You can contribute by choosing one of open issues and working on them or by creating new functionality that you think will greatly increase appeal of **V**, and then by creating Pull Request.
+## 🐞 Hey, I found a bug!
+If something doesn't work as it should, you can go here to create an issue. Please choose an appropriate title, and in the description, include everything that you think will be useful for fixing the bug/helping with your issue.
 
-## 🐞 Hey I found a bug!
-Something doesn't work like it should? If so, [go here to create issue](https://github.com/datguysheepy/v-rss-reader/issues/new) - please choose appropriate title and in description include everything that you think will be useful for fixing this bug/helping with your issue.
-
-## 📝 License 
-**V - RSS Reader** is open-source project licensed under the [GPL-3.0](https://github.com/datguysheepy/v-rss-reader/blob/master/LICENSE).
+## 📝 License
+**V - RSS Reader** is an open-source project licensed under the [GPL-3.0](https://github.com/datguysheepy/v-rss-reader/blob/master/LICENSE).
