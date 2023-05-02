@@ -28,7 +28,7 @@
 ## 📰 What is RSS?
 RSS (Rich Site Summary) is a web feed that allows users and applications to access updates to websites in a standardized, computer-readable format. Subscribing to RSS feeds can allow a user to keep track of many different websites in a single news aggregator, which constantly monitors sites for new content, removing the need for the user to manually check them.
 
-If you're interested in using RSS feeds to stay up-to-date on your favorite websites, **V - RSS Reader** is the perfect solution. You can download it for free from the Google Play store [here](https://play.google.com/store/apps/details?id=).
+If you're interested in using RSS feeds to stay up-to-date on your favorite websites, **V - RSS Reader** is the perfect solution. You can download it for free from the Google Play store [here](https://play.google.com/store/apps/details?id=com.vrssreader.app).
 
 ## 🙋 FAQ:
 **Q:** What data is stored and sent by **V - RSS Reader**?\
@@ -41,7 +41,7 @@ If you're interested in using RSS feeds to stay up-to-date on your favorite webs
 **A:** Yes, **V** is completely free to use and download, and there are no ads.
 
 **Q:** Where can I download it?\
-**A:** If you use an Android phone, you can download it from the Google Play store [here](https://play.google.com/store/apps/details?id=). If you don't need automatic updates, you can download the "apk" file straight from the Github releases page [here](https://github.com/).
+**A:** If you use an Android phone, you can download it from the Google Play store [here](https://play.google.com/store/apps/details?id=com.vrssreader.app). If you don't need automatic updates, you can download the "apk" file straight from the Github releases page [here](https://github.com/datguysheepy/v-rss-reader/releases).
 
 **Q:** Is **V** available on iOS?\
 **A:** No, currently the app is available only on Android devices. If this is something that would be really heavily requested then I may consider supporting it in the future
