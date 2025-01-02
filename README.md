@@ -1,3 +1,10 @@
+> [!WARNING]  
+> This project is no longer maintained or available. It was created a long time ago when I was learning React Native and mobile app development.
+> The main reason I decided to stop supporting this app is simple: I wasn’t using it. I enjoy building things for myself and then sharing them with the world, as I believe there’s always at
+> least one other person who might find them useful. If you are that person, I’m sorry 🙏, and I hope you’re able to find something better than this.
+>
+> I’m leaving this repository public in case it might help someone in the future. However, please keep in mind that it is likely very outdated by the time you are reading this.
+
 # V - RSS Reader
 **V - RSS Reader** is a mobile app for Android that functions as an RSS reader, allowing you to access all your favorite articles in one place. With a simple and minimalistic design, you can keep up with the latest news on politics, business, sports, entertainment, and more - completely free.
 
