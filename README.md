@@ -23,7 +23,7 @@
 		<td>First version</td>
 		<td>After first redesign</td>
 		<td>Latest redesign</td>
-		<td>Latest redesign functionalities</td>
+		<td></td>
 	</tr>
 </table>
 
