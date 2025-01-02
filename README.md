@@ -11,7 +11,7 @@
 * Customizable
 * Minimalistic
 
-![](./v-rss-reader-all.gif)
+<img src="./v-rss-reader-all.gif" height="400" />
 
 ### Screenshots
 <table align="center">
