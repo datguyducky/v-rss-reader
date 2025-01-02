@@ -11,19 +11,19 @@
 * Customizable
 * Minimalistic
 
+![](./v-rss-reader-all.gif)
+
 ### Screenshots
 <table align="center">
 	<tr>
 		<td><img src="./v_blue.png" alt="" width="240" /></td>
 		<td><img src="./new_v-home.png" alt="" width="240" /></td>
 		<td><img src="./v3.jpg" alt="" width="240" /></td>
-		<td><img src="./v-rss-reader-all.gif" alt="" width="240"/></td>
 	</tr>
 	<tr align="center">
 		<td>First version</td>
 		<td>After first redesign</td>
 		<td>Latest redesign</td>
-		<td></td>
 	</tr>
 </table>
 
